@@ -1,0 +1,492 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Exception;
+use Illuminate\Http\Request;
+use App\Models\Developments;
+use App\Models\DevelopmentsHighlights;
+use App\Models\DevelopmentsApartments;
+use App\Models\Properties;
+use App\Models\Images;
+use Illuminate\support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
+use App\Models\Estados;
+use App\Models\Municipios;
+use App\Models\Colonias;
+
+class DevelopmentsController extends Controller
+{
+    public function getAll(){
+        $developments = Developments::all();
+        
+        return $developments;
+    }
+
+    public function getDevelopmentsHightlights(){
+        $highlights = DevelopmentsHighlights::orderBy('num_order', 'asc')->get();
+
+        if(sizeof($highlights) > 0){
+            $highlightIds = $highlights->pluck('id_development')->toArray();
+            $highlights = Developments::whereIn('id', $highlightIds)->get();
+        }else{
+            $highlights = [];
+        }
+
+        return $highlights;
+    }
+
+
+    public function getDevelopmentsHightlightFromMunicipio($id){
+
+        $highlight = DevelopmentsHighlights::where('id_municipio', $id)
+        ->orderBy('num_order', 'asc')
+        ->get();
+        
+        if(sizeof($highlight) > 0){
+           $developments = Developments::select(); 
+            foreach ($highlight as $value) {
+                $developments = $developments->orwhere('id', $value->id_development);
+            }
+            $developments = $developments->get();
+        }else{
+            $developments = [];
+        }
+        
+        return $developments;
+    }
+
+    public function deleteDevHightlight($id){
+        $h = DevelopmentsHighlights::find($id);
+
+        if ($h) {
+            $h->delete();
+            return redirect('overview/developments-highlights');
+        } else {
+            return json_encode('error: Agenda entry not found');
+        }
+    }
+
+    public function addDevHightlight(Request $request) {
+        try {
+            $h = new DevelopmentsHighlights();
+            $h->id_estado = 19;
+            $h->id_municipio = $request->id_municipio;
+            $h->id_development = $request->id_development;
+            $h->save();
+        }catch(Exception $e){
+            return json_encode($e->getMessage());
+        }
+       
+        return redirect('overview/developments-highlights');
+    }
+
+    public function orderDevHightlight(Request $request) {
+        $idProperty = $request->id;
+        
+        $h = DevelopmentsHighlights::where('id_development', $idProperty)->first();
+
+        if ($h) {
+            $h->num_order = $request->num_order;
+            $h->save();
+
+            return redirect('overview/developments-highlights');
+        } else {
+            return json_encode('error: entry for property with id ' . $idProperty . ' not found');
+        }
+    }
+
+    public function getdevsbymunicipio($id){
+        $dev = Developments::where('id_municipio', $id)->get();
+        return response()->json($dev);
+    }
+
+    public function getDevelopmentsImagesCards(){
+        $images = Images::where('type_property', 'development')
+            ->where('category', 'card')
+            ->get();
+        
+        return $images;
+    }
+
+     public function getDevelopmentsImagesDetail($id){
+        $images = Images::where('type_property', 'property')
+            ->where('category', 'card')
+            ->where('id_property', $id)
+            ->get();
+        
+        return $images;
+    }
+
+
+    public function getDevelopment($id){
+        $developments = Developments::where('id', $id)
+            ->get();
+        
+        return $developments;
+    }
+
+    public function getDevCard($id){
+        $dev = Developments::selectRaw('id,status,title,price_min,price_max,location,description,views,images')
+            ->where('id',$id)
+            ->get();
+        
+        return $dev;
+    }
+
+    public function getMultiDevCard($array){
+
+        if(str_contains($array,'-')) {
+            $list = explode('-',$array);
+        }else{
+            $list[] = $array;
+        }
+        
+
+        $dev = Developments::selectRaw('id,status,title,price_min,price_max,location,description,views,images');
+
+        foreach ($list as $value) {
+           $dev = $dev->orWhere('id',$value);
+        }
+        
+        $dev = $dev->get();
+        
+        return $dev;
+    }
+
+    public function getDevelopmentsRelated($id){
+
+        $Developments = Developments::where('id', $id)
+            ->get();
+        $DevelopmentsRelated = Developments::where('status', $Developments[0]->status)
+            ->where('id_municipio', $Developments[0]->id_municipio)
+            ->take(10)
+            ->get();
+        
+        return $DevelopmentsRelated;
+
+    }
+
+    public function getDevSearch($estado = "0",$municipio = "0",$colonia = "0",$status = 0,$min = 0,$max = 0){
+
+        $search = Developments::select();
+
+        if($estado != "0"){
+            $search = $search->where('id_estado', $estado);
+        }
+        if($municipio != "0"){
+            $search = $search->where('id_municipio', $municipio);
+        }
+        if($colonia != "0"){
+            $search = $search->where('id_colonia', $colonia);
+        }
+
+        if($max == 0){
+            $search = $search->where('price_min', '>', $min);
+        }else{
+            $search = $search->where('price_min', '>', $min);
+            $search = $search->where('price_max', '<', $max);
+        }
+
+        if($status == "presale"){
+            $search = $search->where('status', 'presale');
+        }elseif($status == "sale"){
+            $search = $search->where('status', 'sale');
+        }
+
+        $search = $search->paginate(12); 
+           
+        return $search;
+        
+    }
+    
+    public function storeDev(Request $request){
+
+        $development = new Developments;
+        $development->title = $request->title;
+        $development->status = $request->status;
+        $development->price_min = $request->price_min;
+        $development->price_max = $request->price_max;
+        $development->description = $request->description;
+        $development->availability = $request->availability;
+        $development->financing = $request->financing;
+        $development->mode = $request->mode;
+        $development->id_estado = $request->id_estado;
+        $development->id_municipio = $request->id_municipio;
+        $development->id_colonia = $request->id_colonia;
+        $development->street = $request->street;
+        $development->num_ext = $request->num_ext;
+        
+        $estado = Estados::where('id', $request->id_estado)->get();
+        $estado = $estado[0]['nombre'];
+
+        $municipio = Municipios::where('id', $request->id_municipio)->get();
+        $municipio = $municipio[0]['nombre'];
+
+        $colonia = Colonias::where('id', $request->id_colonia)->get();
+        $colonia = $colonia[0]['nombre'];
+
+        $development->location = $colonia.', '.$municipio.', '.$estado;
+        
+        $development->cp = $request->cp;
+        $development->map = $request->map;
+        $development->map_lat = $request->mapLat;
+        $development->map_long = $request->mapLong;
+        $development->area = $request->area;
+        $development->amenities = $request->amenities;
+        $development->commission_percentage = $request->commission_percentage;
+        $development->id_user = Auth::user()->id;
+        if($request->hasFile('images')){
+            $development->images = sizeof($request->file('images'));
+        }
+        $development->save();
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $index => $image) {
+
+                $nameimg = Str::slug($index+1).".".$image->getClientOriginalExtension();
+                $route = public_path("img/posts/developments/".$development->id."/");
+                $image->move($route, $nameimg);
+            }
+        }
+
+        $key = 1;
+
+        foreach ($request->option as $option){
+            $appartment = new DevelopmentsApartments;
+            $appartment->id_development = $development->id;
+            $appartment->price = $option['price'];
+            $appartment->rooms = $option['rooms'];
+            $appartment->bathrooms = $option['bathrooms'];
+            $appartment->parkings = $option['parkings'];
+            $appartment->area = $option['area'];
+            if($request->file('imageoption.' . $key) && is_array($request->file('imageoption.' . $key))){
+                $appartment->image_plans = sizeof($request->file('imageoption.' . $key));
+            }elseif($request->file('imageoption.' . $key) && !is_array($request->file('imageoption.' . $key))){
+                $appartment->image_plans = 1;
+            }else{
+                $appartment->image_plans = 0;
+            }
+            
+            if($option['num_available']){
+                $appartment->num_available = $option['num_available'];
+            }else{
+                $appartment->num_available = 0;
+            }
+            
+
+            if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
+                //foreach ($request->file('imageoption.' . $key) as $i => $image) {
+                    $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
+                    $route = public_path("img/posts/developments/" . $development->id . "/" . "plans/");
+                    $request->file('imageoption.' . $key)->move($route, $nameimg);
+                //}
+            }
+
+            $appartment->save();
+            $key++;
+        }
+
+        return redirect()->route('admin.developments');
+    }
+    
+    public function editdev(Request $request){
+        $development = Developments::findOrFail($request->id);
+        $development->title = $request->title;
+        $development->status = $request->status;
+        $development->price_min = $request->price_min;
+        $development->price_max = $request->price_max;
+        $development->description = $request->description;
+        $development->availability = $request->availability;
+        $development->financing = $request->financing;
+        $development->mode = $request->mode;
+        $development->id_estado = $request->id_estado;
+        $development->id_municipio = $request->id_municipio;
+        $development->id_colonia = $request->id_colonia;
+        $development->street = $request->street;
+        $development->num_ext = $request->num_ext;
+        
+        $estado = Estados::where('id', $request->id_estado)->get();
+        $estado = $estado[0]['nombre'];
+
+        $municipio = Municipios::where('id', $request->id_municipio)->get();
+        $municipio = $municipio[0]['nombre'];
+
+        $colonia = Colonias::where('id', $request->id_colonia)->get();
+        $colonia = $colonia[0]['nombre'];
+
+        $development->location = $colonia.', '.$municipio.', '.$estado;
+        
+        $development->cp = $request->cp;
+        $development->map = $request->map;
+        $development->map_lat = $request->mapLat;
+        $development->map_long = $request->mapLong;
+        $development->area = $request->area;
+        $development->amenities = $request->amenities;
+        $development->commission_percentage = $request->commission_percentage;
+        
+        if($request->hasFile('images')){
+            $development->images = $request->num_images + sizeof($request->file('images'));
+        }else{
+            $development->images = $request->num_images;
+        }
+        
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $index => $image) {
+
+                $nameimg = Str::slug($request->num_images+$index+1).".".$image->getClientOriginalExtension();
+                $route = public_path("img/posts/developments/".$request->id."/");
+                $image->move($route, $nameimg);
+            }
+        }
+        
+        if($request->orderimg){
+            foreach ($request->orderimg as $index => $order) {
+                $path = public_path();
+                $key = $index;
+    
+                if (file_exists($path."img/posts/developments/{$request->id}/{$order}.jpg")) {
+                    rename($path."img/posts/developments/{$request->id}/{$order}.jpg", $path."img/posts/developments/{$request->id}/{$order}temp.jpg");
+                }
+            }
+            
+            foreach ($request->orderimg as $index => $order) {
+                $path = public_path();
+                $key = $index;
+                
+                if (file_exists($path."img/posts/developments/{$request->id}/{$key}temp.jpg")) {
+                    rename($path."img/posts/developments/{$request->id}/{$key}temp.jpg", $path."img/posts/developments/{$request->id}/{$order}.jpg");
+                }
+            }
+        }
+        
+        $development->save();
+
+        $key = 1;
+        
+        if($request->optionapp){
+            foreach ($request->optionapp as $option){
+                $appartment = DevelopmentsApartments::findOrFail($option['id']);
+                $appartment->price = $option['price'];
+                $appartment->rooms = $option['rooms'];
+                $appartment->bathrooms = $option['bathrooms'];
+                $appartment->parkings = $option['parkings'];
+                $appartment->area = $option['area'];
+                if($request->file('imageoption.' . $key) && is_array($request->file('imageoption.' . $key))){
+                    $appartment->image_plans = sizeof($request->file('imageoption.' . $key));
+                }elseif($request->file('imageoption.' . $key) && !is_array($request->file('imageoption.' . $key))){
+                    $appartment->image_plans = 1;
+                }else{
+                    $appartment->image_plans = 0;
+                }
+                
+                if($option['num_available']){
+                    $appartment->num_available = $option['num_available'];
+                }else{
+                    $appartment->num_available = 0;
+                }
+                
+    
+                if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
+                    //foreach ($request->file('imageoption.' . $key) as $i => $image) {
+                        $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
+                        $route = public_path("img/posts/developments/" . $development->id . "/" . "plans/");
+                        $request->file('imageoption.' . $key)->move($route, $nameimg);
+                    //}
+                }
+    
+                $appartment->save();
+                $key++;
+            }
+        }
+        
+        if($request->optionapp){
+            $key = sizeof($request->optionapp)+1;
+        }else{
+            $key = 0;
+        }
+
+        if($request->option){
+            foreach ($request->option as $option){
+                $appartment = new DevelopmentsApartments;
+                $appartment->id_development = $development->id;
+                $appartment->price = $option['price'];
+                $appartment->rooms = $option['rooms'];
+                $appartment->bathrooms = $option['bathrooms'];
+                $appartment->parkings = $option['parkings'];
+                $appartment->area = $option['area'];
+                if($request->file('imageoption.' . $key) && is_array($request->file('imageoption.' . $key))){
+                    $appartment->image_plans = sizeof($request->file('imageoption.' . $key));
+                }elseif($request->file('imageoption.' . $key) && !is_array($request->file('imageoption.' . $key))){
+                    $appartment->image_plans = 1;
+                }else{
+                    $appartment->image_plans = 0;
+                }
+                
+                if($option['num_available']){
+                    $appartment->num_available = $option['num_available'];
+                }else{
+                    $appartment->num_available = 0;
+                }
+                
+    
+                if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
+                    //foreach ($request->file('imageoption.' . $key) as $i => $image) {
+                        $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
+                        $route = public_path("img/posts/developments/" . $development->id . "/" . "plans/");
+                        $request->file('imageoption.' . $key)->move($route, $nameimg);
+                    //}
+                }
+    
+                $appartment->save();
+                $key++;
+            }
+        }
+        
+
+        return redirect()->route('admin.developments');
+    }
+    
+    public function deleteDev($id){
+
+        $dev = Developments::findOrFail($id);
+    
+        $directoryPath = public_path("img/posts/developments/{$dev->id}");
+    
+        if (is_dir($directoryPath)) {
+            File::deleteDirectory($directoryPath, true);
+            // Esperar 1 segundo antes de intentar eliminar la carpeta
+            sleep(1);
+            rmdir($directoryPath);
+        }
+    
+        $dev->delete();
+        
+        $apartments = DevelopmentsApartments::where('id_development',$id);
+        $apartments->delete();
+        
+        return redirect()->back();
+    
+    }
+
+    public function getCommissionsEP($type) {
+        if($type == "dev"){
+            $commissions = Developments::whereNotNull('commission_percentage')
+                ->distinct('commission_percentage')
+                ->pluck('commission_percentage');
+
+            return $commissions;
+        }else if($type == "property"){
+            $commissions = Properties::whereNotNull('commission_percentage')
+                ->distinct('commission_percentage')
+                ->pluck('commission_percentage');
+
+            return $commissions;
+        }
+        
+    }
+
+}
