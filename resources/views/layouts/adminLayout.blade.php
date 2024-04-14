@@ -93,7 +93,7 @@
                 </li>
                 <li class="dropdown dropdown-menu-end">
                     <a href="#" class="profile" data-bs-toggle="dropdown">
-                        <img src="{{url('./public/img/users/'.auth()->user()->profile_image)}}" title="Profile" alt="Profile" />
+                        <img src="{{asset('img/users/'.auth()->user()->profile_image)}}" title="Profile" alt="Profile" />
                     </a>
                     <ul class="dropdown-menu menu-primary-dropdown">
                         <li>
