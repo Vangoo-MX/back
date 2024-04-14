@@ -21,8 +21,8 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
-    <link rel="stylesheet" href="/css/app.css">
-    <link rel="stylesheet" href="/css/admin.css">
+    <link href="./resources/css/app.css" rel="stylesheet">
+    <link href="./resources/css/admin.css" rel="stylesheet">
     <script src="/js/app.js"></script>
 
 </head>
