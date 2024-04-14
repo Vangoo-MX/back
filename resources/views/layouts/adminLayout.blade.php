@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Administrador Vangoo | @yield('title')</title>
-    <link rel="shortcut icon" href="{{url('./img/icon/icon-logo.png')}}" type="image/PNG">
+    <link rel="shortcut icon" href="{{asset('img/icon/icon-logo.png')}}" type="image/PNG">
     <!--------FONTAWESOME--------->
     <script src="https://kit.fontawesome.com/e0df5df9e9.js" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified CSS -->
