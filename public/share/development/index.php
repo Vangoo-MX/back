@@ -8,9 +8,9 @@
 
     $typeText = 'developments';
     // $urlShare = $type == 'Development' ? 'https://vangoo.mx/details/desarrollo/'.$id : 'https://vangoo.mx/details/propiedad/'.$id;
-    $urlShare = 'https://vangoo.mx/admin/share/development/index.php?id='.$id;
+    $urlShare = 'https://dashboard.vangoo.mx/share/development/index.php?id='.$id;
 
-    $urlApi = 'https://vangoo.mx/admin/ep/getDevelopment/'.$id;
+    $urlApi = 'https://dashboard.vangoo.mx/ep/getDevelopment/'.$id;
     $curl = curl_init($urlApi);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($curl);
@@ -49,8 +49,8 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="<?php echo $data['title']; ?>">
     <meta property="og:description" content="<?php echo $data['description']; ?>">
-    <meta property="og:image" content="https://vangoo.mx/admin/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
-    <meta property="og:image:secure_url" content="https://vangoo.mx/admin/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg"> 
+    <meta property="og:image" content="https://dashboard.vangoo.mx/public/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+    <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/public/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg"> 
     <meta property="og:image:type" content="image/jpeg"> 
     <meta property="og:image:width" content="400">
     <meta property="og:image:height" content="300">
@@ -190,7 +190,7 @@
             <div class="content">
                 <a>
                     <div class="content-image">
-                        <img alt="house" loading="lazy" src="https://vangoo.mx/admin/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+                        <img alt="house" loading="lazy" src="https://dashboard.vangoo.mx/public/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
                     </div>
                     <div class="content-info">
                         <h3><?php echo $data['title']; ?></h3>
