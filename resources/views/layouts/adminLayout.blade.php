@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Administrador Vangoo | @yield('title')</title>
-    <link rel="shortcut icon" href="{{url('./require/resources/img/icon/icon-logo.png')}}" type="image/PNG">
+    <link rel="shortcut icon" href="{{asset('img/icon/icon-logo.png')}}" type="image/PNG">
     <!--------FONTAWESOME--------->
     <script src="https://kit.fontawesome.com/e0df5df9e9.js" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified CSS -->
@@ -22,10 +22,9 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
-
-    {{-- <link href="{url('./require/resources/css/admin.css')}}" rel="stylesheet"> --}}
-    <link href="{{url('./require/resources/css/app.css')}}" rel="stylesheet">
-
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('js/app.js')}}">
 </head>
 
 <body>
