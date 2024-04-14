@@ -22,8 +22,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
 
-    <link href="{{url('resources/css/admin.css')}}" rel="stylesheet">
-    <link href="{{url('resources/css/app.css')}}" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 
