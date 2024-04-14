@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
 Propiedades
-<img src="{{url('./require/resources/img/icon/icon-logo-mini.png')}}" />
+<img src="{{url('./img/icon/icon-logo-mini.png')}}" />
 Detalle
 @endsection()
 

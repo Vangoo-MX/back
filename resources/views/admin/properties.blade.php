@@ -10,23 +10,23 @@
 
 <!-- Content Row -->
 <div class="row">
-    <div class="container mt-3 px-4">           
+    <div class="container mt-3 px-4">
         <table class="table table-striped table-bordered" id="propertiesTable">
             <thead>
-            <tr>
-                <th>id</th>
-                <th>Titulo</th>
-                <th>Precio</th>
-                <th>Colonia</th>
-                <th>Municipio</th>
-                <th>Estado</th>
-                <th>Usuario</th>
-                <th>Fecha</th>
-                <th>Acciones</th>
-            </tr>
+                <tr>
+                    <th>id</th>
+                    <th>Titulo</th>
+                    <th>Precio</th>
+                    <th>Colonia</th>
+                    <th>Municipio</th>
+                    <th>Estado</th>
+                    <th>Usuario</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
             </thead>
             <tbody>
-            @foreach($propiedades as $p)
+                @foreach($propiedades as $p)
                 <tr>
                     <td>{{$p->id}}</td>
                     <td>{{limitString($p->title,37)}}</td>
@@ -44,31 +44,31 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item" href="{{route('admin.details',$p->id)}}">
-                                        <img src="{{url('./require/resources/img/icon/info.png')}}" /> 
+                                        <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/propiedad/{{$p->id}}')">
-                                        <img src="{{url('./require/resources/img/icon/link.png')}}" />
+                                        <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
                                 </li>
                                 <li class="d-none">
                                     <a class="dropdown-item" href="#">
-                                        <img src="{{url('./require/resources/img/icon/update.png')}}" />
+                                        <img src="{{url('./img/icon/update.png')}}" />
                                         Editar
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$p->id}})" id="propertyDeactiveConfirmBtn{{$p->id}}" data-url="{{route('epProperty.deactive',$p->id)}}">
-                                        <img src="{{url('./require/resources/img/icon/desactive.png')}}" />
+                                        <img src="{{url('./img/icon/desactive.png')}}" />
                                         Desactivar
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeleteModal" onclick="propertyDeleteModalData({{$p->id}})" id="propertyDeleteConfirmBtn{{$p->id}}" data-url="{{route('epProperty.delete',$p->id)}}">
-                                        <img src="{{url('./require/resources/img/icon/trash.png')}}" />
+                                        <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>
                                 </li>
@@ -76,7 +76,7 @@
                         </div>
                     </td>
                 </tr>
-            @endforeach
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -85,51 +85,50 @@
 
 <!----Delete----->
 <div class="modal fade" id="propertyDeleteModal">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
 
-      <div class="modal-header">
-        <h4 class="modal-title">¿Estás seguro que deseas eliminar esta propiedad?</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+            <div class="modal-header">
+                <h4 class="modal-title">¿Estás seguro que deseas eliminar esta propiedad?</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
 
-      <div class="modal-body">
-        <p>Una vez eliminada la propiedad no podrá ser recuperada, por favor verifica.</p>
-        <div class="d-flex justify-content-end">
-            <input type="hidden" id="propertyDeleteId">
-            <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-            <button class="btn1" data-bs-dismiss="modal" onclick="propertyDeleteSend()"> Confirmar</button>
+            <div class="modal-body">
+                <p>Una vez eliminada la propiedad no podrá ser recuperada, por favor verifica.</p>
+                <div class="d-flex justify-content-end">
+                    <input type="hidden" id="propertyDeleteId">
+                    <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn1" data-bs-dismiss="modal" onclick="propertyDeleteSend()"> Confirmar</button>
+                </div>
+            </div>
+
         </div>
-      </div>
-
     </div>
-  </div>
 </div>
 <!----Deactivate----->
 <div class="modal fade" id="propertyDeactivateModal">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
 
-      <div class="modal-header">
-        <h4 class="modal-title">¿Estás seguro que deseas desactivar esta propiedad?</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+            <div class="modal-header">
+                <h4 class="modal-title">¿Estás seguro que deseas desactivar esta propiedad?</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
 
-      <div class="modal-body">
-        <p>Mientras la propiedad esté desactivado no podrá ser visualizado en el portal de Vangoo.mx</p>
-        <div class="d-flex justify-content-end">
-            <input type="hidden" id="propertyDeactivateId">
-            <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-            <button class="btn1" data-bs-dismiss="modal" onclick="propertyDeactiveSend()">Confirmar</button>
+            <div class="modal-body">
+                <p>Mientras la propiedad esté desactivado no podrá ser visualizado en el portal de Vangoo.mx</p>
+                <div class="d-flex justify-content-end">
+                    <input type="hidden" id="propertyDeactivateId">
+                    <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn1" data-bs-dismiss="modal" onclick="propertyDeactiveSend()">Confirmar</button>
+                </div>
+            </div>
+
         </div>
-      </div>
-
     </div>
-  </div>
 </div>
 
 <script>
-
     function propertyDeleteModalData(id) {
         $("#propertyDeleteId").val(id);
     }
@@ -140,12 +139,12 @@
 
     function propertyDeleteSend() {
         var id = $("#propertyDeleteId").val();
-        var url = $("#propertyDeleteConfirmBtn"+id).data("url");
+        var url = $("#propertyDeleteConfirmBtn" + id).data("url");
         $.ajax({
             url: url,
             type: "GET",
             success: function(response) {
-                message('success', 'Propiedad '+id+' eliminada. Actualizando tabla... <div class="spinner-border text-success"></div>');
+                message('success', 'Propiedad ' + id + ' eliminada. Actualizando tabla... <div class="spinner-border text-success"></div>');
                 setTimeout(function() {
                     window.location.reload();
                 }, 1000);
@@ -157,14 +156,14 @@
         });
     }
 
-    function propertyDeactiveSend(){
+    function propertyDeactiveSend() {
         var id = $("#propertyDeactivateId").val();
-        var url = $("#propertyDeactiveConfirmBtn"+id).data("url");
+        var url = $("#propertyDeactiveConfirmBtn" + id).data("url");
         $.ajax({
             url: url,
             type: "GET",
             success: function(response) {
-                message('success', 'Propiedad '+id+' desactivada. Actualizando tabla... <div class="spinner-border text-success"></div>');
+                message('success', 'Propiedad ' + id + ' desactivada. Actualizando tabla... <div class="spinner-border text-success"></div>');
                 setTimeout(function() {
                     window.location.reload();
                 }, 1000);
@@ -177,42 +176,43 @@
     }
 
 
-  $(document).ready(function() {
+    $(document).ready(function() {
         $('#propertiesTable').DataTable({
             language: {
-                processing:     "Procesando..",
-                search:         "Buscar:&nbsp;",
-                lengthMenu:    "Ver _MENU_ Elementos",
-                info:           "Mostrando de _START_ a _END_ de _TOTAL_ Elementos",
-                infoFiltered:   "(filtrando de _MAX_ elementos en total)",
-                infoPostFix:    "",
+                processing: "Procesando..",
+                search: "Buscar:&nbsp;",
+                lengthMenu: "Ver _MENU_ Elementos",
+                info: "Mostrando de _START_ a _END_ de _TOTAL_ Elementos",
+                infoFiltered: "(filtrando de _MAX_ elementos en total)",
+                infoPostFix: "",
                 loadingRecords: "Cargando registros...",
-                zeroRecords:    "No hay registros",
-                emptyTable:     "No hay datos para mostrar",
+                zeroRecords: "No hay registros",
+                emptyTable: "No hay datos para mostrar",
                 paginate: {
-                    first:      "Primero",
-                    previous:   "Anterior",
-                    next:       "Siguiente",
-                    last:       "Último"
+                    first: "Primero",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Último"
                 },
                 aria: {
-                    sortAscending:  ": activer pour trier la colonne par ordre croissant",
+                    sortAscending: ": activer pour trier la colonne par ordre croissant",
                     sortDescending: ": activer pour trier la colonne par ordre décroissant"
                 }
             }
         });
-    } );
- </script>
+    });
+</script>
 
- <style>
-    .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+<style>
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
         color: inherit !important;
         border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius:50px;
+        border-radius: 50px;
         background-color: transparent;
         background: transparent;
     }
- </style>
+</style>
 
 
 @endsection()
