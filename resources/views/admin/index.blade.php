@@ -17,7 +17,7 @@
             <h1>-</h1>
         </div>
         <div>
-            <img src="{{url('./require/resources/img/icon/pub-active.png')}}" />
+            <img src="{{url('./img/icon/pub-active.png')}}" />
         </div>
     </div>
     <div class="info-card info-card-yellow">
@@ -26,7 +26,7 @@
             <h1>-</h1>
         </div>
         <div>
-            <img src="{{url('./require/resources/img/icon/pub-pend.png')}}" />
+            <img src="{{url('./img/icon/pub-pend.png')}}" />
         </div>
     </div>
     <div class="info-card info-card-green">
@@ -35,7 +35,7 @@
             <h1>-</h1>
         </div>
         <div>
-            <img src="{{url('./require/resources/img/icon/cot-active.png')}}" />
+            <img src="{{url('./img/icon/cot-active.png')}}" />
         </div>
     </div>
 </div>
@@ -45,15 +45,15 @@
 <div class="content-table">
     <table class="table" id="dashboard-table" data-order='[[ 0, "asc" ]]' data-page-length='8'>
         <thead>
-        <tr>
-            <th class="start">id</th>
-            <th>Titulo</th>
-            <th>Precio</th>
-            <th>Colonia</th>
-            <th>Municipio</th>
-            <th>Usuario</th>
-            <th class="end">Fecha</th>
-        </tr>
+            <tr>
+                <th class="start">id</th>
+                <th>Titulo</th>
+                <th>Precio</th>
+                <th>Colonia</th>
+                <th>Municipio</th>
+                <th>Usuario</th>
+                <th class="end">Fecha</th>
+            </tr>
         </thead>
         <tbody>
             <tr>
