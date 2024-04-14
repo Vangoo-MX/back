@@ -35,7 +35,7 @@
             <div class="nav-menu">
                 <div class="logo">
                     <a href="{{route('admin.index')}}">
-                        <img src="{{url('./require/resources/img/icon/icon-logo.png')}}" />
+                        <img src="{{url('img/icon/icon-logo.png')}}" />
                     </a>
                 </div>
                 <!---
