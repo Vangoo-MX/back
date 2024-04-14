@@ -23,45 +23,60 @@ use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
-    public function index(){
-       
-        if(!Auth::check()){
+    public function index()
+    {
+
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
         return view('admin.index');
     }
 
-    public function create(){
-        if(!Auth::check()){
+    public function create()
+    {
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
         return view('admin.create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
-        if(!Auth::check()){
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
         $request->validate([
+            'name' => 'required',
+            'password' =>  ['required', 'min:8'],
+            'tel' => 'numeric|required',
+            'password_confirmation' => 'same:password',
             'email' => [
                 'required',
                 'email',
                 Rule::unique('app_users')->ignore($request->user()),
             ]
         ], [
+            'name.required' => 'El campo nombre es obligatorio.',
+            'password.required' => 'El campo contraseña es obligatorio.',
+            'password_confirmation.same' => 'Las contraseñas no coinciden',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'tel.numeric' => 'El campo teléfono debe ser numérico.',
+            'tel.required' => 'El campo teléfono es obligatorio.',
+            'email.required' => 'El campo correo electrónico es obligatorio.',
+            'email.email' => 'El correo electrónico no es válido.',
             'email.unique' => 'El correo electrónico ya está en uso. Por favor, elige otro.',
         ]);
 
@@ -69,255 +84,518 @@ class AdminController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $request->password;
-        if($request->rol){
-            $user->rol = $request->rol;
-        }
-        if($request->tel){
-            $user->tel = $request->tel;
-        }
+        $user->rol = $request->rol;
+        $user->tel = $request->tel;
         $user->save();
 
-        return redirect()->route('admin.user', $user);
-        
+        return redirect()->route('admin.users');
     }
-    
-    public function createdev(){
-        if(!Auth::check()){
+
+    public function createdev()
+    {
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        $municipios = Municipios::where('id_estado',19)->get();
+        $municipios = Municipios::where('id_estado', 19)->get();
 
         return view('admin.createdev', compact('municipios'));
     }
-    
-    public function editdev($id){
-        if(!Auth::check()){
+
+    public function editdev($id)
+    {
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        $municipios = Municipios::where('id_estado',19)->get();
-        
-        $dev = Developments::where('id',$id)->get();
-        $app = DevelopmentsApartments::where('id_development',$id)->get();
+        $municipios = Municipios::where('id_estado', 19)->get();
 
-        return response()->view('admin.editdev', compact('municipios','dev','app'))->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')->header('Pragma', 'no-cache')->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+        $dev = Developments::where('id', $id)->get();
+        $app = DevelopmentsApartments::where('id_development', $id)->get();
+
+        return response()->view('admin.editdev', compact('municipios', 'dev', 'app'))->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')->header('Pragma', 'no-cache')->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
     }
 
-    public function show($id = 0){
-        if(!Auth::check()){
+    public function show($id = 0)
+    {
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
         $user = User::find($id);
         $roles = Roles::all();
 
-        return view('admin.user', compact('user'),compact('roles'));
+        return view('admin.user', compact('user'), compact('roles'));
     }
 
-    public function allusers(){
-        if(!Auth::check()){
+    public function allusers()
+    {
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
         $users = User::all();
         $roles = Roles::all();
 
-        return view('admin.allusers', compact('users'),compact('roles'));
+        return view('admin.allusers', compact('users', 'roles'));
     }
 
-    public function contacts(){
-        if(!Auth::check()){
+    public function destroy($id)
+    {
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $user = User::find($id);
+
+        if ($user) {
+            $user->delete();
+            return redirect()->route('admin.users')->with('success', 'Usuario eliminado correctamente');
+        } else {
+            return redirect()->route('admin.users')->with('error', 'No se pudo encontrar el usuario');
+        }
+    }
+
+    public function contacts()
+    {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
         $agenda = Agenda::join('app_users', 'list_agenda.id_user', '=', 'app_users.id')
-        ->select('list_agenda.*', 'app_users.name as user_name')
-        ->get();
+            ->select('list_agenda.*', 'app_users.name as user_name')
+            ->get();
         return view('admin.contacts', compact('agenda'));
     }
 
-    public function edit(User $user){
+    public function edit(User $user)
+    {
 
-        if(!Auth::check()){
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        return view('admin.edit',compact('user'));
-
+        return view('admin.edit', compact('user'));
     }
 
-    public function properties(){
-       
-        if(!Auth::check()){
+    public function update(Request $request, User $user)
+    {
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
-        
+        // if ($request->hasFile('profile_image')) {
+        //     $filename = $user . "." . $request->profile_image->extension();
+        //     $request->profile_image->storeAs("resources/img/users", $filename);
+        //     $user->update([
+        //         'profile_image' => $filename,
+        //     ]);
+        // }
+        $request->validate([
+            'name' => 'required',
+            'tel' => [
+                'numeric',
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (strlen($value) !== 10) {
+                        $fail('El campo teléfono debe tener exactamente 10 dígitos.');
+                    }
+                }
+            ],
+            'biography' => 'max:250',
+            'contact_schedule' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!empty($value)) {
+                        if (!preg_match('/^\d{1,2}:\d{2} (am|pm) - \d{1,2}:\d{2} (am|pm)$/', $value)) {
+                            $fail('El formato de la franja horaria debe ser como "8:00 am - 8:00 pm".');
+                        }
+                    }
+                },
+            ],
+        ], [
+            'name.required' => 'El campo nombre es obligatorio.',
+            'tel.numeric' => 'El campo teléfono debe ser numérico.',
+            'tel.required' => 'El campo teléfono es obligatorio.',
+            'biography.max' => 'Su biografia no debe de exceder los 250 caracteres',
+            'contact_schedule.required' => 'El campo horario de contacto es obligatorio.',
+        ]);
+        $user->update([
+            'name' => $request->name,
+            'tel' => $request->tel,
+            'biography' => $request->biography,
+            'email' => $request->email,
+            'rol' => $request->rol,
+            'contact_preference' => $request->contact_preference,
+            'contact_schedule' => $request->contact_schedule,
+        ]);
+        if ($user->wasChanged()) {
+            return redirect()->route('admin.user', $user)->with('success', 'Usuario actualizado correctamente');
+        } else {
+            return back()->withInput()->with('error', 'No se realizaron cambios');
+        }
+    }
+    public function password(User $user)
+    {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        return view('admin.changepassword', compact('user'));
+    }
+    public function updatePassword(Request $request, User $user)
+    {
+        $request->validate([
+            'password' =>  ['required', 'min:8'],
+            'password_confirmation' => 'same:password',
+        ], [
+            'password.required' => 'El campo contraseña es obligatorio.',
+            'password_confirmation.same' => 'Las contraseñas no coinciden',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+        ]);
+        $user->update(['password' => $request->password]);
+        return redirect()->route('admin.user', $user)->with('success', 'Contraseña actualizada correctamente');
+    }
+    public function properties()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
         $propiedades = Properties::get();
 
-        return view('admin.properties',compact('propiedades'));
+        return view('admin.properties', compact('propiedades'));
     }
 
-    public function editdevpage($id){
-        if(!Auth::check()){
+    public function details($id)
+    {
+
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
-
-        $municipios = Municipios::where('id_estado',19)->get();
-        
-        $dev = Developments::where('id',$id)->get();
-        $app = DevelopmentsApartments::where('id_development',$id)->get();
-
-        return response()->view('admin.editdev', compact('municipios','dev','app'))->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')->header('Pragma', 'no-cache')->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
-    }
-
-    public function details($id){
-       
-        if(!Auth::check()){
-            return redirect('/');
-        }
-        if(Auth::user()->rol != 1){
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-        $municipios = Municipios::where('id_estado',19)->get();
+        $municipios = Municipios::where('id_estado', 19)->get();
         $propiedad = Properties::find($id);
 
-        return view('admin.details',compact('propiedad'),compact('municipios'));
+        return view('admin.details', compact('propiedad', 'municipios'));
     }
-    
-    public function developments(){
-       
-        if(!Auth::check()){
+
+    public function getColonias(Request $request)
+    {
+        try {
+            $municipioId = $request->municipio_id;
+            $colonias = Colonias::where('id_municipio', $municipioId)->get();
+            return response()->json($colonias);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function showProperties($propiedad)
+    {
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
-        
+        $propiedad = Properties::find($propiedad);
+        $municipio_propiedad = Municipios::find($propiedad->id_municipio);
+        $estado_propiedad = $municipio_propiedad->id_estado;
+        $municipios = Municipios::where('id_estado', $estado_propiedad)->get();
+        $colonias = Colonias::where('id_municipio', $propiedad->id_municipio)->get();
+
+        return view('admin.showProperties', compact('municipios', 'colonias', 'propiedad'));
+    }
+
+    public function updateProperties(Request $request, Properties $propiedad)
+    {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+        $request->validate([
+            'title' => 'required|min:10|max:100',
+            'price' => 'required|numeric',
+            'price_maintenance' => 'numeric',
+            'description' => 'required|min:10|max:500',
+            'rooms' => 'required|numeric',
+            'bathrooms' => 'required|numeric',
+            'parkings' => 'required|numeric',
+            'area' => 'required|numeric',
+            'street' => 'required|min:3|max:20',
+            'num_ext' => 'required|numeric',
+            'num_int' => 'required|numeric',
+            'cp' => 'required|numeric',
+            'amenities' => 'min:3',
+            'services' => 'min:3',
+            'sell_type' => 'required|min:3',
+            'share_conditions' => 'required|min:3|max:500',
+            'antiquity' => 'required|numeric',
+            'floor' => 'required|numeric',
+            'area_terrain' => 'required|numeric',
+            'price_m2' => 'required|numeric',
+        ], [
+            'title.required' => 'El título es obligatorio',
+            'title.min' => 'El título debe tener mas de 10 caracteres',
+            'title.max' => 'El título debe tener menos de 100 caracteres',
+            'price.required' => 'El precio es obligatorio',
+            'price.numeric' => 'El precio debe ser un número',
+            'price_maintenance.numeric' => 'El precio de mantenimiento debe ser un número',
+            'description.required' => 'La descripción es obligatoria',
+            'description.min' => 'La descripción debe tener mas de 10 caracteres',
+            'description.max' => 'La descripción debe tener menos de 500 caracteres',
+            'rooms.required' => 'La cantidad de habitaciones son requeridas',
+            'rooms.numeric' => 'La cantidad de habitaciones debe ser un número',
+            'bathrooms.required' => 'La cantidad de baños son requeridos',
+            'bathrooms.numeric' => 'La cantidad de baños debe ser un número',
+            'parkings.required' => 'La cantidad de parqueaderos son requeridos',
+            'parkings.numeric' => 'La cantidad de parqueaderos debe ser un número',
+            'area.required' => 'La medida del area es requerida',
+            'area.numeric' => 'La medida del area debe ser un número',
+            'street.required' => 'La calle es requerida',
+            'street.min' => 'La calle debe tener mas de 3 caracteres',
+            'street.max' => 'La calle debe tener menos de 100 caracteres',
+            'num_ext.required' => 'El número exterior es requerido',
+            'num_ext.numeric' => 'El numero exterior solo puede ser un numero',
+            'num_int.required' => 'El número interior es requerido',
+            'num_int.numeric' => 'El numero interior solo puede ser un numero',
+            'cp.required' => 'El codigo postal es requerido',
+            'cp.numeric' => 'El codigo solo puede ser un numero',
+            'amenities.min' => 'Ingrese minimo una amenidad',
+            'services.min' => 'Ingrese minimo un servicio',
+            'sell_type.required' => 'El tipo de venta es requerido',
+            'sell_type.min' => 'Ingrese minimo un tipo de venta',
+            'shared_conditions.required' => 'Las condiciones de renta son requeridas',
+            'share_conditions.min' => 'Ingrese minimo una condicion para compartir',
+            'share_conditions.max' => 'Las condiciones para compartir deben de tener maximo 500 caracteres',
+            'antiquity.required' => 'La antiguedad es requerida',
+            'antiquity.numeric' => 'La antiguedad debe ser un numero',
+            'floor.required' => 'El piso es requerido',
+            'floor.numeric' => 'El piso debe ser un numero',
+            'area_terrain.required' => 'La medida del area del terreno es requerida',
+            'area_terrain.numeric' => 'La medida del area del terreno debe ser un numero',
+            'price_m2.required' => 'El precio por metro cuadrado es requerido',
+            'price_m2.numeric' => 'El precio por metro cuadrado debe ser un numero',
+        ]);
+        $updates = [];
+        $colonia = Colonias::find($request->id_colonia);
+        $municipio = Municipios::find($request->id_municipio);
+        $estado = Estados::find($propiedad->id_estado);
+        $location = $colonia->nombre . ', ' . $municipio->nombre . ', ' . $estado->nombre;
+        $propiedad->update([
+            'title' => $request->title,
+            'operation_type' => $request->operation_type,
+            'type' => $request->type,
+            'price' => $request->price,
+            'price_maintenance' => $request->price_maintenance,
+            'description' => $request->description,
+            'rooms' => $request->rooms,
+            'bathrooms' => $request->bathrooms,
+            'parkings' => $request->parkings,
+            'map' => $request->map,
+            'area' => $request->area,
+            'id_municipio' => $request->id_municipio,
+            'id_colonia' => $request->id_colonia,
+            'street' => $request->street,
+            'num_ext' => $request->num_ext,
+            'num_int' => $request->num_int,
+            'cp' => $request->cp,
+            'amenities' => $request->amenities,
+            'services' => $request->services,
+            'sell_type' => $request->sell_type,
+            'share_conditions' => $request->share_conditions,
+            'antiquity' => $request->antiquity,
+            'location' => $location,
+        ]);
+
+        if ($request->type == "departamento") {
+            $updates['floor'] = $request->floor;
+            $updates['dev_type'] = $request->dev_type;
+        }
+
+        if ($request->type == "terreno") {
+            $updates['area_terrain'] = $request->area_terrain;
+        }
+
+        if ($request->price_m2) {
+            $updates['price_m2'] = $request->price_m2;
+        }
+
+        if (!empty($updates)) {
+            $propiedad->update($updates);
+        }
+
+        return redirect()->route('admin.details', $propiedad)->with('success', 'Propiedad actualizada correctamente');
+    }
+
+    public function editdevpage($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $municipios = Municipios::where('id_estado', 19)->get();
+
+        $dev = Developments::where('id', $id)->get();
+        $app = DevelopmentsApartments::where('id_development', $id)->get();
+
+        return response()->view('admin.editdev', compact('municipios', 'dev', 'app'))->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')->header('Pragma', 'no-cache')->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+    }
+
+    public function developments()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
         $desarrollos = Developments::get();
 
-        return view('admin.developments',compact('desarrollos'));
+        return view('admin.developments', compact('desarrollos'));
     }
 
-    public function queue(){
-       
-        if(!Auth::check()){
+    public function queue()
+    {
+
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
-        
-        $propiedadesqueue = PropertiesQueue::where('status_aproved',0)->get();
 
-        $propiedadesrejected = PropertiesQueue::where('status_aproved',2)->get();
+        $propiedadesqueue = PropertiesQueue::where('status_aproved', 0)->get();
 
-        $propiedadesrevision = PropertiesQueue::where('status_aproved',3)->get();
+        $propiedadesrejected = PropertiesQueue::where('status_aproved', 2)->get();
 
-        return view('admin.queue',compact('propiedadesqueue','propiedadesrejected','propiedadesrevision'));
+        $propiedadesrevision = PropertiesQueue::where('status_aproved', 3)->get();
+
+        return view('admin.queue', compact('propiedadesqueue', 'propiedadesrejected', 'propiedadesrevision'));
     }
 
-    public function files(){
-       
-        if(!Auth::check()){
+    public function files()
+    {
+
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
         return view('admin.files');
     }
 
-    public function statistics(){
-       
-        if(!Auth::check()){
+    public function statistics()
+    {
+
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
         return view('admin.statistics');
     }
 
-    public function settingsinfo(){
-       
-        if(!Auth::check()){
+    public function settingsinfo()
+    {
+
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
         return view('admin.settingsinfo');
     }
 
-    public function highlights(){
-       
-        if(!Auth::check()){
+    public function highlights()
+    {
+
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
-        
+
         $propertieshl = PropertiesHighlights::get();
         $estados = Estados::get();
         $municipios = Municipios::get();
-        $municipiosh = Municipios::where('highlight',1)->get();
+        $municipiosh = Municipios::where('highlight', 1)->get();
 
-        return view('admin.highlights',compact('propertieshl', 'estados', 'municipios', 'municipiosh'));
+        return view('admin.highlights', compact('propertieshl', 'estados', 'municipios', 'municipiosh'));
     }
-    
-    public function highlightsdev(){
-       
-        if(!Auth::check()){
+
+    public function highlightsdev()
+    {
+
+        if (!Auth::check()) {
             return redirect('/');
         }
-        if(Auth::user()->rol != 1){
+        if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
-        
+
         $devshl = DevelopmentsHighlights::get();
         $estados = Estados::get();
         $municipios = Municipios::get();
-        $municipiosh = Municipios::where('highlight',1)->get();
+        $municipiosh = Municipios::where('highlight', 1)->get();
 
-        return view('admin.highlightsdev',compact('devshl', 'estados', 'municipios', 'municipiosh'));
+        return view('admin.highlightsdev', compact('devshl', 'estados', 'municipios', 'municipiosh'));
     }
 
-    public function email_confirm(){
+    public function email_confirm()
+    {
         return view('emails.confirm');
     }
 
-    public function email_template(){
+    public function email_template()
+    {
         return view('emails.template');
     }
-
-
 }

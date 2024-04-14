@@ -1,8 +1,8 @@
 @extends('layouts.adminLayout')
 
 @section('breadcrumb')
-Propiedades 
-<img src="{{url('./require/resources/img/icon/icon-logo-mini.png')}}" /> 
+Propiedades
+<img src="{{url('./require/resources/img/icon/icon-logo-mini.png')}}" />
 Detalle
 @endsection()
 
@@ -17,24 +17,24 @@ Detalle
 <!-- Content Row -->
 
 <div class="d-flex justify-content-end gap-2 mb-2">
-    <a href=""><button class="btn1">Editar propiedad</button></a>
+    <a href="{{route('admin.showProperties', $propiedad->id)}}"><button class="btn1">Editar propiedad</button></a>
     <a href="{{route('admin.properties')}}"><button class="btn2">volver</button></a>
 </div>
 
-<?php if($propiedad->status == 0){ ?>
-<div class="alert alert-danger">
-    Esta propiedad está deshabilitada
-</div>
+<?php if ($propiedad->status == 0) { ?>
+    <div class="alert alert-danger">
+        Esta propiedad está deshabilitada
+    </div>
 <?php } ?>
 
 <div class="w-100">
 
-    <form method="post" class="w-100" enctype="multipart/form-data" >
+    <form method="post" class="w-100" enctype="multipart/form-data">
 
         @csrf
         <input type="hidden" name="id" value="{{$propiedad->id}}">
 
-        <div class="w-100 d-flex flex-column flex-lg-row justify-between gap-5">  
+        <div class="w-100 d-flex flex-column flex-lg-row justify-between gap-5">
 
             <div class="w-100 d-flex flex-column">
 
@@ -46,17 +46,27 @@ Detalle
                 <div class="mb-3 mt-3">
                     <label for="operation_type" class="form-label">Tipo de operación:</label>
                     <select class="form-select" name="operation_type" disabled>
-                        <option value="venta" <?php if($propiedad->operation_type == 'venta'){echo 'selected';} ?>>Venta</option>
-                        <option value="renta" <?php if($propiedad->operation_type == 'renta'){echo 'selected';} ?>>Renta</option>
+                        <option value="venta" <?php if ($propiedad->operation_type == 'venta') {
+                                                    echo 'selected';
+                                                } ?>>Venta</option>
+                        <option value="renta" <?php if ($propiedad->operation_type == 'renta') {
+                                                    echo 'selected';
+                                                } ?>>Renta</option>
                     </select>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label for="type" class="form-label">Tipo:</label>
                     <select class="form-select" name="type" disabled>
-                        <option value="casa" <?php if($propiedad->type == 'casa'){echo 'selected';} ?>>casa</option>
-                        <option value="departamento" <?php if($propiedad->type == 'departamento'){echo 'selected';} ?>>departamento</option>
-                        <option value="terreno" <?php if($propiedad->type == 'terreno'){echo 'selected';} ?>>terreno</option>
+                        <option value="casa" <?php if ($propiedad->type == 'casa') {
+                                                    echo 'selected';
+                                                } ?>>casa</option>
+                        <option value="departamento" <?php if ($propiedad->type == 'departamento') {
+                                                            echo 'selected';
+                                                        } ?>>departamento</option>
+                        <option value="terreno" <?php if ($propiedad->type == 'terreno') {
+                                                    echo 'selected';
+                                                } ?>>terreno</option>
                     </select>
                 </div>
 
@@ -88,11 +98,11 @@ Detalle
                     </div>
                 </div>
 
-                <?php if($propiedad->type == "departamento"){ ?>
-                <div class="mb-3 mt-3">
-                    <label for="floor" class="form-label">Piso en el que se encuentra:</label>
-                    <input type="number" class="form-control" id="floor" value="{{$propiedad->floor}}" placeholder="Piso en el que se encuentra" name="floor" disabled>
-                </div>
+                <?php if ($propiedad->type == "departamento") { ?>
+                    <div class="mb-3 mt-3">
+                        <label for="floor" class="form-label">Piso en el que se encuentra:</label>
+                        <input type="number" class="form-control" id="floor" value="{{$propiedad->floor}}" placeholder="Piso en el que se encuentra" name="floor" disabled>
+                    </div>
                 <?php } ?>
 
                 <div class="mb-3 mt-3">
@@ -110,18 +120,18 @@ Detalle
                     <input type="number" step="0.01" class="form-control" id="area" value="{{$propiedad->area}}" placeholder="Ingresa el area del inmueble" name="area" disabled>
                 </div>
 
-                <?php if($propiedad->type == "terreno"){ ?>
-                <div class="mb-3 mt-3">
-                    <label for="area" class="form-label">Area del terreno:</label>
-                    <input type="number" class="form-control" id="area_terrain" value="{{$propiedad->area_terrain}}" placeholder="Ingresa el area del terreno" name="area_terrain" disabled>
-                </div>
+                <?php if ($propiedad->type == "terreno") { ?>
+                    <div class="mb-3 mt-3">
+                        <label for="area" class="form-label">Area del terreno:</label>
+                        <input type="number" class="form-control" id="area_terrain" value="{{$propiedad->area_terrain}}" placeholder="Ingresa el area del terreno" name="area_terrain" disabled>
+                    </div>
                 <?php } ?>
 
-                <?php if($propiedad->type == "departamento"){ ?>
-                <div class="mb-3 mt-3">
-                    <label for="dev_type" class="form-label">Tipo de desarrollo:</label>
-                    <input type="number" class="form-control" id="dev_type" value="{{$propiedad->dev_type}}" placeholder="tipo de desarrollo en el que se encuentra" name="dev_type" disabled>
-                </div>
+                <?php if ($propiedad->type == "departamento") { ?>
+                    <div class="mb-3 mt-3">
+                        <label for="dev_type" class="form-label">Tipo de desarrollo:</label>
+                        <input type="number" class="form-control" id="dev_type" value="{{$propiedad->dev_type}}" placeholder="tipo de desarrollo en el que se encuentra" name="dev_type" disabled>
+                    </div>
                 <?php } ?>
 
             </div>
@@ -136,7 +146,9 @@ Detalle
                     <select class="form-select" name="id_municipio" id="id_municipio" disabled>
                         <option hidden>Selecciona un municipio</option>
                         @foreach($municipios as $e)
-                            <option value="{{$e->id}}" data-id="{{$e->id}}" <?php if($propiedad->id_municipio == $e->id){echo 'selected';} ?>>{{$e->nombre}}</option>
+                        <option value="{{$e->id}}" data-id="{{$e->id}}" <?php if ($propiedad->id_municipio == $e->id) {
+                                                                            echo 'selected';
+                                                                        } ?>>{{$e->nombre}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -151,7 +163,7 @@ Detalle
                 </div>
 
                 <div class="mb-3 mt-3">
-                    
+
                     <div class="d-flex gap-5">
                         <div>
                             <label for="num_ext" class="form-label">Número exterior:</label>
@@ -162,7 +174,7 @@ Detalle
                             <input type="number" class="form-control" id="num_int" value="{{$propiedad->num_int}}" placeholder="Ingresa el número interior" name="num_int" disabled>
                         </div>
                     </div>
-                    
+
                 </div>
 
                 <div class="mb-3 mt-3">
@@ -170,7 +182,7 @@ Detalle
                     <input type="number" class="form-control" id="cp" value="{{$propiedad->cp}}" placeholder="Ingresa el código postal" name="cp" disabled>
                 </div>
 
-                
+
                 <div class="mb-3 mt-3">
                     <label for="amenities" class="form-label">Amenidades:</label>
                     <input type="text" class="form-control" id="amenities" value="{{$propiedad->amenities}}" placeholder="Separe con comas y sin espacios" name="amenities" disabled>
@@ -191,11 +203,11 @@ Detalle
                     <textarea class="form-control" rows="5" id="share_conditions" name="share_conditions" disabled>{{$propiedad->share_conditions}}</textarea>
                 </div>
 
-                <?php if($propiedad->price_m2){ ?>
-                <div class="mb-3 mt-3">
-                    <label for="price_m2" class="form-label">Precio basado en m2:</label>
-                    <input type="text" class="form-control" id="price_m2" value="{{$propiedad->price_m2}}" placeholder="Precio basado en m2" name="price_m2" disabled>
-                </div>
+                <?php if ($propiedad->price_m2) { ?>
+                    <div class="mb-3 mt-3">
+                        <label for="price_m2" class="form-label">Precio basado en m2:</label>
+                        <input type="text" class="form-control" id="price_m2" value="{{$propiedad->price_m2}}" placeholder="Precio basado en m2" name="price_m2" disabled>
+                    </div>
                 <?php } ?>
 
                 <div class="mb-3 mt-3">
@@ -205,11 +217,15 @@ Detalle
 
                 <div class="mb-3 mt-3">
                     <label for="no_exact_location">Mostrar locación exacta:</label>
-                    <?php if($propiedad->no_exact_location == 1){echo "si";}else{echo "no";} ?>
+                    <?php if ($propiedad->no_exact_location == 1) {
+                        echo "si";
+                    } else {
+                        echo "no";
+                    } ?>
                 </div>
-                
+
                 <input type="hidden" name="num_images" value="{{$propiedad->images}}">
-            
+
             </div>
 
         </div>
@@ -223,7 +239,7 @@ Detalle
                         <img class="pe-2" src="https://vangoo.cindyita.com/admin/img/posts/properties/{{$propiedad->id}}/{{$i}}.jpg?<?php echo rand(); ?>" width="250px" height="250px">
                     </a>
                 </div>
-            @endfor
+                @endfor
         </div>
 
     </form>

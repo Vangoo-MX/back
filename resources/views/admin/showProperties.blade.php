@@ -1,0 +1,338 @@
+@extends('layouts.adminLayout')
+
+@section('breadcrumb')
+Propiedades
+<img src="{{url('./require/resources/img/icon/icon-logo-mini.png')}}" />
+Detalle
+<img src="{{url('./require/resources/img/icon/icon-logo-mini.png')}}" />
+Editar propiedad
+@endsection()
+
+@section('title')
+{{$propiedad->title}}
+@endsection()
+
+@section('titleContent','Detalles de propiedad')
+
+@section('content')
+
+<!-- Content Row -->
+
+
+<?php if ($propiedad->status == 0) { ?>
+    <div class="alert alert-danger">
+        Esta propiedad está deshabilitada
+    </div>
+<?php } ?>
+
+<div class="w-100">
+
+    <form method="post" class="w-100" action="{{route('admin.propertiesUpdate', $propiedad)}}" enctype="multipart/form-data">
+
+        @csrf
+        <input type="hidden" name="id" value="{{$propiedad->id}}">
+
+        <div class="w-100 d-flex flex-column flex-lg-row justify-between gap-5">
+
+            <div class="w-100 d-flex flex-column">
+
+                <div class="mb-3 mt-3">
+                    <label for="title" class="form-label">Titulo:</label>
+                    <input type="text" class="form-control" id="title" value="{{old('title', $propiedad->title)}}" placeholder="Ingresa un titulo" name="title">
+                    @error('title')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="operation_type" class="form-label">Tipo de operación:</label>
+                    <select class="form-select" name="operation_type">
+                        <option value="venta" <?php if ($propiedad->operation_type == 'venta') {
+                                                    echo 'selected';
+                                                } ?>>Venta</option>
+                        <option value="renta" <?php if ($propiedad->operation_type == 'renta') {
+                                                    echo 'selected';
+                                                } ?>>Renta</option>
+                    </select>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="type" class="form-label">Tipo:</label>
+                    <select class="form-select" name="type">
+                        <option value="casa" <?php if ($propiedad->type == 'casa') {
+                                                    echo 'selected';
+                                                } ?>>casa</option>
+                        <option value="departamento" <?php if ($propiedad->type == 'departamento') {
+                                                            echo 'selected';
+                                                        } ?>>departamento</option>
+                        <option value="terreno" <?php if ($propiedad->type == 'terreno') {
+                                                    echo 'selected';
+                                                } ?>>terreno</option>
+                    </select>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="price" class="form-label">Precio:</label>
+                    <input type="number" class="form-control" step="0.01" id="price" value="{{old('price', $propiedad->price)}}" placeholder="Precio de venta/renta" name="price">
+                    @error('price')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="price_maintenance" class="form-label">Precio de mantenimiento:</label>
+                    <input type="number" class="form-control" id="price_maintenance" value="{{old('price_maintenance', $propiedad->price_maintenance)}}" placeholder="Precio de mantenimiento" name="price_maintenance">
+                    @error('price_maintenance')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="description">Descripción:</label>
+                    <textarea class="form-control" rows="5" id="description" name="description">{{old('description', $propiedad->description)}}</textarea>
+                    @error('description')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <div class="d-flex gap-5">
+                        <div>
+                            <label for="rooms" class="form-label">Cuartos:</label>
+                            <input type="number" class="form-control" step="1" id="rooms" value="{{old('rooms', $propiedad->rooms)}}" placeholder="Cuartos" name="rooms">
+                            @error('rooms')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div>
+                            <label for="bathrooms" class="form-label">Baños:</label>
+                            <input type="number" class="form-control" step="1" id="bathrooms" value="{{old('bathrooms', $propiedad->bathrooms)}}" placeholder="Cuartos" name="bathrooms">
+                            @error('bathrooms')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+
+                <?php if ($propiedad->type == "departamento") { ?>
+                    <div class="mb-3 mt-3">
+                        <label for="floor" class="form-label">Piso en el que se encuentra:</label>
+                        <input type="number" class="form-control" id="floor" value="{{old('floor', $propiedad->floor)}}" placeholder="Piso en el que se encuentra" name="floor">
+                        @error('floor')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                <?php } ?>
+
+                <div class="mb-3 mt-3">
+                    <label for="parkings" class="form-label">Lugares de estacionamiento:</label>
+                    <input type="number" class="form-control" step="1" id="parkings" value="{{old('parkings', $propiedad->parkings)}}" placeholder="Lugares de estacionamiento" name="parkings">
+                    @error('parkings')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="map" class="form-label">Mapa:</label>
+                    <input type="text" class="form-control" id="map" value="{{old('map', $propiedad->map)}}" placeholder="Ingresa el link de google maps" name="map">
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="area" class="form-label">Area:</label>
+                    <input type="number" step="0.01" class="form-control" id="area" value="{{old('area', $propiedad->area)}}" placeholder="Ingresa el area del inmueble" name="area">
+                    @error('area')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <?php if ($propiedad->type == "terreno") { ?>
+                    <div class="mb-3 mt-3">
+                        <label for="area" class="form-label">Area del terreno:</label>
+                        <input type="number" class="form-control" id="area_terrain" value="{{old('area_terrain', $propiedad->area_terrain)}}" placeholder="Ingresa el area del terreno" name="area_terrain">
+                        @error('area_terrain')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                <?php } ?>
+
+                <?php if ($propiedad->type == "departamento") { ?>
+                    <div class="mb-3 mt-3">
+                        <label for="dev_type" class="form-label">Tipo de desarrollo:</label>
+                        <input type="number" class="form-control" id="dev_type" value="{{old('dev_type', $propiedad->dev_type)}}" placeholder="tipo de desarrollo en el que se encuentra" name="dev_type">
+                    </div>
+                <?php } ?>
+
+            </div>
+
+
+            <div class="w-100 d-flex flex-column">
+                <div class="mb-3 mt-3">
+                    <label for="id_municipio" class="form-label">Municipio:</label>
+                    <select class="form-select" name="id_municipio" id="id_municipio">
+                        <option hidden>Selecciona un municipio</option>
+                        @foreach($municipios as $e)
+                        <option value="{{$e->id}}" data-id="{{$e->id}}" <?php if ($propiedad->id_municipio == $e->id) {
+                                                                            echo 'selected';
+                                                                        } ?>>{{$e->nombre}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="id_colonia" class="form-label">Colonia:</label>
+                    <select class="form-select" name="id_colonia" id="id_colonia">
+                        <option hidden>Selecciona una colonia</option>
+                        @foreach($colonias as $colonia)
+                        <option value="{{$colonia->id}}" data-id="{{$colonia->id}}" <?php if ($propiedad->id_colonia == $colonia->id) {
+                                                                                        echo 'selected';
+                                                                                    } ?>>{{$colonia->nombre}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="street" class="form-label">Calle:</label>
+                    <input type="text" class="form-control" id="street" value="{{old('street' ,$propiedad->street)}}" placeholder="Ingresa la calle" name="street">
+                    @error('street')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-3 mt-3">
+
+                    <div class="d-flex gap-5">
+                        <div>
+                            <label for="num_ext" class="form-label">Número exterior:</label>
+                            <input type="number" class="form-control" id="num_ext" value="{{old('num_ext', $propiedad->num_ext)}}" placeholder="Ingresa el número exterior" name="num_ext">
+                            @error('num_ext')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div>
+                            <label for="num_int" class="form-label">Número interior:</label>
+                            <input type="number" class="form-control" id="num_int" value="{{old('num_int', $propiedad->num_int)}}" placeholder="Ingresa el número interior" name="num_int">
+                            @error('num_int')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="cp" class="form-label">Codigo postal:</label>
+                    <input type="number" class="form-control" id="cp" value="{{old('cp', $propiedad->cp)}}" placeholder="Ingresa el código postal" name="cp">
+                    @error('cp')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+
+                <div class="mb-3 mt-3">
+                    <label for="amenities" class="form-label">Amenidades:</label>
+                    <input type="text" class="form-control" id="amenities" value="{{old('amenities', $propiedad->amenities)}}" placeholder="Separe con comas y sin espacios" name="amenities">
+                    @error('amenities')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="services" class="form-label">Servicios:</label>
+                    <input type="text" class="form-control" id="services" value="{{old('services', $propiedad->services)}}" placeholder="Separe con comas y sin espacios" name="services">
+                    @error('services')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="sell_type" class="form-label">Tipo de venta:</label>
+                    <input type="text" class="form-control" id="sell_type" value="{{old('sell_type', $propiedad->sell_type)}}" placeholder="Tipo de venta" name="sell_type">
+                    @error('sell_type')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="share-conditions">Condiciones para compartir:</label>
+                    <textarea class="form-control" rows="5" id="share_conditions" name="share_conditions">{{old('share_conditions', $propiedad->share_conditions)}}</textarea>
+                    @error('share_conditions')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <?php if ($propiedad->price_m2) { ?>
+                    <div class="mb-3 mt-3">
+                        <label for="price_m2" class="form-label">Precio basado en m2:</label>
+                        <input type="text" class="form-control" id="price_m2" value="{{old('price_m2', $propiedad->price_m2)}}" placeholder="Precio basado en m2" name="price_m2">
+                        @error('price_m2')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                <?php } ?>
+
+                <div class="mb-3 mt-3">
+                    <label for="antiquity" class="form-label">Antiguedad:</label>
+                    <input type="text" class="form-control" id="antiquity" value="{{old('antiquity', $propiedad->antiquity)}}" placeholder="Antiguedad del inmueble" name="antiquity">
+                    @error('antiquity')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="no_exact_location">Mostrar locación exacta:</label>
+                    <?php if ($propiedad->no_exact_location == 1) {
+                        echo "si";
+                    } else {
+                        echo "no";
+                    } ?>
+                </div>
+
+                <input type="hidden" name="num_images" value="{{$propiedad->images}}">
+
+            </div>
+
+        </div>
+        <hr>
+
+        <span>Imagenes:</span>
+        <div class="d-flex gap-2 mt-2">
+            @for ($i = 1; $i <= $propiedad->images; $i++)
+                <div class="d-flex flex-column align-items-center">
+                    <a href="https://vangoo.cindyita.com/admin/img/posts/properties/{{$propiedad->id}}/{{$i}}.jpg" target="_blank">
+                        <img class="pe-2" src="https://vangoo.cindyita.com/admin/img/posts/properties/{{$propiedad->id}}/{{$i}}.jpg?<?php echo rand(); ?>" width="250px" height="250px">
+                    </a>
+                </div>
+                @endfor
+        </div>
+        <br><br>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn1">Editar propiedad</button>
+        </div>
+
+    </form>
+
+</div>
+
+@endsection()
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#id_municipio').change(function() {
+            var municipioId = $(this).val();
+            console.log(municipioId);
+            $.ajax({
+                url: '{{ route("getColonias") }}',
+                method: 'GET',
+                data: {
+                    municipio_id: municipioId
+                },
+                success: function(response) {
+                    $('#id_colonia').empty();
+                    $('#id_colonia').append('<option hidden>Selecciona una colonia</option>');
+                    $.each(response, function(index, colonia) {
+                        $('#id_colonia').append('<option value="' + colonia.id + '">' + colonia.nombre + '</option>');
+                    });
+                }
+            });
+        });
+    });
+</script>
