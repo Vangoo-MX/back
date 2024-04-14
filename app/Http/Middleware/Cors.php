@@ -28,7 +28,7 @@ class Cors
         );
         $response->headers->set(
             'Access-Control-Allow-Headers',
-            'Content-Type, Accept, Authorization, X-Requested-With, Application'
+            'Content-Type, Accept, Authorization, X-Requested-With, Application, Cache-Control'
         );
 
         return $response;
