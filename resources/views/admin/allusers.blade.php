@@ -68,13 +68,13 @@
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="dropdown-item" href="{{route('admin.user',$u->id)}}" target="_blank">
-                                            <img src="{{url('./require/resources/img/icon/info.png')}}" />
+                                            <img src="{{url('./img/icon/info.png')}}" />
                                             Detalles
                                         </a>
                                     </li>
                                     <li>
                                         <button class="dropdown-item delete" data-user-id="{{$u->id}}">
-                                            <img src="{{url('./require/resources/img/icon/trash.png')}}" />
+                                            <img src="{{url('./img/icon/trash.png')}}" />
                                             Borrar
                                         </button>
                                     </li>
