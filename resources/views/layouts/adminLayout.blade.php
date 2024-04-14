@@ -35,7 +35,7 @@
             <div class="nav-menu">
                 <div class="logo">
                     <a href="{{route('admin.index')}}">
-                        <img src="{{url('img/icon/icon-logo.png')}}" />
+                        <img src="{{url('./img/icon/icon-logo.png')}}" />
                     </a>
                 </div>
                 <!---
@@ -45,12 +45,12 @@
                 <div class="menu">
                     <li>
                         <a href="{{route('admin.index')}}" class="{{ (request()->is('overview/home*')) ? 'active' : '' }}">
-                            <img src="{{url('./require/resources/img/icon/dashboard.png')}}" title="Dashboard" alt="Dashboard" />
+                            <img src="{{url('./img/icon/dashboard.png')}}" title="Dashboard" alt="Dashboard" />
                         </a>
                     </li>
                     <li class="dropdown dropdown-menu-end">
                         <a class="cursor-pointer {{ (request()->is('overview/properties*')) ? 'active' : '' }} {{ (request()->is('overview/queue*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
-                            <img src="{{url('./require/resources/img/icon/properties.png')}}" title="Propiedades" alt="Properties" />
+                            <img src="{{url('./img/icon/properties.png')}}" title="Propiedades" alt="Properties" />
                         </a>
                         <ul class="dropdown-menu menu-primary-dropdown">
                             <li><a class="{{ (request()->is('overview/properties')) ? 'active' : '' }}" href="{{route('admin.properties')}}">Todas las propiedades</a></li>
@@ -60,7 +60,7 @@
                     </li>
                     <li class="dropdown dropdown-menu-end">
                         <a class="cursor-pointer {{ (request()->is('overview/developments*')) ? 'active' : '' }} {{ (request()->is('overview/createdev*')) ? 'active' : '' }} {{ (request()->is('overview/highlightsdev*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
-                            <img src="{{url('./require/resources/img/icon/developments.png')}}" title="Desarrollos" alt="Developments" />
+                            <img src="{{url('./img/icon/developments.png')}}" title="Desarrollos" alt="Developments" />
                         </a>
                         <ul class="dropdown-menu menu-primary-dropdown">
                             <li><a class="{{ (request()->is('overview/developments*')) ? 'active' : '' }}" href="{{route('admin.developments')}}">Todas los desarrollos</a></li>
@@ -70,17 +70,17 @@
                     </li>
                     <li>
                         <a href="{{route('admin.users')}}" class="{{ (request()->is('overview/user*')) ? 'active' : '' }} {{ (request()->is('overview/users*')) ? 'active' : '' }}">
-                            <img src="{{url('./require/resources/img/icon/users.png')}}" title="Usuarios" alt="Users" />
+                            <img src="{{url('./img/icon/users.png')}}" title="Usuarios" alt="Users" />
                         </a>
                     </li>
                     <li>
                         <a href="{{route('admin.contacts')}}" class="{{ (request()->is('overview/contacts*')) ? 'active' : '' }}">
-                            <img src="{{url('./require/resources/img/icon/contacts.png')}}" title="Contactos" alt="Contacts" />
+                            <img src="{{url('./img/icon/contacts.png')}}" title="Contactos" alt="Contacts" />
                         </a>
                     </li>
                     <li style="display:none;">
                         <a href="{{route('admin.statistics')}}" class="{{ (request()->is('overview/statistics*')) ? 'active' : '' }}">
-                            <img src="{{url('./require/resources/img/icon/metrics.png')}}" title="Estadisticas" alt="Metrics" />
+                            <img src="{{url('./img/icon/metrics.png')}}" title="Estadisticas" alt="Metrics" />
                         </a>
                     </li>
                 </div>
@@ -88,7 +88,7 @@
             <div class="nav-footer">
                 <li class="d-none">
                     <a href="#">
-                        <img src="{{url('./require/resources/img/icon/settings.png')}}" title="Ajustes" alt="Settings" />
+                        <img src="{{url('./img/icon/settings.png')}}" title="Ajustes" alt="Settings" />
                     </a>
                 </li>
                 <li class="dropdown dropdown-menu-end">
@@ -128,7 +128,7 @@
         <div class="content">
 
             <div class="breadcrumb">
-                Inicio <img src="{{url('./require/resources/img/icon/icon-logo-mini.png')}}" /> @yield('breadcrumb')
+                Inicio <img src="{{url('./img/icon/icon-logo-mini.png')}}" /> @yield('breadcrumb')
             </div>
 
             <h1>@yield('title')</h1>
@@ -143,7 +143,7 @@
             <footer>
                 <span>@ Vangoo 2023</span>
                 <div>
-                    <img src="{{url('./require/resources/img/logo.png')}}" />
+                    <img src="{{url('./img/logo.png')}}" />
                 </div>
             </footer>
 
@@ -172,7 +172,7 @@
 
     <!------JS------>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{{url('./require/resources/js/app.js')}}"></script>
+    <script src="{{url('./js/app.js')}}"></script>
     <!------/JS------>
 
 </body>
