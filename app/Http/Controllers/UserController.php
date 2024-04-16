@@ -46,6 +46,9 @@ class UserController extends Controller
 
         if ($user && $user->status == 1) {
             Auth::login($user);
+            if($user->rol != 1){
+                return redirect()->away('https://vangoo.mx');
+            }
             return $this->authenticated($request,$user);
         } else {
             return redirect()->to('/')->withErrors('Usuario no activo');
