@@ -94,7 +94,7 @@ Route::post('ep/user/loginep', [UserController::class, 'loginEP']);
 
 Route::get('ep/user/logoutep', [UserController::class, 'logoutEP']);
 
-Route::get('ep/user/checkauth', [UserController::class, 'checkAuthEP']);
+Route::get('ep/user/checkauth', [UserController::class, 'checkAuthEP'])->middleware('cors');
 
 /*update user*/
 
