@@ -6,7 +6,7 @@
 
 <div class="sidenav">
     <div class="login-main-text">
-        <h2>VANGOO<br> Administrador</h2>
+        <h2>VANGOO</h2>
         <p>Inicia sesión para entrar.</p>
     </div>
 </div>
