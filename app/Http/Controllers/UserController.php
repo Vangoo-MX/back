@@ -97,8 +97,6 @@ class UserController extends Controller
         } else {
             return json_encode('inactiveuser');
         }
-
-        
     }
 
 

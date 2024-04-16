@@ -90,7 +90,7 @@ Route::get('ep/csrf-token', function () {
 
 Route::post('ep/user/registerep', [UserController::class, 'registerEP']);
 
-Route::post('ep/user/loginep', [UserController::class, 'loginEP']);
+Route::post('ep/user/loginep', [UserController::class, 'loginEP'])->middleware("cors");
 
 Route::get('ep/user/logoutep', [UserController::class, 'logoutEP']);
 
