@@ -103,7 +103,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="https://www.vangoo.mx/profile">
+                            <a class="dropdown-item" href="https://www.vangoo.mx/profile" target="_blank">
                                 <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
                                 Panel de ventas
                             </a>
