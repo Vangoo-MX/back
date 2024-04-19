@@ -257,11 +257,7 @@ class AdminController extends Controller
             'contact_preference' => $request->contact_preference,
             'contact_schedule' => $request->contact_schedule,
         ]);
-        if ($user->wasChanged()) {
-            return redirect()->route('admin.user', $user)->with('success', 'Usuario actualizado correctamente');
-        } else {
-            return back()->withInput()->with('error', 'No se realizaron cambios');
-        }
+        return redirect()->route('admin.user', $user)->with('success', 'Usuario actualizado correctamente');
     }
     public function password(User $user)
     {
