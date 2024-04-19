@@ -229,7 +229,7 @@ class AdminController extends Controller
                     }
                 },
             ],
-            'profile_image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            //'profile_image' => 'image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'name.required' => 'El campo nombre es obligatorio.',
             'tel.numeric' => 'El campo teléfono debe ser numérico.',
