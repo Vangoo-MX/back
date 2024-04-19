@@ -8,8 +8,8 @@
     <meta name="description" content="">
     <link rel="icon" type="image/png" href="{{asset('img/favicon.png')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+    <link href="./resources/css/app.css" rel="stylesheet">
+    <link href="./resources/css/admin.css" rel="stylesheet">
     <!--------FONTAWESOME--------->
     <script src="https://kit.fontawesome.com/e0df5df9e9.js" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified CSS -->
@@ -24,12 +24,11 @@
     @yield('content')
 
     <!------JS------>
-    <link rel="stylesheet" href="{{asset('js/app.js')}}">
-    <link rel="stylesheet" href="{{asset('js/jquery-easing/jquery.easing.min.js')}}">
-    <link rel="stylesheet" href="{{asset('js/admin.js')}}">
-    <link rel="stylesheet" href="{{asset('js/chart.js/Chart.min.js')}}">
-    <link rel="stylesheet" href="{{asset('js/chart-area-demo.js')}}">
-    <link rel="stylesheet" href="{{asset('js/chart-pie-demo.js')}}">
+    <script src="./resources/js/jquery-easing/jquery.easing.min.js"></script>
+    <script src="./resources/js/admin.js"></script>
+    <script src="./resources/js/chart.js/Chart.min.js"></script>
+    <script src="./resources/js/chart-area-demo.js"></script>
+    <script src="./resources/js/chart-pie-demo.js"></script>
     <!------/JS------>
 
 </body>
