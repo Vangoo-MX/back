@@ -15,7 +15,7 @@
         <h3>Editar usuario</h3>
 
         <div class="w-100">
-            <form method="post" action="{{route('admin.update', $user->id)}}" class="w-100">
+            <form method="post" action="{{route('admin.update', $user->id)}}" class="w-100" enctype="multipart/form-data">
 
                 @csrf
 
@@ -85,6 +85,15 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-12 col-lg-6 mb-3">
+                        <div>
+                            <label for="profile_image" class="form-label">Imagen de perfil:</label>
+                            <input type="file" class="form-control" id="profile_image" name="profile_image" />
+                            @error('profile_image')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="col-12 col-lg-6 mb-3">
                         <div>
                             <label for="roluser" class="form-label">Rol de usuario:</label>

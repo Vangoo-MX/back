@@ -207,13 +207,6 @@ class AdminController extends Controller
         if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
-        // if ($request->hasFile('profile_image')) {
-        //     $filename = $user . "." . $request->profile_image->extension();
-        //     $request->profile_image->storeAs("resources/img/users", $filename);
-        //     $user->update([
-        //         'profile_image' => $filename,
-        //     ]);
-        // }
         $request->validate([
             'name' => 'required',
             'tel' => [
@@ -236,13 +229,26 @@ class AdminController extends Controller
                     }
                 },
             ],
+            'profile_image' => 'image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'name.required' => 'El campo nombre es obligatorio.',
             'tel.numeric' => 'El campo teléfono debe ser numérico.',
             'tel.required' => 'El campo teléfono es obligatorio.',
             'biography.max' => 'Su biografia no debe de exceder los 250 caracteres',
             'contact_schedule.required' => 'El campo horario de contacto es obligatorio.',
+            'profile_image.image' => 'El archivo debe ser una imagen.',
+            'profile_image.mimes' => 'El archivo debe ser una imagen jpeg, png o jpg.',
+            'profile_image.max' => 'El archivo no debe pesar más de 2MB.',
         ]);
+        if ($request->hasFile('profile_image')) {
+            $userId = $user->id;
+            $filename = $userId . "." . $request->profile_image->extension();
+            $storagePath = public_path('img/users');
+            $request->profile_image->move($storagePath, $filename);
+            $user->update([
+                'profile_image' => $filename,
+            ]);
+        }
         $user->update([
             'name' => $request->name,
             'tel' => $request->tel,
