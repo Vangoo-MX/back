@@ -243,8 +243,7 @@ class AdminController extends Controller
         if ($request->hasFile('profile_image')) {
             $userId = $user->id;
             $filename = $userId . "." . $request->profile_image->extension();
-            $storagePath = public_path('img/users');
-            $request->profile_image->move($storagePath, $filename);
+            $request->profile_image->storeAs('public/img/users', $filename);
             $user->update([
                 'profile_image' => $filename,
             ]);
