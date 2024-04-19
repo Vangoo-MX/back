@@ -229,7 +229,7 @@ class AdminController extends Controller
                     }
                 },
             ],
-            //'profile_image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'profile_image' => 'image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'name.required' => 'El campo nombre es obligatorio.',
             'tel.numeric' => 'El campo teléfono debe ser numérico.',
@@ -244,20 +244,33 @@ class AdminController extends Controller
             $userId = $user->id;
             $filename = $userId . "." . $request->profile_image->extension();
             $request->profile_image->storeAs('public/img/users', $filename);
+            $updateData = ['profile_image' => $filename];
+            if ($request->filled(['name', 'tel', 'biography', 'email', 'rol', 'contact_preference', 'contact_schedule'])) {
+                $updateData = array_merge($updateData, [
+                    'name' => $request->name,
+                    'tel' => $request->tel,
+                    'biography' => $request->biography,
+                    'email' => $request->email,
+                    'rol' => $request->rol,
+                    'contact_preference' => $request->contact_preference,
+                    'contact_schedule' => $request->contact_schedule,
+                ]);
+            }
+
+            $user->update($updateData);
+            return redirect()->route('admin.user', $user)->with('success', 'Perfil de usuario actualizado correctamente');
+        } else {
             $user->update([
-                'profile_image' => $filename,
+                'name' => $request->name,
+                'tel' => $request->tel,
+                'biography' => $request->biography,
+                'email' => $request->email,
+                'rol' => $request->rol,
+                'contact_preference' => $request->contact_preference,
+                'contact_schedule' => $request->contact_schedule,
             ]);
+            return redirect()->route('admin.user', $user)->with('success', 'Usuario actualizado correctamente');
         }
-        $user->update([
-            'name' => $request->name,
-            'tel' => $request->tel,
-            'biography' => $request->biography,
-            'email' => $request->email,
-            'rol' => $request->rol,
-            'contact_preference' => $request->contact_preference,
-            'contact_schedule' => $request->contact_schedule,
-        ]);
-        return redirect()->route('admin.user', $user)->with('success', 'Usuario actualizado correctamente');
     }
     public function password(User $user)
     {
