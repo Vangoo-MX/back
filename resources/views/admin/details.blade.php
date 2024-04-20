@@ -236,7 +236,7 @@ Detalle
             @for ($i = 1; $i <= $propiedad->images; $i++)
                 <div class="d-flex flex-column align-items-center">
                     <a href="https://vangoo.cindyita.com/admin/img/posts/properties/{{$propiedad->id}}/{{$i}}.jpg" target="_blank">
-                        <img class="pe-2" src="https://vangoo.cindyita.com/admin/img/posts/properties/{{$propiedad->id}}/{{$i}}.jpg?<?php echo rand(); ?>" width="250px" height="250px">
+                        <img class="pe-2" src="{{asset('storage/img/posts/properties').'/'.$propiedad->id.'/'.$i.'.jpg?'<?php echo rand(); ?>" width="250px" height="250px">
                     </a>
                 </div>
                 @endfor
