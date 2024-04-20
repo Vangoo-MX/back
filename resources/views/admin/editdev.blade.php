@@ -12,7 +12,7 @@
 <div class="row d-flex justify-content-center w-100">
     <div class="col-12 col-lg-4 px-5 d-flex flex-column align-items-center justify-content-center w-100">
 
-        <h3>Editar desarrollo id:{{$dev[0]->id}}</h3>
+        <h3>Editar desarrollo id: {{$dev[0]->title}}</h3>
 
         <div class="w-100">
             <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('epDev.edit') }}">
@@ -166,8 +166,8 @@
         <div class="d-flex gap-2 mt-2">
             @for ($i = 1; $i <= $dev[0]->images; $i++)
                 <div class="d-flex flex-column align-items-center">
-                    <a href="https://dashboard.vangoo.mx/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
-                        <img class="pe-2" src="https://dashboard.vangoo.mx/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg?<?php echo rand(); ?>" width="90px" height="90px">
+                    <a href="https://dashboard.vangoo.mx/public/storage/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
+                        <img class="pe-2" src="{{asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?'}} <?php echo rand(); ?>" width="90px" height="90px">
                     </a>
                     <div class="mt-1">
                         <input class="form-control" type="number" name="orderimg[{{$i}}]" value="{{$i}}" max="{{$dev[0]->images}}" min="1" style="width:100%">
