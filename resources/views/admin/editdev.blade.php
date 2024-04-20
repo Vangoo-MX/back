@@ -166,7 +166,7 @@
         <div class="d-flex gap-2 mt-2">
             @for ($i = 1; $i <= $dev[0]->images; $i++)
                 <div class="d-flex flex-column align-items-center">
-                    <a href="https://dashboard.vangoo.mx/public/storage/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
+                    <a href="https://dashboard.vangoo.mx/storage/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
                         <img class="pe-2" src="{{asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?'}} <?php echo rand(); ?>" width="90px" height="90px">
                     </a>
                     <div class="mt-1">
