@@ -12,7 +12,7 @@
 <div class="row d-flex justify-content-center w-100">
     <div class="col-12 col-lg-4 px-5 d-flex flex-column align-items-center justify-content-center w-100">
 
-        <h3>Editar desarrollo id: {{$dev[0]->title}}</h3>
+        <h3>{{$dev[0]->title}}</h3>
 
         <div class="w-100">
             <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('epDev.edit') }}">
@@ -25,7 +25,10 @@
 
                         <div class="mb-3 mt-3">
                             <label for="title" class="form-label">Titulo:</label>
-                            <input type="text" class="form-control" id="title" value="{{$dev[0]->title}}" placeholder="Ingresa un titulo" name="title" required>
+                            <input type="text" class="form-control" id="title" placeholder="Ingresa un titulo" name="title" value="{{old('title', $dev[0]->title)}}" required>
+                            @error('title')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-3 mt-3">
@@ -42,27 +45,42 @@
 
                         <div class="mb-3 mt-3">
                             <label for="price_min" class="form-label">Precio mínimo:</label>
-                            <input type="number" class="form-control" step="0.01" id="price_min" value="{{$dev[0]->price_min}}" placeholder="Precio mínimo" name="price_min" required>
+                            <input type="number" class="form-control" step="0.01" id="price_min" value="{{old('price_min', $dev[0]->price_min)}}" placeholder="Precio mínimo" name="price_min" required>
+                            @error('price_min')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="price_max" class="form-label">Precio máximo:</label>
-                            <input type="number" class="form-control" step="0.01" id="price_max" value="{{$dev[0]->price_max}}" placeholder="Precio máximo" name="price_max" required>
+                            <input type="number" class="form-control" step="0.01" id="price_max" value="{{old('price_max', $dev[0]->price_max)}}" placeholder="Precio máximo" name="price_max" required>
+                            @error('price_max')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="description">Descripción:</label>
-                            <textarea class="form-control" rows="5" id="description" name="description">{{$dev[0]->description}}</textarea>
+                            <textarea class="form-control" rows="5" id="description" name="description">{{old('description', $dev[0]->description)}}</textarea>
+                            @error('description')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="availability" class="form-label">Disponibilidad:</label>
-                            <input type="text" class="form-control" id="availability" value="{{$dev[0]->availability}}" placeholder="Fecha en que estará disponible" name="availability">
+                            <input type="date" class="form-control" id="availability" value="{{old('availability', $dev[0]->availability)}}" placeholder="Fecha en que estará disponible" name="availability">
+                            @error('availability')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="financing" class="form-label">Financiación:</label>
-                            <input type="text" class="form-control" id="financing" alue="{{$dev[0]->financing}}" placeholder="Financiado" name="financing">
+                            <input type="text" class="form-control" id="financing" value="{{old('financing', $dev[0]->financing)}}" placeholder="Financiado" name="financing">
+                            @error('financing')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-3 mt-3">
@@ -114,50 +132,68 @@
 
                         <div class="mb-3 mt-3">
                             <label for="street" class="form-label">Calle:</label>
-                            <input type="text" class="form-control" id="street" value="{{$dev[0]->street}}" placeholder="Ingresa la calle" name="street">
+                            <input type="text" class="form-control" id="street" value="{{old('street', $dev[0]->street)}}" placeholder="Ingresa la calle" name="street">
+                            @error('street')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="num_ext" class="form-label">Número exterior:</label>
-                            <input type="number" class="form-control" id="num_ext" value="{{$dev[0]->num_ext}}" placeholder="Ingresa el número exterior" name="num_ext">
+                            <input type="number" class="form-control" id="num_ext" value="{{old('num_ext', $dev[0]->num_ext)}}" placeholder="Ingresa el número exterior" name="num_ext">
+                            @error('num_ext')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="cp" class="form-label">CP:</label>
-                            <input type="number" class="form-control" id="cp" value="{{$dev[0]->cp}}" placeholder="Ingresa el código postal" name="cp">
+                            <input type="number" class="form-control" id="cp" value="{{old('cp', $dev[0]->cp)}}" placeholder="Ingresa el código postal" name="cp">
+                            @error('cp')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         {{-- <div class="mb-3 mt-3">
                                 <label for="map" class="form-label">Mapa:</label>
-                                <input type="text" class="form-control" id="map" value="{{$dev[0]->map}}" placeholder="Ingresa el link de google maps" name="map">
+                                <input type="text" class="form-control" id="map" value="{{old('map', $dev[0]->map)}}" placeholder="Ingresa el link de google maps" name="map">
                     </div> --}}
 
                     <div class="mb-3 mt-3">
                         <label for="maplat" class="form-label">Coordenadas Longitud:</label>
-                        <input type="text" class="form-control" id="maplat" name="maplat" value="{{$dev[0]->map_lat}}">
+                        <input type="text" class="form-control" id="maplat" name="maplat" value="{{old('map_lat', $dev[0]->map_lat)}}">
                     </div>
 
                     <div class="mb-3 mt-3">
                         <label for="maplong" class="form-label">Coordenadas Latitud:</label>
-                        <input type="text" class="form-control" id="maplong" name="maplong" value="{{$dev[0]->map_long}}">
+                        <input type="text" class="form-control" id="maplong" name="maplong" value="{{old('map_long', $dev[0]->map_long)}}">
                     </div>
 
                     <div class="mb-3 mt-3">
                         <label for="area" class="form-label">Area:</label>
-                        <input type="number" step="0.01" class="form-control" id="area" value="{{$dev[0]->area}}" placeholder="Ingresa el area del inmueble" name="area">
+                        <input type="number" step="0.01" class="form-control" id="area" value="{{old('area', $dev[0]->area)}}" placeholder="Ingresa el area del inmueble" name="area">
+                        @error('area')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <div class="mb-3 mt-3">
                         <label for="amenities" class="form-label">Amenidades:</label>
-                        <input type="text" class="form-control" id="amenities" value="{{$dev[0]->amenities}}" placeholder="Separe con comas y sin espacios" name="amenities">
+                        <input type="text" class="form-control" id="amenities" value="{{old('amenities', $dev[0]->amenities)}}" placeholder="Separe con comas y sin espacios" name="amenities">
+                        @error('amenities')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <div class="mb-3 mt-3">
                         <label for="commission_percentage" class="form-label">Porcentaje de comisión de venta:</label>
-                        <input type="number" class="form-control" id="commission_percentage" value="{{$dev[0]->commission_percentage}}" placeholder="Porcentaje en números sin signos" name="commission_percentage">
+                        <input type="number" class="form-control" id="commission_percentage" value="{{old('commission_percentage', $dev[0]->commission_percentage)}}" placeholder="Porcentaje en números sin signos" name="commission_percentage">
+                        @error('commission_percentage')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
-                    <input type="hidden" name="num_images" value="{{$dev[0]->images}}">
+                    <input type="hidden" name="num_images" value="{{old('images', $dev[0]->images)}}">
 
                 </div>
         </div>
