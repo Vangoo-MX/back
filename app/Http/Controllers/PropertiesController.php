@@ -240,8 +240,8 @@ class PropertiesController extends Controller
         $newProperty = Properties::create($propertyData);
 
 
-        $sourcePath = public_path("img/postsqueue/properties/" . $request->id . "/");
-        $destinationPath = public_path("img/posts/properties/" . $newProperty->id . "/");
+        $sourcePath = public_path("app/public/img/postsqueue/properties/" . $request->id . "/");
+        $destinationPath = public_path("app/public/img/posts/properties/" . $newProperty->id . "/");
 
         if (!File::exists($destinationPath)) {
             File::makeDirectory($destinationPath, 0777, true);
@@ -280,7 +280,7 @@ class PropertiesController extends Controller
 
         $property = Properties::findOrFail($id);
 
-        $directoryPath = public_path("img/posts/properties/{$property->id}");
+        $directoryPath = public_path("app/public/img/posts/properties/{$property->id}");
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
@@ -309,7 +309,7 @@ class PropertiesController extends Controller
 
         $property = Properties::findOrFail($id);
 
-        $directoryPath = public_path("img/posts/properties/{$property->id}");
+        $directoryPath = public_path("app/public/img/posts/properties/{$property->id}");
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
@@ -485,7 +485,7 @@ class PropertiesController extends Controller
         $imageNames = $request->imageNames;
         $id = $request->id;
 
-        $route = public_path("img/postsqueue/properties/$id/");
+        $route = public_path("app/public/img/postsqueue/properties/$id/");
 
         foreach ($imageNames as $imageName) {
             $imagePath = $route . $imageName . 'jpg';

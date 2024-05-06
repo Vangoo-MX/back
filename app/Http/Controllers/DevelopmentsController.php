@@ -551,7 +551,7 @@ class DevelopmentsController extends Controller
 
         $dev = Developments::findOrFail($id);
 
-        $directoryPath = public_path("img/posts/developments/{$dev->id}");
+        $directoryPath = public_path("app/public/img/posts/developments/{$dev->id}");
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);

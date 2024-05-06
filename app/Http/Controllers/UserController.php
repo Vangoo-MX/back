@@ -175,7 +175,7 @@ class UserController extends Controller
 
     public function bepartnerEP(Request $request)
     {
-        Mail::to('contacto@vangoo.mx')->send(new BePartnerContactMail($request->all()));
+        Mail::to('bepartner@vangoo.mx')->send(new BePartnerContactMail($request->all()));
         return response()->json(['message' => 'Correo enviado con éxito'], 200);
     }
 
