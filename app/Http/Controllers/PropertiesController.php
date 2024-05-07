@@ -485,7 +485,7 @@ class PropertiesController extends Controller
         $imageNames = $request->imageNames;
         $id = $request->id;
 
-        $route = public_path("app/public/img/postsqueue/properties/$id/");
+        $route = public_path("app/public/img/postsqueue/properties/{$id}/");
 
         foreach ($imageNames as $imageName) {
             $imagePath = $route . $imageName . 'jpg';
