@@ -28,7 +28,7 @@ class BePartnerContactMail extends Mailable
     public function build()
     {
         $content = "Nuevo mensaje: \n";
-        $content .= "User: " . ($this->formData['id_user'] ? $this->formData['id_user'] : 'No') . "\n";
+        //$content .= "User: " . ($this->formData['id_user'] ? $this->formData['id_user'] : 'No') . "\n";
         $content .= "Nombre: " . $this->formData['name'] . "\n";
         $content .= "Email: " . $this->formData['email'] . "\n";
         $content .= "Tel: " . $this->formData['tel'] . "\n";
@@ -36,8 +36,8 @@ class BePartnerContactMail extends Mailable
         $content .= "Mensaje: " . $this->formData['mensaje'] . "\n";
 
         return $this->subject('Nuevo formulario de contacto Vangoo')
-                    ->view('emails.template')
-                    ->with('content', $content);
+            ->view('emails.template')
+            ->with('content', $content);
     }
 
     /**
