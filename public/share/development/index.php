@@ -8,7 +8,7 @@ if ($_GET && isset($_GET['id'])) {
 
 $typeText = 'developments';
 // $urlShare = $type == 'Development' ? 'https://vangoo.mx/details/desarrollo/'.$id : 'https://vangoo.mx/details/propiedad/'.$id;
-$urlShare = 'https://dashboard.vangoo.mx/share/development/index.php?id=' . $id;
+$urlShare = 'https://www.vangoo.mx/details/desarrollo/' . $id;
 
 $urlApi = 'https://dashboard.vangoo.mx/ep/getDevelopment/' . $id;
 $curl = curl_init($urlApi);
