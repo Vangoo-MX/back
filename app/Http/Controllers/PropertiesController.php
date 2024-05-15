@@ -234,22 +234,24 @@ class PropertiesController extends Controller
 
     public function aprovedPropertyQueue(Request $request)
     {
+        dd('Controlador recibido correctamente');
 
         $propertyQueue = PropertiesQueue::findOrFail($request->id);
         $propertyData = Arr::except($propertyQueue->toArray(), ['id']);
         $newProperty = Properties::create($propertyData);
-
+        dd('Nueva propiedad creada:', $newProperty);
 
         $sourcePath = public_path("storage/img/postsqueue/properties/" . $request->id . "/");
         $destinationPath = public_path("storage/img/posts/properties/" . $newProperty->id . "/");
+        dd('Rutas de origen y destino:', $sourcePath, $destinationPath);
         $files = File::allFiles($sourcePath);
         foreach ($files as $file) {
             $filename = $file->getFilename();
             File::move($sourcePath . $filename, $destinationPath . $filename);
         }
-
+        dd('Archivos movidos correctamente');
         $propertyQueue->delete();
-
+        dd('Propiedad en cola eliminada correctamente');
         return redirect()->route('admin.queue');
     }
 
