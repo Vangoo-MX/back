@@ -243,21 +243,11 @@ class PropertiesController extends Controller
         $sourcePath = public_path("storage/img/postsqueue/properties/" . $request->id . "/");
         $destinationPath = public_path("storage/img/posts/properties/" . $newProperty->id . "/");
         $files = File::allFiles($sourcePath);
-
         foreach ($files as $file) {
             $filename = $file->getFilename();
-            $destinationFile = $destinationPath . $filename;
-            if (!File::exists($destinationFile)) {
-                try {
-                    File::move($file->getPathname(), $destinationFile);
-                } catch (\Exception $e) {
-                    echo "Error al mover el archivo $filename: " . $e->getMessage() . "\n";
-                    continue;
-                }
-            } else {
-                echo "El archivo $filename ya existe en la ubicación de destino. Se omitió.\n";
-            }
+            File::move($sourcePath . $filename, $destinationPath . $filename);
         }
+
         $propertyQueue->delete();
 
         return redirect()->route('admin.queue');
