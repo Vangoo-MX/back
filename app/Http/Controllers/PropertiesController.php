@@ -242,22 +242,22 @@ class PropertiesController extends Controller
 
         $sourcePath = public_path("storage/img/postsqueue/properties/" . $request->id . "/");
         $destinationPath = public_path("storage/img/posts/properties/" . $newProperty->id . "/");
-        if (!file_exists($sourcePath)) {
-            // Manejar el caso donde el directorio de origen no existe
-            return response()->json(['error' => 'El directorio de origen no existe'], 500);
-        }
-
-        // Verificar si el directorio de destino existe
-        if (!file_exists($destinationPath)) {
-            // Manejar el caso donde el directorio de destino no existe
-            return response()->json(['error' => 'El directorio de destino no existe'], 500);
-        }
         $files = File::allFiles($sourcePath);
+
         foreach ($files as $file) {
             $filename = $file->getFilename();
-            File::move($sourcePath . $filename, $destinationPath . $filename);
+            $destinationFile = $destinationPath . $filename;
+            if (!File::exists($destinationFile)) {
+                try {
+                    File::move($file->getPathname(), $destinationFile);
+                } catch (\Exception $e) {
+                    echo "Error al mover el archivo $filename: " . $e->getMessage() . "\n";
+                    continue;
+                }
+            } else {
+                echo "El archivo $filename ya existe en la ubicación de destino. Se omitió.\n";
+            }
         }
-
         $propertyQueue->delete();
 
         return redirect()->route('admin.queue');
