@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\File;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
-use Illuminate\Support\Facades\DB;
 
 class PropertiesController extends Controller
 {
@@ -236,11 +235,8 @@ class PropertiesController extends Controller
     public function aprovedPropertyQueue(Request $request)
     {
         dd('Controlador recibido correctamente ID: ' . $request->id);
-        $propertyQueue = DB::table('list_properties_queue')->where('id', $request->id)->first();
-        if (!$propertyQueue) {
-            dd('No se encontró ninguna propiedad en la cola con el ID proporcionado utilizando Query Builder');
-        }
-        dd('Propiedad encontrada utilizando Query Builder:', $propertyQueue);
+        $propertyQueue = PropertiesQueue::findOrFail($request->id);
+        dd('propertyQueue: ' . $propertyQueue);
         $propertyData = Arr::except($propertyQueue->toArray(), ['id']);
         dd('propertyData: ' . $propertyData);
         $newProperty = Properties::create($propertyData);
