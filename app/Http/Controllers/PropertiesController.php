@@ -235,7 +235,6 @@ class PropertiesController extends Controller
     public function aprovedPropertyQueue(Request $request)
     {
         dd('Controlador recibido correctamente ID: ' . $request->id);
-        ini_set('memory_limit', '256M');
         $propertyQueue = PropertiesQueue::findOrFail($request->id);
         dd('propertyQueue: ' . $propertyQueue);
         $propertyData = Arr::except($propertyQueue->toArray(), ['id']);
