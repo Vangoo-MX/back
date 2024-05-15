@@ -11,10 +11,10 @@ use App\Models\Images;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PropertiesController extends Controller
 {
@@ -235,11 +235,8 @@ class PropertiesController extends Controller
     public function aprovedPropertyQueue(Request $request)
     {
         dd('Controlador recibido correctamente ID: ' . $request->id);
-        try {
-            $propertyQueue = PropertiesQueue::findOrFail($request->id);
-        } catch (ModelNotFoundException $e) {
-            dd('No se encontró ninguna propiedad en la cola con el ID proporcionado');
-        }
+        $propertyQueue = PropertiesQueue::findOrFail($request->id);
+        dd('propertyQueue: ' . $propertyQueue);
         $propertyData = Arr::except($propertyQueue->toArray(), ['id']);
         dd('propertyData: ' . $propertyData);
         $newProperty = Properties::create($propertyData);
@@ -248,14 +245,17 @@ class PropertiesController extends Controller
         $sourcePath = public_path("storage/img/postsqueue/properties/" . $request->id . "/");
         $destinationPath = public_path("storage/img/posts/properties/" . $newProperty->id . "/");
         dd('Rutas de origen y destino:', $sourcePath, $destinationPath);
+
         $files = File::allFiles($sourcePath);
         foreach ($files as $file) {
             $filename = $file->getFilename();
             File::move($sourcePath . $filename, $destinationPath . $filename);
         }
         dd('Archivos movidos correctamente');
+
         $propertyQueue->delete();
         dd('Propiedad en cola eliminada correctamente');
+
         return redirect()->route('admin.queue');
     }
 
