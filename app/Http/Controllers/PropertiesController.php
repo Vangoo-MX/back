@@ -11,10 +11,10 @@ use App\Models\Images;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
-
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PropertiesController extends Controller
 {
@@ -237,7 +237,7 @@ class PropertiesController extends Controller
         dd('Controlador recibido correctamente ID: ' . $request->id);
         try {
             $propertyQueue = PropertiesQueue::findOrFail($request->id);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             dd('No se encontró ninguna propiedad en la cola con el ID proporcionado');
         }
         $propertyData = Arr::except($propertyQueue->toArray(), ['id']);
