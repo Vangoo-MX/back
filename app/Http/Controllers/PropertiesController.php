@@ -278,7 +278,7 @@ class PropertiesController extends Controller
 
         $property = Properties::findOrFail($id);
 
-        $directoryPath = public_path("app/public/img/posts/properties/{$property->id}");
+        $directoryPath = public_path("storage/img/posts/properties/{$property->id}");
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
@@ -307,7 +307,7 @@ class PropertiesController extends Controller
 
         $property = Properties::findOrFail($id);
 
-        $directoryPath = public_path("app/public/img/posts/properties/{$property->id}");
+        $directoryPath = public_path("storage/img/posts/properties/{$property->id}");
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
@@ -483,7 +483,7 @@ class PropertiesController extends Controller
         $imageNames = $request->imageNames;
         $id = $request->id;
 
-        $route = public_path("app/public/img/postsqueue/properties/{$id}/");
+        $route = public_path("storage/img/postsqueue/properties/{$id}/");
 
         foreach ($imageNames as $imageName) {
             $imagePath = $route . $imageName . 'jpg';
