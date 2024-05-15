@@ -234,7 +234,8 @@ class PropertiesController extends Controller
 
     public function aprovedPropertyQueue(Request $request)
     {
-        dd('Controlador recibido correctamente');
+        dd('Controlador recibido correctamente ID: ' . $request->id);
+
 
         $propertyQueue = PropertiesQueue::findOrFail($request->id);
         $propertyData = Arr::except($propertyQueue->toArray(), ['id']);
