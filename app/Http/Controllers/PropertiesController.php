@@ -235,10 +235,11 @@ class PropertiesController extends Controller
     public function aprovedPropertyQueue(Request $request)
     {
         dd('Controlador recibido correctamente ID: ' . $request->id);
-
-
-        $propertyQueue = PropertiesQueue::findOrFail($request->id);
-        dd('propertyQueue: ' . $propertyQueue);
+        try {
+            $propertyQueue = PropertiesQueue::findOrFail($request->id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            dd('No se encontró ninguna propiedad en la cola con el ID proporcionado');
+        }
         $propertyData = Arr::except($propertyQueue->toArray(), ['id']);
         dd('propertyData: ' . $propertyData);
         $newProperty = Properties::create($propertyData);
