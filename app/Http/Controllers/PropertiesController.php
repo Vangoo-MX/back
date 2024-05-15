@@ -240,13 +240,18 @@ class PropertiesController extends Controller
         $newProperty = Properties::create($propertyData);
 
 
-        $sourcePath = public_path("app/public/img/postsqueue/properties/" . $request->id . "/");
-        $destinationPath = public_path("app/public/img/posts/properties/" . $newProperty->id . "/");
-
-        if (!File::exists($destinationPath)) {
-            File::makeDirectory($destinationPath, 0777, true);
+        $sourcePath = public_path("storage/img/postsqueue/properties/" . $request->id . "/");
+        $destinationPath = public_path("storage/img/posts/properties/" . $newProperty->id . "/");
+        if (!file_exists($sourcePath)) {
+            // Manejar el caso donde el directorio de origen no existe
+            return response()->json(['error' => 'El directorio de origen no existe'], 500);
         }
 
+        // Verificar si el directorio de destino existe
+        if (!file_exists($destinationPath)) {
+            // Manejar el caso donde el directorio de destino no existe
+            return response()->json(['error' => 'El directorio de destino no existe'], 500);
+        }
         $files = File::allFiles($sourcePath);
         foreach ($files as $file) {
             $filename = $file->getFilename();
