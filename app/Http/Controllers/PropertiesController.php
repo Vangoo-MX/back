@@ -238,7 +238,9 @@ class PropertiesController extends Controller
 
 
         $propertyQueue = PropertiesQueue::findOrFail($request->id);
+        dd('propertyQueue: ' . $propertyQueue);
         $propertyData = Arr::except($propertyQueue->toArray(), ['id']);
+        dd('propertyData: ' . $propertyData);
         $newProperty = Properties::create($propertyData);
         dd('Nueva propiedad creada:', $newProperty);
 
