@@ -241,6 +241,10 @@ class PropertiesController extends Controller
         $sourcePath = public_path("storage/img/postsqueue/properties/" . $request->id . "/");
         $destinationPath = public_path("storage/img/posts/properties/" . $newProperty->id . "/");
 
+        if (!File::exists($destinationPath)) {
+            File::makeDirectory($destinationPath, 0777, true);
+        }
+
         $files = File::allFiles($sourcePath);
         foreach ($files as $file) {
             $filename = $file->getFilename();
