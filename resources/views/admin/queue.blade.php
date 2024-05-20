@@ -196,6 +196,7 @@
                     <th>Estado</th>
                     <th>Usuario</th>
                     <th>Fecha</th>
+                    <th>Aprobación</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -212,6 +213,18 @@
                     <td>{{estado($p->id_estado)}}</td>
                     <td><a href="user/{{$p->id_user}}">{{$p->id_user}}</a></td>
                     <td>{{$p->created_at}}</td>
+                    <td>
+                        <div class="d-flex gap-1 btn-aproved justify-content-start">
+                            <form method="post" action="{{route('epPropertyQueue.aproved')}}">
+                                @csrf
+                                <input type="hidden" id="id" name="id" value="{{$p->id}}">
+                                <button class="btnSuccess" type="submit">Aprobar</button>
+                            </form>
+                            <a href="{{route('epPropertyQueue.reject', $p->id)}}">
+                                <button class="btnDanger">Rechazar</button>
+                            </a>
+                        </div>
+                    </td>
                     <td>
                         <div class="dropdown">
                             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">

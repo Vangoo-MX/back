@@ -63,7 +63,7 @@ class UserController extends Controller
     public function authenticated(Request $request, $user)
     {
         if (Auth::user()->rol != 1 || Auth::user()->rol != 2) {
-            return redirect('/overview/home');
+            return redirect('https://vangoo.mx');
         } else {
             return redirect('https://vangoo.mx');
         }
