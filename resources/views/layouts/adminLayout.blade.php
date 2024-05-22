@@ -116,7 +116,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item" href="https://vangoo.mx/profile/publications">
-                                <i class="fa-regular fa-mail-open fa-fw me-2 text-gray-400"></i>
+                                <i class="fa-regular fa-envelope-open fa-fw me-2 text-gray-400"></i>
                                 Correo Administrativo
                             </a>
                         </li>
