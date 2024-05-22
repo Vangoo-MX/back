@@ -115,7 +115,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="https://vangoo.mx/profile/publications">
+                            <a class="dropdown-item" href="https://webmail.vangoo.mx/roundcube/index.php" target="_blank">
                                 <i class="fa-regular fa-envelope fa-fw me-2 text-gray-400"></i>
                                 Correo Administrativo
                             </a>
