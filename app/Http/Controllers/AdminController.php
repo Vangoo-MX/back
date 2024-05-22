@@ -365,7 +365,7 @@ class AdminController extends Controller
         $request->validate([
             'title' => 'required|min:10|max:100',
             'price' => 'required|numeric',
-            'price_maintenance' => 'numeric',
+            'price_maintenance' => 'null|numeric',
             'description' => 'required|min:10|max:500',
             'rooms' => 'required|numeric',
             'bathrooms' => 'required|numeric',
