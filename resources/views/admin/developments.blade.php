@@ -2,7 +2,7 @@
 
 @section('breadcrumb','Desarrollos')
 
-@section('title','Developments')
+@section('title','Desarrollos')
 
 @section('titleContent','Desarrollos')
 
