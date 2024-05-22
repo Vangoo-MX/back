@@ -115,6 +115,12 @@
                             </a>
                         </li>
                         <li>
+                            <a class="dropdown-item" href="https://vangoo.mx/profile/publications">
+                                <i class="fa-regular fa-mail-open fa-fw me-2 text-gray-400"></i>
+                                Correo Administrativo
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" href="https://vangoo.mx/profile/lists">
                                 <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
                                 Listas
