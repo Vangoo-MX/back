@@ -86,12 +86,12 @@
                                         Copiar link
                                     </a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyQueueDeleteModal" onclick="propertyQueueDeleteModalData({{$p->id}})" id="propertyQueueDeleteConfirmBtn{{$p->id}}" data-url="{{route('epPropertyQueue.delete',$p->id)}}">
                                         <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </td>
@@ -162,12 +162,12 @@
                                         Copiar link
                                     </a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyQueueDeleteModal" onclick="propertyQueueDeleteModalData({{$p->id}})" id="propertyQueueDeleteConfirmBtn{{$p->id}}" data-url="{{route('epPropertyQueue.delete',$p->id)}}">
                                         <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
 
@@ -243,12 +243,12 @@
                                         Copiar link
                                     </a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyQueueDeleteModal" onclick="propertyQueueDeleteModalData({{$p->id}})" id="propertyQueueDeleteConfirmBtn{{$p->id}}" data-url="{{route('epPropertyQueue.delete',$p->id)}}">
                                         <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
 
