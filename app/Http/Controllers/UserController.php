@@ -74,7 +74,7 @@ class UserController extends Controller
         //Session::flush();
         Auth::logout();
 
-        return redirect()->to('/');
+        return redirect('https://vangoo.mx');
     }
 
     /* endpoints frontend */

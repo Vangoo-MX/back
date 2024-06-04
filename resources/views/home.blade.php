@@ -1,141 +1,217 @@
 @extends('layouts.plantilla')
 
-@section('title','home')
+@section('title','Inicia Sesion')
 
 @section('content')
-
-<div class="sidenav">
-    <div class="login-main-text">
-        <h2>VANGOO</h2>
-        <p>Inicia sesión para entrar.</p>
-    </div>
-</div>
-<div class="main d-flex justify-content-center">
-    <div class="col-md-5 col-sm-12">
-        <div class="login-form">
-            <h3 class="text-center">Login</h3>
-            <form class="d-flex flex-column gap-4" method="POST" action="{{route('user.login')}}">
-                @csrf
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" placeholder="Email" name="email" id="email" value="{{old('email')}}">
+<div class="flex min-h-screen items-center justify-center bg-image">
+    <div class="w-full max-w-md space-y-6 rounded-lg bg-white p-8 shadow-lg dark:bg-gray-900">
+        <div class="space-y-2 text-center">
+            <img src="/img/logo.png" alt="Logo" class="logo">
+            <p class="text-gray-500 dark:text-gray-400">Ingresa tu correo electronico y tu contraseña para iniciar sesion</p>
+        </div>
+        @include('layouts.messages')
+        <form method="POST" action="{{ route('user.login') }}" class="space-y-4">
+            @csrf
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 text-black focus:outline-none focus:ring-[#FF6492] focus:border-[#FF6492] sm:text-sm" placeholder="m@example.com" />
+            </div>
+            <div>
+                <div class="flex items-center justify-between">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
                 </div>
-                <div class="form-group">
-                    <label>Contraseña</label>
-                    <input type="password" class="form-control" placeholder="Password" name="password" id="password">
+                <div class="relative mt-1">
+                    <input id="password" type="password" name="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 text-black focus:outline-none focus:ring-[#FF6492] focus:border-[#FF6492] sm:text-sm" placeholder="Ingresa tu contraseña" />
                 </div>
-                @include('layouts.messages')
-                <div class="d-flex justify-content-center gap-3">
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </div>
-            </form>
+            </div>
+            <button type="submit" class="w-full btn-pink px-4 py-2 rounded-md">
+                Inicia Sesion
+            </button>
+        </form>
+        <div class="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
+            ¿No tienes una cuenta? <a href="https://www.vangoo.mx/bepartnercontact" class="font-medium text-[#4FDC64] hover:underline">Registrate</a>
         </div>
     </div>
 </div>
-
 <style>
-    * {
-        box-sizing: border-box;
+    .min-h-screen {
+        min-height: 100vh;
     }
 
-    body {
+    .flex {
+        display: flex;
+    }
+
+    .items-center {
+        align-items: center;
+    }
+
+    .justify-center {
+        justify-content: center;
+    }
+
+    .bg-gray-100 {
+        background-color: #f7fafc;
+    }
+
+    .dark .bg-gray-950 {
+        background-color: #1a202c;
+    }
+
+    .w-full {
         width: 100%;
-        min-height: 100%;
-        font-family: "Lato", sans-serif;
-        position: relative;
     }
 
-    .main-head {
-        height: 150px;
-        background: #FFF;
+    .max-w-md {
+        max-width: 28rem;
     }
 
-    .sidenav {
-        height: 100%;
-        background-color: #FC7B97;
-        overflow-x: hidden;
-        padding-top: 30px;
+    .space-y-6>*+* {
+        margin-top: 1.5rem;
     }
 
-    .main {
-        padding: 0px 10px;
+    .rounded-lg {
+        border-radius: 0.5rem;
     }
 
-    @media screen and (max-height: 450px) {
-        .sidenav {
-            padding-top: 15px;
-        }
+    .bg-white {
+        background-color: #ffffff;
     }
 
-    @media screen and (max-width: 450px) {
-        .login-form {
-            margin-top: 10%;
-        }
-
-        .register-form {
-            margin-top: 10%;
-        }
+    .p-8 {
+        padding: 2rem;
     }
 
-    @media screen and (max-width: 750px) {
-        .main {
-            padding-top: 50px;
-        }
+    .shadow-lg {
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
     }
 
-    @media screen and (min-width: 768px) {
-        .main {
-            margin-left: 40%;
-        }
-
-        .sidenav {
-            width: 40%;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-        }
-
-        .login-form {
-            margin-top: 80%;
-        }
-
-        .register-form {
-            margin-top: 20%;
-        }
+    .dark .bg-gray-900 {
+        background-color: #2d3748;
     }
 
-    .login-main-text {
-        margin-top: 20%;
-        padding: 60px;
-        color: black;
+    .text-center {
+        text-align: center;
     }
 
-    .login-main-text h2 {
-        font-weight: 300;
+    .text-3xl {
+        font-size: 1.875rem;
     }
 
-    .btn-primary {
-        background-color: #FC7B97;
-        border: 0;
+    .font-bold {
+        font-weight: 700;
     }
 
-    .btn-primary:hover {
-        background-color: #FC7B97;
-        border: 0;
-        opacity: 0.8;
+    .text-gray-500 {
+        color: #a0aec0;
     }
 
-    .btn-secondary {
-        background-color: #2E93EF;
-        border: 0;
+    .dark .text-gray-400 {
+        color: #cbd5e0;
     }
 
-    .btn-secondary:hover {
-        background-color: #2E93EF;
-        border: 0;
-        opacity: 0.8;
+    .space-y-4>*+* {
+        margin-top: 1rem;
+    }
+
+    .block {
+        display: block;
+    }
+
+    .text-sm {
+        font-size: 0.875rem;
+    }
+
+    .font-medium {
+        font-weight: 500;
+    }
+
+    .mt-1 {
+        margin-top: 0.25rem;
+    }
+
+    .px-3 {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .py-2 {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .border {
+        border-width: 1px;
+    }
+
+    .border-gray-300 {
+        border-color: #d2d6dc;
+    }
+
+    .rounded-md {
+        border-radius: 0.375rem;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .placeholder-gray-400 {
+        color: #cbd5e0;
+    }
+
+    .focus\:outline-none:focus {
+        outline: none;
+    }
+
+    .focus\:ring-2:focus {
+        box-shadow: 0 0 0 2px rgba(255, 100, 146, 0.5);
+    }
+
+    .focus\:border-indigo-500:focus {
+        border-color: #667eea;
+    }
+
+    .w-full {
+        width: 100%;
+    }
+
+    .btn-pink {
+        background-color: #FF6492;
+        color: #ffffff;
+    }
+
+    .btn-pink:hover {
+        background-color: #ff4a7f;
+    }
+
+    .btn-pink:focus {
+        box-shadow: 0 0 0 2px rgba(255, 100, 146, 0.5);
+    }
+
+    .mt-4 {
+        margin-top: 1rem;
+    }
+
+    .hover\:underline:hover {
+        text-decoration: underline;
+    }
+
+    .bg-image {
+        width: 100%;
+        height: 100vh;
+        background-image: url('../img/bg.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: top center;
+        display: flex;
+    }
+
+    .logo {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
     }
 </style>
-
 @endsection()
