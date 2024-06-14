@@ -1,6 +1,6 @@
 @extends('layouts.plantilla')
 
-@section('title','Inicia Sesion')
+@section('title','Restablecimiento de Contraseña')
 
 @section('content')
 <div class="flex min-h-screen items-center justify-center bg-image">
@@ -9,9 +9,21 @@
             <img src="/img/logo.png" alt="Logo" class="logo">
             <p class="text-gray-500 dark:text-gray-400">Ingresa tu correo electronico y tu contraseña para iniciar sesion</p>
         </div>
-        @include('layouts.messages')
-        <form method="POST" action="{{ route('user.login') }}" class="space-y-4">
+        @if (session('status'))
+        <div class="bg-green-500 text-white p-4 rounded-md">
+            {{ session('status') }}
+        </div>
+        @endif
+        @if ($errors->any())
+        <div class="bg-red-500 text-white p-4 rounded-md">
+            @foreach ($errors->all() as $error)
+            {{ $error }}
+            @endforeach
+        </div>
+        @endif
+        <form method="POST" action="{{ route('password.update') }}" class="space-y-4">
             @csrf
+            <input type="hidden" name="token" value="{{ $token }}">
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
                 <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 text-black focus:outline-none focus:ring-[#FF6492] focus:border-[#FF6492] sm:text-sm" placeholder="m@example.com" />
@@ -19,19 +31,23 @@
             <div>
                 <div class="flex items-center justify-between">
                     <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
-                    <a href="{{route('password.request')}}" class="text-sm text-color hover:underline">¿Olvidaste tu contraseña?</a>
                 </div>
                 <div class="relative mt-1">
                     <input id="password" type="password" name="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 text-black focus:outline-none focus:ring-[#FF6492] focus:border-[#FF6492] sm:text-sm" placeholder="Ingresa tu contraseña" />
                 </div>
             </div>
+            <div>
+                <div class="flex items-center justify-between">
+                    <label for="password-confirm" class="block text-sm font-medium text-gray-700">Confirma tu contraseña</label>
+                </div>
+                <div class="relative mt-1">
+                    <input id="password-confirm" type="password" name="password_confirmation" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 text-black focus:outline-none focus:ring-[#FF6492] focus:border-[#FF6492] sm:text-sm" placeholder="Vuelve a escribir tu contraseña" />
+                </div>
+            </div>
             <button type="submit" class="w-full btn-pink px-4 py-2 rounded-md">
-                Inicia Sesion
+                Restablecer contraseña
             </button>
         </form>
-        <div class="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
-            ¿No tienes una cuenta? <a href="https://www.vangoo.mx/bepartnercontact" class="font-medium text-color hover:underline">Registrate</a>
-        </div>
     </div>
 </div>
 <style>
@@ -215,12 +231,12 @@
         margin: 0 auto;
     }
 
-    .justify-between {
-        justify-content: space-between;
+    .bg-green-500 {
+        background-color: #48bb78;
     }
 
-    .text-color {
-        color: #4FDC64;
+    .bg-red-500 {
+        background-color: #f56565;
     }
 </style>
 @endsection()

@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Notifications\ResetPasswordNotification;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,9 +15,9 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, CanResetPassword;
 
-     /**
+    /**
      * The table associated with the model.
      *
      * @var string
@@ -57,14 +60,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected function name(): Attribute{
+    protected function name(): Attribute
+    {
         return new Attribute(
-            get: fn($value) => ucwords($value),
-            set: fn($value) => strtolower($value)
+            get: fn ($value) => ucwords($value),
+            set: fn ($value) => strtolower($value)
         );
     }
 
-    public function setPasswordAttribute($value){
+    public function setPasswordAttribute($value)
+    {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 }

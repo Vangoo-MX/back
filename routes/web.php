@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\PropertiesController;
@@ -284,4 +286,8 @@ Route::post('ep/bepartnerEP', [UserController::class, 'bepartnerEP'])->name('bep
 
 Route::post('ep/contactAgentMail', [FavoritesController::class, 'contactAgent'])->name('contactAgent.post');
 
-// Route::get('ep/mailTest', [UserController::class,'mailTest'])->name('emailtest.get');
+// Password Reset Routes
+Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
