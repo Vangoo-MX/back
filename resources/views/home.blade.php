@@ -9,7 +9,6 @@
             <img src="/img/logo.png" alt="Logo" class="logo">
             <p class="text-gray-500 dark:text-gray-400">Ingresa tu correo electronico y tu contraseña para iniciar sesion</p>
         </div>
-        @include('layouts.messages')
         @if (session('status'))
         <div class="bg-green-500 text-white p-4 rounded-md">
             {{ session('status') }}
