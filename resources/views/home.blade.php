@@ -10,6 +10,18 @@
             <p class="text-gray-500 dark:text-gray-400">Ingresa tu correo electronico y tu contraseña para iniciar sesion</p>
         </div>
         @include('layouts.messages')
+        @if (session('status'))
+        <div class="bg-green-500 text-white p-4 rounded-md">
+            {{ session('status') }}
+        </div>
+        @endif
+        @if ($errors->any())
+        <div class="bg-red-500 text-white p-4 rounded-md">
+            @foreach ($errors->all() as $error)
+            {{ $error }}
+            @endforeach
+        </div>
+        @endif
         <form method="POST" action="{{ route('user.login') }}" class="space-y-4">
             @csrf
             <div>
@@ -221,6 +233,14 @@
 
     .text-color {
         color: #4FDC64;
+    }
+
+    .bg-green-500 {
+        background-color: #48bb78;
+    }
+
+    .bg-red-500 {
+        background-color: #f56565;
     }
 </style>
 @endsection()
