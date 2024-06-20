@@ -214,7 +214,7 @@
     .bg-image {
         width: 100%;
         height: 100vh;
-        background-image: url('../img/bg.png');
+        background-image: url('https://dashboard.vangoo.mx/img/bg.png');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: top center;
