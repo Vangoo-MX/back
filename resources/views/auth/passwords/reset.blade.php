@@ -26,7 +26,7 @@
             <input type="hidden" name="token" value="{{ $token }}">
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 text-black focus:outline-none focus:ring-[#FF6492] focus:border-[#FF6492] sm:text-sm" placeholder="m@example.com" />
+                <input id="email" type="email" name="email" value="{{ $email ?? old('email') }}" required autofocus class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 text-black focus:outline-none focus:ring-[#FF6492] focus:border-[#FF6492] sm:text-sm" placeholder="m@example.com" />
             </div>
             <div>
                 <div class="flex items-center justify-between">
