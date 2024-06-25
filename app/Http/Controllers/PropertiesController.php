@@ -215,7 +215,7 @@ class PropertiesController extends Controller
             $search = $search->where('type', $type);
         }
 
-        $search = $search->paginate(16);
+        $search = $search->paginate(50);
 
         return $search;
     }

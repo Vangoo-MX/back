@@ -210,7 +210,7 @@ class DevelopmentsController extends Controller
             $search = $search->where('status', 'sale');
         }
 
-        $search = $search->paginate(12);
+        $search = $search->paginate(50);
 
         return $search;
     }
