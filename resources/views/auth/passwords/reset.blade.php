@@ -7,7 +7,7 @@
     <div class="w-full max-w-md space-y-6 rounded-lg bg-white p-8 shadow-lg dark:bg-gray-900">
         <div class="space-y-2 text-center">
             <img src="/img/logo.png" alt="Logo" class="logo">
-            <p class="text-gray-500 dark:text-gray-400">Ingresa tu correo electronico y tu contraseña para iniciar sesion</p>
+            <p class="text-gray-500 dark:text-gray-400">Ingrese su nueva contraseña</p>
         </div>
         @if (session('status'))
         <div class="bg-green-500 text-white p-4 rounded-md">
