@@ -32,6 +32,8 @@ class Properties extends Model
         'parkings',
         'description',
         'map',
+        'map_long',
+        'map_lat',
         'antiquity',
         'amenities',
         'floor',
@@ -46,11 +48,10 @@ class Properties extends Model
         'images',
         'id_user'
     ];
-     /**
+    /**
      * The table associated with the model.
      *
      * @var string
      */
     protected $table = 'post_properties';
-
 }
