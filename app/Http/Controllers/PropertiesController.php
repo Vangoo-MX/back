@@ -237,7 +237,8 @@ class PropertiesController extends Controller
         $propertyQueue = PropertiesQueue::findOrFail($request->id);
         $propertyData = Arr::except($propertyQueue->toArray(), ['id']);
         $newProperty = Properties::create($propertyData);
-
+        dd('propertyData: ' . $propertyData);
+        dd('newProperties: ' . $newProperty);
         $sourcePath = public_path("storage/img/postsqueue/properties/" . $request->id . "/");
         $destinationPath = public_path("storage/img/posts/properties/" . $newProperty->id . "/");
 
