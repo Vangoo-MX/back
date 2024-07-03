@@ -43,7 +43,7 @@
 <h5>Propiedades recientes</h5>
 
 <div class="content-table">
-    <table class="table table-striped table-bordered" id="dashboard-table" data-order='[[ 0, "asc" ]]' data-page-length='8'>
+    <table class="table table-striped table-bordered" id="propertiesTable" data-order='[[ 0, "asc" ]]' data-page-length='8'>
         <thead>
             <tr>
                 <th class="start">id</th>
@@ -88,6 +88,45 @@
 
 <!------JS------>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#propertiesTable').DataTable({
+            language: {
+                processing: "Procesando..",
+                search: "Buscar:&nbsp;",
+                lengthMenu: "Ver _MENU_ Elementos",
+                info: "Mostrando de _START_ a _END_ de _TOTAL_ Elementos",
+                infoFiltered: "(filtrando de _MAX_ elementos en total)",
+                infoPostFix: "",
+                loadingRecords: "Cargando registros...",
+                zeroRecords: "No hay registros",
+                emptyTable: "No hay datos para mostrar",
+                paginate: {
+                    first: "Primero",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Último"
+                },
+                aria: {
+                    sortAscending: ": activer pour trier la colonne par ordre croissant",
+                    sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                }
+            }
+        });
+    });
+</script>
 <!------/JS------>
+
+<style>
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+        color: inherit !important;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50px;
+        background-color: transparent;
+        background: transparent;
+    }
+</style>
 
 @endsection()
