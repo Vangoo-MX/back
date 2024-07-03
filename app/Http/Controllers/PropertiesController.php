@@ -21,7 +21,6 @@ class PropertiesController extends Controller
     public function getAll()
     {
         $properties = Properties::all();
-        //return $users;
         return $properties;
     }
 
@@ -441,30 +440,7 @@ class PropertiesController extends Controller
 
         return json_encode($property->id);
     }
-    /*
-    public function imagesPropertyQueue(Request $request) {
-        //Guardar imagenes
-        if ($request->file('image') != [] && $request->file('image') != null) {
 
-            // Iterar a través de todas las imágenes proporcionadas en la solicitud
-            foreach ($request->file('image') as $key => $image) {
-                // Generar un nombre de archivo único para la imagen
-                $nameimg = Str::slug($request->id)."_".$key.".".$image->getClientOriginalExtension();
-
-                $route = public_path("img/postsqueue/properties/");
-                $image->move($route, $nameimg);
-                //$property->image_url = $nameimg;
-                //array_push($routes, $nameimg);
-            }
-            return json_encode('success');
-        }else{
-            return response()->json([
-            'error' => 'No se ha proporcionado ninguna imagen',
-            "request" => $request
-            ], 400);
-        }
-    }
-*/
     public function imagesPropertyQueue(Request $request)
     {
 

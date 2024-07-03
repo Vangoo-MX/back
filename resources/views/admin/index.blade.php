@@ -56,15 +56,17 @@
             </tr>
         </thead>
         <tbody>
+            @foreach($properties as $property)
             <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
+                <td>{{ $property->id }}</td>
+                <td>{{ $property->title }}</td>
+                <td>{{ $property->price }}</td>
+                <td>{{ $property->id_colonia->nombre }}</td>
+                <td>{{ $property->id_municipio->nombre }}</td>
+                <td>{{ $property->id_user }}</td>
+                <td>{{ $property->created_at }}</td>
             </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

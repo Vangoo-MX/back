@@ -14,7 +14,6 @@ use App\Models\DevelopmentsHighlights;
 use App\Models\DevelopmentsApartments;
 use App\Models\Tracker;
 use App\Models\Agenda;
-
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
@@ -33,7 +32,8 @@ class AdminController extends Controller
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        return view('admin.index');
+        $properties = Properties::all();
+        return view('admin.index', ['properties' => $properties]);
     }
 
     public function create()
