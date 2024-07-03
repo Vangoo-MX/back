@@ -36,7 +36,12 @@ class AdminController extends Controller
         $pendingPropertiesCount = PropertiesQueue::where('status_aproved', '!=', 2)->count();
         $activeDevelopmentsCount = Developments::count();
         $properties = Properties::all();
-        return view('admin.index', compact('properties', 'activePropertiesCount', 'pendingPropertiesCount', 'activeDevelopmentsCount'));
+        return view('admin.index', compact(
+            'properties',
+            'activePropertiesCount',
+            'pendingPropertiesCount',
+            'activeDevelopmentsCount'
+        ));
     }
 
     public function create()
