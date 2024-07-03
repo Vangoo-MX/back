@@ -31,9 +31,16 @@ class AdminController extends Controller
         if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
-
+        $activePropertiesCount = Properties::count();
+        $pendingPropertiesCount = PropertiesQueue::where('status', '!=', 2)->count();
+        $activeDevelopmentsCount = Developments::count();
         $properties = Properties::all();
-        return view('admin.index', ['properties' => $properties]);
+        return view('admin.index', [
+            'properties' => $properties,
+            'activePropertiesCount' => $activePropertiesCount,
+            'pendingPropertiesCount' => $pendingPropertiesCount,
+            'activeDevelopmentsCount' => $activeDevelopmentsCount
+        ]);
     }
 
     public function create()
