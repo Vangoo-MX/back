@@ -43,7 +43,7 @@
 <h5>Propiedades recientes</h5>
 
 <div class="content-table">
-    <table class="table" id="dashboard-table" data-order='[[ 0, "asc" ]]' data-page-length='8'>
+    <table class="table table-striped table-bordered" id="dashboard-table" data-order='[[ 0, "asc" ]]' data-page-length='8'>
         <thead>
             <tr>
                 <th class="start">id</th>
@@ -60,11 +60,11 @@
             <tr>
                 <td>{{ $property->id }}</td>
                 <td>{{ $property->title }}</td>
-                <td>{{ $property->price }}</td>
-                <td>{{ $property->id_colonia->nombre }}</td>
-                <td>{{ $property->id_municipio->nombre }}</td>
-                <td>{{ $property->id_user }}</td>
-                <td>{{ $property->created_at }}</td>
+                <td>{{ moneyFormat($property->price) }}</td>
+                <td>{{ colonia($property->id_colonia) }}</td>
+                <td>{{ municipio($property->id_municipio) }}</td>
+                <td>{{ username($property->id_user) }}</td>
+                <td>{{ convertDate($property->created_at) }}</td>
             </tr>
             @endforeach
         </tbody>
