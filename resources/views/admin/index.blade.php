@@ -69,10 +69,10 @@
     </table>
 </div>
 <br>
-<div class="d-flex justify-content-between align-items-center">
+<!-- <div class="d-flex justify-content-between align-items-center">
     <h5>Visitantes Vangoo</h5>
     <button class="btn1">Ver todas</button>
-</div>
+</div> -->
 
 <div class="content-chart">
     <div>
