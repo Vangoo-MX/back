@@ -39,35 +39,6 @@
         </div>
     </div>
 </div>
-<!-- <div class="info-cards">
-    <div class="info-card info-card-pink">
-        <div>
-            <p>Publicaciones activas</p>
-            <h1>-</h1>
-        </div>
-        <div>
-            <img src="{{url('./img/icon/pub-active.png')}}" />
-        </div>
-    </div>
-    <div class="info-card info-card-yellow">
-        <div>
-            <p>Publicaciones pendientes</p>
-            <h1>-</h1>
-        </div>
-        <div>
-            <img src="{{url('./img/icon/pub-pend.png')}}" />
-        </div>
-    </div>
-    <div class="info-card info-card-green">
-        <div>
-            <p>Desarrollos activos</p>
-            <h1>-</h1>
-        </div>
-        <div>
-            <img src="{{url('./img/icon/cot-active.png')}}" />
-        </div>
-    </div>
-</div> -->
 <br>
 <h5>Propiedades recientes</h5>
 
