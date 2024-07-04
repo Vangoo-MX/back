@@ -43,7 +43,7 @@
 <h5>Propiedades recientes</h5>
 
 <div class="content-table">
-    <table class="table table-striped table-bordered" id="propertiesTable" data-order='[[ 0, "asc" ]]' data-page-length='8'>
+    <table class="table table-striped table-bordered" id="propertiesTable">
         <thead>
             <tr>
                 <th class="start">id</th>
