@@ -68,9 +68,6 @@ Route::get('overview/createdev', [AdminController::class, 'createdev'])->name('a
 
 Route::get('overview/editdev/{id}', [AdminController::class, 'editdev'])->name('admin.editdev');
 
-Route::delete('admin/developments/{id}/image/{image}', [AdminController::class, 'deleteImage'])->name('admin.developments.delete_image');
-
-
 Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('emails.confirm');
 
 Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('emails.template');
@@ -195,6 +192,8 @@ Route::post('ep/storedev', [DevelopmentsController::class, 'storeDev'])->name('e
 Route::get('ep/deletedev/{id}', [DevelopmentsController::class, 'deleteDev'])->name('epDev.delete');
 
 Route::get('ep/editdevelopments/{id}', [AdminController::class, 'editdevpage'])->name('dev.edit');
+
+Route::delete('admin/developments/{id}/image/{image}', [AdminController::class, 'deleteImage'])->name('admin.developments.delete_image');
 
 Route::post('ep/editdev', [DevelopmentsController::class, 'editdev'])->name('epDev.edit');
 
