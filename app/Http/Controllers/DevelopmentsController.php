@@ -428,15 +428,6 @@ class DevelopmentsController extends Controller
         $colonia = Colonias::find($request->id_colonia);
         $coloniaNombre = $colonia ? $colonia->nombre : 'Desconocido';
 
-        // $estado = Estados::where('id', $request->id_estado)->get();
-        // $estado = $estado[0]['nombre'];
-
-        // $municipio = Municipios::where('id', $request->id_municipio)->get();
-        // $municipio = $municipio[0]['nombre'];
-
-        // $colonia = Colonias::where('id', $request->id_colonia)->get();
-        // $colonia = $colonia[0]['nombre'];
-
         $development->location = $coloniaNombre . ', ' . $municipioNombre . ', ' . $estadoNombre;
 
         $development->cp = $request->cp;
@@ -507,10 +498,8 @@ class DevelopmentsController extends Controller
 
 
                 if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
-                    //foreach ($request->file('imageoption.' . $key) as $i => $image) {
                     $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
                     $request->file('imageoption.' . $key)->storeAs('public/img/posts/developments/' . $development->id . '/' . 'plans/', $nameimg);
-                    //}
                 }
 
                 $appartment->save();
@@ -549,10 +538,8 @@ class DevelopmentsController extends Controller
 
 
                 if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
-                    //foreach ($request->file('imageoption.' . $key) as $i => $image) {
                     $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
                     $request->file('imageoption.' . $key)->storeAs('public/img/posts/developments/' . $development->id . '/' . 'plans/', $nameimg);
-                    //}
                 }
 
                 $appartment->save();
@@ -585,6 +572,32 @@ class DevelopmentsController extends Controller
 
         return redirect()->back();
     }
+
+    public function deleteImage($id, $image)
+    {
+        $path = storage_path('app/public/img/posts/developments/' . $id . '/' . $image . '.jpg');
+
+        if (file_exists($path)) {
+            unlink($path);
+
+            $dir = storage_path('app/public/img/posts/developments/' . $id);
+            $files = glob($dir . '/*.jpg');
+
+            foreach ($files as $key => $file) {
+                $newPath = $dir . '/' . ($key + 1) . '.jpg';
+                if ($file !== $newPath) {
+                    rename($file, $newPath);
+                }
+            }
+
+            $development = Developments::findOrFail($id);
+            $development->images = count($files);
+            $development->save();
+        }
+
+        return redirect()->back()->with('success', 'Imagen eliminada con éxito');
+    }
+
 
     public function getCommissionsEP($type)
     {

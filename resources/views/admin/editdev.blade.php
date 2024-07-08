@@ -211,9 +211,26 @@
                     <div class="mt-1">
                         <input class="form-control" type="number" name="orderimg[{{$i}}]" value="{{$i}}" max="{{$dev[0]->images}}" min="1" style="width:100%">
                     </div>
+                    <form method="POST" action="{{ route('admin.developments.delete_image', ['id' => $dev[0]->id, 'image' => $i]) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger mt-2">Eliminar</button>
+                    </form>
                 </div>
                 @endfor
         </div>
+        <!-- <div class="d-flex gap-2 mt-2">
+            @for ($i = 1; $i <= $dev[0]->images; $i++)
+                <div class="d-flex flex-column align-items-center">
+                    <a href="https://dashboard.vangoo.mx/storage/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
+                        <img class="pe-2" src="{{asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?'}} <?php echo rand(); ?>" width="90px" height="90px">
+                    </a>
+                    <div class="mt-1">
+                        <input class="form-control" type="number" name="orderimg[{{$i}}]" value="{{$i}}" max="{{$dev[0]->images}}" min="1" style="width:100%">
+                    </div>
+                </div>
+                @endfor
+        </div> -->
 
         <div class="images mb-3 mt-3">
             <label for="image" class="form-label">Agregar más imágenes:</label>

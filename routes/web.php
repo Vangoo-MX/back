@@ -68,6 +68,9 @@ Route::get('overview/createdev', [AdminController::class, 'createdev'])->name('a
 
 Route::get('overview/editdev/{id}', [AdminController::class, 'editdev'])->name('admin.editdev');
 
+Route::delete('admin/developments/{id}/image/{image}', [AdminController::class, 'deleteImage'])->name('admin.developments.delete_image');
+
+
 Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('emails.confirm');
 
 Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('emails.template');
