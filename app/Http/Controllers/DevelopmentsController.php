@@ -414,16 +414,25 @@ class DevelopmentsController extends Controller
         $development->street = $request->street;
         $development->num_ext = $request->num_ext;
 
-        $estado = Estados::where('id', $request->id_estado)->get();
-        $estado = $estado[0]['nombre'];
+        $estado = Estados::find($request->id_estado);
+        $estadoNombre = $estado ? $estado->nombre : 'Desconocido';
 
-        $municipio = Municipios::where('id', $request->id_municipio)->get();
-        $municipio = $municipio[0]['nombre'];
+        $municipio = Municipios::find($request->id_municipio);
+        $municipioNombre = $municipio ? $municipio->nombre : 'Desconocido';
 
-        $colonia = Colonias::where('id', $request->id_colonia)->get();
-        $colonia = $colonia[0]['nombre'];
+        $colonia = Colonias::find($request->id_colonia);
+        $coloniaNombre = $colonia ? $colonia->nombre : 'Desconocido';
 
-        $development->location = $colonia . ', ' . $municipio . ', ' . $estado;
+        // $estado = Estados::where('id', $request->id_estado)->get();
+        // $estado = $estado[0]['nombre'];
+
+        // $municipio = Municipios::where('id', $request->id_municipio)->get();
+        // $municipio = $municipio[0]['nombre'];
+
+        // $colonia = Colonias::where('id', $request->id_colonia)->get();
+        // $colonia = $colonia[0]['nombre'];
+
+        $development->location = $coloniaNombre . ', ' . $municipioNombre . ', ' . $estadoNombre;
 
         $development->cp = $request->cp;
         $development->map = $request->map;
