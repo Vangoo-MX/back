@@ -206,16 +206,12 @@
             @for ($i = 1; $i <= $dev[0]->images; $i++)
                 <div class="d-flex flex-column align-items-center">
                     <a href="https://dashboard.vangoo.mx/storage/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
-                        <img class="pe-2" src="{{asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?'}} <?php echo rand(); ?>" width="90px" height="90px">
+                        <img class="pe-2" src="{{asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?'}}<?php echo rand(); ?>" width="90px" height="90px">
                     </a>
                     <div class="mt-1">
                         <input class="form-control" type="number" name="orderimg[{{$i}}]" value="{{$i}}" max="{{$dev[0]->images}}" min="1" style="width:100%">
                     </div>
-                    <form method="POST" action="{{ route('admin.developments.delete_image', ['id' => $dev[0]->id, 'image' => $i]) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger mt-2">Eliminar</button>
-                    </form>
+                    <button type="button" class="btn btn-danger btn-sm mt-1 delete-image" data-image="{{$i}}">Eliminar</button>
                 </div>
                 @endfor
         </div>
@@ -364,33 +360,7 @@
             reader.readAsDataURL(file);
         });
     });
-    /*
-    document.getElementById('id_estado').addEventListener('change', function() {
 
-        var estadoId = this.options[this.selectedIndex].getAttribute('data-id');
-        var url = '../ep/getMunicipiosFromEstado/' + estadoId;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var municipios = JSON.parse(xhr.responseText);
-                var municipiosHtml = '';
-                for (var i = 0; i < municipios.length; i++) {
-                    municipiosHtml += '<option value="' + municipios[i].id + '" data-id="' + municipios[i].id + '">' + municipios[i].nombre + '</option>';
-                }
-                var selectHtml = '';
-                if (estadoId != 0) {
-                    selectHtml = '<select class="form-select" name="id_municipio" id="id_municipio">' + municipiosHtml + '</select>';
-                }
-                document.getElementById('municipioshtml').innerHTML = selectHtml;
-            } else {
-                console.log('Error');
-            }
-        };
-        xhr.send();
-    });
-*/
     function changeMuninicio() {
         var municipioId = document.getElementById('id_municipio').options[document.getElementById('id_municipio').selectedIndex].getAttribute('data-id');
         var url = '../../ep/getColoniasFromMunicipio/' + municipioId;
