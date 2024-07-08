@@ -108,10 +108,10 @@
                                 @foreach($municipios as $e)
                                 <option value="{{$e->id}}" data-id="{{$e->id}}">{{$e->nombre}}</option>
                                 @endforeach
+                                @error('id_municipio')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </select>
-                            @error('id_municipio')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
                         </div>
 
                         <div class="mb-3 mt-3">
