@@ -193,8 +193,6 @@ Route::get('ep/deletedev/{id}', [DevelopmentsController::class, 'deleteDev'])->n
 
 Route::get('ep/editdevelopments/{id}', [AdminController::class, 'editdevpage'])->name('dev.edit');
 
-Route::delete('admin/developments/{id}/image/{image}', [AdminController::class, 'deleteImage'])->name('admin.developments.delete_image');
-
 Route::post('ep/editdev', [DevelopmentsController::class, 'editdev'])->name('epDev.edit');
 
 Route::get('ep/commissions/{type}', [DevelopmentsController::class, 'getCommissionsEP'])->name('epDev.commissions');

@@ -517,31 +517,6 @@ class AdminController extends Controller
         return view('admin.developments', compact('desarrollos'));
     }
 
-    public function deleteImage($id, $image)
-    {
-        $path = storage_path('app/public/img/posts/developments/' . $id . '/' . $image . '.jpg');
-
-        if (file_exists($path)) {
-            unlink($path);
-
-            $dir = storage_path('app/public/img/posts/developments/' . $id);
-            $files = glob($dir . '/*.jpg');
-
-            foreach ($files as $key => $file) {
-                $newPath = $dir . '/' . ($key + 1) . '.jpg';
-                if ($file !== $newPath) {
-                    rename($file, $newPath);
-                }
-            }
-
-            $development = Developments::findOrFail($id);
-            $development->images = count($files);
-            $development->save();
-        }
-
-        return redirect()->back()->with('success', 'Imagen eliminada con éxito');
-    }
-
     public function queue()
     {
 
