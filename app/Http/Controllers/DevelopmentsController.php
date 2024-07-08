@@ -218,7 +218,7 @@ class DevelopmentsController extends Controller
     public function storeDev(Request $request)
     {
         $request->validate([
-            'title' => 'required|min:10|max:100',
+            'title' => 'required|min:5|max:100',
             'price_min' => 'required|numeric|lte:price_max',
             'price_max' => 'required|numeric|gte:price_min',
             'description' => 'required|min:10|max:500',
@@ -351,7 +351,7 @@ class DevelopmentsController extends Controller
     public function editdev(Request $request)
     {
         $request->validate([
-            'title' => 'required|min:10|max:100',
+            'title' => 'required|min:5|max:100',
             'price_min' => 'required|numeric|lte:price_max',
             'price_max' => 'required|numeric|gte:price_min',
             'description' => 'required|min:10|max:500',
