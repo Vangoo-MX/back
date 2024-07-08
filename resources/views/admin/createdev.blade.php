@@ -104,7 +104,7 @@
                         <div class="mb-3 mt-3">
                             <label for="id_municipio" class="form-label">Municipio:</label>
                             <select class="form-select" name="id_municipio" id="id_municipio" required>
-                                <option hidden selected>Selecciona un municipio</option>
+                                <option value="" hidden selected>Selecciona un municipio</option>
                                 @foreach($municipios as $e)
                                 <option value="{{$e->id}}" data-id="{{$e->id}}">{{$e->nombre}}</option>
                                 @endforeach
@@ -113,6 +113,19 @@
                                 @enderror
                             </select>
                         </div>
+
+                        <!-- <div class="mb-3 mt-3">
+                            <label for="id_municipio" class="form-label">Municipio:</label>
+                            <select class="form-select" name="id_municipio" id="id_municipio" required>
+                                <option hidden selected>Selecciona un municipio</option>
+                                @foreach($municipios as $e)
+                                <option value="{{$e->id}}" data-id="{{$e->id}}">{{$e->nombre}}</option>
+                                @endforeach
+                                @error('id_municipio')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </select>
+                        </div> -->
 
                         <div class="mb-3 mt-3">
                             <label for="id_colonia" class="form-label">Colonia:</label>
