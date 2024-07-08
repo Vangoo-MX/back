@@ -36,7 +36,7 @@
                     <td>@if($p->id_colonia) {{limitString(colonia($p->id_colonia),30)}} @endif</td>
                     <td>@if($p->id_municipio) {{municipio($p->id_municipio)}} @endif</td>
                     <td>@if($p->id_estado) {{estado($p->id_estado)}} @endif</td>
-                    <td><a href="user/{{$p->id_user}}">{{$p->id_user}}</a></td>
+                    <td><a href="user/{{$p->id_user}}">{{username($p->id_user)}}</a></td>
                     <td>{{ convertDate($p->created_at) }}</td>
                     <td>
                         <div class="dropdown">
