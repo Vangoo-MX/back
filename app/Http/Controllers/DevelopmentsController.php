@@ -229,6 +229,7 @@ class DevelopmentsController extends Controller
             'amenities' => 'min:3',
             'area' => 'required|numeric',
             'commission_percentage' => 'required|numeric',
+            'id_municipio' => 'required',
             //'imagen' => 'required|image|mimes:jpeg,jpg|max:2048',
         ], [
             'title.required' => 'El título es obligatorio',
@@ -257,6 +258,7 @@ class DevelopmentsController extends Controller
             'area.numeric' => 'La medida del area debe ser un número',
             'commission_percentage.required' => 'El porcentaje de comisión es requerido',
             'commission_percentage.numeric' => 'El porcentaje de comisión debe ser un número',
+            'id_municipio.required' => 'El municipio es requerido',
             // 'imagen.required' => 'La imagen es requerida',
             // 'imagen.image' => 'La imagen debe ser una imagen',
             // 'imagen.mimes' => 'Solo se admiten .jpg y .jpeg como archivos de imagen',
@@ -362,6 +364,7 @@ class DevelopmentsController extends Controller
             'amenities' => 'min:3',
             'area' => 'required|numeric',
             'commission_percentage' => 'required|numeric',
+            'id_municipio' => 'required',
             //'imagen' => 'required|image|mimes:jpeg,jpg|max:2048',
         ], [
             'title.required' => 'El título es obligatorio',
@@ -390,6 +393,7 @@ class DevelopmentsController extends Controller
             'area.numeric' => 'La medida del area debe ser un número',
             'commission_percentage.required' => 'El porcentaje de comisión es requerido',
             'commission_percentage.numeric' => 'El porcentaje de comisión debe ser un número',
+            'id_municipio.required' => 'El municipio es requerido',
             // 'imagen.required' => 'La imagen es requerida',
             // 'imagen.image' => 'La imagen debe ser una imagen',
             // 'imagen.mimes' => 'Solo se admiten .jpg y .jpeg como archivos de imagen',

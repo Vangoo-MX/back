@@ -123,6 +123,9 @@
                                                                                 } ?>>{{$e->nombre}}</option>
                                 @endforeach
                             </select>
+                            @error('id_municipio')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="mb-3 mt-3">
