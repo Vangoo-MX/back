@@ -206,19 +206,6 @@
             @for ($i = 1; $i <= $dev[0]->images; $i++)
                 <div class="d-flex flex-column align-items-center">
                     <a href="https://dashboard.vangoo.mx/storage/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
-                        <img class="pe-2" src="{{asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?'}}<?php echo rand(); ?>" width="90px" height="90px">
-                    </a>
-                    <div class="mt-1">
-                        <input class="form-control" type="number" name="orderimg[{{$i}}]" value="{{$i}}" max="{{$dev[0]->images}}" min="1" style="width:100%">
-                    </div>
-                    <button type="button" class="btn btn-danger btn-sm mt-1 delete-image" data-image="{{$i}}">Eliminar</button>
-                </div>
-                @endfor
-        </div>
-        <!-- <div class="d-flex gap-2 mt-2">
-            @for ($i = 1; $i <= $dev[0]->images; $i++)
-                <div class="d-flex flex-column align-items-center">
-                    <a href="https://dashboard.vangoo.mx/storage/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
                         <img class="pe-2" src="{{asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?'}} <?php echo rand(); ?>" width="90px" height="90px">
                     </a>
                     <div class="mt-1">
@@ -226,7 +213,7 @@
                     </div>
                 </div>
                 @endfor
-        </div> -->
+        </div>
 
         <div class="images mb-3 mt-3">
             <label for="image" class="form-label">Agregar más imágenes:</label>
