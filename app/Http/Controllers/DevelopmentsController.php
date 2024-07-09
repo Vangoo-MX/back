@@ -365,7 +365,9 @@ class DevelopmentsController extends Controller
             'amenities' => 'min:3',
             'area' => 'required|numeric',
             'commission_percentage' => 'required|numeric',
-            //'imagen' => 'required|image|mimes:jpeg,jpg|max:2048',
+            'id_municipio' => 'required',
+            'images' => 'required|array',
+            'images.*' => 'image|mimes:jpeg,jpg|max:2048'
         ], [
             'title.required' => 'El título es obligatorio',
             'title.min' => 'El título debe tener mas de 10 caracteres',
@@ -393,10 +395,11 @@ class DevelopmentsController extends Controller
             'area.numeric' => 'La medida del area debe ser un número',
             'commission_percentage.required' => 'El porcentaje de comisión es requerido',
             'commission_percentage.numeric' => 'El porcentaje de comisión debe ser un número',
-            // 'imagen.required' => 'La imagen es requerida',
-            // 'imagen.image' => 'La imagen debe ser una imagen',
-            // 'imagen.mimes' => 'Solo se admiten .jpg y .jpeg como archivos de imagen',
-            // 'imagen.max' => 'La imagen debe pesar menos de 2MB',
+            'id_municipio.required' => 'El municipio es requerido',
+            'imagen.required' => 'Sube al menos una imagen',
+            'images.*.image' => 'Cada archivo debe ser una imagen.',
+            'images.*.mimes' => 'Cada imagen debe ser de tipo jpeg o jpg.',
+            'images.*.max' => 'Cada imagen no puede ser mayor de 2MB.',
         ]);
         $development = Developments::findOrFail($request->id);
         $development->title = $request->title;
