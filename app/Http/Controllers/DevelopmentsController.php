@@ -366,7 +366,7 @@ class DevelopmentsController extends Controller
             'area' => 'required|numeric',
             'commission_percentage' => 'required|numeric',
             'id_municipio' => 'required',
-            'images' => 'required|array',
+            'images' => 'array',
             'images.*' => 'image|mimes:jpeg,jpg|max:2048'
         ], [
             'title.required' => 'El título es obligatorio',
@@ -396,7 +396,6 @@ class DevelopmentsController extends Controller
             'commission_percentage.required' => 'El porcentaje de comisión es requerido',
             'commission_percentage.numeric' => 'El porcentaje de comisión debe ser un número',
             'id_municipio.required' => 'El municipio es requerido',
-            'imagen.required' => 'Sube al menos una imagen',
             'images.*.image' => 'Cada archivo debe ser una imagen.',
             'images.*.mimes' => 'Cada imagen debe ser de tipo jpeg o jpg.',
             'images.*.max' => 'Cada imagen no puede ser mayor de 2MB.',
