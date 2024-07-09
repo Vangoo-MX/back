@@ -260,7 +260,7 @@ class DevelopmentsController extends Controller
             'commission_percentage.required' => 'El porcentaje de comisión es requerido',
             'commission_percentage.numeric' => 'El porcentaje de comisión debe ser un número',
             'id_municipio.required' => 'El municipio es requerido',
-            'imagen.required' => 'Sube al menos una imagen',,
+            'imagen.required' => 'Sube al menos una imagen',
             'images.*.image' => 'Cada archivo debe ser una imagen.',
             'images.*.mimes' => 'Cada imagen debe ser de tipo jpeg o jpg.',
             'images.*.max' => 'Cada imagen no puede ser mayor de 2MB.',
