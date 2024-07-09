@@ -218,7 +218,7 @@ class DevelopmentsController extends Controller
     public function storeDev(Request $request)
     {
         $request->validate([
-            'title' => 'required|min:5|max:100',
+            'title' => 'required|min:10|max:100',
             'price_min' => 'required|numeric|lte:price_max',
             'price_max' => 'required|numeric|gte:price_min',
             'description' => 'required|min:10|max:500',
@@ -229,9 +229,7 @@ class DevelopmentsController extends Controller
             'amenities' => 'min:3',
             'area' => 'required|numeric',
             'commission_percentage' => 'required|numeric',
-            'id_municipio' => 'required',
-            'images' => 'required|array|max:15',
-            'images.*' => 'image|mimes:jpeg,jpg|max:2048',
+            //'imagen' => 'required|image|mimes:jpeg,jpg|max:2048',
         ], [
             'title.required' => 'El título es obligatorio',
             'title.min' => 'El título debe tener mas de 10 caracteres',
@@ -259,12 +257,10 @@ class DevelopmentsController extends Controller
             'area.numeric' => 'La medida del area debe ser un número',
             'commission_percentage.required' => 'El porcentaje de comisión es requerido',
             'commission_percentage.numeric' => 'El porcentaje de comisión debe ser un número',
-            'id_municipio.required' => 'El municipio es requerido',
-            'imagen.required' => 'Sube al menos una imagen',
-            'images.max' => 'No puede subir más de 15 imágenes.',
-            'images.*.image' => 'Cada archivo debe ser una imagen.',
-            'images.*.mimes' => 'Cada imagen debe ser de tipo jpeg o jpg.',
-            'images.*.max' => 'Cada imagen no puede ser mayor de 2MB.',
+            // 'imagen.required' => 'La imagen es requerida',
+            // 'imagen.image' => 'La imagen debe ser una imagen',
+            // 'imagen.mimes' => 'Solo se admiten .jpg y .jpeg como archivos de imagen',
+            // 'imagen.max' => 'La imagen debe pesar menos de 2MB',
         ]);
         $development = new Developments;
         $development->title = $request->title;
@@ -355,7 +351,7 @@ class DevelopmentsController extends Controller
     public function editdev(Request $request)
     {
         $request->validate([
-            'title' => 'required|min:5|max:100',
+            'title' => 'required|min:10|max:100',
             'price_min' => 'required|numeric|lte:price_max',
             'price_max' => 'required|numeric|gte:price_min',
             'description' => 'required|min:10|max:500',
@@ -366,9 +362,7 @@ class DevelopmentsController extends Controller
             'amenities' => 'min:3',
             'area' => 'required|numeric',
             'commission_percentage' => 'required|numeric',
-            'id_municipio' => 'required',
-            'images' => 'required|array|max:15',
-            'images.*' => 'image|mimes:jpeg,jpg|max:2048'
+            //'imagen' => 'required|image|mimes:jpeg,jpg|max:2048',
         ], [
             'title.required' => 'El título es obligatorio',
             'title.min' => 'El título debe tener mas de 10 caracteres',
@@ -396,13 +390,10 @@ class DevelopmentsController extends Controller
             'area.numeric' => 'La medida del area debe ser un número',
             'commission_percentage.required' => 'El porcentaje de comisión es requerido',
             'commission_percentage.numeric' => 'El porcentaje de comisión debe ser un número',
-            'id_municipio.required' => 'El municipio es requerido',
-            'imagen.required' => 'Sube al menos una imagen',
-            'images.max' => 'No puede subir más de 15 imágenes.',
-            'images.*.image' => 'Cada archivo debe ser una imagen.',
-            'images.*.mimes' => 'Cada imagen debe ser de tipo jpeg o jpg.',
-            'images.*.max' => 'Cada imagen no puede ser mayor de 2MB.',
-
+            // 'imagen.required' => 'La imagen es requerida',
+            // 'imagen.image' => 'La imagen debe ser una imagen',
+            // 'imagen.mimes' => 'Solo se admiten .jpg y .jpeg como archivos de imagen',
+            // 'imagen.max' => 'La imagen debe pesar menos de 2MB',
         ]);
         $development = Developments::findOrFail($request->id);
         $development->title = $request->title;
@@ -419,16 +410,16 @@ class DevelopmentsController extends Controller
         $development->street = $request->street;
         $development->num_ext = $request->num_ext;
 
-        $estado = Estados::find($request->id_estado);
-        $estadoNombre = $estado ? $estado->nombre : 'Desconocido';
+        $estado = Estados::where('id', $request->id_estado)->get();
+        $estado = $estado[0]['nombre'];
 
-        $municipio = Municipios::find($request->id_municipio);
-        $municipioNombre = $municipio ? $municipio->nombre : 'Desconocido';
+        $municipio = Municipios::where('id', $request->id_municipio)->get();
+        $municipio = $municipio[0]['nombre'];
 
-        $colonia = Colonias::find($request->id_colonia);
-        $coloniaNombre = $colonia ? $colonia->nombre : 'Desconocido';
+        $colonia = Colonias::where('id', $request->id_colonia)->get();
+        $colonia = $colonia[0]['nombre'];
 
-        $development->location = $coloniaNombre . ', ' . $municipioNombre . ', ' . $estadoNombre;
+        $development->location = $colonia . ', ' . $municipio . ', ' . $estado;
 
         $development->cp = $request->cp;
         $development->map = $request->map;
@@ -498,8 +489,10 @@ class DevelopmentsController extends Controller
 
 
                 if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
+                    //foreach ($request->file('imageoption.' . $key) as $i => $image) {
                     $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
                     $request->file('imageoption.' . $key)->storeAs('public/img/posts/developments/' . $development->id . '/' . 'plans/', $nameimg);
+                    //}
                 }
 
                 $appartment->save();
@@ -538,8 +531,10 @@ class DevelopmentsController extends Controller
 
 
                 if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
+                    //foreach ($request->file('imageoption.' . $key) as $i => $image) {
                     $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
                     $request->file('imageoption.' . $key)->storeAs('public/img/posts/developments/' . $development->id . '/' . 'plans/', $nameimg);
+                    //}
                 }
 
                 $appartment->save();

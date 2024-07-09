@@ -97,6 +97,20 @@
 
                     </div>
                     <div class="w-100">
+
+                        <!---
+                            <div class="mb-3 mt-3">
+                                <label for="id_estado" class="form-label">Estado:</label>
+                                <select class="form-select" name="id_estado" id="id_estado">
+                                    @ foreach($estados as $e)
+                                        <option value="$e->id" data-id="$e->id">$e->nombre</option>
+                                    @ endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3 mt-3">
+                                <label for="id_municipio" class="form-label">Municipio:</label>
+                                <span id="municipioshtml"></span>
+                            </div>--->
                         <input type="hidden" id="id_estado" name="id_estado" value="19">
 
                         <div class="mb-3 mt-3">
@@ -109,9 +123,6 @@
                                                                                 } ?>>{{$e->nombre}}</option>
                                 @endforeach
                             </select>
-                            @error('id_municipio')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
                         </div>
 
                         <div class="mb-3 mt-3">
@@ -333,7 +344,33 @@
             reader.readAsDataURL(file);
         });
     });
+    /*
+    document.getElementById('id_estado').addEventListener('change', function() {
 
+        var estadoId = this.options[this.selectedIndex].getAttribute('data-id');
+        var url = '../ep/getMunicipiosFromEstado/' + estadoId;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var municipios = JSON.parse(xhr.responseText);
+                var municipiosHtml = '';
+                for (var i = 0; i < municipios.length; i++) {
+                    municipiosHtml += '<option value="' + municipios[i].id + '" data-id="' + municipios[i].id + '">' + municipios[i].nombre + '</option>';
+                }
+                var selectHtml = '';
+                if (estadoId != 0) {
+                    selectHtml = '<select class="form-select" name="id_municipio" id="id_municipio">' + municipiosHtml + '</select>';
+                }
+                document.getElementById('municipioshtml').innerHTML = selectHtml;
+            } else {
+                console.log('Error');
+            }
+        };
+        xhr.send();
+    });
+*/
     function changeMuninicio() {
         var municipioId = document.getElementById('id_municipio').options[document.getElementById('id_municipio').selectedIndex].getAttribute('data-id');
         var url = '../../ep/getColoniasFromMunicipio/' + municipioId;

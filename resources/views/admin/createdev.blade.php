@@ -104,28 +104,12 @@
                         <div class="mb-3 mt-3">
                             <label for="id_municipio" class="form-label">Municipio:</label>
                             <select class="form-select" name="id_municipio" id="id_municipio" required>
-                                <option value="" hidden selected>Selecciona un municipio</option>
-                                @foreach($municipios as $e)
-                                <option value="{{$e->id}}" data-id="{{$e->id}}">{{$e->nombre}}</option>
-                                @endforeach
-                                @error('id_municipio')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </select>
-                        </div>
-
-                        <!-- <div class="mb-3 mt-3">
-                            <label for="id_municipio" class="form-label">Municipio:</label>
-                            <select class="form-select" name="id_municipio" id="id_municipio" required>
                                 <option hidden selected>Selecciona un municipio</option>
                                 @foreach($municipios as $e)
                                 <option value="{{$e->id}}" data-id="{{$e->id}}">{{$e->nombre}}</option>
                                 @endforeach
-                                @error('id_municipio')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </select>
-                        </div> -->
+                        </div>
 
                         <div class="mb-3 mt-3">
                             <label for="id_colonia" class="form-label">Colonia:</label>
@@ -201,7 +185,6 @@
                 <div class="images mb-3 mt-3">
                     <label for="image" class="form-label">Imágenes:</label>
                     <input type="file" name="images[]" id="imagen" class="form-control" accept="image/jpeg" multiple onchange="previewImage()">
-                    <label for="imageMessage" class="form-label">Hasta un maximo de 15 imagenes son aceptadas</label>
                     @error('imagen')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -314,13 +297,6 @@
 
 <script>
     //imagenes
-    document.getElementById('imagen').addEventListener('change', function(event) {
-        if (this.files.length > 15) {
-            alert('No puede subir más de 15 imágenes.');
-            this.value = '';
-        }
-    });
-
     const imagenInput = document.getElementById('imagen');
     const previewContainer = document.getElementById('preview');
     const previewImage = previewContainer.querySelector('.preview-image');
