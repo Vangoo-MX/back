@@ -551,6 +551,32 @@ class DevelopmentsController extends Controller
         return redirect()->route('admin.developments');
     }
 
+    public function deleteImage(Request $request, $developmentId, $imageId)
+    {
+        $imagePath = 'public/img/posts/developments/' . $developmentId . '/' . $imageId . '.jpg';
+
+        if (Storage::exists($imagePath)) {
+            Storage::delete($imagePath);
+
+            $development = Developments::findOrFail($developmentId);
+            $development->images -= 1;
+            $development->save();
+
+            for ($i = $imageId + 1; $i <= $development->images + 1; $i++) {
+                $oldImagePath = 'public/img/posts/developments/' . $developmentId . '/' . $i . '.jpg';
+                $newImagePath = 'public/img/posts/developments/' . $developmentId . '/' . ($i - 1) . '.jpg';
+
+                if (Storage::exists($oldImagePath)) {
+                    Storage::move($oldImagePath, $newImagePath);
+                }
+            }
+
+            return redirect()->back()->with('success', 'La imagen se eliminó correctamente.');
+        } else {
+            return response()->json(['error' => 'Imagen no encontrada.'], 404);
+        }
+    }
+
     public function deleteDev($id)
     {
 

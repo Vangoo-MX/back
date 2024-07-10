@@ -201,13 +201,15 @@
         <span>Imagenes:</span>
         <div class="d-flex gap-2 mt-2">
             @for ($i = 1; $i <= $dev[0]->images; $i++)
-                <div class="d-flex flex-column align-items-center">
+                <div class="d-flex flex-column align-items-center image-container">
                     <a href="https://dashboard.vangoo.mx/storage/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
-                        <img class="pe-2" src="{{asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?'}} <?php echo rand(); ?>" width="90px" height="90px">
+                        <img class="pe-2" src="{{ asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?' . uniqid() }}" width="90px" height="90px">
                     </a>
                     <div class="mt-1">
                         <input class="form-control" type="number" name="orderimg[{{$i}}]" value="{{$i}}" max="{{$dev[0]->images}}" min="1" style="width:100%">
                     </div>
+                    <span class="delete-icon" onclick="confirmDelete(event, {{$i}})">❌</span>
+                    <!-- <button type="button" class="btn btn-danger mt-1" onclick="confirmDelete(event, {{$i}})">Eliminar</button> -->
                 </div>
                 @endfor
         </div>
@@ -275,6 +277,10 @@
         </div>
 
         </form>
+        <form id="delete-form" action="{{ route('development.images.delete', ['developmentId' => $dev[0]->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+            @csrf
+            @method('DELETE')
+        </form>
     </div>
 
 
@@ -313,6 +319,22 @@
         display: flex;
         gap: 5px;
     }
+
+    .image-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .delete-icon {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        color: red;
+        cursor: pointer;
+        z-index: 1;
+        margin-top: 3px;
+        margin-right: 10px;
+    }
 </style>
 
 <script>
@@ -344,6 +366,15 @@
             reader.readAsDataURL(file);
         });
     });
+
+    function confirmDelete(event, imageId) {
+        event.preventDefault();
+        if (confirm('¿Estás seguro de eliminar esta imagen?')) {
+            var form = document.getElementById('delete-form');
+            form.action = form.action.replace(':imageId', imageId);
+            form.submit();
+        }
+    }
     /*
     document.getElementById('id_estado').addEventListener('change', function() {
 
