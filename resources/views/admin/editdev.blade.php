@@ -459,7 +459,7 @@
         newOption.id = `option-appartment-${optionCount}`;
 
         const inputs = `
-            <span class="input-group-text">Opción ${optionCount}</span>
+            <span class="input-group-text"># ${optionCount}</span>
             <input type="number" class="form-control" placeholder="Precio" name="option[${optionCount}][price]" required>
             <input type="number" class="form-control" placeholder="Area" name="option[${optionCount}][area]" required>
             <input type="number" class="form-control" placeholder="Habitaciones" name="option[${optionCount}][rooms]" required>
