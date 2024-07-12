@@ -468,7 +468,7 @@
         newOption.innerHTML = `
             <div class="input-group mb-3 gap-2">${inputs}</div>
             <div class="input-group mb-3 app-file">${fileInput}</div>
-            <div class="input-group-icon mb-3 gap-2">${button}</div>
+            <div class="input-group-icon option-appartment mb-3">${button}</div>
         `;
 
         optionsContainer.appendChild(newOption);
