@@ -223,16 +223,16 @@
                         @foreach($app as $a)
                         <div class="option-appartment" id="option-appartment-{{$loop->index+1}}">
                             <div class="input-group mb-3 gap-2 flex-column flex-lg-row">
-                                <input type="text" class="form-control app-input" placeholder="Titulo" value="{{$a->title}}" name="optionapp[{{$loop->index+1}}][title]" required>
-                                <input type="number" class="form-control app-input" placeholder="Precio" value="{{$a->price}}" name="optionapp[{{$loop->index+1}}][price]" required>
-                                <input type="number" step="0.01" class="form-control app-input" placeholder="Area" value="{{$a->area}}" name="optionapp[{{$loop->index+1}}][area]" required>
-                                <input type="number" class="form-control app-input" placeholder="Habitaciones" value="{{$a->rooms}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
-                                <input type="number" class="form-control app-input" placeholder="Baños" value="{{$a->bathrooms}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
-                                <input type="number" class="form-control app-input" placeholder="Estacionamientos" value="{{$a->parkings}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
-                                <input type="number" class="form-control app-input" placeholder="Num disponibles" value="{{$a->num_available}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
+                                <input type="text" class="form-control app-input" placeholder="Titulo" value="{{old('title', $a->title)}}" name="optionapp[{{$loop->index+1}}][title]" required>
+                                <input type="number" class="form-control app-input" placeholder="Precio" value="{{old('price', $a->price)}}" name="optionapp[{{$loop->index+1}}][price]" required>
+                                <input type="number" step="0.01" class="form-control app-input" placeholder="Area" value="{{old('area', $a->area)}}" name="optionapp[{{$loop->index+1}}][area]" required>
+                                <input type="number" class="form-control app-input" placeholder="Habitaciones" value="{{old('rooms', $a->rooms)}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
+                                <input type="number" class="form-control app-input" placeholder="Baños" value="{{old('bathrooms', $a->bathrooms)}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
+                                <input type="number" class="form-control app-input" placeholder="Estacionamientos" value="{{old('parkings',$a->parkings)}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
+                                <input type="number" class="form-control app-input" placeholder="Num disponibles" value="{{old('num_available', $a->num_available)}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
                             </div>
                             <div class="input-group mb-3 app-file">
-                                <input type="file" class="form-control" name="imageoption[{{$loop->index+1}}]" accept="image/jpeg">
+                                <input type="file" class="form-control" value="{{old('imageoption', $a->imageoption)}}" name="imageoption[{{$loop->index+1}}]" accept="image/jpeg">
                             </div>
                         </div>
                         @endforeach
