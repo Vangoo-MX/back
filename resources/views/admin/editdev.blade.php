@@ -345,12 +345,15 @@
 
     /*-----------RESPONSIVE--------------*/
     @media only screen and (max-width: 600px) {
-        .option-appartment {
+
+        .option-appartment,
+        .input-group-icon {
             flex-direction: column;
         }
 
         .app-file,
-        .app-input {
+        .app-input,
+        .delete-icon-option {
             width: 100% !important;
         }
     }
@@ -468,7 +471,7 @@
         newOption.innerHTML = `
             <div class="input-group mb-3 gap-2">${inputs}</div>
             <div class="input-group mb-3 app-file">${fileInput}</div>
-            <div class="input-group-icon option-appartment mb-3">${button}</div>
+            <div class="input-group-icon mb-3">${button}</div>
         `;
 
         optionsContainer.appendChild(newOption);
