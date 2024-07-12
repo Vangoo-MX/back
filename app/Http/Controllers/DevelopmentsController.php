@@ -304,11 +304,22 @@ class DevelopmentsController extends Controller
         }
         $development->save();
 
+        // if ($request->hasFile('images')) {
+        //     foreach ($request->file('images') as $index => $image) {
+
+        //         $nameimg = Str::slug($index + 1) . "." . $image->getClientOriginalExtension();
+        //         $image->storeAs('public/img/posts/developments/' . $development->id . '/', $nameimg);
+        //     }
+        // }
+
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
-
+                $directory = 'public/img/posts/developments/' . $development->id . '/';
                 $nameimg = Str::slug($index + 1) . "." . $image->getClientOriginalExtension();
-                $image->storeAs('public/img/posts/developments/' . $development->id . '/', $nameimg);
+                if (!File::exists($directory)) {
+                    File::makeDirectory($directory, 0755, true);
+                }
+                $image->storeAs($directory, $nameimg);
             }
         }
 
