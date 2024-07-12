@@ -149,13 +149,13 @@
                             </div> --}}
 
                         <div class="mb-3 mt-3">
-                            <label for="maplat" class="form-label">Coordenadas Longitud:</label>
-                            <input type="text" class="form-control" id="maplat" name="maplat" value="{{old('map_lat')}}">
+                            <label for="map_lat" class="form-label">Coordenadas Longitud:</label>
+                            <input type="text" class="form-control" id="map_lat" name="map_lat" value="{{old('map_lat')}}">
                         </div>
 
                         <div class="mb-3 mt-3">
-                            <label for="maplong" class="form-label">Coordenadas Latitud:</label>
-                            <input type="text" class="form-control" id="maplong" name="maplong" value="{{old('map_long')}}">
+                            <label for="map_long" class="form-label">Coordenadas Latitud:</label>
+                            <input type="text" class="form-control" id="map_long" name="map_long" value="{{old('map_long')}}">
                         </div>
 
                         <div class="mb-3 mt-3">
@@ -285,6 +285,24 @@
         width: 25%;
     }
 
+    .delete-icon-option {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        color: red;
+        cursor: pointer;
+        z-index: 1;
+        margin-top: 7px;
+    }
+
+    .input-group-icon {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        width: 1%;
+    }
+
     /*-----------RESPONSIVE--------------*/
     @media only screen and (max-width: 600px) {
         .option-appartment {
@@ -379,9 +397,12 @@
             <input type="file" class="form-control" name="imageoption[${optionCount}]" accept="image/jpeg">
         `;
 
+        const button = `<a href="#" class="delete-icon-option delete-option-btn" data-option-id="${optionCount}">❌</a>`;
+
         newOption.innerHTML = `
             <div class="input-group mb-3 gap-2">${inputs}</div>
             <div class="input-group mb-3 app-file">${fileInput}</div>
+            <div class="input-group-icon mb-3 gap-2">${button}</div>
         `;
 
         optionsContainer.appendChild(newOption);
