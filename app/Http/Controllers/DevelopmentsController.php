@@ -230,8 +230,8 @@ class DevelopmentsController extends Controller
             'area' => 'required|numeric',
             'commission_percentage' => 'required|numeric',
             'id_municipio' => 'required',
-            'images' => 'required|array',
-            'images.*' => 'image|mimes:jpeg,jpg|max:2048',
+            // 'images' => 'required|array',
+            // 'images.*' => 'image|mimes:jpeg,jpg|max:2048',
         ], [
             'title.required' => 'El título es obligatorio',
             'title.min' => 'El título debe tener mas de 10 caracteres',
@@ -260,10 +260,10 @@ class DevelopmentsController extends Controller
             'commission_percentage.required' => 'El porcentaje de comisión es requerido',
             'commission_percentage.numeric' => 'El porcentaje de comisión debe ser un número',
             'id_municipio.required' => 'El municipio es requerido',
-            'imagen.required' => 'Sube al menos una imagen',
-            'images.*.image' => 'Cada archivo debe ser una imagen.',
-            'images.*.mimes' => 'Cada imagen debe ser de tipo jpeg o jpg.',
-            'images.*.max' => 'Cada imagen no puede ser mayor de 2MB.',
+            // 'imagen.required' => 'Sube al menos una imagen',
+            // 'images.*.image' => 'Cada archivo debe ser una imagen.',
+            // 'images.*.mimes' => 'Cada imagen debe ser de tipo jpeg o jpg.',
+            // 'images.*.max' => 'Cada imagen no puede ser mayor de 2MB.',
         ]);
         $development = new Developments;
         $development->title = $request->title;
@@ -367,8 +367,8 @@ class DevelopmentsController extends Controller
             'area' => 'required|numeric',
             'commission_percentage' => 'required|numeric',
             'id_municipio' => 'required',
-            'images' => 'array',
-            'images.*' => 'image|mimes:jpeg,jpg|max:2048'
+            // 'images' => 'array',
+            // 'images.*' => 'image|mimes:jpeg,jpg|max:2048'
         ], [
             'title.required' => 'El título es obligatorio',
             'title.min' => 'El título debe tener mas de 10 caracteres',
@@ -397,9 +397,9 @@ class DevelopmentsController extends Controller
             'commission_percentage.required' => 'El porcentaje de comisión es requerido',
             'commission_percentage.numeric' => 'El porcentaje de comisión debe ser un número',
             'id_municipio.required' => 'El municipio es requerido',
-            'images.*.image' => 'Cada archivo debe ser una imagen.',
-            'images.*.mimes' => 'Cada imagen debe ser de tipo jpeg o jpg.',
-            'images.*.max' => 'Cada imagen no puede ser mayor de 2MB.',
+            // 'images.*.image' => 'Cada archivo debe ser una imagen.',
+            // 'images.*.mimes' => 'Cada imagen debe ser de tipo jpeg o jpg.',
+            // 'images.*.max' => 'Cada imagen no puede ser mayor de 2MB.',
         ]);
         $development = Developments::findOrFail($request->id);
         $development->title = $request->title;
