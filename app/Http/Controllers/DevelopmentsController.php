@@ -293,8 +293,8 @@ class DevelopmentsController extends Controller
 
         $development->cp = $request->cp;
         $development->map = $request->map;
-        $development->map_lat = $request->mapLat;
-        $development->map_long = $request->mapLong;
+        $development->map_lat = $request->map_lat;
+        $development->map_long = $request->map_long;
         $development->area = $request->area;
         $development->amenities = $request->amenities;
         $development->commission_percentage = $request->commission_percentage;
@@ -317,6 +317,7 @@ class DevelopmentsController extends Controller
         foreach ($request->option as $option) {
             $appartment = new DevelopmentsApartments;
             $appartment->id_development = $development->id;
+            $appartment->title = $option['title'];
             $appartment->price = $option['price'];
             $appartment->rooms = $option['rooms'];
             $appartment->bathrooms = $option['bathrooms'];
@@ -428,8 +429,8 @@ class DevelopmentsController extends Controller
 
         $development->cp = $request->cp;
         $development->map = $request->map;
-        $development->map_lat = $request->mapLat;
-        $development->map_long = $request->mapLong;
+        $development->map_lat = $request->map_lat;
+        $development->map_long = $request->map_long;
         $development->area = $request->area;
         $development->amenities = $request->amenities;
         $development->commission_percentage = $request->commission_percentage;
@@ -472,12 +473,18 @@ class DevelopmentsController extends Controller
 
         if ($request->optionapp) {
             foreach ($request->optionapp as $option) {
+                if (!isset($option['id'])) {
+                    continue;
+                }
+
                 $appartment = DevelopmentsApartments::findOrFail($option['id']);
-                $appartment->price = $option['price'];
-                $appartment->rooms = $option['rooms'];
-                $appartment->bathrooms = $option['bathrooms'];
-                $appartment->parkings = $option['parkings'];
-                $appartment->area = $option['area'];
+                $appartment->title = $option['title'] ?? $appartment->title;
+                $appartment->price = $option['price'] ?? $appartment->price;
+                $appartment->rooms = $option['rooms'] ?? $appartment->rooms;
+                $appartment->bathrooms = $option['bathrooms'] ?? $appartment->bathrooms;
+                $appartment->parkings = $option['parkings'] ?? $appartment->parkings;
+                $appartment->area = $option['area'] ?? $appartment->area;
+
                 if ($request->file('imageoption.' . $key) && is_array($request->file('imageoption.' . $key))) {
                     $appartment->image_plans = sizeof($request->file('imageoption.' . $key));
                 } elseif ($request->file('imageoption.' . $key) && !is_array($request->file('imageoption.' . $key))) {
@@ -486,18 +493,11 @@ class DevelopmentsController extends Controller
                     $appartment->image_plans = 0;
                 }
 
-                if ($option['num_available']) {
-                    $appartment->num_available = $option['num_available'];
-                } else {
-                    $appartment->num_available = 0;
-                }
-
+                $appartment->num_available = $option['num_available'] ?? 0;
 
                 if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
-                    //foreach ($request->file('imageoption.' . $key) as $i => $image) {
                     $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
                     $request->file('imageoption.' . $key)->storeAs('public/img/posts/developments/' . $development->id . '/' . 'plans/', $nameimg);
-                    //}
                 }
 
                 $appartment->save();
@@ -515,6 +515,7 @@ class DevelopmentsController extends Controller
             foreach ($request->option as $option) {
                 $appartment = new DevelopmentsApartments;
                 $appartment->id_development = $development->id;
+                $appartment->title = $option['title'];
                 $appartment->price = $option['price'];
                 $appartment->rooms = $option['rooms'];
                 $appartment->bathrooms = $option['bathrooms'];

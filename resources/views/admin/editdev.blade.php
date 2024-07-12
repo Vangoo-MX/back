@@ -10,7 +10,7 @@
 
 <!-- Content Row -->
 <div class="row d-flex justify-content-center w-100">
-    <div class="col-12 col-lg-4 px-5 d-flex flex-column align-items-center justify-content-center w-100">
+    <div class="col-12 col-lg-4 px-2 px-lg-5 d-flex flex-column align-items-center justify-content-center w-100">
 
         <h3>{{$dev[0]->title}}</h3>
 
@@ -20,7 +20,7 @@
                 @csrf
                 <input type="hidden" name="id" value="{{$dev[0]->id}}">
 
-                <div class="d-flex gap-5 w-100">
+                <div class="d-flex gap-5 w-100 flex-column flex-lg-row">
                     <div class="w-100">
 
                         <div class="mb-3 mt-3">
@@ -45,7 +45,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="price_min" class="form-label">Precio mínimo:</label>
-                            <input type="number" class="form-control" step="0.01" id="price_min" value="{{old('price_min', $dev[0]->price_min)}}" placeholder="Precio mínimo" name="price_min" required>
+                            <input type="number" class="form-control" id="price_min" placeholder="Precio mínimo" name="price_min" value="{{old('price_min', $dev[0]->price_min)}}" required>
                             @error('price_min')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -53,7 +53,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="price_max" class="form-label">Precio máximo:</label>
-                            <input type="number" class="form-control" step="0.01" id="price_max" value="{{old('price_max', $dev[0]->price_max)}}" placeholder="Precio máximo" name="price_max" required>
+                            <input type="number" class="form-control" id="price_max" placeholder="Precio máximo" name="price_max" value="{{old('price_max', $dev[0]->price_max)}}" required>
                             @error('price_max')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -69,7 +69,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="availability" class="form-label">Disponibilidad:</label>
-                            <input type="date" class="form-control" id="availability" value="{{old('availability', $dev[0]->availability)}}" placeholder="Fecha en que estará disponible" name="availability">
+                            <input type="date" class="form-control" id="availability" placeholder="Fecha en que estará disponible" name="availability" value="{{old('availability', $dev[0]->availability)}}">
                             @error('availability')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -77,10 +77,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="financing" class="form-label">Financiación:</label>
-                            <input type="text" class="form-control" id="financing" value="{{old('financing', $dev[0]->financing)}}" placeholder="Financiado" name="financing">
-                            @error('financing')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <input type="text" class="form-control" id="financing" placeholder="Financiado" name="financing" value="{{old('financing', $dev[0]->financing)}}">
                         </div>
 
                         <div class="mb-3 mt-3">
@@ -132,7 +129,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="street" class="form-label">Calle:</label>
-                            <input type="text" class="form-control" id="street" value="{{old('street', $dev[0]->street)}}" placeholder="Ingresa la calle" name="street">
+                            <input type="text" class="form-control" id="street" placeholder="Ingresa la calle" name="street" value="{{old('street', $dev[0]->street)}}">
                             @error('street')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -140,7 +137,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="num_ext" class="form-label">Número exterior:</label>
-                            <input type="number" class="form-control" id="num_ext" value="{{old('num_ext', $dev[0]->num_ext)}}" placeholder="Ingresa el número exterior" name="num_ext">
+                            <input type="number" class="form-control" id="num_ext" placeholder="Ingresa el número exterior" name="num_ext" value="{{old('num_ext', $dev[0]->num_ext)}}">
                             @error('num_ext')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -148,7 +145,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="cp" class="form-label">CP:</label>
-                            <input type="number" class="form-control" id="cp" value="{{old('cp', $dev[0]->cp)}}" placeholder="Ingresa el código postal" name="cp">
+                            <input type="number" class="form-control" id="cp" placeholder="Ingresa el código postal" name="cp" value="{{old('cp', $dev[0]->cp)}}">
                             @error('cp')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -156,149 +153,137 @@
 
                         {{-- <div class="mb-3 mt-3">
                                 <label for="map" class="form-label">Mapa:</label>
-                                <input type="text" class="form-control" id="map" value="{{old('map', $dev[0]->map)}}" placeholder="Ingresa el link de google maps" name="map">
-                    </div> --}}
+                                <input type="text" class="form-control" id="map" name="map">
+                            </div> --}}
 
-                    <div class="mb-3 mt-3">
-                        <label for="maplat" class="form-label">Coordenadas Longitud:</label>
-                        <input type="text" class="form-control" id="maplat" name="maplat" value="{{old('map_lat', $dev[0]->map_lat)}}">
-                    </div>
+                        <div class="mb-3 mt-3">
+                            <label for="map_lat" class="form-label">Coordenadas Longitud:</label>
+                            <input type="text" class="form-control" id="map_lat" name="map_lat" value="{{old('map_lat', $dev[0]->map_lat)}}">
+                        </div>
 
-                    <div class="mb-3 mt-3">
-                        <label for="maplong" class="form-label">Coordenadas Latitud:</label>
-                        <input type="text" class="form-control" id="maplong" name="maplong" value="{{old('map_long', $dev[0]->map_long)}}">
-                    </div>
+                        <div class="mb-3 mt-3">
+                            <label for="map_long" class="form-label">Coordenadas Latitud:</label>
+                            <input type="text" class="form-control" id="map_long" name="map_long" value="{{old('map_long', $dev[0]->map_long)}}">
+                        </div>
 
-                    <div class="mb-3 mt-3">
-                        <label for="area" class="form-label">Area:</label>
-                        <input type="number" step="0.01" class="form-control" id="area" value="{{old('area', $dev[0]->area)}}" placeholder="Ingresa el area del inmueble" name="area">
-                        @error('area')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
+                        <div class="mb-3 mt-3">
+                            <label for="area" class="form-label">Area:</label>
+                            <input type="number" step="0.01" class="form-control" id="area" placeholder="Ingresa el area del inmueble" name="area" value="{{old('area', $dev[0]->area)}}">
+                            @error('area')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                    <div class="mb-3 mt-3">
-                        <label for="amenities" class="form-label">Amenidades:</label>
-                        <input type="text" class="form-control" id="amenities" value="{{old('amenities', $dev[0]->amenities)}}" placeholder="Separe con comas y sin espacios" name="amenities">
-                        @error('amenities')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
+                        <div class="mb-3 mt-3">
+                            <label for="amenities" class="form-label">Amenidades:</label>
+                            <input type="text" class="form-control" id="amenities" placeholder="Separe con comas y sin espacios" name="amenities" value="{{old('amenities', $dev[0]->amenities)}}">
+                            @error('amenities')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                    <div class="mb-3 mt-3">
-                        <label for="commission_percentage" class="form-label">Porcentaje de comisión de venta:</label>
-                        <input type="number" class="form-control" id="commission_percentage" value="{{old('commission_percentage', $dev[0]->commission_percentage)}}" placeholder="Porcentaje en números sin signos" name="commission_percentage">
-                        @error('commission_percentage')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <input type="hidden" name="num_images" value="{{old('images', $dev[0]->images)}}">
-
-                </div>
-        </div>
-
-        <span>Imagenes:</span>
-        <div class="d-flex gap-2 mt-2">
-            @for ($i = 1; $i <= $dev[0]->images; $i++)
-                <div class="d-flex flex-column align-items-center image-container">
-                    <a href="https://dashboard.vangoo.mx/storage/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
-                        <img class="pe-2" src="{{ asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?' . uniqid() }}" width="90px" height="90px">
-                    </a>
-                    <div class="mt-1">
-                        <input class="form-control" type="number" name="orderimg[{{$i}}]" value="{{$i}}" max="{{$dev[0]->images}}" min="1" style="width:100%">
-                    </div>
-                    <span class="delete-icon" onclick="confirmDelete(event, {{$i}})">❌</span>
-                    <!-- <button type="button" class="btn btn-danger mt-1" onclick="confirmDelete(event, {{$i}})">Eliminar</button> -->
-                </div>
-                @endfor
-        </div>
-
-        <div class="images mb-3 mt-3">
-            <label for="image" class="form-label">Agregar más imágenes:</label>
-            <input type="file" name="images[]" id="imagen" class="form-control" accept="image/jpeg" multiple onchange="previewImage()">
-            <div id="preview"></div>
-        </div>
-
-        <hr>
-
-        <div class="mt-3 mb-3">
-            <label class="form-label">Opciones de departamentos:</label>
-
-            <div class="options-container">
-                @foreach($app as $a)
-                <div class="option-appartment" id="option-appartment-{{$loop->index+1}}">
-                    <a href="" class="mt-2 d-none" style="text-decoration:none;">
-                        <i class="fa-solid fa-circle-xmark text-danger mx-1"></i>
-                    </a>
-                    <div class="input-group mb-3 option-appartment">
-                        <span class="input-group-text">#{{$loop->index+1}}</span>
-                        <input type="hidden" value="{{$a->id}}" name="optionapp[{{$loop->index+1}}][id]">
-                        <input type="number" step="0.01" class="form-control" placeholder="Precio" value="{{$a->price}}" name="optionapp[{{$loop->index+1}}][price]" required>
-                        <input type="number" step="0.01" class="form-control" placeholder="Area" value="{{$a->area}}" name="optionapp[{{$loop->index+1}}][area]" required>
-                        <input type="number" step="0.01" class="form-control" placeholder="Habitaciones" value="{{$a->rooms}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
-                        <input type="number" step="0.01" class="form-control" placeholder="Baños" value="{{$a->bathrooms}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
-                        <input type="number" step="0.01" class="form-control" placeholder="Estacionamientos" value="{{$a->parkings}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
-                        <input type="number" step="0.01" class="form-control" placeholder="Num disponibles" value="{{$a->num_available}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
-                    </div>
-                    <div class="input-group mb-3 w-50 option-appartment">
-                        <a href="https://dashboard.vangoo.mx/img/posts/developments/{{$dev[0]->id}}/plans/1.jpg" target="_blank">
-                            <img class="pe-2" src="https://dashboard.vangoo.mx/img/posts/developments/{{$dev[0]->id}}/plans/{{$loop->index+1}}.jpg?<?php echo rand(); ?>" width="35px" height="35px" onerror="{this.src='{{url('./img/img404.jpg')}}'}">
-                        </a>
-                        <input type="file" class="form-control" name="imageoption[{{$loop->index+1}}]" accept="image/jpeg">
+                        <div class="mb-3 mt-3">
+                            <label for="commission_percentage" class="form-label">Porcentaje de comisión de venta:</label>
+                            <input type="number" class="form-control" id="commission_percentage" placeholder="Porcentaje en números sin signos" name="commission_percentage" value="{{old('commission_percentage', $dev[0]->commission_percentage)}}">
+                            @error('commission_percentage')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <input type="hidden" name="num_images" value="{{old('images', $dev[0]->images)}}">
                     </div>
                 </div>
-                @endforeach
-            </div>
 
-            <!--nueva opción-->
+                <span>Imagenes:</span>
+                <div class="d-flex gap-2 mt-2">
+                    @for ($i = 1; $i <= $dev[0]->images; $i++)
+                        <div class="d-flex flex-column align-items-center image-container">
+                            <a href="https://dashboard.vangoo.mx/storage/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
+                                <img class="pe-2" src="{{ asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?' . uniqid() }}" width="90px" height="90px">
+                            </a>
+                            <div class="mt-1">
+                                <input class="form-control" type="number" name="orderimg[{{$i}}]" value="{{$i}}" max="{{$dev[0]->images}}" min="1" style="width:100%">
+                            </div>
+                            <span class="delete-icon" onclick="confirmDelete(event, {{$i}})">❌</span>
+                        </div>
+                        @endfor
+                </div>
 
-            <span class="btn btn-secondary" id="add-option-btn">Agregar opción</span>
+                <div class="images mb-3 mt-3">
+                    <label for="image" class="form-label">Agregar más imágenes:</label>
+                    <input type="file" name="images[]" id="imagen" class="form-control" accept="image/jpeg" multiple onchange="previewImage()">
+                    <div id="preview"></div>
+                </div>
+
+                <hr>
+
+                <div class="mt-3 mb-3">
+                    <label class="form-label">Opciones de departamentos:</label>
+
+                    <div class="options-container">
+                        @foreach($app as $a)
+                        <div class="option-appartment" id="option-appartment-{{$loop->index+1}}">
+                            <div class="input-group mb-3 gap-2 flex-column flex-lg-row">
+                                <input type="text" class="form-control app-input" placeholder="Titulo" value="{{$a->title}}" name="optionapp[{{$loop->index+1}}][title]" required>
+                                <input type="number" class="form-control app-input" placeholder="Precio" value="{{$a->price}}" name="optionapp[{{$loop->index+1}}][price]" required>
+                                <input type="number" step="0.01" class="form-control app-input" placeholder="Area" value="{{$a->area}}" name="optionapp[{{$loop->index+1}}][area]" required>
+                                <input type="number" class="form-control app-input" placeholder="Habitaciones" value="{{$a->rooms}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
+                                <input type="number" class="form-control app-input" placeholder="Baños" value="{{$a->bathrooms}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
+                                <input type="number" class="form-control app-input" placeholder="Estacionamientos" value="{{$a->parkings}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
+                                <input type="number" class="form-control app-input" placeholder="Num disponibles" value="{{$a->num_available}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
+                            </div>
+                            <div class="input-group mb-3 app-file">
+                                <input type="file" class="form-control" name="imageoption[{{$loop->index+1}}]" accept="image/jpeg">
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+
+                    <!--nueva opción-->
+
+                    <span class="btn btn-secondary" id="add-option-btn">Agregar opción</span>
+                </div>
+
+                @if ($errors->any())
+                <div class="alert alert-danger mt-3">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
+                @if(session('success'))
+                <div class="alert alert-success mt-3">
+                    {{ session('success') }}
+                </div>
+                @endif
+
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="submit" class="btn bg-gradient-info btn-lg">Editar</button>
+                </div>
+
+            </form>
+            <form id="delete-form" action="{{ route('development.images.delete', ['developmentId' => $dev[0]->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+                @csrf
+                @method('DELETE')
+            </form>
         </div>
-
-        @if ($errors->any())
-        <div class="alert alert-danger mt-3">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
-
-        @if(session('success'))
-        <div class="alert alert-success mt-3">
-            {{ session('success') }}
-        </div>
-        @endif
-
-        <div class="d-flex justify-content-center mt-4">
-            <button type="submit" class="btn btn-info btn-lg">Editar</button>
-        </div>
-
-        </form>
-        <form id="delete-form" action="{{ route('development.images.delete', ['developmentId' => $dev[0]->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
-            @csrf
-            @method('DELETE')
-        </form>
     </div>
-
-
-</div>
 </div>
 
 <br><br><br>
 
 <style>
     button.bg-gradient-info {
-        background-color: var(--info);
+        background-color: #2E93EF;
         background-size: cover;
         color: white;
         border-radius: 25px;
     }
 
     button.bg-gradient-info:hover {
-        background-color: var(--info);
+        background-color: #2E93EF;
         background-size: cover;
         opacity: 0.7;
         color: white;
@@ -317,7 +302,11 @@
 
     .option-appartment {
         display: flex;
-        gap: 5px;
+        gap: 10px;
+    }
+
+    .app-file {
+        width: 25%;
     }
 
     .image-container {
@@ -334,6 +323,36 @@
         z-index: 1;
         margin-top: 3px;
         margin-right: 10px;
+    }
+
+    .delete-icon-option {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        color: red;
+        cursor: pointer;
+        z-index: 1;
+        margin-top: 7px;
+    }
+
+    .input-group-icon {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        width: 1%;
+    }
+
+    /*-----------RESPONSIVE--------------*/
+    @media only screen and (max-width: 600px) {
+        .option-appartment {
+            flex-direction: column;
+        }
+
+        .app-file,
+        .app-input {
+            width: 100% !important;
+        }
     }
 </style>
 
@@ -375,33 +394,7 @@
             form.submit();
         }
     }
-    /*
-    document.getElementById('id_estado').addEventListener('change', function() {
 
-        var estadoId = this.options[this.selectedIndex].getAttribute('data-id');
-        var url = '../ep/getMunicipiosFromEstado/' + estadoId;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var municipios = JSON.parse(xhr.responseText);
-                var municipiosHtml = '';
-                for (var i = 0; i < municipios.length; i++) {
-                    municipiosHtml += '<option value="' + municipios[i].id + '" data-id="' + municipios[i].id + '">' + municipios[i].nombre + '</option>';
-                }
-                var selectHtml = '';
-                if (estadoId != 0) {
-                    selectHtml = '<select class="form-select" name="id_municipio" id="id_municipio">' + municipiosHtml + '</select>';
-                }
-                document.getElementById('municipioshtml').innerHTML = selectHtml;
-            } else {
-                console.log('Error');
-            }
-        };
-        xhr.send();
-    });
-*/
     function changeMuninicio() {
         var municipioId = document.getElementById('id_municipio').options[document.getElementById('id_municipio').selectedIndex].getAttribute('data-id');
         var url = '../../ep/getColoniasFromMunicipio/' + municipioId;
@@ -441,8 +434,6 @@
         changeMuninicio();
     });
 
-
-
     //opciones de apartamentos
     let optionCount = <?php if ($app) {
                             echo sizeof($app);
@@ -459,26 +450,36 @@
         newOption.id = `option-appartment-${optionCount}`;
 
         const inputs = `
-            <span class="input-group-text"># ${optionCount}</span>
-            <input type="number" class="form-control" placeholder="Precio" name="option[${optionCount}][price]" required>
-            <input type="number" class="form-control" placeholder="Area" name="option[${optionCount}][area]" required>
-            <input type="number" class="form-control" placeholder="Habitaciones" name="option[${optionCount}][rooms]" required>
-            <input type="number" class="form-control" placeholder="Baños" name="option[${optionCount}][bathrooms]" required>
-            <input type="number" class="form-control" placeholder="Estacionamientos" name="option[${optionCount}][parkings]" required>
-            <input type="number" class="form-control" placeholder="Num disponibles" name="option[${optionCount}][num_available]" required>
+            <input type="text" class="form-control app-input" placeholder="Titulo" name="option[${optionCount}][title]" required>
+            <input type="number" class="form-control app-input" placeholder="Precio" name="option[${optionCount}][price]" required>
+            <input type="number" class="form-control app-input" placeholder="Area" name="option[${optionCount}][area]" required>
+            <input type="number" class="form-control app-input" placeholder="Habitaciones" name="option[${optionCount}][rooms]" required>
+            <input type="number" class="form-control app-input" placeholder="Baños" name="option[${optionCount}][bathrooms]" required>
+            <input type="number" class="form-control app-input" placeholder="Estacionamientos" name="option[${optionCount}][parkings]" required>
+            <input type="number" class="form-control app-input" placeholder="Num disponibles" name="option[${optionCount}][num_available]" required>
         `;
 
         const fileInput = `
-            <span class="input-group-text">Plano</span>
             <input type="file" class="form-control" name="imageoption[${optionCount}]" accept="image/jpeg">
         `;
 
+        const button = `<a href="#" class="delete-icon-option delete-option-btn" data-option-id="${optionCount}">❌</a>`;
+
         newOption.innerHTML = `
-            <div class="input-group mb-3">${inputs}</div>
-            <div class="input-group mb-3 w-50">${fileInput}</div>
+            <div class="input-group mb-3 gap-2">${inputs}</div>
+            <div class="input-group mb-3 app-file">${fileInput}</div>
+            <div class="input-group-icon mb-3 gap-2">${button}</div>
         `;
 
         optionsContainer.appendChild(newOption);
+
+        const newDeleteBtn = newOption.querySelector('.delete-option-btn');
+        newDeleteBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const optionId = this.getAttribute('data-option-id');
+            const optionElement = document.getElementById(`option-appartment-${optionId}`);
+            optionElement.remove();
+        });
     });
 </script>
 

@@ -150,12 +150,12 @@
 
                         <div class="mb-3 mt-3">
                             <label for="maplat" class="form-label">Coordenadas Longitud:</label>
-                            <input type="text" class="form-control" id="maplat" name="maplat">
+                            <input type="text" class="form-control" id="maplat" name="maplat" value="{{old('map_lat')}}">
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="maplong" class="form-label">Coordenadas Latitud:</label>
-                            <input type="text" class="form-control" id="maplong" name="maplong">
+                            <input type="text" class="form-control" id="maplong" name="maplong" value="{{old('map_long')}}">
                         </div>
 
                         <div class="mb-3 mt-3">
