@@ -418,6 +418,14 @@
         `;
 
         optionsContainer.appendChild(newOption);
+
+        const newDeleteBtn = newOption.querySelector('.delete-option-btn');
+        newDeleteBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const optionId = this.getAttribute('data-option-id');
+            const optionElement = document.getElementById(`option-appartment-${optionId}`);
+            optionElement.remove();
+        });
     });
 </script>
 
