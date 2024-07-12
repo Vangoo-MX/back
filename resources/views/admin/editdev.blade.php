@@ -325,14 +325,18 @@
         margin-right: 10px;
     }
 
+    .delete-option-btn-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+    }
+
     .delete-icon-option {
-        position: absolute;
-        top: 0px;
-        right: 0px;
         color: red;
         cursor: pointer;
         z-index: 1;
-        margin-top: 7px;
+        margin-bottom: 5px
     }
 
     .input-group-icon {
@@ -347,6 +351,10 @@
     @media only screen and (max-width: 600px) {
         .option-appartment {
             flex-direction: column;
+        }
+
+        .delete-option-btn-container {
+            justify-content: center;
         }
 
         .app-file,
@@ -463,7 +471,12 @@
             <input type="file" class="form-control" name="imageoption[${optionCount}]" accept="image/jpeg">
         `;
 
-        const button = `<a href="#" class="delete-icon-option delete-option-btn" data-option-id="${optionCount}">❌</a>`;
+        const button = `
+            <div class="delete-option-btn-container">
+                <a href="#" class="delete-icon-option delete-option-btn" data-option-id="${optionCount}">❌</a>
+            </div>
+        `;
+
 
         newOption.innerHTML = `
             <div class="input-group mb-3 gap-2">${inputs}</div>
