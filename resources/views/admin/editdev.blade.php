@@ -345,15 +345,12 @@
 
     /*-----------RESPONSIVE--------------*/
     @media only screen and (max-width: 600px) {
-
-        .option-appartment,
-        .input-group-icon {
+        .option-appartment {
             flex-direction: column;
         }
 
         .app-file,
-        .app-input,
-        .delete-icon-option {
+        .app-input {
             width: 100% !important;
         }
     }
