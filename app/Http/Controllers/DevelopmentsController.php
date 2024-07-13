@@ -319,15 +319,10 @@ class DevelopmentsController extends Controller
 
                 $path = storage_path('app/public/img/posts/developments/' . $development->id . '/');
 
-                // Verificar si la ruta existe, si no, crearla
                 if (!file_exists($path)) {
                     mkdir($path, 0755, true);
                 }
-
-                // Cambiar los permisos del directorio
                 chmod($path, 0755);
-
-                // Almacenar la imagen
                 $image->storeAs($directory, $nameimg);
             }
         }
