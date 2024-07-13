@@ -317,18 +317,15 @@ class DevelopmentsController extends Controller
                 $directory = 'public/img/posts/developments/' . $development->id . '/';
                 $nameimg = Str::slug($index + 1) . "." . $image->getClientOriginalExtension();
 
-                $path = public_path('storage/img/posts/developments/' . $development->id . '/');
-                dd($path);
+                $path = storage_path('app/public/img/posts/developments/' . $development->id . '/');
 
                 // Verificar si la ruta existe, si no, crearla
                 if (!file_exists($path)) {
                     mkdir($path, 0755, true);
-                    dd('directorio creado');
                 }
 
                 // Cambiar los permisos del directorio
                 chmod($path, 0755);
-                dd('permisos cambiados');
 
                 // Almacenar la imagen
                 $image->storeAs($directory, $nameimg);
