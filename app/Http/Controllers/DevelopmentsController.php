@@ -316,10 +316,9 @@ class DevelopmentsController extends Controller
             foreach ($request->file('images') as $index => $image) {
                 $directory = 'public/img/posts/developments/' . $development->id . '/';
                 $nameimg = Str::slug($index + 1) . "." . $image->getClientOriginalExtension();
-                if (!File::exists($directory)) {
-                    File::makeDirectory($directory, 0755, true);
-                }
                 $image->storeAs($directory, $nameimg);
+                $path = base_path('dashboard.vangoo.mx/' . $directory);
+                chmod($path, 0755);
             }
         }
 
