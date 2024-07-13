@@ -317,7 +317,7 @@ class DevelopmentsController extends Controller
                 $directory = 'public/img/posts/developments/' . $development->id . '/';
                 $nameimg = Str::slug($index + 1) . "." . $image->getClientOriginalExtension();
 
-                $path = base_path('dashboard.vangoo.mx/' . $directory);
+                $path = storage_path('app/public/img/posts/developments/' . $development->id . '/');
                 dd($path);
 
                 // Verificar si la ruta existe, si no, crearla
