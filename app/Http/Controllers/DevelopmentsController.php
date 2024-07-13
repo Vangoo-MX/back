@@ -316,16 +316,19 @@ class DevelopmentsController extends Controller
             foreach ($request->file('images') as $index => $image) {
                 $directory = 'public/img/posts/developments/' . $development->id . '/';
                 $nameimg = Str::slug($index + 1) . "." . $image->getClientOriginalExtension();
-                $image->storeAs($directory, $nameimg);
+
                 $path = base_path('dashboard.vangoo.mx/' . $directory);
-                if (file_exists($path)) {
-                    // Cambiar los permisos del directorio
-                    chmod($path, 0755); // Cambiar permisos a 755 (drwxr-xr-x)
-                } else {
-                    // Crear el directorio si no existe y luego cambiar los permisos
+
+                // Verificar si la ruta existe, si no, crearla
+                if (!file_exists($path)) {
                     mkdir($path, 0755, true);
-                    chmod($path, 0755);
                 }
+
+                // Cambiar los permisos del directorio
+                chmod($path, 0755);
+
+                // Almacenar la imagen
+                $image->storeAs($directory, $nameimg);
             }
         }
 
