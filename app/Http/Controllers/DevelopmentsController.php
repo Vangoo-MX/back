@@ -318,14 +318,17 @@ class DevelopmentsController extends Controller
                 $nameimg = Str::slug($index + 1) . "." . $image->getClientOriginalExtension();
 
                 $path = base_path('dashboard.vangoo.mx/' . $directory);
+                dd($path);
 
                 // Verificar si la ruta existe, si no, crearla
                 if (!file_exists($path)) {
                     mkdir($path, 0755, true);
+                    dd('directorio creado');
                 }
 
                 // Cambiar los permisos del directorio
                 chmod($path, 0755);
+                dd('permisos cambiados');
 
                 // Almacenar la imagen
                 $image->storeAs($directory, $nameimg);
