@@ -346,8 +346,14 @@ class DevelopmentsController extends Controller
 
 
             if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
+                $directory = 'public/img/posts/developments/' . $development->id . '/' . 'plans/';
                 $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
-                $request->file('imageoption.' . $key)->storeAs('public/img/posts/developments/' . $development->id . '/' . 'plans/', $nameimg);
+                $path = storage_path('app/public/img/posts/developments/' . $development->id . '/' . 'plans/');
+                if (!file_exists($path)) {
+                    mkdir($path, 0755, true);
+                }
+                chmod($path, 0755);
+                $request->file('imageoption.' . $key)->storeAs($directory, $nameimg);
             }
 
             $appartment->save();
