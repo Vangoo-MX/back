@@ -304,14 +304,6 @@ class DevelopmentsController extends Controller
         }
         $development->save();
 
-        // if ($request->hasFile('images')) {
-        //     foreach ($request->file('images') as $index => $image) {
-
-        //         $nameimg = Str::slug($index + 1) . "." . $image->getClientOriginalExtension();
-        //         $image->storeAs('public/img/posts/developments/' . $development->id . '/', $nameimg);
-        //     }
-        // }
-
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 $directory = 'public/img/posts/developments/' . $development->id . '/';
@@ -354,10 +346,8 @@ class DevelopmentsController extends Controller
 
 
             if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
-                //foreach ($request->file('imageoption.' . $key) as $i => $image) {
                 $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
                 $request->file('imageoption.' . $key)->storeAs('public/img/posts/developments/' . $development->id . '/' . 'plans/', $nameimg);
-                //}
             }
 
             $appartment->save();
