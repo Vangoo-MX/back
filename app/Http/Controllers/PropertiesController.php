@@ -446,8 +446,14 @@ class PropertiesController extends Controller
 
         if ($request->hasFile('image')) {
             $imagen = $request->file('image');
+            $directory = 'public/img/postsqueue/properties/' . $request->id . '/';
             $nameimg = Str::slug($request->index) . "." . $imagen->getClientOriginalExtension();
-            $imagen->storeAs('public/img/postsqueue/properties/' . $request->id . '/', $nameimg);
+            $path = storage_path('app/public/img/postsqueue/properties/' . $request->id . '/');
+            if (!file_exists($path)) {
+                mkdir($path, 0755, true);
+            }
+            chmod($path, 0755);
+            $imagen->storeAs($directory, $nameimg);
         }
 
         return json_encode('success');
