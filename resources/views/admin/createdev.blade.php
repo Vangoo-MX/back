@@ -203,7 +203,7 @@
                         <div class="option-appartment" id="option-appartment-1">
                             <div class="input-group mb-3 gap-2 flex-column flex-lg-row">
                                 <input type="text" class="form-control app-input" placeholder="Titulo" name="option[1][title]" required>
-                                <input type="number" class="form-control app-input" placeholder="Precio" name="option[1][price]" required>
+                                <input type="number" class="form-control app-input" placeholder="Precio" name="option[1][price]">
                                 <input type="number" step="0.01" class="form-control app-input" placeholder="Area" name="option[1][area]" required>
                                 <input type="number" class="form-control app-input" placeholder="Habitaciones" name="option[1][rooms]" required>
                                 <input type="number" class="form-control app-input" placeholder="Baños" name="option[1][bathrooms]" required>
@@ -393,7 +393,7 @@
 
         const inputs = `
             <input type="text" class="form-control app-input" placeholder="Titulo" name="option[${optionCount}][title]" required>
-            <input type="number" class="form-control app-input" placeholder="Precio" name="option[${optionCount}][price]" required>
+            <input type="number" class="form-control app-input" placeholder="Precio" name="option[${optionCount}][price]">
             <input type="number" class="form-control app-input" placeholder="Area" name="option[${optionCount}][area]" required>
             <input type="number" class="form-control app-input" placeholder="Habitaciones" name="option[${optionCount}][rooms]" required>
             <input type="number" class="form-control app-input" placeholder="Baños" name="option[${optionCount}][bathrooms]" required>
