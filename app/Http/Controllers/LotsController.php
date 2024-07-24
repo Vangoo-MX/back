@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LotsRequest;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Lots;
@@ -11,7 +10,6 @@ use Illuminate\support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
@@ -26,6 +24,59 @@ class LotsController
         return $lots;
     }
 
+    public function getLotsHightlights()
+    {
+        $highlights = LotsHighlights::orderBy('num_order', 'asc')->get();
+
+        if (sizeof($highlights) > 0) {
+            $highlightIds = $highlights->pluck('id_lot')->toArray();
+            $highlights = Lots::whereIn('id', $highlightIds)->get();
+        } else {
+            $highlights = [];
+        }
+
+        return $highlights;
+    }
+
+    public function getLotsHightlightFromMunicipio($id)
+    {
+
+        $highlight = LotsHighlights::where('id_municipio', $id)
+            ->orderBy('num_order', 'asc')
+            ->get();
+
+        if (sizeof($highlight) > 0) {
+            $lots = Lots::select();
+            foreach ($highlight as $value) {
+                $lots = $lots->orwhere('id', $value->id_lot);
+            }
+            $lots = $lots->get();
+        } else {
+            $lots = [];
+        }
+
+        return $lots;
+    }
+
+    public function getLotsImagesDetail($id)
+    {
+        $images = Images::where('type_property', 'property')
+            ->where('category', 'card')
+            ->where('id_property', $id)
+            ->get();
+
+        return $images;
+    }
+
+    public function getLotsImagesCards()
+    {
+        $images = Images::where('type_property', 'development')
+            ->where('category', 'card')
+            ->get();
+
+        return $images;
+    }
+
     public function getLotsByMunicipality($id)
     {
         $lot = Lots::where('id_municipio', $id)->get();
@@ -38,6 +89,90 @@ class LotsController
             ->get();
 
         return $lots;
+    }
+
+    public function getLotsRelated($id)
+    {
+
+        $lots = Lots::where('id', $id)
+            ->get();
+        $lotsRelated = Lots::where('status', $lots[0]->status)
+            ->where('id_municipio', $lots[0]->id_municipio)
+            ->take(10)
+            ->get();
+
+        return $lotsRelated;
+    }
+
+    public function getLotCard($id)
+    {
+        $lot = Lots::selectRaw('id,status,title,price_min,price_max,location,description,views,images')
+            ->where('id', $id)
+            ->get();
+
+        return $lot;
+    }
+
+    public function getMultiLotCard($array)
+    {
+
+        if (str_contains($array, '-')) {
+            $list = explode('-', $array);
+        } else {
+            $list[] = $array;
+        }
+
+
+        $lot = Lots::selectRaw('id,status,title,price_min,price_max,location,description,views,images');
+
+        foreach ($list as $value) {
+            $lot = $lot->orWhere('id', $value);
+        }
+
+        $ot = $lot->get();
+
+        return $lot;
+    }
+
+    public function getLotSearch($estado = "0", $municipio = "0", $colonia = "0", $status = 0, $min = 0, $max = 0)
+    {
+
+        $search = Lots::select();
+
+        if ($estado != "0") {
+            $search = $search->where('id_estado', $estado);
+        }
+        if ($municipio != "0") {
+            $search = $search->where('id_municipio', $municipio);
+        }
+        if ($colonia != "0") {
+            $search = $search->where('id_colonia', $colonia);
+        }
+
+        if ($max == 0) {
+            $search = $search->where('price_min', '>', $min);
+        } else {
+            $search = $search->where('price_min', '>', $min);
+            $search = $search->where('price_max', '<', $max);
+        }
+
+        if ($status == "presale") {
+            $search = $search->where('status', 'presale');
+        } elseif ($status == "sale") {
+            $search = $search->where('status', 'sale');
+        }
+
+        $search = $search->paginate(50);
+
+        return $search;
+    }
+
+    public function getCommissionsEP($type)
+    {
+        $commissions = Lots::whereNotNull('commission_percentage')
+            ->distinct('commission_percentage')
+            ->pluck('commission_percentage');
+        return $commissions;
     }
 
     public function storeLot(Request $request)

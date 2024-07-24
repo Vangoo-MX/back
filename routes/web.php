@@ -219,6 +219,16 @@ Route::post('ep/editlot', [LotsController::class, 'editLot'])->name('epLot.edit'
 Route::delete('ep/editlot/{lotId}/{imageId}', [LotsController::class, 'deleteImage'])->name('lot.images.delete');
 Route::get('ep/get-lots-by-municipio/{id}', [LotsController::class, 'getLotsByMunicipio']);
 
+Route::get('ep/getLotsHightlights', [LotsController::class, 'getLotsHightlights'])->name('epLotsHightlights.get');
+Route::get('ep/getLotsHightlightFromMunicipio/{id}', [LotsController::class, 'getLotsHightlightFromMunicipio'])->name('epLotsHightlightFromMunicipio.get');
+Route::get('ep/getLotsImagesDetail/{id}', [LotsController::class, 'getLotsImagesDetail'])->name('epLotsImagesDetail.get');
+Route::get('ep/getLotsImagesCards', [LotsController::class, 'getLotsImagesCards'])->name('epLotsImagesCards.get');
+Route::get('ep/getLot/{id}', [LotsController::class, 'getLot'])->name('epLot.get');
+Route::get('ep/getLotsRelated/{id}', [LotsController::class, 'getLotsRelated'])->name('epLotsRelated.get');
+Route::get('ep/getLotCard/{id}', [LotsController::class, 'getLotCard'])->name('epLotCard.get');
+Route::get('ep/getMultiLotCard/{id}', [LotsController::class, 'getMultiLotCard'])->name('epMultiLotCard.get');
+Route::get('ep/getLotSearch/{estado?}/{municipio?}/{colonia?}/{status?}/{min?}/{max?}', [LotsController::class, 'getLotSearch'])->name('epLotSearch.get');
+Route::get('ep/getLotsCommissions/{type}', [LotsController::class, 'getCommissionsEP'])->name('epLot.commissions');
 /* INFORMACIÓN */
 Route::get('ep/getEstado/{id}', [InfoController::class, 'getEstado'])->name('estado.get');
 Route::get('ep/getAllEstados', [InfoController::class, 'getEstados']);
