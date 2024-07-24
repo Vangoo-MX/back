@@ -129,7 +129,7 @@ class LotsController
             $lot = $lot->orWhere('id', $value);
         }
 
-        $ot = $lot->get();
+        $lot = $lot->get();
 
         return $lot;
     }
