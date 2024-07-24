@@ -1,10 +1,10 @@
 @extends('layouts.adminLayout')
 
-@section('breadcrumb','Desarrollos')
+@section('breadcrumb','Lotes')
 
-@section('title','Desarrollos')
+@section('title','Lotes')
 
-@section('titleContent','Desarrollos')
+@section('titleContent','Lotes')
 
 @section('content')
 
@@ -16,23 +16,23 @@
                 <tr>
                     <th>id</th>
                     <th>Titulo</th>
-                    <th>Precio máximo</th>
                     <th>Precio mínimo</th>
+                    <th>Precio máximo</th>
                     <th>Colonia</th>
                     <th>Municipio</th>
                     <th>Estado</th>
                     <th>Usuario</th>
-                    <th>Fecha</th>
+                    <th>Fecha de creacion</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($desarrollos as $p)
+                @foreach($lots as $p)
                 <tr>
                     <td>{{$p->id}}</td>
                     <td>{{limitString($p->title,37)}}</td>
-                    <td>{{moneyFormat($p->price_max)}}</td>
                     <td>{{moneyFormat($p->price_min)}}</td>
+                    <td>{{moneyFormat($p->price_max)}}</td>
                     <td>@if($p->id_colonia) {{limitString(colonia($p->id_colonia),30)}} @endif</td>
                     <td>@if($p->id_municipio) {{municipio($p->id_municipio)}} @endif</td>
                     <td>@if($p->id_estado) {{estado($p->id_estado)}} @endif</td>
@@ -45,19 +45,19 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" target="_blank" href="https://vangoo.mx/details/desarrollo/{{$p->id}}">
+                                    <a class="dropdown-item" target="_blank" href="https://vangoo.mx/details/lotes/{{$p->id}}">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/desarrollo/{{$p->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/lotes/{{$p->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{route('dev.edit',$p->id)}}">
+                                    <a class="dropdown-item" href="{{route('lot.edit',$p->id)}}">
                                         <img src="{{url('./img/icon/update.png')}}" />
                                         Editar
                                     </a>
@@ -69,7 +69,7 @@
                                     </a>
                                 </li> -->
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#devDeleteModal" onclick="devDeleteModalData({{$p->id}})" id="devDeleteConfirmBtn{{$p->id}}" data-url="{{route('epDev.delete',$p->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#devDeleteModal" onclick="devDeleteModalData({{$p->id}})" id="devDeleteConfirmBtn{{$p->id}}" data-url="{{route('epLot.delete',$p->id)}}">
                                         <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>
@@ -96,7 +96,7 @@
             </div>
 
             <div class="modal-body">
-                <p>Una vez eliminado el desarrollo no podrá ser recuperada, por favor verifica.</p>
+                <p>Una vez eliminado el lote no podrá ser recuperada, por favor verifica.</p>
                 <div class="d-flex justify-content-end">
                     <input type="hidden" id="devDeleteId">
                     <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
@@ -113,12 +113,12 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title">¿Estás seguro que deseas desactivar este desarrollo?</h4>
+                <h4 class="modal-title">¿Estás seguro que deseas desactivar este lote?</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
-                <p>Mientras el desarrollo esté desactivado no podrá ser visualizado en el portal de Vangoo.mx</p>
+                <p>Mientras el lote esté desactivado no podrá ser visualizado en el portal de Vangoo.mx</p>
                 <div class="d-flex justify-content-end">
                     <input type="hidden" id="devDeactivateId">
                     <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>

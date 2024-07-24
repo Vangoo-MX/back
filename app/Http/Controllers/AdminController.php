@@ -17,7 +17,8 @@ use App\Models\Agenda;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
-
+use App\Models\Lots;
+use App\Models\LotsHighlights;
 use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
@@ -128,6 +129,20 @@ class AdminController extends Controller
         $app = DevelopmentsApartments::where('id_development', $id)->get();
 
         return response()->view('admin.editdev', compact('municipios', 'dev', 'app'))->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')->header('Pragma', 'no-cache')->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+    }
+
+    public function createLot()
+    {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $municipios = Municipios::where('id_estado', 19)->get();
+
+        return view('admin.createlot', compact('municipios'));
     }
 
     public function show($id = 0)
@@ -517,6 +532,41 @@ class AdminController extends Controller
         return view('admin.developments', compact('desarrollos'));
     }
 
+    public function lots()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $lots = Lots::get();
+
+        return view('admin.lots', compact('lots'));
+    }
+
+    public function editLotPage($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $municipios = Municipios::where('id_estado', 19)->get();
+
+        $lot = Lots::where('id', $id)->get();
+
+        return response()
+            ->view('admin.editlot', compact('municipios', 'lot'))
+            ->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+    }
+
     public function queue()
     {
 
@@ -609,6 +659,24 @@ class AdminController extends Controller
         $municipiosh = Municipios::where('highlight', 1)->get();
 
         return view('admin.highlightsdev', compact('devshl', 'estados', 'municipios', 'municipiosh'));
+    }
+
+    public function highlightsLot()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $lotshl = LotsHighlights::get();
+        $estados = Estados::get();
+        $municipios = Municipios::get();
+        $municipiosh = Municipios::where('highlight', 1)->get();
+
+        return view('admin.highlightslots', compact('lotshl', 'estados', 'municipios', 'municipiosh'));
     }
 
     public function email_confirm()

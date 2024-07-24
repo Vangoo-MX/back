@@ -462,7 +462,7 @@ class DevelopmentsController extends Controller
 
         if ($request->orderimg) {
             foreach ($request->orderimg as $index => $order) {
-                $path = storage_path('app/public/img/posts/developments/' . $request->id);
+                $path = storage_path('app/public/img/posts/developments/' . $development->id);
                 $key = $index;
                 if (file_exists($path . "/{$order}.jpg")) {
                     rename($path . "/{$order}.jpg", $path . "/{$order}temp.jpg");
@@ -470,7 +470,7 @@ class DevelopmentsController extends Controller
             }
 
             foreach ($request->orderimg as $index => $order) {
-                $path = storage_path('app/public/img/posts/developments/' . $request->id);
+                $path = storage_path('app/public/img/posts/developments/' . $development->id);
                 $key = $index;
                 if (file_exists($path . "/{$key}temp.jpg")) {
                     rename($path . "/{$key}temp.jpg", $path . "/{$order}.jpg");

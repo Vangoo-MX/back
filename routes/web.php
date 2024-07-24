@@ -12,6 +12,7 @@ use App\Http\Controllers\DevelopmentsController;
 use App\Http\Controllers\DevelopmentsApartmentsController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\FavoritesController;
+use App\Http\Controllers\LotsController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -44,6 +45,8 @@ Route::post('admin/details/edit/{propiedad}', [AdminController::class, 'updatePr
 
 Route::get('overview/developments', [AdminController::class, 'developments'])->name('admin.developments');
 
+Route::get('overview/lots', [AdminController::class, 'lots'])->name('admin.lots');
+
 Route::get('overview/queue', [AdminController::class, 'queue'])->name('admin.queue');
 
 Route::get('overview/users', [AdminController::class, 'allusers'])->name('admin.users');
@@ -62,11 +65,15 @@ Route::get('overview/properties-highlights', [AdminController::class, 'highlight
 
 Route::get('overview/developments-highlights', [AdminController::class, 'highlightsdev'])->name('admin.highlights.developments');
 
+Route::get('overview/lots-highlights', [AdminController::class, 'highlightsLot'])->name('admin.highlights.lots');
+
 Route::post('admin/store', [AdminController::class, 'store'])->name('admin.storeuser');
 
 Route::get('overview/createdev', [AdminController::class, 'createdev'])->name('admin.createdev');
 
 Route::get('overview/editdev/{id}', [AdminController::class, 'editdev'])->name('admin.editdev');
+
+Route::get('overview/createlot', [AdminController::class, 'createLot'])->name('admin.createLot');
 
 Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('emails.confirm');
 
@@ -204,6 +211,14 @@ Route::get('ep/getApartmentsFromDev/{id}', [DevelopmentsApartmentsController::cl
 
 Route::get('ep/getApartmentsImages/{id}', [DevelopmentsApartmentsController::class, 'getApartmentsImages'])->name('epApartmentsImages.get');
 
+/* LOTES */
+Route::post('ep/storelot', [LotsController::class, 'storeLot'])->name('epLot.store');
+Route::get('ep/deletelot/{id}', [LotsController::class, 'deleteLot'])->name('epLot.delete');
+Route::get('ep/editlots/{id}', [AdminController::class, 'editLotPage'])->name('lot.edit');
+Route::post('ep/editlot', [LotsController::class, 'editLot'])->name('epLot.edit');
+Route::delete('ep/editlot/{lotId}/{imageId}', [LotsController::class, 'deleteImage'])->name('lot.images.delete');
+Route::get('ep/get-lots-by-municipio/{id}', [LotsController::class, 'getLotsByMunicipio']);
+
 /* INFORMACIÓN */
 Route::get('ep/getEstado/{id}', [InfoController::class, 'getEstado'])->name('estado.get');
 Route::get('ep/getAllEstados', [InfoController::class, 'getEstados']);
@@ -281,6 +296,14 @@ Route::get('ep/deleteHighlightdev/{id}', [DevelopmentsController::class, 'delete
 Route::post('ep/addHighlightdev', [DevelopmentsController::class, 'addDevHightlight'])->name('Highlightdev.add');
 
 Route::post('ep/orderHighlightdev', [DevelopmentsController::class, 'orderDevHightlight'])->name('Highlightdev.order');
+
+/*---------*/
+
+Route::get('ep/deleteHighlightlot/{id}', [LotsController::class, 'deleteLotHightlight'])->name('highlightLot.delete');
+
+Route::post('ep/addHighlightlot', [LotsController::class, 'addLotHightlight'])->name('highlightLot.add');
+
+Route::post('ep/orderHighlightlot', [LotsController::class, 'orderLotHightlight'])->name('highlightLot.order');
 
 /*----EMAIL---*/
 
