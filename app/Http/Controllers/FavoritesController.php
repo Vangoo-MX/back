@@ -82,9 +82,15 @@ class FavoritesController extends Controller
     public function allFavoritesUsuarioData($id)
     {
 
-        $propertiesFav = PropertiesFavorites::where('id_user', $id)->where('id_list', null)->get();
-        $devFav = DevelopmentsFavorites::where('id_user', $id)->where('id_list', null)->get();
-        $lotFav = LotsFavorites::where('id_user', $id)->where('id_list', null)->get();
+        $propertiesFav = PropertiesFavorites::where('id_user', $id)
+            ->where('id_list', null)
+            ->get();
+        $devFav = DevelopmentsFavorites::where('id_user', $id)
+            ->where('id_list', null)
+            ->get();
+        $lotFav = LotsFavorites::where('id_user', $id)
+            ->where('id_list', null)
+            ->get();
 
         if (sizeof($propertiesFav) > 0) {
             $properties = Properties::selectRaw('id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images');
@@ -128,11 +134,20 @@ class FavoritesController extends Controller
     {
 
         if ($type == 'property') {
-            $return = PropertiesFavorites::where('id_user', $id)->where('id_property', $idproperty)->where('id_list', NULL)->get();
+            $return = PropertiesFavorites::where('id_user', $id)
+                ->where('id_property', $idproperty)
+                ->where('id_list', NULL)
+                ->get();
         } elseif ($type == 'development') {
-            $return = DevelopmentsFavorites::where('id_user', $id)->where('id_development', $idproperty)->where('id_list', NULL)->get();
+            $return = DevelopmentsFavorites::where('id_user', $id)
+                ->where('id_development', $idproperty)
+                ->where('id_list', NULL)
+                ->get();
         } else if ($type == 'lot') {
-            $return = LotsFavorites::where('id_user', $id)->where('id_lot', $idproperty)->where('id_list', NULL)->get();
+            $return = LotsFavorites::where('id_user', $id)
+                ->where('id_lot', $idproperty)
+                ->where('id_list', NULL)
+                ->get();
         }
 
         if (sizeof($return) > 0) {
@@ -265,8 +280,7 @@ class FavoritesController extends Controller
     public function deleteListUser($id_user, $id_list)
     {
 
-        $fav = ListsUser::where('id_user', $id_user)
-            ->where('id', $id_list);
+        $fav = ListsUser::where('id_user', $id_user)->where('id', $id_list);
         $fav->delete();
         $propertiesFav = PropertiesFavorites::where('id_user', $id_user)->where('id_list', $id_list);
         $propertiesFav->delete();
@@ -286,9 +300,13 @@ class FavoritesController extends Controller
             $propertiesFav = PropertiesFavorites::where('id_list', $id)->get();
             $devFav = DevelopmentsFavorites::where('id_list', $id)->get();
             $lotFav = LotsFavorites::where('id_list', $id)->get();
-            $listdata = ListsUser::selectRaw('id,id_user,title,timestamp')->where('id', $id)->first();
+            $listdata = ListsUser::selectRaw('id,id_user,title,timestamp')
+                ->where('id', $id)
+                ->first();
             $id_user = $listdata['id_user'];
-            $name_user = User::selectRaw('name')->where('id', $id_user)->first();
+            $name_user = User::selectRaw('name')
+                ->where('id', $id_user)
+                ->first();
 
             $return = [];
 
