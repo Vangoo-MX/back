@@ -227,7 +227,7 @@ Route::get('ep/getLotsRelated/{id}', [LotsController::class, 'getLotsRelated'])-
 Route::get('ep/getLotCard/{id}', [LotsController::class, 'getLotCard'])->name('epLotCard.get');
 Route::get('ep/getMultiLotCard/{id}', [LotsController::class, 'getMultiLotCard'])->name('epMultiLotCard.get');
 Route::get('ep/getLotSearch/{estado?}/{municipio?}/{colonia?}/{status?}/{min?}/{max?}', [LotsController::class, 'getLotSearch'])->name('epLotSearch.get');
-Route::get('ep/getLotsCommissions/{type}', [LotsController::class, 'getCommissionsEP'])->name('epLot.commissions');
+
 /* INFORMACIÓN */
 Route::get('ep/getEstado/{id}', [InfoController::class, 'getEstado'])->name('estado.get');
 Route::get('ep/getAllEstados', [InfoController::class, 'getEstados']);
@@ -250,6 +250,8 @@ Route::get('ep/allFavNoListUser/{id}', [FavoritesController::class, 'allFavNoLis
 Route::post('ep/postPropertiesFavUser', [FavoritesController::class, 'postPropertiesFavUser']);
 
 Route::post('ep/postDevFavUser', [FavoritesController::class, 'postDevFavUser']);
+
+Route::post('ep/postLotFavUser', [FavoritesController::class, 'postLotFavUser']);
 
 Route::get('ep/deletePropertyFavUser/{id_user}/{id_property}/{type_property}', [FavoritesController::class, 'deletePropertyFavUser']);
 
