@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\CommissionsController;
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\PropertiesController;
@@ -204,8 +205,6 @@ Route::post('ep/editdev', [DevelopmentsController::class, 'editdev'])->name('epD
 
 Route::delete('ep/dev/{developmentId}/{imageId}', [DevelopmentsController::class, 'deleteImage'])->name('development.images.delete');
 
-Route::get('ep/commissions/{type}', [DevelopmentsController::class, 'getCommissionsEP'])->name('epDev.commissions');
-
 /* OPCIONES DESARROLLOS */
 Route::get('ep/getApartmentsFromDev/{id}', [DevelopmentsApartmentsController::class, 'getApartmentsFromDev'])->name('epApartmentsFromDev.get');
 
@@ -326,3 +325,6 @@ Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestF
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+//Comissions
+Route::get('ep/commissions/{type}', [CommissionsController::class, 'getCommissionsEP'])->name('ep.commissions');

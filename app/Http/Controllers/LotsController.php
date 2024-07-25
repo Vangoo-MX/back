@@ -167,14 +167,6 @@ class LotsController
         return $search;
     }
 
-    public function getCommissionsEP($type)
-    {
-        $commissions = Lots::whereNotNull('commission_percentage')
-            ->distinct('commission_percentage')
-            ->pluck('commission_percentage');
-        return $commissions;
-    }
-
     public function storeLot(Request $request)
     {
         $estado = Estados::find($request->id_estado)->nombre;

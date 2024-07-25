@@ -610,21 +610,4 @@ class DevelopmentsController extends Controller
 
         return redirect()->back();
     }
-
-    public function getCommissionsEP($type)
-    {
-        if ($type == "dev") {
-            $commissions = Developments::whereNotNull('commission_percentage')
-                ->distinct('commission_percentage')
-                ->pluck('commission_percentage');
-
-            return $commissions;
-        } else if ($type == "property") {
-            $commissions = Properties::whereNotNull('commission_percentage')
-                ->distinct('commission_percentage')
-                ->pluck('commission_percentage');
-
-            return $commissions;
-        }
-    }
 }
