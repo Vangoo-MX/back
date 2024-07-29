@@ -232,7 +232,7 @@
                             <div class="col-md-6">
                                 <label for="broad" class="form-label">Ancho:</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="number" class="form-control" id="broad" placeholder="Ancho del lote" name="broad" value="{{ old('broad', $lot[0]->broad) }}" required>
+                                    <input type="number" class="form-control" id="broad" placeholder="Ancho del lote" name="broad" value="{{ old('broad', $lot[0]->broad) }}">
                                     <span class="ms-2">m</span>
                                 </div>
                                 @error('broad')
@@ -242,7 +242,7 @@
                             <div class="col-md-6">
                                 <label for="largue" class="form-label">Largo:</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="number" class="form-control" id="largue" placeholder="Largo del lote" name="largue" value="{{ old('largue', $lot[0]->largue) }}" required>
+                                    <input type="number" class="form-control" id="largue" placeholder="Largo del lote" name="largue" value="{{ old('largue', $lot[0]->largue) }}">
                                     <span class="ms-2">m</span>
                                 </div>
                                 @error('largue')
