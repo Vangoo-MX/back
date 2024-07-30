@@ -303,11 +303,15 @@ Editar propiedad
                         </div>
                         @endfor
                 </div>
+                <div class="images mb-3 mt-3">
+                    <label for="image" class="form-label">Agregar más imágenes:</label>
+                    <input type="file" name="images[]" id="imagen" class="form-control" accept="image/jpeg" multiple onchange="previewImage()">
+                    <div id="preview"></div>
+                </div>
                 <br><br>
                 <div class="d-flex justify-content-center mt-4">
                     <button type="submit" class="btn1">Editar propiedad</button>
                 </div>
-
             </form>
         </div>
     </div>
