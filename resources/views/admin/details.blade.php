@@ -248,4 +248,94 @@ Detalle
     </div>
 </div>
 
+<style>
+    button.bg-gradient-info {
+        background-color: #2E93EF;
+        background-size: cover;
+        color: white;
+        border-radius: 25px;
+    }
+
+    button.bg-gradient-info:hover {
+        background-color: #2E93EF;
+        background-size: cover;
+        opacity: 0.7;
+        color: white;
+    }
+
+    #preview {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    #preview img {
+        max-width: 100%;
+        max-height: 200px;
+    }
+
+    .option-appartment {
+        display: flex;
+        gap: 10px;
+    }
+
+    .app-file {
+        width: 25%;
+    }
+
+    .image-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .delete-icon {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        color: red;
+        cursor: pointer;
+        z-index: 1;
+        margin-top: 3px;
+        margin-right: 10px;
+    }
+
+    .delete-option-btn-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+    }
+
+    .delete-icon-option {
+        color: red;
+        cursor: pointer;
+        z-index: 1;
+        margin-bottom: 5px
+    }
+
+    .input-group-icon {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        width: 1%;
+    }
+
+    /*-----------RESPONSIVE--------------*/
+    @media only screen and (max-width: 600px) {
+        .option-appartment {
+            flex-direction: column;
+        }
+
+        .delete-option-btn-container {
+            justify-content: center;
+        }
+
+        .app-file,
+        .app-input {
+            width: 100% !important;
+        }
+    }
+</style>
+
 @endsection()

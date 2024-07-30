@@ -1,6 +1,10 @@
 @extends('layouts.adminLayout')
 
-@section('breadcrumb','Editar Lote')
+@section('breadcrumb')
+Lotes
+<img src="{{url('./img/icon/icon-logo-mini.png')}}" />
+Editar
+@endsection()
 
 @section('title','Editar lote')
 
