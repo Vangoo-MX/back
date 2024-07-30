@@ -224,20 +224,15 @@ Detalle
                                 echo "no";
                             } ?>
                         </div>
-
-                        <input type="hidden" name="num_images" value="{{$propiedad->images}}">
-
                     </div>
-
                 </div>
-                <hr>
 
                 <span>Imagenes:</span>
                 <div class="d-flex gap-2 mt-2">
                     @for ($i = 1; $i <= $propiedad->images; $i++)
                         <div class="d-flex flex-column align-items-center">
                             <a href="https://dashboard.vangoo.mx/storage/img/posts/properties/{{$propiedad->id}}/{{$i}}.jpg" target="_blank">
-                                <img class="pe-2" src="{{asset('storage/img/posts/properties').'/'.$propiedad->id.'/'.$i.'.jpg?'}}<?php echo rand(); ?>" width="250px" height="250px">
+                                <img class="pe-2" src="{{asset('storage/img/posts/properties').'/'.$propiedad->id.'/'.$i.'.jpg?'}}<?php echo rand(); ?>" width="90px" height="90px">
                             </a>
                         </div>
                         @endfor
