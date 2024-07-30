@@ -106,7 +106,7 @@ class LotsController
 
     public function getLotCard($id)
     {
-        $lot = Lots::selectRaw('id,status,title,price_min,price_max,location,description,views,images')
+        $lot = Lots::selectRaw('id,status,title,price_min,price_max,location,description,images')
             ->where('id', $id)
             ->get();
 
@@ -123,7 +123,7 @@ class LotsController
         }
 
 
-        $lot = Lots::selectRaw('id,status,title,price_min,price_max,location,description,views,images');
+        $lot = Lots::selectRaw('id,status,title,price_min,price_max,location,description,images');
 
         foreach ($list as $value) {
             $lot = $lot->orWhere('id', $value);
