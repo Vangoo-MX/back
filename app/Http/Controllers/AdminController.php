@@ -395,7 +395,7 @@ class AdminController extends Controller
             'bathrooms' => 'required|numeric',
             'parkings' => 'required|numeric',
             'area' => 'required|numeric',
-            'street' => 'required|min:3|max:20',
+            'street' => 'required|min:3|max:100',
             'num_ext' => 'required|numeric',
             'num_int' => 'nullable|numeric',
             'cp' => 'required|numeric',
