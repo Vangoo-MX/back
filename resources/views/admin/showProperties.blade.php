@@ -293,9 +293,18 @@ Editar propiedad
                 <div class="d-flex gap-2 mt-2">
                     @for ($i = 1; $i <= $propiedad->images; $i++)
                         <div class="d-flex flex-column align-items-center image-container">
-                            <a href="https://dashboard.vangoo.mx/storage/img/posts/properties/{{$propiedad->id}}/{{$i}}.jpg" target="_blank">
-                                <img class="pe-2" src="{{asset('storage/img/posts/properties').'/'.$propiedad->id.'/'.$i.'.jpg?' . uniqid()}}" width="90px" height="90px">
+                            @php
+                            $jpgExists = file_exists(public_path('storage/img/posts/properties/' . $propiedad->id . '/' . $i . '.jpg'));
+                            $jpegExists = file_exists(public_path('storage/img/posts/properties/' . $propiedad->id . '/' . $i . '.jpeg'));
+                            $imageUrl = $jpgExists ? asset('storage/img/posts/properties/' . $propiedad->id . '/' . $i . '.jpg') : ($jpegExists ? asset('storage/img/posts/properties/' . $propiedad->id . '/' . $i . '.jpeg') : null);
+                            @endphp
+
+                            @if($imageUrl)
+                            <a href="{{ $imageUrl }}" target="_blank">
+                                <img class="pe-2" src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px">
                             </a>
+                            @endif
+
                             <div class="mt-1">
                                 <input class="form-control" type="number" name="orderimg[{{$i}}]" value="{{$i}}" max="{{$propiedad->images}}" min="1" style="width:100%">
                             </div>
