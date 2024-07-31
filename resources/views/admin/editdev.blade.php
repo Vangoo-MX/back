@@ -200,6 +200,17 @@
                             <a href="https://dashboard.vangoo.mx/storage/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
                                 <img class="pe-2" src="{{ asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?' . uniqid() }}" width="90px" height="90px">
                             </a>
+                            @php
+                            $jpgExists = file_exists(public_path('storage/img/posts/developments/' . $dev[0]->id . '/' . $i . '.jpg'));
+                            $jpegExists = file_exists(public_path('storage/img/posts/developments/' . $dev[0]->id . '/' . $i . '.jpeg'));
+                            $imageUrl = $jpgExists ? asset('storage/img/posts/developments/' . $dev[0]->id . '/' . $i . '.jpg') : ($jpegExists ? asset('storage/img/posts/developments/' . $dev[0] . '/' . $i . '.jpeg') : null);
+                            @endphp
+
+                            @if($imageUrl)
+                            <a href="{{ $imageUrl }}" target="_blank">
+                                <img class="pe-2" src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px">
+                            </a>
+                            @endif
                             <div class="mt-1">
                                 <input class="form-control" type="number" name="orderimg[{{$i}}]" value="{{$i}}" max="{{$dev[0]->images}}" min="1" style="width:100%">
                             </div>
