@@ -197,9 +197,6 @@
                 <div class="d-flex gap-2 mt-2">
                     @for ($i = 1; $i <= $dev[0]->images; $i++)
                         <div class="d-flex flex-column align-items-center image-container">
-                            <a href="https://dashboard.vangoo.mx/storage/img/posts/developments/{{$dev[0]->id}}/{{$i}}.jpg" target="_blank">
-                                <img class="pe-2" src="{{ asset('storage/img/posts/developments').'/'.$dev[0]->id.'/'.$i.'.jpg?' . uniqid() }}" width="90px" height="90px">
-                            </a>
                             @php
                             $jpgExists = file_exists(public_path('storage/img/posts/developments/' . $dev[0]->id . '/' . $i . '.jpg'));
                             $jpegExists = file_exists(public_path('storage/img/posts/developments/' . $dev[0]->id . '/' . $i . '.jpeg'));
