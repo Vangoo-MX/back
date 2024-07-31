@@ -390,7 +390,7 @@ class AdminController extends Controller
             'title' => 'required|min:10|max:100',
             'price' => 'required|numeric',
             'price_maintenance' => 'nullable|numeric',
-            'description' => 'required|min:10|max:500',
+            'description' => 'nullable|max:500',
             'rooms' => 'required|numeric',
             'bathrooms' => 'required|numeric',
             'parkings' => 'required|numeric',
