@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
+use Illuminate\Support\Facades\Storage;
 
 class PropertiesController extends Controller
 {
@@ -287,6 +288,32 @@ class PropertiesController extends Controller
 
         $property->delete();
         return redirect()->route('admin.properties');
+    }
+
+    public function deleteImage(Request $request, $propertieId, $imageId)
+    {
+        $imagePath = 'public/img/posts/properties/' . $propertieId . '/' . $imageId . '.jpg';
+
+        if (Storage::exists($imagePath)) {
+            Storage::delete($imagePath);
+
+            $propertie = Properties::findOrFail($propertieId);
+            $propertie->images -= 1;
+            $propertie->save();
+
+            for ($i = $imageId + 1; $i <= $propertie->images + 1; $i++) {
+                $oldImagePath = 'public/img/posts/properties/' . $propertieId . '/' . $i . '.jpg';
+                $newImagePath = 'public/img/posts/properties/' . $propertieId . '/' . ($i - 1) . '.jpg';
+
+                if (Storage::exists($oldImagePath)) {
+                    Storage::move($oldImagePath, $newImagePath);
+                }
+            }
+
+            return redirect()->back()->with('success', 'La imagen se eliminó correctamente.');
+        } else {
+            return response()->json(['error' => 'Imagen no encontrada.'], 404);
+        }
     }
 
     public function deactiveProperty($id)
