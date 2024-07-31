@@ -455,6 +455,11 @@ class AdminController extends Controller
         $municipio = Municipios::find($request->id_municipio);
         $estado = Estados::find($propiedad->id_estado);
         $location = $colonia->nombre . ', ' . $municipio->nombre . ', ' . $estado->nombre;
+        if ($request->hasFile('images')) {
+            $numImages = $propiedad->images + sizeof($request->file('images'));
+        } else {
+            $numImages = $propiedad->images;
+        }
         $propiedad->update([
             'title' => $request->title,
             'operation_type' => $request->operation_type,
@@ -479,6 +484,7 @@ class AdminController extends Controller
             'share_conditions' => $request->share_conditions,
             'antiquity' => $request->antiquity,
             'location' => $location,
+            'images' => $numImages
         ]);
 
         if ($request->type == "departamento") {
