@@ -20,6 +20,7 @@ use App\Models\Colonias;
 use App\Models\Lots;
 use App\Models\LotsHighlights;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -495,6 +496,32 @@ class AdminController extends Controller
 
         if (!empty($updates)) {
             $propiedad->update($updates);
+        }
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $index => $image) {
+
+                $nameimg = Str::slug($propiedad->images + $index + 1) . "." . $image->getClientOriginalExtension();
+                $image->storeAs('public/img/posts/properties/' . $propiedad->id . '/', $nameimg);
+            }
+        }
+
+        if ($request->orderimg) {
+            foreach ($request->orderimg as $index => $order) {
+                $path = storage_path('app/public/img/posts/properties/' . $propiedad->id);
+                $key = $index;
+                if (file_exists($path . "/{$order}.jpg")) {
+                    rename($path . "/{$order}.jpg", $path . "/{$order}temp.jpg");
+                }
+            }
+
+            foreach ($request->orderimg as $index => $order) {
+                $path = storage_path('app/public/img/posts/properties/' . $propiedad->id);
+                $key = $index;
+                if (file_exists($path . "/{$key}temp.jpg")) {
+                    rename($path . "/{$key}temp.jpg", $path . "/{$order}.jpg");
+                }
+            }
         }
 
         return redirect()->route('admin.details', $propiedad)->with('success', 'Propiedad actualizada correctamente');
