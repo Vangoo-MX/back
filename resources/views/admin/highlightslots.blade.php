@@ -55,7 +55,7 @@
                         <a href="{{ route('highlightLot.delete', $p->id) }}" class="btn btn-danger">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </a>
-                        <a href="https://vangoo.mx/details/lote/{{$p->id}}" target="_blank">
+                        <a href="https://vangoo.mx/detailslots/lots/{{$p->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
                         <form id="orden-form{{$p->id_lot}}" action="{{ route('highlightLot.order') }}" method="POST">
