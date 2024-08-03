@@ -200,12 +200,12 @@
                             </div> --}}
 
                         <div class="mb-3 mt-3">
-                            <label for="map_lat" class="form-label">Coordenadas Longitud:</label>
+                            <label for="map_lat" class="form-label">Coordenadas Latitud:</label>
                             <input type="text" class="form-control" id="map_lat" name="map_lat" value="{{old('map_lat')}}">
                         </div>
 
                         <div class="mb-3 mt-3">
-                            <label for="map_long" class="form-label">Coordenadas Latitud:</label>
+                            <label for="map_long" class="form-label">Coordenadas Longitud:</label>
                             <input type="text" class="form-control" id="map_long" name="map_long" value="{{old('map_long')}}">
                         </div>
 
