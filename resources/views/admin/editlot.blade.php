@@ -210,7 +210,7 @@ Editar
                         </div>
 
                         <div class="mb-3 mt-3">
-                            <label for="cp" class="form-label">CP:</label>
+                            <label for="cp" class="form-label">Codigo Postal:</label>
                             <input type="number" class="form-control" id="cp" placeholder="Ingresa el código postal" name="cp" value="{{old('cp', $lot[0]->cp)}}">
                             @error('cp')
                             <span class="text-danger">{{ $message }}</span>
