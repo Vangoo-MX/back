@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CommissionsController;
+use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\PropertiesController;
@@ -268,31 +269,31 @@ Route::post('ep/createListUser', [FavoritesController::class, 'createListUser'])
 Route::post('ep/savePropertyInList', [FavoritesController::class, 'savePropertyInList']);
 
 /* Agenda */
-Route::get('ep/getAgenda/{id}', [FavoritesController::class, 'getAgendaUser'])->name('agenda.get');
+Route::get('ep/getAgenda/{id}', [ContactsController::class, 'getAgendaUser'])->name('agenda.get');
 
-Route::get('ep/getAgendaById/{id}', [FavoritesController::class, 'getAgenda'])->name('agendaById.get');
+Route::get('ep/getAgendaById/{id}', [ContactsController::class, 'getAgenda'])->name('agendaById.get');
 
-Route::post('ep/saveAgenda', [FavoritesController::class, 'saveAgendaUser'])->name('agenda.post');
+Route::post('ep/saveAgenda', [ContactsController::class, 'saveAgendaUser'])->name('agenda.post');
 
-Route::get('ep/deleteAgenda/{id}', [FavoritesController::class, 'deleteAgendaUser'])->name('agenda.delete');
+Route::get('ep/deleteAgenda/{id}', [ContactsController::class, 'deleteAgendaUser'])->name('agenda.delete');
 
-Route::post('ep/updateAgenda', [FavoritesController::class, 'updateAgendaUser'])->name('agenda.update');
+Route::post('ep/updateAgenda', [ContactsController::class, 'updateAgendaUser'])->name('agenda.update');
 
-Route::post('ep/saveContactDocs', [FavoritesController::class, 'saveContactDocs'])->middleware('web')->name('contactDocs.post');
+Route::post('ep/saveContactDocs', [ContactsController::class, 'saveContactDocs'])->middleware('web')->name('contactDocs.post');
 
-Route::get('ep/getDocsAgenda/{id}', [FavoritesController::class, 'getDocsAgenda'])->name('contactDocs.get');
+Route::get('ep/getDocsAgenda/{id}', [ContactsController::class, 'getDocsAgenda'])->name('contactDocs.get');
 
-Route::get('ep/statusContact/{id_agenda}/{etapa}', [FavoritesController::class, 'statusContact'])->name('contactStatus.get');
+Route::get('ep/statusContact/{id_agenda}/{etapa}', [ContactsController::class, 'statusContact'])->name('contactStatus.get');
 
-Route::get('ep/saveAgendaDocsNotes/{id_docs}/{note}', [FavoritesController::class, 'saveAgendaDocsNotes'])->name('contactNotes.get');
+Route::get('ep/saveAgendaDocsNotes/{id_docs}/{note}', [ContactsController::class, 'saveAgendaDocsNotes'])->name('contactNotes.get');
 
 /* Tickets */
-Route::get('ep/getTicket/{id}', [FavoritesController::class, 'getTicket'])->name('ticket.get');
-Route::post('ep/saveTicket', [FavoritesController::class, 'saveTicket'])->name('ticket.post');
-Route::get('ep/getTicketsUser/{id}', [FavoritesController::class, 'getTicketsUser'])->name('ticketsUser.get');
-Route::get('ep/getTicketsSendUser/{id}', [FavoritesController::class, 'getTicketsSendUser'])->name('ticketsSendUser.get');
-Route::get('ep/deleteTicket/{id}', [FavoritesController::class, 'deleteTicket'])->name('ticket.delete');
-Route::post('ep/editStatusTicket', [FavoritesController::class, 'editStatusTicket'])->name('editStatusTicket.post');
+Route::get('ep/getTicket/{id}', [ContactsController::class, 'getTicket'])->name('ticket.get');
+Route::post('ep/saveTicket', [ContactsController::class, 'saveTicket'])->name('ticket.post');
+Route::get('ep/getTicketsUser/{id}', [ContactsController::class, 'getTicketsUser'])->name('ticketsUser.get');
+Route::get('ep/getTicketsSendUser/{id}', [ContactsController::class, 'getTicketsSendUser'])->name('ticketsSendUser.get');
+Route::get('ep/deleteTicket/{id}', [ContactsController::class, 'deleteTicket'])->name('ticket.delete');
+Route::post('ep/editStatusTicket', [ContactsController::class, 'editStatusTicket'])->name('editStatusTicket.post');
 
 /* highlights edit */
 
@@ -322,7 +323,7 @@ Route::post('ep/orderHighlightlot', [LotsController::class, 'orderLotHightlight'
 
 Route::post('ep/bepartnerEP', [UserController::class, 'bepartnerEP'])->name('bepartner.post');
 
-Route::post('ep/contactAgentMail', [FavoritesController::class, 'contactAgent'])->name('contactAgent.post');
+Route::post('ep/contactAgentMail', [ContactsController::class, 'contactAgent'])->name('contactAgent.post');
 
 // Password Reset Routes
 Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
