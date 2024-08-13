@@ -178,20 +178,4 @@ class UserController extends Controller
         Mail::to('bepartner@vangoo.mx')->send(new BePartnerContactMail($request->all()));
         return response()->json(['message' => 'Correo enviado con éxito'], 200);
     }
-
-    public function mailTest()
-    {
-        $formData = [
-            'name' => 'prueba',
-            'email' => 'contacto@vangoo.mx',
-            'tel' => '12345',
-            'asunto' => 'hola prueba',
-            'mensaje' => 'hola esta es una prueba',
-            'id_user' => 1
-        ];
-
-        Mail::to('contacto@vangoo.mx')->send(new BePartnerContactMail($formData));
-
-        return json_encode(1);
-    }
 }
