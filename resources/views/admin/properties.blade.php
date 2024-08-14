@@ -141,7 +141,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title">¿Estás seguro que deseas volver a Activar esta propiedad?</h4>
+                <h4 class="modal-title">¿Estás seguro que deseas volver a activar esta propiedad?</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
