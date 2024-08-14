@@ -46,7 +46,8 @@ class Properties extends Model
         'views',
         'no_exact_location',
         'images',
-        'id_user'
+        'id_user',
+        'status',
     ];
     /**
      * The table associated with the model.
