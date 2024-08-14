@@ -142,7 +142,7 @@ Route::get('ep/deleteProperty/{id}', [PropertiesController::class, 'deleteProper
 
 Route::get('ep/deactiveProperty/{id}', [PropertiesController::class, 'deactiveProperty'])->name('epProperty.deactive');
 
-Route::get('ep/activeProperty/{id}', [PropertiesController::class, 'activeProperty'])->name('epProperty.active');
+Route::get('ep/activeProperty/{id}', [PropertiesController::class, 'activeProperty'])->name('epProperty.activate');
 
 Route::get('ep/deletePropertyEP/{id}', [PropertiesController::class, 'deletePropertyEP']);
 
