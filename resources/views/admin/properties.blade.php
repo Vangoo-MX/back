@@ -61,10 +61,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    @if ($p->status == 1)
                                     <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$p->id}})" id="propertyDeactiveConfirmBtn{{$p->id}}" data-url="{{route('epProperty.deactive',$p->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Desactivar
                                     </a>
+                                    @endif
                                 </li>
                                 <li>
                                     <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeleteModal" onclick="propertyDeleteModalData({{$p->id}})" id="propertyDeleteConfirmBtn{{$p->id}}" data-url="{{route('epProperty.delete',$p->id)}}">
