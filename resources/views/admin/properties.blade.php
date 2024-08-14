@@ -67,7 +67,7 @@
                                         Desactivar
                                     </a>
                                     @else
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActivateModalData({{$p->id}})" id="propertyActivateConfirmBtn{{$p->id}}" data-url="{{route('epProperty.activate',$p->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$p->id}})" id="propertyActivateConfirmBtn{{$p->id}}" data-url="{{route('epProperty.activate',$p->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Activar
                                     </a>
@@ -135,6 +135,29 @@
     </div>
 </div>
 
+<!----Activate----->
+<div class="modal fade" id="propertyActivateModal">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">¿Estás seguro que deseas volver a Activar esta propiedad?</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <p>La propiedad volvera a visualizarse en el portal de Vangoo.mx</p>
+                <div class="d-flex justify-content-end">
+                    <input type="hidden" id="propertyActivateId">
+                    <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn1" data-bs-dismiss="modal" onclick="propertyActiveSend()">Confirmar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script>
     function propertyDeleteModalData(id) {
         $("#propertyDeleteId").val(id);
@@ -142,6 +165,10 @@
 
     function propertyDeactiveModalData(id) {
         $("#propertyDeactivateId").val(id);
+    }
+
+    function propertyActiveModalData(id) {
+        $("#propertyActivateId").val(id);
     }
 
     function propertyDeleteSend() {
@@ -171,6 +198,25 @@
             type: "GET",
             success: function(response) {
                 message('success', 'Propiedad ' + id + ' desactivada. Actualizando tabla... <div class="spinner-border text-success"></div>');
+                setTimeout(function() {
+                    window.location.reload();
+                }, 1000);
+            },
+            error: function(xhr) {
+                message('danger', 'Algo salió mal');
+                console.error('Error en la solicitud. Código de estado: ' + xhr.status);
+            }
+        });
+    }
+
+    function propertyActiveSend() {
+        var id = $("#propertyActivateId").val();
+        var url = $("#propertyActivateConfirmBtn" + id).data("url");
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function(response) {
+                message('success', 'Propiedad ' + id + ' activada. Actualizando tabla... <div class="spinner-border text-success"></div>');
                 setTimeout(function() {
                     window.location.reload();
                 }, 1000);
