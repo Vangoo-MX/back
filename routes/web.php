@@ -142,6 +142,8 @@ Route::get('ep/deleteProperty/{id}', [PropertiesController::class, 'deleteProper
 
 Route::get('ep/deactiveProperty/{id}', [PropertiesController::class, 'deactiveProperty'])->name('epProperty.deactive');
 
+Route::get('ep/activeProperty/{id}', [PropertiesController::class, 'activeProperty'])->name('epProperty.active');
+
 Route::get('ep/deletePropertyEP/{id}', [PropertiesController::class, 'deletePropertyEP']);
 
 Route::get('ep/get-properties-by-municipio/{id}', [PropertiesController::class, 'getpropertiesbymunicipio']);

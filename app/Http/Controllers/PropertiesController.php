@@ -327,6 +327,17 @@ class PropertiesController extends Controller
         return redirect()->route('admin.properties');
     }
 
+    public function activeProperty($id)
+    {
+
+        $property = Properties::findOrFail($id);
+
+        $property->status = 1;
+
+        $property->save();
+        return redirect()->route('admin.properties');
+    }
+
     public function deletePropertyEP($id)
     {
 

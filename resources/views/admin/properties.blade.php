@@ -66,6 +66,11 @@
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Desactivar
                                     </a>
+                                    @else
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActivateModalData({{$p->id}})" id="propertyActivateConfirmBtn{{$p->id}}" data-url="{{route('epProperty.activate',$p->id)}}">
+                                        <img src="{{url('./img/icon/desactive.png')}}" />
+                                        Activar
+                                    </a>
                                     @endif
                                 </li>
                                 <li>
