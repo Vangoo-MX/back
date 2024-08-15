@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use App\Models\User;
 use App\Models\Roles;
 use App\Models\Properties;
@@ -188,6 +189,15 @@ class AdminController extends Controller
         $user = User::find($id);
 
         if ($user) {
+            $extensions = ['jpg', 'jpeg', 'png'];
+
+            foreach ($extensions as $extension) {
+                $profileImagePath = storage_path("app/public/img/users/{$user->id}.{$extension}");
+                if (file_exists($profileImagePath)) {
+                    unlink($profileImagePath);
+                    break;
+                }
+            }
             $user->delete();
             return redirect()->route('admin.users')->with('success', 'Usuario eliminado correctamente');
         } else {
