@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotaVendedorActualizada;
 use Illuminate\Http\Request;
 use App\Models\Agenda;
 use App\Models\AgendaDocs;
@@ -76,6 +77,8 @@ class ContactsController extends Controller
 
             $agenda->nota_vendedor = $note;
             $agenda->save();
+
+            event(new NotaVendedorActualizada($agenda));
 
             return json_encode($agenda);
         } catch (Exception $e) {
