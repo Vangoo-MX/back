@@ -13,6 +13,7 @@ class NotaVendedorActualizadaMail extends Mailable
     use Queueable, SerializesModels;
 
     public $agenda;
+    public $vendedor;
 
     /**
      * Create a new message instance.
@@ -22,6 +23,7 @@ class NotaVendedorActualizadaMail extends Mailable
     public function __construct(AgendaDocs $agenda)
     {
         $this->agenda = $agenda;
+        $this->vendedor = $agenda->agendaRelation->name;
     }
 
     /**
@@ -33,6 +35,9 @@ class NotaVendedorActualizadaMail extends Mailable
     {
         return $this->subject('Nota Vendedor Actualizada')
             ->markdown('emails.nota_actualizada')
-            ->with('agenda', $this->agenda);
+            ->with([
+                'agenda' => $this->agenda,
+                'vendedor' => $this->vendedor,
+            ]);
     }
 }

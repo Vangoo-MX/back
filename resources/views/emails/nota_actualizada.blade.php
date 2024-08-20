@@ -1,7 +1,7 @@
 @component('mail::message')
 # Nota Vendedor Actualizada
 
-La nota del vendedor {{ $agenda->name }} ha sido actualizada.
+La nota del vendedor {{ $vendedor }} ha sido actualizada.
 
 **ID Agenda:** {{ $agenda->id_agenda }}
 
