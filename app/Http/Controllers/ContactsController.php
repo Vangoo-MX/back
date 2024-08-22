@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotaAdministradorActualizada;
 use App\Events\NotaVendedorActualizada;
 use Illuminate\Http\Request;
 use App\Models\Agenda;
@@ -89,6 +90,7 @@ class ContactsController extends Controller
     public function saveContactDocs(Request $request)
     {
         try {
+            $agendaDocs = AgendaDocs::where('id_agenda', $request->id)->first();
             $docsData = [
                 'id_agenda' => $request->id,
                 'contacto_cliente' => $request->has('contacto_cliente') ? 1 : 0,
@@ -117,10 +119,15 @@ class ContactsController extends Controller
                 'nota_admin' => $request->nota_admin,
             ];
 
+            $agenda = $request->nota_admin;
             AgendaDocs::updateOrInsert(
                 ['id_agenda' => $request->id],
                 $docsData
             );
+
+            if ($agendaDocs && $agendaDocs->nota_admin !== $request->nota_admin) {
+                event(new NotaAdministradorActualizada($agenda));
+            }
 
             return redirect()->route('admin.contacts');
         } catch (Exception $e) {

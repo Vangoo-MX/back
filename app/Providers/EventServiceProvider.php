@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\NotaAdministradorActualizada;
 use App\Events\NotaVendedorActualizada;
+use App\Listeners\EnviarCorreoNotaAdministrador;
 use App\Listeners\EnviarCorreoNotaVendedor;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         NotaVendedorActualizada::class => [
             EnviarCorreoNotaVendedor::class,
+        ],
+        NotaAdministradorActualizada::class => [
+            EnviarCorreoNotaAdministrador::class
         ],
     ];
 
