@@ -289,6 +289,8 @@ Route::get('ep/statusContact/{id_agenda}/{etapa}', [ContactsController::class, '
 
 Route::get('ep/saveAgendaDocsNotes/{id_docs}/{note}', [ContactsController::class, 'saveAgendaDocsNotes'])->name('contactNotes.get');
 
+Route::get('ep/MarcarLeido/{id_agenda}', [ContactsController::class, 'marcarComoLeido'])->name('marcarComoLeido');
+
 /* Tickets */
 Route::get('ep/getTicket/{id}', [ContactsController::class, 'getTicket'])->name('ticket.get');
 Route::post('ep/saveTicket', [ContactsController::class, 'saveTicket'])->name('ticket.post');

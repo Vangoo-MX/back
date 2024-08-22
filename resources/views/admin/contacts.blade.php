@@ -29,7 +29,14 @@
                 @foreach($agenda as $agend)
                 <tr>
                     <td>{{$agend->id}}</td>
-                    <td><a href="{{route('admin.user',$agend->id_user)}}">{{$agend->user_name}}</a></td>
+                    <td>
+                        <a href="{{route('admin.user',$agend->id_user)}}">
+                            {{$agend->user_name}}
+                            @if(!$agend->mensaje_leido)
+                            <span class="badge bg-danger">Nuevo</span>
+                            @endif
+                        </a>
+                    </td>
                     <td>{{$agend->name}}</td>
                     <td>{{$agend->email}}</td>
                     <td>{{$agend->phone}}</td>
@@ -71,6 +78,12 @@
                                     <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#documentsModal" onclick="documentsModalData({{$agend->id}})" id="documentsConfirmBtn{{$agend->id}}" data-url="{{route('contactDocs.get',$agend->id)}}">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Documentos
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item cursor-pointer" href="{{ route('marcarComoLeido', $agend->id) }}">
+                                        <img src="{{url('./img/icon/check.png')}}" />
+                                        Marcar como leído
                                     </a>
                                 </li>
                             </ul>
@@ -222,6 +235,13 @@
         </div>
     </div>
 </div>
+
+<style>
+    .badge.bg-danger {
+        background-color: #dc3545;
+        color: #fff;
+    }
+</style>
 
 <script>
     function documentsModalData(id) {
