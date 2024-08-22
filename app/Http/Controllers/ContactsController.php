@@ -90,7 +90,7 @@ class ContactsController extends Controller
     public function saveContactDocs(Request $request)
     {
         try {
-            $agendaDocs = AgendaDocs::where('id_agenda', $request->id)->first();
+            $agendaDocs = AgendaDocs::firstOrNew(['id_agenda' => $request->id]);
             $docsData = [
                 'id_agenda' => $request->id,
                 'contacto_cliente' => $request->has('contacto_cliente') ? 1 : 0,
@@ -119,14 +119,10 @@ class ContactsController extends Controller
                 'nota_admin' => $request->nota_admin,
             ];
 
-            $agenda = $request->nota_admin;
-            AgendaDocs::updateOrInsert(
-                ['id_agenda' => $request->id],
-                $docsData
-            );
+            $agendaDocs->fill($docsData)->save();
 
-            if ($agendaDocs && $agendaDocs->nota_admin !== $request->nota_admin) {
-                event(new NotaAdministradorActualizada($agenda));
+            if ($agendaDocs->wasChanged('nota_admin')) {
+                event(new NotaAdministradorActualizada($agendaDocs));
             }
 
             return redirect()->route('admin.contacts');
