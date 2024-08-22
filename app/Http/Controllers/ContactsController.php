@@ -133,9 +133,9 @@ class ContactsController extends Controller
 
     public function marcarComoLeido($id_agenda)
     {
-        $agendaDocs = AgendaDocs::where('id_agenda', $id_agenda)->first();
-        $agendaDocs->mensaje_leido = true;
-        $agendaDocs->save();
+        $agenda = Agenda::findOrFail($id_agenda);
+        $agenda->mensaje_leido = true;
+        $agenda->save();
 
         return redirect()->route('admin.contacts');
     }
