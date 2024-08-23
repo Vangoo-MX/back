@@ -33,7 +33,7 @@
                         <a href="{{route('admin.user',$agend->id_user)}}">
                             {{$agend->user_name}}
                             @if(!$agend->mensaje_leido)
-                            <span class="badge bg-danger">Nuevo</span>
+                            <span class="badge bg-danger">Nuevo Mensaje</span>
                             @endif
                         </a>
                     </td>
