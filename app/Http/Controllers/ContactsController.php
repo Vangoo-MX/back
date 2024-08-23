@@ -74,13 +74,14 @@ class ContactsController extends Controller
     public function saveAgendaDocsNotes($idDocs, $note)
     {
         try {
-            $agenda = AgendaDocs::findOrFail($idDocs);
+            $agendaDocs = AgendaDocs::findOrFail($idDocs);
 
-            if ($agenda->nota_vendedor !== $note) {
-                $agenda->nota_vendedor = $note;
-                $agenda->agenda->mensaje_leido = false;
-                $agenda->save();
-                event(new NotaVendedorActualizada($agenda));
+            if ($agendaDocs->nota_vendedor !== $note) {
+                $agendaDocs->nota_vendedor = $note;
+                $agendaDocs->agenda->mensaje_leido = false;
+                $agendaDocs->agenda->save();
+                $agendaDocs->save();
+                event(new NotaVendedorActualizada($agendaDocs));
             }
 
             return json_encode($agenda);
