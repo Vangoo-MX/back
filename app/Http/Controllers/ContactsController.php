@@ -84,7 +84,7 @@ class ContactsController extends Controller
                 event(new NotaVendedorActualizada($agendaDocs));
             }
 
-            return json_encode($agenda);
+            return json_encode($agendaDocs);
         } catch (Exception $e) {
             return json_encode('error: ' . $e);
         }
