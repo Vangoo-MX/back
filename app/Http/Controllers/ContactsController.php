@@ -76,10 +76,12 @@ class ContactsController extends Controller
         try {
             $agenda = AgendaDocs::findOrFail($idDocs);
 
-            $agenda->nota_vendedor = $note;
-            $agenda->save();
-
-            event(new NotaVendedorActualizada($agenda));
+            if ($agenda->nota_vendedor !== $note) {
+                $agenda->nota_vendedor = $note;
+                $agenda->agenda->mensaje_leido = false;
+                $agenda->save();
+                event(new NotaVendedorActualizada($agenda));
+            }
 
             return json_encode($agenda);
         } catch (Exception $e) {
