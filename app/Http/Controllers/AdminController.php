@@ -214,7 +214,10 @@ class AdminController extends Controller
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
+        $userID = Auth::id();
+
         $agenda = Agenda::join('app_users', 'list_agenda.id_user', '=', 'app_users.id')
+            ->where('list_agenda.id_user', $userID)
             ->select('list_agenda.*', 'app_users.name as user_name')
             ->get();
         return view('admin.contacts', compact('agenda'));
