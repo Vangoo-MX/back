@@ -12,6 +12,18 @@
 <div class="row">
 
     <div class="container mt-3 px-4">
+        <form method="GET" action="{{ route('admin.contacts') }}" class="mb-4">
+            <div class="form-group">
+                <label for="userSelect">Seleccionar Usuario:</label>
+                <select name="user_id" id="userSelect" class="form-control" onchange="this.form.submit()">
+                    @foreach($users as $id => $name)
+                    <option value="{{ $id }}" {{ $id == $selectedUserID ? 'selected' : '' }}>
+                        {{ $name }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+        </form>
         <table class="table table-striped table-bordered" id="contactsTable">
             <thead>
                 <tr>

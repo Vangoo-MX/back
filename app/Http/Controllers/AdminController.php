@@ -205,22 +205,26 @@ class AdminController extends Controller
         }
     }
 
-    public function contacts()
+    public function contacts(Request $request)
     {
         if (!Auth::check()) {
             return redirect('/');
         }
+
         if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        $userID = Auth::id();
+        $selectedUserID = $request->input('user_id', Auth::id());
 
         $agenda = Agenda::join('app_users', 'list_agenda.id_user', '=', 'app_users.id')
-            ->where('list_agenda.id_user', $userID)
+            ->where('list_agenda.id_user', $selectedUserID)
             ->select('list_agenda.*', 'app_users.name as user_name')
             ->get();
-        return view('admin.contacts', compact('agenda'));
+
+        $users = User::whereIn('rol', [1, 2, 3, 4])->pluck('name', 'id');
+
+        return view('admin.contacts', compact('agenda', 'users', 'selectedUserID'));
     }
 
     public function edit(User $user)
