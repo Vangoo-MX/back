@@ -172,10 +172,4 @@ class UserController extends Controller
             return json_encode('error: ' . $e);
         }
     }
-
-    public function bepartnerEP(Request $request)
-    {
-        Mail::to('bepartner@vangoo.mx')->send(new BePartnerContactMail($request->all()));
-        return response()->json(['message' => 'Correo enviado con éxito'], 200);
-    }
 }

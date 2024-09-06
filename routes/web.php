@@ -15,6 +15,7 @@ use App\Http\Controllers\DevelopmentsApartmentsController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\LotsController;
+use App\Http\Controllers\MailsController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -325,9 +326,9 @@ Route::post('ep/orderHighlightlot', [LotsController::class, 'orderLotHightlight'
 
 /*----EMAIL---*/
 
-Route::post('ep/bepartnerEP', [UserController::class, 'bepartnerEP'])->name('bepartner.post');
-
-Route::post('ep/contactAgentMail', [ContactsController::class, 'contactAgent'])->name('contactAgent.post');
+Route::post('ep/bepartnerEP', [MailsController::class, 'bepartnerEP'])->name('bepartner.post');
+Route::post('ep/contactAgentMail', [MailsController::class, 'contactAgent'])->name('contactAgent.post');
+Route::post('ep/salesAdvisor', [MailsController::class, 'salesAdvisor'])->name('salesAdvisor.post');
 
 // Password Reset Routes
 Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');

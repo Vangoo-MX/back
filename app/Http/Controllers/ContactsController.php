@@ -278,10 +278,4 @@ class ContactsController extends Controller
             return json_encode('error: Ticket entry not found');
         }
     }
-
-    public function contactAgent(Request $request)
-    {
-        Mail::to('contacto@vangoo.mx')->send(new ContactAgentMail($request->all()));
-        return response()->json(['message' => 'Correo enviado con éxito'], 200);
-    }
 }
