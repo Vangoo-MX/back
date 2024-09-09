@@ -7,6 +7,7 @@ use App\Mail\ContactAgentMail;
 use App\Mail\SalesAdvisorMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class MailsController extends Controller
 {
@@ -18,7 +19,7 @@ class MailsController extends Controller
 
     public function contactAgent(Request $request)
     {
-        dd($request->all());
+        Log::info($request->all());
         Mail::to('agente@vangoo.mx')->send(new ContactAgentMail($request->all()));
         return response()->json(['message' => 'Correo enviado con éxito'], 200);
     }
