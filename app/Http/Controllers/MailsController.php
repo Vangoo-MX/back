@@ -19,7 +19,6 @@ class MailsController extends Controller
 
     public function contactAgent(Request $request)
     {
-        Log::info($request->all());
         Mail::to('agente@vangoo.mx')->send(new ContactAgentMail($request->all()));
         return response()->json(['message' => 'Correo enviado con éxito'], 200);
     }
