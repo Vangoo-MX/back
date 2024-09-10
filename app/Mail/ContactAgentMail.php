@@ -30,6 +30,8 @@ class ContactAgentMail extends Mailable
         $content = "Una persona está interesada: \n";
         $content .= "Id propiedad: " . $this->formData['id_property'] . "\n";
         $content .= "Tipo propiedad: " . $this->formData['type_property'] . "\n";
+        $content .= "Nombre de la propiedad: " . $this->formData['title_property'] . "\n";
+        $content .= "Ubicacion de la propiedad: " . $this->formData['location_property'] . "\n";
         $content .= "Nombre: " . $this->formData['name'] . "\n";
         $content .= "Email: " . $this->formData['email'] . "\n";
         $content .= "Tel: " . $this->formData['tel'] . "\n";
