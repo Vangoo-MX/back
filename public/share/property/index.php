@@ -48,7 +48,7 @@ function moneyFormat($numero)
     <meta property="url" content="<?php echo $urlShare; ?>">
     <link rel="canonical" href="<?php echo $urlShare; ?>">
 
-    <meta property="og:type" content="website">
+    <!-- <meta property="og:type" content="website">
     <meta property="og:title" content="<?php echo $data['title']; ?>">
     <meta property="og:description" content="<?php echo $data['description']; ?>">
     <meta property="og:image" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
@@ -59,6 +59,17 @@ function moneyFormat($numero)
     <meta property="og:url" content="<?php echo $urlShare; ?>">
     <meta property="og:site_name" content="Vangoo">
     <meta property="og:image:alt" content="vangoo property image">
+    <meta property="fb:app_id" content="7865680626775570"> -->
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="<?php echo $data['title']; ?>">
+    <meta property="og:description" content="<?php echo $data['description']; ?>">
+    <meta property="og:image" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+    <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="400">
+    <meta property="og:image:height" content="300">
+    <meta property="og:url" content="<?php echo $urlShare; ?>">
     <meta property="fb:app_id" content="7865680626775570">
 
     <script src="https://kit.fontawesome.com/e0df5df9e9.js" crossorigin="anonymous"></script>
