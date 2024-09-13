@@ -364,7 +364,6 @@ class FavoritesController extends Controller
     {
 
         try {
-            Log::info($request->all());
             if ($request->type == 'property') {
 
                 $favu = PropertiesFavorites::where('id_user', $request->id_user)->where('id_property', $request->id_property)->where('id_list', $request->id_list)->first();
