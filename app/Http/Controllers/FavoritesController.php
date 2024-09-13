@@ -333,7 +333,7 @@ class FavoritesController extends Controller
             }
 
             if (sizeof($lotFav) > 0) {
-                $lot = Lots::selectRaw('id, title, type_lots, location, description, images');
+                $lot = Lots::selectRaw('id, title, status, type_lots, location, description, images');
                 foreach ($lotFav as $value) {
                     $lot = $lot->orwhere('id', $value['id_lot']);
                 }
