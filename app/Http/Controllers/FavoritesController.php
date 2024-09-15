@@ -311,7 +311,7 @@ class FavoritesController extends Controller
             }
 
             if (sizeof($propertiesFav) > 0) {
-                $properties = Properties::selectRaw('id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images');
+                $properties = Properties::selectRaw('id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,commission_percentage,views,images');
                 foreach ($propertiesFav as $value) {
                     $properties = $properties->orwhere('id', $value['id_property']);
                 }
@@ -322,7 +322,7 @@ class FavoritesController extends Controller
             }
 
             if (sizeof($devFav) > 0) {
-                $dev = Developments::selectRaw('id,status,title,price_min,price_max,location,description,mode,views,images');
+                $dev = Developments::selectRaw('id,status,title,price_min,price_max,location,description,commission_percentage,mode,views,images');
                 foreach ($devFav as $value) {
                     $dev = $dev->orwhere('id', $value['id_development']);
                 }
@@ -333,7 +333,7 @@ class FavoritesController extends Controller
             }
 
             if (sizeof($lotFav) > 0) {
-                $lot = Lots::selectRaw('id, title, status, type_lots, location, description, images');
+                $lot = Lots::selectRaw('id, title, status, type_lots, price_min, price_max, location, description,commission_percentage, images');
                 foreach ($lotFav as $value) {
                     $lot = $lot->orwhere('id', $value['id_lot']);
                 }
