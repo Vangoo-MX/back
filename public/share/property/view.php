@@ -91,69 +91,68 @@ function moneyFormat($numero)
         }
 
         .propertyCard {
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            max-width: 350px;
-            margin: 20px;
-            transition: box-shadow 0.3s ease-in-out;
+            position: relative;
         }
 
-        .propertyCard:hover {
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        .propertyCard .content {
+            border-radius: 10px;
+            padding: 225px 20px 20px;
+            width: 380px;
+            background-color: #fff;
+            box-shadow: 0 0 5px 1px #0000001a;
+            position: relative;
+            z-index: 1;
         }
 
-        .propertyCard img {
+        .propertyCard .content .content-image {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 200px;
+            height: 210px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .propertyCard .content .content-image img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-bottom: 1px solid #e0e0e0;
+            object-position: center;
+            border-radius: 10px 10px 0 0;
         }
 
-        .propertyCard h3 {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin: 10px 0 5px;
-            color: #333;
+        .propertyCard .content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111;
         }
 
-        .propertyCard .price {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #ff4081;
+        .propertyCard .content .price {
+            font-size: 17px;
+            font-weight: 600;
+            color: black;
         }
 
-        .propertyCard p {
-            color: #666;
-            margin: 5px 0;
-            font-size: 0.9rem;
+        .propertyCard .content p {
+            font-size: 11pt;
+            line-height: 15pt;
+            font-weight: 400;
         }
 
-        .propertyCard .map-location {
-            font-size: 0.8rem;
-            color: #ff4081;
-            margin-left: 5px;
+        .propertyCard .content span {
+            color: #69696B;
+            font-size: 14px;
+            font-weight: 400;
         }
 
-        .propertyCard .icons {
-            padding: 10px 15px;
-        }
-
-        .propertyCard .icons div {
-            display: flex;
-            align-items: center;
-            font-size: 0.9rem;
-        }
-
-        .propertyCard .icons img {
-            width: 20px;
-            height: 20px;
-        }
-
-        .gap-1 {
-            gap: 8px;
+        .propertyCard .content-desc {
+            overflow: hidden;
+            display: -webkit-box;
+            line-clamp: 4;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
 
         .button-primary {
