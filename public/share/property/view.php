@@ -91,68 +91,69 @@ function moneyFormat($numero)
         }
 
         .propertyCard {
-            position: relative;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 350px;
+            margin: 20px;
+            transition: box-shadow 0.3s ease-in-out;
         }
 
-        .propertyCard .content {
-            border-radius: 10px;
-            padding: 225px 20px 20px;
-            width: 380px;
-            background-color: #fff;
-            box-shadow: 0 0 5px 1px #0000001a;
-            position: relative;
-            z-index: 1;
+        .propertyCard:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        .propertyCard .content .content-image {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .propertyCard img {
             width: 100%;
-            height: 210px;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .propertyCard .content .content-image img {
-            width: 100%;
-            height: 100%;
+            height: 200px;
             object-fit: cover;
-            object-position: center;
-            border-radius: 10px 10px 0 0;
+            border-bottom: 1px solid #e0e0e0;
         }
 
-        .propertyCard .content h3 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #111;
+        .propertyCard h3 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 10px 0 5px;
+            color: #333;
         }
 
-        .propertyCard .content .price {
-            font-size: 17px;
-            font-weight: 600;
-            color: black;
+        .propertyCard .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff4081;
         }
 
-        .propertyCard .content p {
-            font-size: 11pt;
-            line-height: 15pt;
-            font-weight: 400;
+        .propertyCard p {
+            color: #666;
+            margin: 5px 0;
+            font-size: 0.9rem;
         }
 
-        .propertyCard .content span {
-            color: #69696B;
-            font-size: 14px;
-            font-weight: 400;
+        .propertyCard .map-location {
+            font-size: 0.8rem;
+            color: #ff4081;
+            margin-left: 5px;
         }
 
-        .propertyCard .content-desc {
-            overflow: hidden;
-            display: -webkit-box;
-            line-clamp: 4;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            text-overflow: ellipsis;
-            overflow: hidden;
+        .propertyCard .icons {
+            padding: 10px 15px;
+        }
+
+        .propertyCard .icons div {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .propertyCard .icons img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .gap-1 {
+            gap: 8px;
         }
 
         .button-primary {
@@ -204,24 +205,6 @@ function moneyFormat($numero)
 
         <!----------CARD----------->
         <div class="propertyCard">
-            <!-- <div class="content">
-                <a>
-                    <div class="content-image">
-                        <img alt="house" loading="lazy" src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
-                    </div>
-                    <div class="content-info">
-                        <h3><?php echo $data['title']; ?></h3>
-                        <span>
-                            <span class="price"><?php echo moneyFormat($data['price']); ?></span>
-                        </span>
-                        <br>
-                        <div>
-                            <p><?php echo $data['location']; ?></p>
-                            <span class="content-desc"><?php echo $data['description']; ?></span>
-                        </div><br>
-                    </div>
-                </a>
-            </div> -->
             <div class="element-2">
                 <div class="propertyCard d-flex justify-content-center align-items-center h-100">
                     <div class="content d-flex flex-column m-0 cursor-pointer">
