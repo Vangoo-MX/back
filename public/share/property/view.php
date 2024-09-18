@@ -102,6 +102,8 @@ function moneyFormat($numero)
             box-shadow: 0 0 5px 1px #0000001a;
             position: relative;
             z-index: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .propertyCard .content .content-image {
@@ -152,7 +154,6 @@ function moneyFormat($numero)
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             text-overflow: ellipsis;
-            overflow: hidden;
         }
 
         .button-primary {
@@ -194,8 +195,45 @@ function moneyFormat($numero)
             width: 25%;
         }
 
-        .icons i {
-            color: var(--tertiary);
+        /* Flex y alineación personalizada */
+        .d-flex {
+            display: flex;
+        }
+
+        .justify-content-center {
+            justify-content: center;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .flex-column {
+            flex-direction: column;
+        }
+
+        .m-0 {
+            margin: 0;
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .overflow-hidden {
+            overflow: hidden;
+        }
+
+        .gap-1 {
+            gap: 10px;
+        }
+
+        .mb-1 {
+            margin-bottom: 10px;
+        }
+
+        .justify-content-between {
+            justify-content: space-between;
         }
     </style>
 
