@@ -189,6 +189,14 @@ function moneyFormat($numero)
             flex-wrap: wrap;
             justify-content: center;
         }
+
+        .element-2 {
+            width: 25%;
+        }
+
+        .icons i {
+            color: var(--tertiary);
+        }
     </style>
 
 </head>
