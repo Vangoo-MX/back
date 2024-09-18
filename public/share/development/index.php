@@ -161,9 +161,9 @@ function moneyFormat($numero)
         .button-primary {
             background-color: #FC7B97;
             border: 0;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 6px 14px;
+            font-size: 20px;
+            font-weight: 600;
+            padding: 10px 20px;
             border-radius: 25px;
             color: white;
             cursor: pointer;
@@ -202,7 +202,7 @@ function moneyFormat($numero)
 
         <div class="title">
             <img src="https://vangoo.mx/assets/img/system/logo.webp" height="40px">
-            <a href="https://vangoo.mx/details/desarrollo/<?php echo $id; ?>"><button class="button-primary">Ver desarrollo</button></a>
+            <a href="https://vangoo.mx/details/desarrollo/<?php echo $id; ?>"><button class="button-primary">Ver detalles del desarrollo</button></a>
         </div>
 
         <!----------CARD----------->
