@@ -104,6 +104,7 @@ function moneyFormat($numero)
             z-index: 1;
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
 
         .propertyCard .content .content-image {
@@ -234,6 +235,25 @@ function moneyFormat($numero)
 
         .justify-content-between {
             justify-content: space-between;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .icons div {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #FC7B97;
+        }
+
+        .icons span {
+            font-size: 14px;
+            font-weight: 400;
+            color: #FC7B97;
         }
     </style>
 
