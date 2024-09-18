@@ -215,7 +215,7 @@ function moneyFormat($numero)
                     <div class="content-info">
                         <h3><?php echo $data['title']; ?></h3>
                         <span>
-                            <span class="price"><?php echo moneyFormat($data['price']); ?></span>
+                            <span class="price_max"><?php echo moneyFormat($data['price']); ?></span>
                         </span>
                         <br>
                         <div>
