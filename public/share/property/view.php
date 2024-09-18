@@ -196,7 +196,6 @@ function moneyFormat($numero)
             width: 25%;
         }
 
-        /* Flex y alineación personalizada */
         .d-flex {
             display: flex;
         }
@@ -271,23 +270,34 @@ function moneyFormat($numero)
         <!----------CARD----------->
         <div class="propertyCard">
             <div class="element-2">
-                <div class="propertyCard d-flex justify-content-center align-items-center h-100">
-                    <div class="content d-flex flex-column m-0 cursor-pointer">
+                <div class="propertyCard">
+                    <div class="content">
                         <a>
-                            <div class="content-image m-0"><img alt="house" loading="lazy" src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg"></div>
+                            <div class="content-image m-0">
+                                <img alt="house" loading="lazy" src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+                            </div>
                             <div class="overflow-hidden">
                                 <h3><?php echo $data['title']; ?></h3>
-                                <span class="d-flex justify-content-between">
-                                    <span class="cursor-pointer price"> <?php echo moneyFormat($data['price']); ?></span>
-                                </span>
-                                <br>
+                                <span class="price"> <?php echo moneyFormat($data['price']); ?></span>
                             </div>
                             <hr>
-                            <div class="icons mb-1 d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-1"><img src="https://www.vangoo.mx/assets/img/system/bed.svg"><span><?php echo $data['rooms']; ?></span></div>
-                                <div class="d-flex align-items-center gap-1"><img src="https://www.vangoo.mx/assets/img/system/car.svg"><span><?php echo $data['parkings']; ?></span></div>
-                                <div class="d-flex align-items-center gap-1"><img src="https://www.vangoo.mx/assets/img/system/bath.svg"><span><?php echo $data['bathrooms']; ?></span></div>
-                                <div class="d-flex align-items-center gap-1"><img src="https://www.vangoo.mx/assets/img/system/house.svg"><span><?php echo $data['area']; ?>m²</span></div>
+                            <div class="icons">
+                                <div>
+                                    <img src="https://www.vangoo.mx/assets/img/system/bed.svg">
+                                    <span><?php echo $data['rooms']; ?></span>
+                                </div>
+                                <div>
+                                    <img src="https://www.vangoo.mx/assets/img/system/car.svg">
+                                    <span><?php echo $data['parkings']; ?></span>
+                                </div>
+                                <div>
+                                    <img src="https://www.vangoo.mx/assets/img/system/bath.svg">
+                                    <span><?php echo $data['bathrooms']; ?></span>
+                                </div>
+                                <div>
+                                    <img src="https://www.vangoo.mx/assets/img/system/house.svg">
+                                    <span><?php echo $data['area']; ?>m²</span>
+                                </div>
                             </div>
                         </a>
                     </div>
