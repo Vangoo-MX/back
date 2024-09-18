@@ -200,7 +200,7 @@ function moneyFormat($numero)
 
         <div class="title">
             <img src="https://vangoo.mx/assets/img/system/logo.webp" height="40px">
-            <a href="https://vangoo.mx/details/propiedad/<?php echo $id; ?>"><button class="button-primary">Ver propiedad</button></a>
+            <a href="https://vangoo.mx/details/propiedad/<?php echo $id; ?>"><button class="button-primary">Ver detalles de la propiedad</button></a>
         </div>
 
         <!----------CARD----------->
