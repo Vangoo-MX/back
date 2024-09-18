@@ -238,14 +238,15 @@ function moneyFormat($numero)
 
         .icons {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            width: 100%;
+            padding: 0 10px;
         }
 
         .icons div {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 10px;
             color: #FC7B97;
         }
 
@@ -253,6 +254,7 @@ function moneyFormat($numero)
             font-size: 14px;
             font-weight: 400;
             color: #FC7B97;
+            font-family: 'Roboto', sans-serif;
         }
     </style>
 
