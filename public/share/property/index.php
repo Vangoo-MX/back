@@ -159,9 +159,9 @@ function moneyFormat($numero)
         .button-primary {
             background-color: #FC7B97;
             border: 0;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 6px 14px;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 10px 20px;
             border-radius: 25px;
             color: white;
             cursor: pointer;
