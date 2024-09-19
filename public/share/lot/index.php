@@ -7,8 +7,7 @@ if ($_GET && isset($_GET['id'])) {
 }
 
 $typeText = 'lots';
-// $urlShare = $type == 'Development' ? 'https://vangoo.mx/details/desarrollo/'.$id : 'https://vangoo.mx/details/propiedad/'.$id;
-$urlShare = 'https://dashboard.vangoo.mx/share/lot/index.php?id=' . $id;
+$urlShare = 'https://dashboard.vangoo.mx/share/lot/view.php?id=' . $id;
 
 $urlApi = 'https://dashboard.vangoo.mx/ep/getLot/' . $id;
 $curl = curl_init($urlApi);
@@ -202,7 +201,6 @@ function moneyFormat($numero)
 
         <div class="title">
             <img src="https://vangoo.mx/assets/img/system/logo.webp" height="40px">
-            <a href="https://vangoo.mx/detailslots/lots/<?php echo $id; ?>"><button class="button-primary">Ver detalles del lote</button></a>
         </div>
 
         <!----------CARD----------->
