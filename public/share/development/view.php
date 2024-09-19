@@ -217,27 +217,6 @@ function moneyFormat($numero)
                 <p class="property-price"><?php echo moneyFormat($data['price_min']); ?> - <?php echo moneyFormat($data['price_max']); ?></p>
                 <p class="property-address"><?php echo $data['location']; ?></p>
             </div>
-
-            <div class="card-footer">
-                <div class="property-details">
-                    <div class="detail-item">
-                        <img src="https://www.vangoo.mx/assets/img/system/bed.svg" alt="Beds" class="icon">
-                        <span><?php echo $data['rooms']; ?></span>
-                    </div>
-                    <div class="detail-item">
-                        <img src="https://www.vangoo.mx/assets/img/system/bath.svg" alt="Baths" class="icon">
-                        <span><?php echo $data['bathrooms']; ?></span>
-                    </div>
-                    <div class="detail-item">
-                        <img src="https://www.vangoo.mx/assets/img/system/car.svg" alt="Parking" class="icon">
-                        <span><?php echo $data['parkings']; ?></span>
-                    </div>
-                    <div class="detail-item">
-                        <img src="https://www.vangoo.mx/assets/img/system/house.svg" alt="Size" class="icon">
-                        <span><?php echo $data['area']; ?>m²</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </body>
