@@ -83,6 +83,9 @@ function moneyFormat($numero)
 
         .logo-section {
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-bottom: 32px;
         }
 
@@ -98,6 +101,7 @@ function moneyFormat($numero)
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            text-align: center;
         }
 
         .btn:hover {
