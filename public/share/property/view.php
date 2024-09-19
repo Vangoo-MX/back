@@ -63,204 +63,135 @@ function moneyFormat($numero)
     <style>
         * {
             box-sizing: border-box;
-            font-family: 'roboto';
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            width: 100%;
-            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
         }
 
-        .main {
-            width: 100%;
-            height: 100%;
-            padding: 20px;
+        .container {
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            padding: 16px;
         }
 
-        .title {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 10px;
+        .logo-section {
+            text-align: center;
+            margin-bottom: 32px;
         }
 
-        .propertyCard {
-            position: relative;
+        .logo {
+            height: 80px;
+            margin-bottom: 16px;
         }
 
-        .propertyCard .content {
-            border-radius: 10px;
-            padding: 225px 20px 20px;
-            width: 380px;
-            background-color: #fff;
-            box-shadow: 0 0 5px 1px #0000001a;
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .propertyCard .content .content-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 210px;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .propertyCard .content .content-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .propertyCard .content h3 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #111;
-        }
-
-        .propertyCard .content .price {
-            font-size: 17px;
-            font-weight: 600;
-            color: black;
-        }
-
-        .propertyCard .content p {
-            font-size: 11pt;
-            line-height: 15pt;
-            font-weight: 400;
-        }
-
-        .propertyCard .content span {
-            color: #69696B;
-            font-size: 14px;
-            font-weight: 400;
-        }
-
-        .propertyCard .content-desc {
-            overflow: hidden;
-            display: -webkit-box;
-            line-clamp: 4;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            text-overflow: ellipsis;
-        }
-
-        .button-primary {
-            background-color: #FC7B97;
-            border: 0;
-            font-size: 20px;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 25px;
+        .btn {
+            background-color: #007bff;
             color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
 
-        .button-secondary {
-            background-color: #75D5C5;
-            border: 0;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 6px 14px;
-            border-radius: 25px;
-            color: black;
-            cursor: pointer;
+        .btn:hover {
+            background-color: #0056b3;
         }
 
-        .button-secondary:hover,
-        .button-primary:hover {
-            opacity: 0.7;
-        }
-
-        .share {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .element-2 {
-            width: 25%;
-        }
-
-        .d-flex {
-            display: flex;
-        }
-
-        .justify-content-center {
-            justify-content: center;
-        }
-
-        .align-items-center {
-            align-items: center;
-        }
-
-        .flex-column {
-            flex-direction: column;
-        }
-
-        .m-0 {
-            margin: 0;
-        }
-
-        .cursor-pointer {
-            cursor: pointer;
-        }
-
-        .overflow-hidden {
+        .card {
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 8px;
             overflow: hidden;
         }
 
-        .gap-1 {
-            gap: 10px;
+        .card-header {
+            position: relative;
         }
 
-        .mb-1 {
-            margin-bottom: 10px;
+        .image-container {
+            position: relative;
         }
 
-        .justify-content-between {
-            justify-content: space-between;
+        .property-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
         }
 
-        .icons {
+        .icon-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .icon-btn img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .card-content {
+            padding: 16px;
+        }
+
+        .property-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .property-price {
+            font-size: 1.8rem;
+            color: #007bff;
+            margin-bottom: 16px;
+        }
+
+        .property-address {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .card-footer {
             display: flex;
             justify-content: space-between;
-            width: 100%;
-            padding: 0 10px;
+            padding: 16px;
+            background-color: #f1f1f1;
         }
 
-        .icons div {
+        .property-details {
+            display: flex;
+            gap: 16px;
+        }
+
+        .detail-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            color: #FC7B97;
+            gap: 4px;
         }
 
-        .icons span {
-            font-size: 14px;
-            font-weight: 400;
-            color: #FC7B97;
-            font-family: 'Roboto', sans-serif;
+        .icon {
+            width: 20px;
+            height: 20px;
         }
     </style>
 
 </head>
 
-<body>
+<!-- <body>
 
     <div class="main">
 
@@ -270,46 +201,94 @@ function moneyFormat($numero)
         </div>
 
         <!----------CARD----------->
+<div class="propertyCard">
+    <div class="element-2">
         <div class="propertyCard">
-            <div class="element-2">
-                <div class="propertyCard">
-                    <div class="content">
-                        <a>
-                            <div class="content-image m-0">
-                                <img alt="house" loading="lazy" src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
-                            </div>
-                            <div class="overflow-hidden">
-                                <h3><?php echo $data['title']; ?></h3>
-                                <span class="price"> <?php echo moneyFormat($data['price']); ?></span>
-                            </div>
-                            <hr>
-                            <div class="icons">
-                                <div>
-                                    <img src="https://www.vangoo.mx/assets/img/system/bed.svg">
-                                    <span><?php echo $data['rooms']; ?></span>
-                                </div>
-                                <div>
-                                    <img src="https://www.vangoo.mx/assets/img/system/car.svg">
-                                    <span><?php echo $data['parkings']; ?></span>
-                                </div>
-                                <div>
-                                    <img src="https://www.vangoo.mx/assets/img/system/bath.svg">
-                                    <span><?php echo $data['bathrooms']; ?></span>
-                                </div>
-                                <div>
-                                    <img src="https://www.vangoo.mx/assets/img/system/house.svg">
-                                    <span><?php echo $data['area']; ?>m²</span>
-                                </div>
-                            </div>
-                        </a>
+            <div class="content">
+                <a>
+                    <div class="content-image m-0">
+                        <img alt="house" loading="lazy" src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
                     </div>
+                    <div class="overflow-hidden">
+                        <h3><?php echo $data['title']; ?></h3>
+                        <span class="price"> <?php echo moneyFormat($data['price']); ?></span>
+                    </div>
+                    <hr>
+                    <div class="icons">
+                        <div>
+                            <img src="https://www.vangoo.mx/assets/img/system/bed.svg">
+                            <span><?php echo $data['rooms']; ?></span>
+                        </div>
+                        <div>
+                            <img src="https://www.vangoo.mx/assets/img/system/car.svg">
+                            <span><?php echo $data['parkings']; ?></span>
+                        </div>
+                        <div>
+                            <img src="https://www.vangoo.mx/assets/img/system/bath.svg">
+                            <span><?php echo $data['bathrooms']; ?></span>
+                        </div>
+                        <div>
+                            <img src="https://www.vangoo.mx/assets/img/system/house.svg">
+                            <span><?php echo $data['area']; ?>m²</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------------->
+
+</div>
+
+</body> -->
+
+<div class="container">
+    <div class="logo-section">
+        <img src="https://vangoo.mx/assets/img/system/logo.webp" alt="Vangoo Logo" class="logo">
+        <button class="btn">Ver detalles de la propiedad</button>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="image-container">
+                <img src="/placeholder.svg?height=250&width=400" alt="Property" class="property-image">
+                <button class="icon-btn">
+                    <img src="heart-icon.svg" alt="Favorite">
+                </button>
+            </div>
+        </div>
+
+        <div class="card-content">
+            <h3 class="property-title">Beautiful Family Home</h3>
+            <p class="property-price">$350,000</p>
+            <p class="property-address">123 Main St, Anytown, USA</p>
+        </div>
+
+        <div class="card-footer">
+            <div class="property-details">
+                <div class="detail-item">
+                    <img src="bed-icon.svg" alt="Beds" class="icon">
+                    <span>3</span>
+                </div>
+                <div class="detail-item">
+                    <img src="bath-icon.svg" alt="Baths" class="icon">
+                    <span>2</span>
+                </div>
+            </div>
+            <div class="property-details">
+                <div class="detail-item">
+                    <img src="car-icon.svg" alt="Parking" class="icon">
+                    <span>2</span>
+                </div>
+                <div class="detail-item">
+                    <img src="home-icon.svg" alt="Size" class="icon">
+                    <span>1500 m²</span>
                 </div>
             </div>
         </div>
-        <!------------------------->
-
     </div>
-
+</div>
 </body>
 
 </html>
