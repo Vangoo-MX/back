@@ -191,104 +191,53 @@ function moneyFormat($numero)
 
 </head>
 
-<!-- <body>
-
-    <div class="main">
-
-        <div class="title">
-            <img src="https://vangoo.mx/assets/img/system/logo.webp" height="80px">
-            <a href="https://vangoo.mx/details/propiedad/<?php echo $id; ?>"><button class="button-primary">Ver detalles de la propiedad</button></a>
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <img src="https://vangoo.mx/assets/img/system/logo.webp" alt="Vangoo Logo" class="logo">
+            <button class="btn">Ver detalles de la propiedad</button>
         </div>
 
-        <!----------CARD----------->
-<div class="propertyCard">
-    <div class="element-2">
-        <div class="propertyCard">
-            <div class="content">
-                <a>
-                    <div class="content-image m-0">
-                        <img alt="house" loading="lazy" src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
-                    </div>
-                    <div class="overflow-hidden">
-                        <h3><?php echo $data['title']; ?></h3>
-                        <span class="price"> <?php echo moneyFormat($data['price']); ?></span>
-                    </div>
-                    <hr>
-                    <div class="icons">
-                        <div>
-                            <img src="https://www.vangoo.mx/assets/img/system/bed.svg">
-                            <span><?php echo $data['rooms']; ?></span>
-                        </div>
-                        <div>
-                            <img src="https://www.vangoo.mx/assets/img/system/car.svg">
-                            <span><?php echo $data['parkings']; ?></span>
-                        </div>
-                        <div>
-                            <img src="https://www.vangoo.mx/assets/img/system/bath.svg">
-                            <span><?php echo $data['bathrooms']; ?></span>
-                        </div>
-                        <div>
-                            <img src="https://www.vangoo.mx/assets/img/system/house.svg">
-                            <span><?php echo $data['area']; ?>m²</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<!------------------------->
-
-</div>
-
-</body> -->
-
-<div class="container">
-    <div class="logo-section">
-        <img src="https://vangoo.mx/assets/img/system/logo.webp" alt="Vangoo Logo" class="logo">
-        <button class="btn">Ver detalles de la propiedad</button>
-    </div>
-
-    <div class="card">
-        <div class="card-header">
-            <div class="image-container">
-                <img src="/placeholder.svg?height=250&width=400" alt="Property" class="property-image">
-                <button class="icon-btn">
-                    <img src="heart-icon.svg" alt="Favorite">
-                </button>
-            </div>
-        </div>
-
-        <div class="card-content">
-            <h3 class="property-title">Beautiful Family Home</h3>
-            <p class="property-price">$350,000</p>
-            <p class="property-address">123 Main St, Anytown, USA</p>
-        </div>
-
-        <div class="card-footer">
-            <div class="property-details">
-                <div class="detail-item">
-                    <img src="bed-icon.svg" alt="Beds" class="icon">
-                    <span>3</span>
-                </div>
-                <div class="detail-item">
-                    <img src="bath-icon.svg" alt="Baths" class="icon">
-                    <span>2</span>
+        <div class="card">
+            <div class="card-header">
+                <div class="image-container">
+                    <img src="/placeholder.svg?height=250&width=400" alt="Property" class="property-image">
+                    <button class="icon-btn">
+                        <img src="heart-icon.svg" alt="Favorite">
+                    </button>
                 </div>
             </div>
-            <div class="property-details">
-                <div class="detail-item">
-                    <img src="car-icon.svg" alt="Parking" class="icon">
-                    <span>2</span>
+
+            <div class="card-content">
+                <h3 class="property-title">Beautiful Family Home</h3>
+                <p class="property-price">$350,000</p>
+                <p class="property-address">123 Main St, Anytown, USA</p>
+            </div>
+
+            <div class="card-footer">
+                <div class="property-details">
+                    <div class="detail-item">
+                        <img src="bed-icon.svg" alt="Beds" class="icon">
+                        <span>3</span>
+                    </div>
+                    <div class="detail-item">
+                        <img src="bath-icon.svg" alt="Baths" class="icon">
+                        <span>2</span>
+                    </div>
                 </div>
-                <div class="detail-item">
-                    <img src="home-icon.svg" alt="Size" class="icon">
-                    <span>1500 m²</span>
+                <div class="property-details">
+                    <div class="detail-item">
+                        <img src="car-icon.svg" alt="Parking" class="icon">
+                        <span>2</span>
+                    </div>
+                    <div class="detail-item">
+                        <img src="home-icon.svg" alt="Size" class="icon">
+                        <span>1500 m²</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 
 </html>
