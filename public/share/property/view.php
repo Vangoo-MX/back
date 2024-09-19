@@ -201,14 +201,14 @@ function moneyFormat($numero)
 <body>
     <div class="container">
         <div class="logo-section">
-            <a href="https://vangoo.mx/details/propiedad/<?php echo $id; ?>"><img src="https://www.vangoo.mx/assets/img/system/new_logo.png" alt="Vangoo Logo" class="logo">
-                <a href="https://vangoo.mx/details/propiedad/<?php echo $id; ?>"><button class="btn">Ver detalles de la propiedad</button></a>
+            <img src="https://www.vangoo.mx/assets/img/system/new_logo.png" alt="Vangoo Logo" class="logo">
+            <a href="https://vangoo.mx/details/propiedad/<?php echo $id; ?>"><button class="btn">Ver detalles de la propiedad</button></a>
         </div>
 
         <div class="card">
             <div class="card-header">
                 <div class="image-container">
-                    <img src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg?height=250&width=400" alt="Property" class="property-image">
+                    <a href="https://vangoo.mx/details/propiedad/<?php echo $id; ?>"><img src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg?height=250&width=400" alt="Property" class="property-image">
                 </div>
             </div>
 
