@@ -188,8 +188,8 @@ function moneyFormat($numero)
         }
 
         .icon {
-            width: 50px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
         }
     </style>
 
@@ -225,8 +225,6 @@ function moneyFormat($numero)
                         <img src="https://www.vangoo.mx/assets/img/system/bath.svg" alt="Baths" class="icon">
                         <span><?php echo $data['bathrooms']; ?></span>
                     </div>
-                </div>
-                <div class="property-details">
                     <div class="detail-item">
                         <img src="https://www.vangoo.mx/assets/img/system/car.svg" alt="Parking" class="icon">
                         <span><?php echo $data['parkings']; ?></span>
