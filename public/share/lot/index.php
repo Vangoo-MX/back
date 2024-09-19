@@ -200,7 +200,7 @@ function moneyFormat($numero)
     <div class="main">
 
         <div class="title">
-            <img src="https://vangoo.mx/assets/img/system/logo.webp" height="40px">
+            <img src="https://vangoo.mx/assets/img/system/logo.webp" height="80px">
         </div>
 
         <!----------CARD----------->
