@@ -186,6 +186,8 @@ function moneyFormat($numero)
             display: flex;
             align-items: center;
             gap: 4px;
+            font-size: 0.9rem;
+            color: #FC7B97;
         }
 
         .icon {
