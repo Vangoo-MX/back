@@ -159,13 +159,13 @@ function moneyFormat($numero)
 
         .property-price {
             font-size: 1.8rem;
-            color: #007bff;
+            color: #FC7B97;
             margin-bottom: 16px;
         }
 
         .property-address {
             color: #666;
-            font-size: 0.9rem;
+            font-size: 1.2rem;
             margin-bottom: 16px;
         }
 
@@ -188,7 +188,7 @@ function moneyFormat($numero)
         }
 
         .icon {
-            width: 20px;
+            width: 50px;
             height: 20px;
         }
     </style>
