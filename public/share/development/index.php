@@ -225,6 +225,20 @@ function moneyFormat($numero)
             </div>
         </div>
         <!------------------------->
+        <!-----SHARE BUTTONS------->
+        <div class="share">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $urlShare; ?>">
+                <button class="button-secondary"><i class="fa-brands fa-facebook"></i> Compartir en Facebook</button>
+            </a>
+            <!-- <button class="button-secondary"><i class="fa-brands fa-instagram"></i> Compartir en Instagram</button> -->
+            <a href="https://twitter.com/intent/tweet?text=Mira esta propiedad en Vangoo&url=<?php echo $urlShare; ?>&hashtags=vangoo">
+                <button class="button-secondary"><i class="fa-brands fa-square-x-twitter"></i> Compartir en X</button>
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $urlShare; ?>">
+                <button class="button-secondary"><i class="fa-brands fa-linkedin"></i> Compartir en LinkedIn</button>
+            </a>
+        </div>
+        <!------------------------->
 
     </div>
 
