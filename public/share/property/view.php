@@ -178,7 +178,7 @@ function moneyFormat($numero)
 
         .property-details {
             display: flex;
-            gap: 16px;
+            gap: 30px;
         }
 
         .detail-item {
@@ -188,8 +188,8 @@ function moneyFormat($numero)
         }
 
         .icon {
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
         }
     </style>
 
