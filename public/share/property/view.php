@@ -195,44 +195,41 @@ function moneyFormat($numero)
     <div class="container">
         <div class="logo-section">
             <img src="https://vangoo.mx/assets/img/system/logo.webp" alt="Vangoo Logo" class="logo">
-            <button class="btn">Ver detalles de la propiedad</button>
+            <a href="https://vangoo.mx/details/propiedad/<?php echo $id; ?>"><button class="btn">Ver detalles de la propiedad</button></a>
         </div>
 
         <div class="card">
             <div class="card-header">
                 <div class="image-container">
-                    <img src="/placeholder.svg?height=250&width=400" alt="Property" class="property-image">
-                    <button class="icon-btn">
-                        <img src="heart-icon.svg" alt="Favorite">
-                    </button>
+                    <img src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg?height=250&width=400" alt="Property" class="property-image">
                 </div>
             </div>
 
             <div class="card-content">
-                <h3 class="property-title">Beautiful Family Home</h3>
-                <p class="property-price">$350,000</p>
-                <p class="property-address">123 Main St, Anytown, USA</p>
+                <h3 class="property-title"><?php echo $data['title']; ?></h3>
+                <p class="property-price"><?php echo moneyFormat($data['price']); ?></p>
+                <p class="property-address"><?php echo $data['location']; ?></p>
             </div>
 
             <div class="card-footer">
                 <div class="property-details">
                     <div class="detail-item">
-                        <img src="bed-icon.svg" alt="Beds" class="icon">
-                        <span>3</span>
+                        <img src="https://www.vangoo.mx/assets/img/system/bed.svg" alt="Beds" class="icon">
+                        <span><?php echo $data['rooms']; ?></span>
                     </div>
                     <div class="detail-item">
-                        <img src="bath-icon.svg" alt="Baths" class="icon">
-                        <span>2</span>
+                        <img src="https://www.vangoo.mx/assets/img/system/bath.svg" alt="Baths" class="icon">
+                        <span><?php echo $data['bathrooms']; ?></span>
                     </div>
                 </div>
                 <div class="property-details">
                     <div class="detail-item">
-                        <img src="car-icon.svg" alt="Parking" class="icon">
-                        <span>2</span>
+                        <img src="https://www.vangoo.mx/assets/img/system/car.svg" alt="Parking" class="icon">
+                        <span><?php echo $data['parkings']; ?></span>
                     </div>
                     <div class="detail-item">
-                        <img src="home-icon.svg" alt="Size" class="icon">
-                        <span>1500 m²</span>
+                        <img src="https://www.vangoo.mx/assets/img/system/house.svg" alt="Size" class="icon">
+                        <span><?php echo $data['area']; ?>m²</span>
                     </div>
                 </div>
             </div>
