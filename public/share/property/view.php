@@ -179,7 +179,7 @@ function moneyFormat($numero)
         .property-details {
             display: flex;
             gap: 30px;
-            text-align: center;
+            align-items: center;
         }
 
         .detail-item {
