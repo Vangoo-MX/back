@@ -194,7 +194,7 @@ function moneyFormat($numero)
 <body>
     <div class="container">
         <div class="logo-section">
-            <img src="https://vangoo.mx/assets/img/system/logo.webp" alt="Vangoo Logo" class="logo">
+            <img src="https://www.vangoo.mx/assets/img/system/new_logo.png" alt="Vangoo Logo" class="logo">
             <a href="https://vangoo.mx/details/propiedad/<?php echo $id; ?>"><button class="btn">Ver detalles de la propiedad</button></a>
         </div>
 
