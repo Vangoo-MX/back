@@ -37,7 +37,7 @@ function moneyFormat($numero)
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vangoo | <?php echo $data['title']; ?></title>
+    <title>Vangoo | <?php echo $data['listdata']['title']; ?></title>
     <link rel="icon" type="image/png" href="https://vangoo.mx/assets/icon/favicon.png">
 
     <meta name="description" content="<?php echo $data['description']; ?>">
@@ -48,7 +48,7 @@ function moneyFormat($numero)
     <link rel="canonical" href="<?php echo $urlShare; ?>">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="<?php echo $data['title']; ?>">
+    <meta property="og:title" content="<?php echo $data['listdata']['title']; ?>">
     <meta property="og:description" content="<?php echo $data['description']; ?>">
     <meta property="og:image" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
     <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
