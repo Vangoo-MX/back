@@ -289,7 +289,6 @@ class FavoritesController extends Controller
     {
 
         try {
-            // Obtener lista de usuario
             $listdata = ListsUser::selectRaw('id, id_user, title, timestamp')
                 ->where('id', $id)
                 ->first();
@@ -298,7 +297,6 @@ class FavoritesController extends Controller
                 return json_encode("error: Lista no encontrada");
             }
 
-            // Obtener el ID de usuario y nombre del usuario
             $id_user = $listdata->id_user;
             $name_user = User::select('name')->find($id_user);
 
@@ -310,40 +308,35 @@ class FavoritesController extends Controller
             $return[0]['listdata'] = $listdata->toArray();
             $return[0]['listdata']['name_user'] = $name_user->name;
 
-            // Consultar favoritos: propiedades, desarrollos y lotes
             $propertiesFav = PropertiesFavorites::where('id_list', $id)->get();
             $devFav = DevelopmentsFavorites::where('id_list', $id)->get();
             $lotFav = LotsFavorites::where('id_list', $id)->get();
 
-            // Listas de IDs
             $propertiesIds = $propertiesFav->pluck('id_property')->toArray();
             $developmentsIds = $devFav->pluck('id_development')->toArray();
             $lotsIds = $lotFav->pluck('id_lot')->toArray();
 
-            // Consultar las propiedades favoritas
             $properties = Properties::selectRaw('id, title, price, location, rooms, parkings, type, bathrooms, area, area_terrain, description, commission_percentage, views, images');
             if (!empty($propertiesIds)) {
                 $properties->whereIn('id', $propertiesIds);
             } else {
-                $properties->whereNull('id'); // Asegura que no retorne nada
+                $properties->whereNull('id');
             }
             $return[0]['properties'] = $properties->get();
 
-            // Consultar los desarrollos favoritos
             $dev = Developments::selectRaw('id, status, title, price_min, price_max, location, description, commission_percentage, mode, views, images');
             if (!empty($developmentsIds)) {
                 $dev->whereIn('id', $developmentsIds);
             } else {
-                $dev->whereNull('id'); // Asegura que no retorne nada
+                $dev->whereNull('id');
             }
             $return[0]['developments'] = $dev->get();
 
-            // Consultar los lotes favoritos
             $lot = Lots::selectRaw('id, title, status, type_lots, price_min, price_max, location, description, commission_percentage, images');
             if (!empty($lotsIds)) {
                 $lot->whereIn('id', $lotsIds);
             } else {
-                $lot->whereNull('id'); // Asegura que no retorne nada
+                $lot->whereNull('id');
             }
             $return[0]['lots'] = $lot->get();
         } catch (Exception $e) {
