@@ -23,23 +23,6 @@ if (!$data) {
 }
 $data = $data[0];
 
-$propertyImage = '';
-$developmentImage = '';
-$lotImage = '';
-
-// Verificar si existen imágenes en los datos de la lista y asignarlas a las variables correspondientes
-if (isset($data['property']['image']) && !empty($data['property']['image'])) {
-    $propertyImage = $data['property']['image'];
-}
-
-if (isset($data['development']['image']) && !empty($data['development']['image'])) {
-    $developmentImage = $data['development']['image'];
-}
-
-if (isset($data['lot']['image']) && !empty($data['lot']['image'])) {
-    $lotImage = $data['lot']['image'];
-}
-
 function moneyFormat($numero)
 {
     $formatted = number_format($numero, 2, '.', ',');
@@ -54,23 +37,24 @@ function moneyFormat($numero)
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vangoo | <?php echo $data['listdata']['title']; ?></title>
+    <title>Vangoo | <?php echo $data['title']; ?></title>
     <link rel="icon" type="image/png" href="https://vangoo.mx/assets/icon/favicon.png">
 
-    <meta name="description" content="<?php echo $data['listdata']['description']; ?>">
-    <meta name="keywords" content="comprar casa, comprar departamento, rentar, rentar casa, comprar nuevo león, rentar casa en nuevo león, comprar casa monterrey, publicar propiedad, buscar propiedades en nuevo león, buscar departamentos, sitio para vivir, lugar para vivir, encontrar dónde vivir, vender propiedades en nuevo león, comisión por venta de propiedad, propiedades destacados nuevo león, desarrollos inmobiliarios">
+    <meta name="description" content="<?php echo $data['description']; ?>">
+    <meta name="keywords" content="comprar casa, comprar departamento,rentar,rentar casa,comprar nuevo león, rentar casa en nuevo león, comprar casa monterrey,publicar propiedad, buscar propiedades en nuevo león, buscar departamentos,sitio para vivir, lugar para vivir,encontrar dónde vivir, vender propiedades en nuevo león,comisión por venta de propiedad,propiedades destacados nuevo león,desarrollos inmobiliarios">
+    <meta property="image" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+    <meta property="image:secure_url" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+    <meta property="url" content="<?php echo $urlShare; ?>">
+    <link rel="canonical" href="<?php echo $urlShare; ?>">
 
-    <?php if ($propertyImage || $developmentImage || $lotImage) : ?>
-        <meta property="og:image" content="https://dashboard.vangoo.mx/storage/collage.php?id=<?php echo $id; ?>">
-        <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/storage/collage.php?id=<?php echo $id; ?>">
-    <?php else : ?>
-        <meta property="og:image" content="https://dashboard.vangoo.mx/storage/img/default.jpg">
-        <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/storage/img/default.jpg">
-    <?php endif; ?>
-
-    <meta property="og:title" content="<?php echo $data['listdata']['title']; ?>">
-    <meta property="og:description" content="<?php echo $data['listdata']['description']; ?>">
     <meta property="og:type" content="website">
+    <meta property="og:title" content="<?php echo $data['title']; ?>">
+    <meta property="og:description" content="<?php echo $data['description']; ?>">
+    <meta property="og:image" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+    <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="400">
+    <meta property="og:image:height" content="300">
     <meta property="og:url" content="<?php echo $urlShare; ?>">
     <meta property="fb:app_id" content="7865680626775570">
 
