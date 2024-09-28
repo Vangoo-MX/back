@@ -317,6 +317,9 @@ class FavoritesController extends Controller
                 }
                 $properties = $properties->get();
                 $return[0]['properties'] = $properties;
+                if (!empty($properties[0]->images)) {
+                    $return[0]['firstPropertyImage'] = $properties[0]->images[0];
+                }
             } else {
                 $return[0]['properties'] = [];
             }
@@ -328,6 +331,9 @@ class FavoritesController extends Controller
                 }
                 $dev = $dev->get();
                 $return[0]['developments'] = $dev;
+                if (!empty($dev[0]->images)) {
+                    $return[0]['firstDevelopmentImage'] = $dev[0]->images[0];
+                }
             } else {
                 $return[0]['developments'] = [];
             }
@@ -339,6 +345,9 @@ class FavoritesController extends Controller
                 }
                 $lot = $lot->get();
                 $return[0]['lots'] = $lot;
+                if (!empty($lot[0]->images)) {
+                    $return[0]['firstLotImage'] = $lot[0]->images[0];
+                }
             } else {
                 $return[0]['lots'] = [];
             }
