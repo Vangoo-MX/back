@@ -23,6 +23,23 @@ if (!$data) {
 }
 $data = $data[0];
 
+$propertyImage = '';
+$developmentImage = '';
+$lotImage = '';
+
+// Verificar si existen imágenes en los datos de la lista y asignarlas a las variables correspondientes
+if (isset($data['property']['image']) && !empty($data['property']['image'])) {
+    $propertyImage = $data['property']['image'];
+}
+
+if (isset($data['development']['image']) && !empty($data['development']['image'])) {
+    $developmentImage = $data['development']['image'];
+}
+
+if (isset($data['lot']['image']) && !empty($data['lot']['image'])) {
+    $lotImage = $data['lot']['image'];
+}
+
 function moneyFormat($numero)
 {
     $formatted = number_format($numero, 2, '.', ',');

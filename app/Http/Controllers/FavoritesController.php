@@ -289,71 +289,67 @@ class FavoritesController extends Controller
     {
 
         try {
+            // Obtener lista de usuario
+            $listdata = ListsUser::selectRaw('id, id_user, title, timestamp')
+                ->where('id', $id)
+                ->first();
 
+            if (!$listdata) {
+                return json_encode("error: Lista no encontrada");
+            }
+
+            // Obtener el ID de usuario y nombre del usuario
+            $id_user = $listdata->id_user;
+            $name_user = User::select('name')->find($id_user);
+
+            if (!$name_user) {
+                return json_encode("error: Usuario no encontrado");
+            }
+
+            $return = [];
+            $return[0]['listdata'] = $listdata->toArray();
+            $return[0]['listdata']['name_user'] = $name_user->name;
+
+            // Consultar favoritos: propiedades, desarrollos y lotes
             $propertiesFav = PropertiesFavorites::where('id_list', $id)->get();
             $devFav = DevelopmentsFavorites::where('id_list', $id)->get();
             $lotFav = LotsFavorites::where('id_list', $id)->get();
-            $listdata = ListsUser::selectRaw('id,id_user,title,timestamp')
-                ->where('id', $id)
-                ->first();
-            $id_user = $listdata['id_user'];
-            $name_user = User::selectRaw('name')
-                ->where('id', $id_user)
-                ->first();
 
-            $return = [];
+            // Listas de IDs
+            $propertiesIds = $propertiesFav->pluck('id_property')->toArray();
+            $developmentsIds = $devFav->pluck('id_development')->toArray();
+            $lotsIds = $lotFav->pluck('id_lot')->toArray();
 
-            if ($listdata) {
-                $return[0]['listdata'] = $listdata;
-                $return[0]['listdata']['name_user'] = $name_user['name'];
+            // Consultar las propiedades favoritas
+            $properties = Properties::selectRaw('id, title, price, location, rooms, parkings, type, bathrooms, area, area_terrain, description, commission_percentage, views, images');
+            if (!empty($propertiesIds)) {
+                $properties->whereIn('id', $propertiesIds);
             } else {
-                $return[0]['listdata'] = [];
+                $properties->whereNull('id'); // Asegura que no retorne nada
             }
+            $return[0]['properties'] = $properties->get();
 
-            if (sizeof($propertiesFav) > 0) {
-                $properties = Properties::selectRaw('id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,commission_percentage,views,images');
-                foreach ($propertiesFav as $value) {
-                    $properties = $properties->orwhere('id', $value['id_property']);
-                }
-                $properties = $properties->get();
-                $return[0]['properties'] = $properties;
-                if (!empty($properties[0]->images)) {
-                    $return[0]['firstPropertyImage'] = $properties[0]->images[0];
-                }
+            // Consultar los desarrollos favoritos
+            $dev = Developments::selectRaw('id, status, title, price_min, price_max, location, description, commission_percentage, mode, views, images');
+            if (!empty($developmentsIds)) {
+                $dev->whereIn('id', $developmentsIds);
             } else {
-                $return[0]['properties'] = [];
+                $dev->whereNull('id'); // Asegura que no retorne nada
             }
+            $return[0]['developments'] = $dev->get();
 
-            if (sizeof($devFav) > 0) {
-                $dev = Developments::selectRaw('id,status,title,price_min,price_max,location,description,commission_percentage,mode,views,images');
-                foreach ($devFav as $value) {
-                    $dev = $dev->orwhere('id', $value['id_development']);
-                }
-                $dev = $dev->get();
-                $return[0]['developments'] = $dev;
-                if (!empty($dev[0]->images)) {
-                    $return[0]['firstDevelopmentImage'] = $dev[0]->images[0];
-                }
+            // Consultar los lotes favoritos
+            $lot = Lots::selectRaw('id, title, status, type_lots, price_min, price_max, location, description, commission_percentage, images');
+            if (!empty($lotsIds)) {
+                $lot->whereIn('id', $lotsIds);
             } else {
-                $return[0]['developments'] = [];
+                $lot->whereNull('id'); // Asegura que no retorne nada
             }
-
-            if (sizeof($lotFav) > 0) {
-                $lot = Lots::selectRaw('id, title, status, type_lots, price_min, price_max, location, description, commission_percentage, images');
-                foreach ($lotFav as $value) {
-                    $lot = $lot->orwhere('id', $value['id_lot']);
-                }
-                $lot = $lot->get();
-                $return[0]['lots'] = $lot;
-                if (!empty($lot[0]->images)) {
-                    $return[0]['firstLotImage'] = $lot[0]->images[0];
-                }
-            } else {
-                $return[0]['lots'] = [];
-            }
+            $return[0]['lots'] = $lot->get();
         } catch (Exception $e) {
             return json_encode("error: " . $e->getMessage());
         }
+
         return $return;
     }
 
