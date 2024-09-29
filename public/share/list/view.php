@@ -205,12 +205,34 @@ function moneyFormat($numero)
         .slider {
             display: flex;
             transition: transform 0.3s ease-in-out;
+            scroll-snap-type: x mandatory;
+            /* Agrega un snap para que el scroll sea más suave */
         }
 
         .card {
-            min-width: calc(100% / 5);
-            /* Para mostrar 5 tarjetas */
+            flex: 0 0 calc(100% / 5);
+            /* Asegura que solo se muestren 5 tarjetas a la vez */
             margin: 0 10px;
+            scroll-snap-align: start;
+            /* Para ajustar cada tarjeta con el snapping */
+            box-sizing: border-box;
+        }
+
+        .card {
+            max-width: 400px;
+            /* Esto garantiza que las tarjetas no se deformen y tengan un tamaño máximo */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            /* Asegura que las tarjetas no se encojan */
+        }
+
+        /* Ajustar el padding para evitar que la última tarjeta se corte */
+        .slider-container {
+            padding-right: 20px;
+            /* Evita que la última tarjeta se corte */
         }
 
         .prev,
