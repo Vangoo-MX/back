@@ -110,7 +110,7 @@ function moneyFormat($numero)
         .card {
             width: 380px;
             /* Ancho fijo de las tarjetas */
-            margin: 0 10px;
+            margin-right: 10px;
             /* Espaciado horizontal entre las tarjetas */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: white;
@@ -155,7 +155,7 @@ function moneyFormat($numero)
         .slider-container {
             position: relative;
             width: 100%;
-            max-width: calc(380px * 5 + 40px);
+            max-width: calc(380px * 5 + 30px);
             /* Controla el ancho del contenedor del slider (5 tarjetas + márgenes) */
             overflow: hidden;
             margin: 0 auto;
@@ -192,7 +192,7 @@ function moneyFormat($numero)
     <div class="container">
         <div class="logo-section">
             <img src="https://www.vangoo.mx/assets/img/system/new_logo.png" alt="Vangoo Logo" class="logo">
-            <a href="https://vangoo.mx/listdetails/<?php echo $id; ?>"><button class="btn">Ver lista completa</button></a>
+            <a href="https://vangoo.mx/listdetail/<?php echo $id; ?>"><button class="btn">Ver lista completa</button></a>
         </div>
 
         <div class="slider-container">
@@ -263,7 +263,7 @@ function moneyFormat($numero)
         let currentPosition = 0;
         const totalCards = cards.length;
         const visibleCards = 5;
-        const cardWidth = 380 + 20; // Ancho de cada tarjeta más el margen
+        const cardWidth = 380 + 10; // Ancho de cada tarjeta más el margen
 
         // Mover a la derecha
         document.querySelector('.next').addEventListener('click', () => {
