@@ -36,7 +36,7 @@ function moneyFormat($numero)
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vangoo | <?php echo $data['title']; ?></title>
+    <title>Vangoo | <?php echo $data['listdata']['title']; ?></title>
     <link rel="icon" type="image/png" href="https://vangoo.mx/assets/icon/favicon.png">
 
     <meta name="description" content="<?php echo $data['description']; ?>">
@@ -193,6 +193,46 @@ function moneyFormat($numero)
             width: 40px;
             height: 40px;
         }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card {
+            min-width: calc(100% / 5);
+            /* Para mostrar 5 tarjetas */
+            margin: 0 10px;
+        }
+
+        .prev,
+        .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+        }
     </style>
 
 </head>
@@ -204,18 +244,92 @@ function moneyFormat($numero)
             <a href="https://vangoo.mx/listdetails/<?php echo $id; ?>"><button class="btn">Ver lista completa</button></a>
         </div>
 
-        <div class="card">
-            <div class="card-header">
-                <div class="image-container">
-                    <img src="https://dashboard.vangoo.mx/share/list/preview.jpg?height=250&width=400" alt="Property" class="property-image">
-                </div>
-            </div>
+        <div class="slider-container">
+            <div class="slider">
 
-            <div class="card-content">
-                <h3 class="property-title"><?php echo $data['listdata']['title']; ?></h3>
+                <!-- Verificar si hay propiedades -->
+                <?php if (!empty($data['properties'])) : ?>
+                    <!-- Propiedades -->
+                    <?php foreach ($data['properties'] as $property) : ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="image-container">
+                                    <img src="<?php echo $property['images'][0]; ?>" alt="Property" class="property-image">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="property-title"><?php echo $property['title']; ?></h3>
+                                <p class="property-price"><?php echo moneyFormat($property['price']); ?></p>
+                                <p class="property-address"><?php echo $property['location']; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+                <!-- Verificar si hay desarrollos -->
+                <?php if (!empty($data['developments'])) : ?>
+                    <!-- Desarrollos -->
+                    <?php foreach ($data['developments'] as $development) : ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="image-container">
+                                    <img src="<?php echo $development['images'][0]; ?>" alt="Development" class="property-image">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="property-title"><?php echo $development['title']; ?></h3>
+                                <p class="property-price"><?php echo moneyFormat($development['price_min']); ?> - <?php echo moneyFormat($development['price_max']); ?></p>
+                                <p class="property-address"><?php echo $development['location']; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+                <!-- Verificar si hay lotes -->
+                <?php if (!empty($data['lots'])) : ?>
+                    <!-- Lotes -->
+                    <?php foreach ($data['lots'] as $lot) : ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="image-container">
+                                    <img src="<?php echo $lot['images'][0]; ?>" alt="Lot" class="property-image">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="property-title"><?php echo $lot['title']; ?></h3>
+                                <p class="property-price"><?php echo moneyFormat($lot['price_min']); ?> - <?php echo moneyFormat($lot['price_max']); ?></p>
+                                <p class="property-address"><?php echo $lot['location']; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
             </div>
+            <button class="prev">⟨</button>
+            <button class="next">⟩</button>
         </div>
     </div>
 </body>
+
+<script>
+    const slider = document.querySelector('.slider');
+    let currentPosition = 0;
+    const totalCards = document.querySelectorAll('.card').length;
+    const visibleCards = 5;
+
+    document.querySelector('.next').addEventListener('click', () => {
+        if (currentPosition > -(totalCards - visibleCards)) {
+            currentPosition--;
+            slider.style.transform = `translateX(${currentPosition * (100 / visibleCards)}%)`;
+        }
+    });
+
+    document.querySelector('.prev').addEventListener('click', () => {
+        if (currentPosition < 0) {
+            currentPosition++;
+            slider.style.transform = `translateX(${currentPosition * (100 / visibleCards)}%)`;
+        }
+    });
+</script>
 
 </html>
