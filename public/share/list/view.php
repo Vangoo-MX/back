@@ -109,15 +109,12 @@ function moneyFormat($numero)
 
         .card {
             width: 380px;
-            /* Ancho fijo de las tarjetas */
             margin-right: 10px;
-            /* Espaciado horizontal entre las tarjetas */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
             flex-shrink: 0;
-            /* Evita que las tarjetas se encojan */
         }
 
         .image-container {
@@ -156,7 +153,6 @@ function moneyFormat($numero)
             position: relative;
             width: 100%;
             max-width: calc(380px * 5 + 30px);
-            /* Controla el ancho del contenedor del slider (5 tarjetas + márgenes) */
             overflow: hidden;
             margin: 0 auto;
         }
@@ -197,7 +193,6 @@ function moneyFormat($numero)
 
         <div class="slider-container">
             <div class="slider">
-                <!-- Aquí van las tarjetas (cards) dinámicas -->
                 <?php if (!empty($data['properties'])) : ?>
                     <?php foreach ($data['properties'] as $property) : ?>
                         <div class="card">
@@ -213,9 +208,7 @@ function moneyFormat($numero)
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <!-- Verificar si hay desarrollos -->
                 <?php if (!empty($data['developments'])) : ?>
-                    <!-- Desarrollos -->
                     <?php foreach ($data['developments'] as $development) : ?>
                         <div class="card">
                             <div class="card-header">
@@ -232,9 +225,7 @@ function moneyFormat($numero)
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <!-- Verificar si hay lotes -->
                 <?php if (!empty($data['lots'])) : ?>
-                    <!-- Lotes -->
                     <?php foreach ($data['lots'] as $lot) : ?>
                         <div class="card">
                             <div class="card-header">
@@ -263,9 +254,8 @@ function moneyFormat($numero)
         let currentPosition = 0;
         const totalCards = cards.length;
         const visibleCards = 5;
-        const cardWidth = 380 + 10; // Ancho de cada tarjeta más el margen
+        const cardWidth = 380 + 10;
 
-        // Mover a la derecha
         document.querySelector('.next').addEventListener('click', () => {
             if (currentPosition > -(totalCards - visibleCards)) {
                 currentPosition--;
@@ -273,7 +263,6 @@ function moneyFormat($numero)
             }
         });
 
-        // Mover a la izquierda
         document.querySelector('.prev').addEventListener('click', () => {
             if (currentPosition < 0) {
                 currentPosition++;
