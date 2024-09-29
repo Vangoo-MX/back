@@ -6,7 +6,6 @@ if ($_GET && isset($_GET['id'])) {
     exit;
 }
 
-$typeText = 'properties';
 $urlShare = 'https://dashboard.vangoo.mx/share/list/view.php?id=' . $id;
 
 $urlApi = 'https://dashboard.vangoo.mx/ep/propertiesFromList/' . $id;
