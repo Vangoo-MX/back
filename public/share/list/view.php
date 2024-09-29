@@ -108,16 +108,16 @@ function moneyFormat($numero)
         }
 
         .card {
-            width: 100%;
-            max-width: 400px;
+            width: calc(100% / 5 - 20px);
+            /* Ajustar para 5 tarjetas visibles */
+            margin: 0 10px;
+            /* Espaciado horizontal entre las tarjetas */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
-        }
-
-        .card-header {
-            position: relative;
+            flex-shrink: 0;
+            /* Evita que las tarjetas se encojan */
         }
 
         .image-container {
@@ -128,22 +128,6 @@ function moneyFormat($numero)
             width: 100%;
             height: 250px;
             object-fit: cover;
-        }
-
-        .icon-btn {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: white;
-            border: none;
-            border-radius: 50%;
-            padding: 8px;
-            cursor: pointer;
-        }
-
-        .icon-btn img {
-            width: 16px;
-            height: 16px;
         }
 
         .card-content {
@@ -168,32 +152,6 @@ function moneyFormat($numero)
             margin-bottom: 16px;
         }
 
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            padding: 16px;
-            background-color: #f1f1f1;
-        }
-
-        .property-details {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .detail-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 1.5rem;
-            color: #FC7B97;
-        }
-
-        .icon {
-            width: 40px;
-            height: 40px;
-        }
-
         .slider-container {
             position: relative;
             width: 100%;
@@ -205,34 +163,6 @@ function moneyFormat($numero)
         .slider {
             display: flex;
             transition: transform 0.3s ease-in-out;
-            scroll-snap-type: x mandatory;
-            /* Agrega un snap para que el scroll sea más suave */
-        }
-
-        .card {
-            flex: 0 0 calc(100% / 5);
-            /* Asegura que solo se muestren 5 tarjetas a la vez */
-            margin: 0 10px;
-            scroll-snap-align: start;
-            /* Para ajustar cada tarjeta con el snapping */
-            box-sizing: border-box;
-        }
-
-        .card {
-            max-width: 400px;
-            /* Esto garantiza que las tarjetas no se deformen y tengan un tamaño máximo */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            flex-shrink: 0;
-            /* Asegura que las tarjetas no se encojan */
-        }
-
-        /* Ajustar el padding para evitar que la última tarjeta se corte */
-        .slider-container {
-            padding-right: 20px;
-            /* Evita que la última tarjeta se corte */
         }
 
         .prev,
@@ -257,8 +187,6 @@ function moneyFormat($numero)
         }
     </style>
 
-</head>
-
 <body>
     <div class="container">
         <div class="logo-section">
@@ -268,16 +196,12 @@ function moneyFormat($numero)
 
         <div class="slider-container">
             <div class="slider">
-
-                <!-- Verificar si hay propiedades -->
+                <!-- Aquí van las tarjetas (cards) dinámicas -->
                 <?php if (!empty($data['properties'])) : ?>
-                    <!-- Propiedades -->
                     <?php foreach ($data['properties'] as $property) : ?>
                         <div class="card">
-                            <div class="card-header">
-                                <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $property['id']; ?>/1.jpg?height=250&width=400" alt="Property" class="property-image">
-                                </div>
+                            <div class="image-container">
+                                <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $property['id']; ?>/1.jpg?height=250&width=400" alt="Property" class="property-image">
                             </div>
                             <div class="card-content">
                                 <h3 class="property-title"><?php echo $property['title']; ?></h3>
@@ -287,71 +211,38 @@ function moneyFormat($numero)
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
-
-                <!-- Verificar si hay desarrollos -->
-                <?php if (!empty($data['developments'])) : ?>
-                    <!-- Desarrollos -->
-                    <?php foreach ($data['developments'] as $development) : ?>
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/developments/<?php echo $development['id']; ?>/1.jpg?height=250&width=400" alt="Development" class="property-image">
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="property-title"><?php echo $development['title']; ?></h3>
-                                <p class="property-price"><?php echo moneyFormat($development['price_min']); ?> - <?php echo moneyFormat($development['price_max']); ?></p>
-                                <p class="property-address"><?php echo $development['location']; ?></p>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-
-                <!-- Verificar si hay lotes -->
-                <?php if (!empty($data['lots'])) : ?>
-                    <!-- Lotes -->
-                    <?php foreach ($data['lots'] as $lot) : ?>
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/lots/<?php echo $lot['id']; ?>/1.jpg?height=250&width=400" alt="Lot" class="property-image">
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="property-title"><?php echo $lot['title']; ?></h3>
-                                <p class="property-price"><?php echo moneyFormat($lot['price_min']); ?> - <?php echo moneyFormat($lot['price_max']); ?></p>
-                                <p class="property-address"><?php echo $lot['location']; ?></p>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-
+                <!-- Se pueden añadir más secciones similares para desarrollos y lotes -->
             </div>
+
             <button class="prev">⟨</button>
             <button class="next">⟩</button>
         </div>
     </div>
+
+    <script>
+        const slider = document.querySelector('.slider');
+        const cards = document.querySelectorAll('.card');
+        let currentPosition = 0;
+        const totalCards = cards.length;
+        const visibleCards = 5;
+        const cardWidth = cards[0].offsetWidth + 20; // Ancho de cada tarjeta más el margen
+
+        // Mover a la derecha
+        document.querySelector('.next').addEventListener('click', () => {
+            if (currentPosition > -(totalCards - visibleCards)) {
+                currentPosition--;
+                slider.style.transform = `translateX(${currentPosition * cardWidth}px)`;
+            }
+        });
+
+        // Mover a la izquierda
+        document.querySelector('.prev').addEventListener('click', () => {
+            if (currentPosition < 0) {
+                currentPosition++;
+                slider.style.transform = `translateX(${currentPosition * cardWidth}px)`;
+            }
+        });
+    </script>
 </body>
-
-<script>
-    const slider = document.querySelector('.slider');
-    let currentPosition = 0;
-    const totalCards = document.querySelectorAll('.card').length;
-    const visibleCards = 5;
-
-    document.querySelector('.next').addEventListener('click', () => {
-        if (currentPosition > -(totalCards - visibleCards)) {
-            currentPosition--;
-            slider.style.transform = `translateX(${currentPosition * (100 / visibleCards)}%)`;
-        }
-    });
-
-    document.querySelector('.prev').addEventListener('click', () => {
-        if (currentPosition < 0) {
-            currentPosition++;
-            slider.style.transform = `translateX(${currentPosition * (100 / visibleCards)}%)`;
-        }
-    });
-</script>
 
 </html>
