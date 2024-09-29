@@ -211,7 +211,44 @@ function moneyFormat($numero)
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
-                <!-- Se pueden añadir más secciones similares para desarrollos y lotes -->
+
+                <!-- Verificar si hay desarrollos -->
+                <?php if (!empty($data['developments'])) : ?>
+                    <!-- Desarrollos -->
+                    <?php foreach ($data['developments'] as $development) : ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="image-container">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/developments/<?php echo $development['id']; ?>/1.jpg?height=250&width=400" alt="Development" class="property-image">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="property-title"><?php echo $development['title']; ?></h3>
+                                <p class="property-price"><?php echo moneyFormat($development['price_min']); ?> - <?php echo moneyFormat($development['price_max']); ?></p>
+                                <p class="property-address"><?php echo $development['location']; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+                <!-- Verificar si hay lotes -->
+                <?php if (!empty($data['lots'])) : ?>
+                    <!-- Lotes -->
+                    <?php foreach ($data['lots'] as $lot) : ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="image-container">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/lots/<?php echo $lot['id']; ?>/1.jpg?height=250&width=400" alt="Lot" class="property-image">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="property-title"><?php echo $lot['title']; ?></h3>
+                                <p class="property-price"><?php echo moneyFormat($lot['price_min']); ?> - <?php echo moneyFormat($lot['price_max']); ?></p>
+                                <p class="property-address"><?php echo $lot['location']; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
 
             <button class="prev">⟨</button>
