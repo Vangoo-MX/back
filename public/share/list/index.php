@@ -209,15 +209,7 @@ function moneyFormat($numero)
                         <img alt="house" loading="lazy" src="https://dashboard.vangoo.mx/share/list/preview.jpg">
                     </div>
                     <div class="content-info">
-                        <h3><?php echo $data['title']; ?></h3>
-                        <span>
-                            <span class="price"><?php echo moneyFormat($data['price']); ?></span>
-                        </span>
-                        <br>
-                        <div>
-                            <p><?php echo $data['location']; ?></p>
-                            <span class="content-desc"><?php echo $data['description']; ?></span>
-                        </div><br>
+                        <h3><?php echo $data['listdata']['title']; ?></h3>
                     </div>
                 </a>
             </div>
