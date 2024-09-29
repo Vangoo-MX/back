@@ -254,7 +254,7 @@ function moneyFormat($numero)
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $data['id']; ?>/1.jpg" alt="Property" class="property-image">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $property['id']; ?>/1.jpg?height=250&width=400" alt="Property" class="property-image">
                                 </div>
                             </div>
                             <div class="card-content">
