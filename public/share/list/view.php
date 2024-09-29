@@ -108,8 +108,8 @@ function moneyFormat($numero)
         }
 
         .card {
-            width: calc(100% / 5 - 20px);
-            /* Ajustar para 5 tarjetas visibles */
+            width: 380px;
+            /* Ancho fijo de las tarjetas */
             margin: 0 10px;
             /* Espaciado horizontal entre las tarjetas */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -155,7 +155,8 @@ function moneyFormat($numero)
         .slider-container {
             position: relative;
             width: 100%;
-            max-width: 1200px;
+            max-width: calc(380px * 5 + 40px);
+            /* Controla el ancho del contenedor del slider (5 tarjetas + márgenes) */
             overflow: hidden;
             margin: 0 auto;
         }
@@ -262,7 +263,7 @@ function moneyFormat($numero)
         let currentPosition = 0;
         const totalCards = cards.length;
         const visibleCards = 5;
-        const cardWidth = cards[0].offsetWidth + 20; // Ancho de cada tarjeta más el margen
+        const cardWidth = 380 + 20; // Ancho de cada tarjeta más el margen
 
         // Mover a la derecha
         document.querySelector('.next').addEventListener('click', () => {
