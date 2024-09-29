@@ -42,16 +42,16 @@ function moneyFormat($numero)
 
     <meta name="description" content="<?php echo $data['description']; ?>">
     <meta name="keywords" content="comprar casa, comprar departamento,rentar,rentar casa,comprar nuevo león, rentar casa en nuevo león, comprar casa monterrey,publicar propiedad, buscar propiedades en nuevo león, buscar departamentos,sitio para vivir, lugar para vivir,encontrar dónde vivir, vender propiedades en nuevo león,comisión por venta de propiedad,propiedades destacados nuevo león,desarrollos inmobiliarios">
-    <meta property="image" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
-    <meta property="image:secure_url" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+    <meta property="image" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
+    <meta property="image:secure_url" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
     <meta property="url" content="<?php echo $urlShare; ?>">
     <link rel="canonical" href="<?php echo $urlShare; ?>">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="<?php echo $data['listdata']['title']; ?>">
     <meta property="og:description" content="<?php echo $data['description']; ?>">
-    <meta property="og:image" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
-    <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+    <meta property="og:image" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
+    <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="400">
     <meta property="og:image:height" content="300">
@@ -206,7 +206,7 @@ function moneyFormat($numero)
             <div class="content">
                 <a>
                     <div class="content-image">
-                        <img alt="house" loading="lazy" src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+                        <img alt="house" loading="lazy" src="https://dashboard.vangoo.mx/share/list/preview.jpg">
                     </div>
                     <div class="content-info">
                         <h3><?php echo $data['title']; ?></h3>
