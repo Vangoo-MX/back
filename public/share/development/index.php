@@ -232,7 +232,9 @@ function moneyFormat($numero)
             <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $urlShare; ?>">
                 <button class="button-secondary"><i class="fa-brands fa-facebook"></i> Compartir en Facebook</button>
             </a>
-            <button class="button-secondary"><i class="fa-brands fa-whatsapp"></i> Compartir en Whatsapp</button>
+            <a href="https://wa.me/send?text=Mira mi lista: <?php echo $urlShare; ?>" data-action="share/whatsapp/share">
+                <button class="button-secondary"><i class="fa-brands fa-whatsapp"></i> Compartir en Whatsapp</button>
+            </a>
             <a href="https://twitter.com/intent/tweet?text=Mira esta propiedad en Vangoo&url=<?php echo $urlShare; ?>&hashtags=vangoo">
                 <button class="button-secondary"><i class="fa-brands fa-square-x-twitter"></i> Compartir en X</button>
             </a>
