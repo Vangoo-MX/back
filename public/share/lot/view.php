@@ -201,7 +201,9 @@ function moneyFormat($numero)
 <body>
     <div class="container">
         <div class="logo-section">
-            <img src="https://www.vangoo.mx/assets/img/system/new_logo.png" alt="Vangoo Logo" class="logo">
+            <a href="https://vangoo.mx">
+                <img src="https://www.vangoo.mx/assets/img/system/new_logo.png" alt="Vangoo Logo" class="logo">
+            </a>
             <a href="https://www.vangoo.mx/detailslots/lots/<?php echo $id; ?>"><button class="btn">Ver detalles del lote</button></a>
         </div>
 
