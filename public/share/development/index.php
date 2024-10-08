@@ -229,16 +229,16 @@ function moneyFormat($numero)
         <!------------------------->
         <!-----SHARE BUTTONS------->
         <div class="share">
-            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $urlShare; ?>">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $urlShare; ?>" target="_blank">
                 <button class="button-secondary"><i class="fa-brands fa-facebook"></i> Compartir en Facebook</button>
             </a>
-            <a href="https://wa.me/send?text=Mira mi lista: <?php echo $urlShare; ?>" data-action="share/whatsapp/share">
+            <a href="https://wa.me/send?text=Mira mi lista: <?php echo $urlShare; ?>" data-action="share/whatsapp/share" target="_blank">
                 <button class="button-secondary"><i class="fa-brands fa-whatsapp"></i> Compartir en Whatsapp</button>
             </a>
-            <a href="https://twitter.com/intent/tweet?text=Mira esta propiedad en Vangoo&url=<?php echo $urlShare; ?>&hashtags=vangoo">
+            <a href="https://twitter.com/intent/tweet?text=Mira esta propiedad en Vangoo&url=<?php echo $urlShare; ?>&hashtags=vangoo" target="_blank">
                 <button class="button-secondary"><i class="fa-brands fa-square-x-twitter"></i> Compartir en X</button>
             </a>
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $urlShare; ?>">
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $urlShare; ?>" target="_blank">
                 <button class="button-secondary"><i class="fa-brands fa-linkedin"></i> Compartir en LinkedIn</button>
             </a>
         </div>
