@@ -241,20 +241,24 @@ class FavoritesController extends Controller
         return json_encode('success');
     }
 
-    public function deletePropertyFavUser($id_user, $id_property, $type_property)
+    public function deletePropertyFavUser($id_list, $id_property, $type_property)
     {
 
         if ($type_property == 'property') {
-            $fav = PropertiesFavorites::where('id_user', $id_user)
-                ->where('id_property', $id_property);
-            $fav->delete();
+            $fav = PropertiesFavorites::where('id_list', $id_list)
+                ->where('id_property', $id_property)
+                ->first();
         } elseif ($type_property == 'development') {
-            $fav = DevelopmentsFavorites::where('id_user', $id_user)
-                ->where('id_development', $id_property);
-            $fav->delete();
+            $fav = DevelopmentsFavorites::where('id_list', $id_list)
+                ->where('id_development', $id_property)
+                ->first();
         } else if ($type_property == 'lot') {
-            $fav = LotsFavorites::where('id_user', $id_user)
-                ->where('id_lot', $id_property);
+            $fav = LotsFavorites::where('id_list', $id_list)
+                ->where('id_lot', $id_property)
+                ->first();
+        }
+
+        if ($fav) {
             $fav->delete();
         }
 

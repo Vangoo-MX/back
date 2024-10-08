@@ -259,7 +259,7 @@ Route::post('ep/postDevFavUser', [FavoritesController::class, 'postDevFavUser'])
 
 Route::post('ep/postLotFavUser', [FavoritesController::class, 'postLotFavUser']);
 
-Route::get('ep/deletePropertyFavUser/{id_user}/{id_property}/{type_property}', [FavoritesController::class, 'deletePropertyFavUser']);
+Route::get('ep/deletePropertyFavUser/{id_list}/{id_property}/{type_property}', [FavoritesController::class, 'deletePropertyFavUser']);
 
 Route::get('ep/listsFavUser/{id}', [FavoritesController::class, 'listsUser']);
 
