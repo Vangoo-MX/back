@@ -35,6 +35,8 @@ if ($position !== false) {
         'developments' => $development ? [$development] : [],
         'lots' => $lot ? [$lot] : [],
     ];
+
+    header("Location: https://dashboard.vangoo.mx/share/local/view.php?property=$propertyId&development=$developmentId&lot=$lotId");
 } else {
     echo "El link es incorrecto";
     exit;
