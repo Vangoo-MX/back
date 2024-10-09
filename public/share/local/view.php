@@ -4,41 +4,48 @@ use App\Models\Developments;
 use App\Models\Lots;
 use App\Models\Properties;
 
-$currentUrl = $_SERVER['REQUEST_URI'];
-$baseUrl = '/sharesearch/';
-$position = strpos($currentUrl, $baseUrl);
-
-if ($position !== false) {
-    $urlPath = substr($currentUrl, $position + strlen($baseUrl));
-    $urlSegments = explode('/', $urlPath);
-
-    if (count($urlSegments) < 4) {
-        echo "El formato de la URL es incorrecto";
-        exit;
-    }
-
-    $propertyId = $urlSegments[count($urlSegments) - 3];
-    $developmentId = $urlSegments[count($urlSegments) - 2];
-    $lotId = $urlSegments[count($urlSegments) - 1];
-
-    $property = Properties::find($propertyId);
-    $development = Developments::find($developmentId);
-    $lot = Lots::find($lotId);
-
-    if (!$property && !$development && !$lot) {
-        echo "No se han encontrado datos válidos";
-        exit;
-    }
-
-    $data = [
-        'properties' => $property ? [$property] : [],
-        'developments' => $development ? [$development] : [],
-        'lots' => $lot ? [$lot] : [],
-    ];
-
-    header("Location: https://dashboard.vangoo.mx/share/local/view.php?property=$propertyId&development=$developmentId&lot=$lotId");
+if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot'])) {
+    $title = $_GET['title'];
+    $propertyIds = explode(',', $_GET['property']);
+    $developmentIds = explode(',', $_GET['development']);
+    $lotIds = explode(',', $_GET['lot']);
 } else {
-    echo "El link es incorrecto";
+    echo 'No se encontraron datos';
+    exit;
+}
+
+$properties = [];
+$developments = [];
+$lots = [];
+
+try {
+    foreach ($propertyIds as $propertyId) {
+        $property = Properties::find($propertyId);
+        if ($property) {
+            $properties[] = $property;
+        }
+    }
+
+    foreach ($developmentIds as $developmentId) {
+        $development = Developments::find($developmentId);
+        if ($development) {
+            $developments[] = $development;
+        }
+    }
+
+    foreach ($lotIds as $lotId) {
+        $lot = Lots::find($lotId);
+        if ($lot) {
+            $lots[] = $lot;
+        }
+    }
+
+    if (empty($properties) && empty($developments) && empty($lots)) {
+        echo 'No se encontraron propiedades, desarrollos o terrenos';
+        exit;
+    }
+} catch (Exception $e) {
+    echo 'Error al obtener los datos' . $e->getMessage();
     exit;
 }
 
