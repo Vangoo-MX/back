@@ -12,9 +12,9 @@ if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GE
 
 $urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title . '&property=' . $_GET['property'] . '&development=' . $_GET['development'] . '&lot=' . $_GET['lot'];
 
-$properties = [];
-$developments = [];
-$lots = [];
+$propertyData = [];
+$developmentData = [];
+$lotData = [];
 
 foreach ($propertyIds as $propertyId) {
     $urlApi = 'https://dashboard.vangoo.mx/ep/getProperty/' . $propertyId;
@@ -22,10 +22,12 @@ foreach ($propertyIds as $propertyId) {
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($curl);
     curl_close($curl);
-    $property = json_decode($response);
-    $property = json_decode(json_encode($property), true);
-    if (!empty($property)) {
+    $property = json_decode($response, true);
+    if (!empty($property) && isset($property['id'])) {
         $propertyData[] = $property;
+    } else {
+        echo 'No se encontraron propiedades';
+        exit;
     }
 }
 
@@ -35,10 +37,12 @@ foreach ($developmentIds as $developmentId) {
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($curl);
     curl_close($curl);
-    $development = json_decode($response);
-    $development = json_decode(json_encode($development), true);
-    if (!empty($development)) {
+    $development = json_decode($response, true);
+    if (!empty($development) && isset($development['id'])) {
         $developmentData[] = $development;
+    } else {
+        echo 'No se encontraron desarrollos';
+        exit;
     }
 }
 
@@ -48,10 +52,12 @@ foreach ($lotIds as $lotId) {
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($curl);
     curl_close($curl);
-    $lot = json_decode($response);
-    $lot = json_decode(json_encode($lot), true);
-    if (!empty($lot)) {
+    $lot = json_decode($response, true);
+    if (!empty($lot) && isset($lot['id'])) {
         $lotData[] = $lot;
+    } else {
+        echo 'No se encontraron terrenos';
+        exit;
     }
 }
 
