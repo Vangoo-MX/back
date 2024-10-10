@@ -16,41 +16,42 @@ $properties = [];
 $developments = [];
 $lots = [];
 
-function getApiData($url)
-{
-    $curl = curl_init($url);
+foreach ($propertyIds as $propertyId) {
+    $urlApi = 'https://dashboard.vangoo.mx/ep/getProperty/' . $propertyId;
+    $curl = curl_init($urlApi);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($curl);
     curl_close($curl);
-    return json_decode($response, true);
-}
-
-foreach ($propertyIds as $propertyId) {
-    $urlApi = 'https://dashboard.vangoo.mx/ep/getProperty/' . $propertyId;
-    $propertyData = getApiData($urlApi);
-
-    echo '<pre>';
-    print_r($propertyData); // Ver la estructura de los datos
-    echo '</pre>';
-
-    if ($propertyData) {
-        $properties[] = $propertyData;
+    $property = json_decode($response);
+    $property = json_decode(json_encode($property), true);
+    if (!empty($property)) {
+        $propertyData[] = $property;
     }
 }
 
 foreach ($developmentIds as $developmentId) {
     $urlApi = 'https://dashboard.vangoo.mx/ep/getDevelopment/' . $developmentId;
-    $developmentData = getApiData($urlApi);
-    if ($developmentData) {
-        $developments[] = $developmentData;
+    $curl = curl_init($urlApi);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $development = json_decode($response);
+    $development = json_decode(json_encode($development), true);
+    if (!empty($development)) {
+        $developmentData[] = $development;
     }
 }
 
 foreach ($lotIds as $lotId) {
     $urlApi = 'https://dashboard.vangoo.mx/ep/getLot/' . $lotId;
-    $lotData = getApiData($urlApi);
-    if ($lotData) {
-        $lots[] = $lotData;
+    $curl = curl_init($urlApi);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $lot = json_decode($response);
+    $lot = json_decode(json_encode($lot), true);
+    if (!empty($lot)) {
+        $lotData[] = $lot;
     }
 }
 
@@ -232,8 +233,8 @@ function moneyFormat($numero)
 
         <div class="slider-container">
             <div class="slider">
-                <?php if (!empty($properties)) : ?>
-                    <?php foreach ($properties as $property) : ?>
+                <?php if (!empty($propertyData)) : ?>
+                    <?php foreach ($propertyData as $property) : ?>
                         <div class="card">
                             <div class="image-container">
                                 <?php echo '<p>Property ID: ' . $property['id'] . '</p>'; ?>
