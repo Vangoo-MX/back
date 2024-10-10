@@ -237,7 +237,6 @@ function moneyFormat($numero)
                     <?php foreach ($propertyData as $property) : ?>
                         <div class="card">
                             <div class="image-container">
-                                <?php echo '<p>Property ID: ' . $property['id'] . '</p>'; ?>
                                 <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $property['id']; ?>/1.jpg?height=250&width=400" alt="Property" class="property-image">
                             </div>
                             <div class="card-content">
@@ -249,8 +248,8 @@ function moneyFormat($numero)
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <?php if (!empty($developments)) : ?>
-                    <?php foreach ($developments as $development) : ?>
+                <?php if (!empty($developmentData)) : ?>
+                    <?php foreach ($developmentData as $development) : ?>
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
@@ -266,8 +265,8 @@ function moneyFormat($numero)
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <?php if (!empty($lots)) : ?>
-                    <?php foreach ($lots as $lot) : ?>
+                <?php if (!empty($lotData)) : ?>
+                    <?php foreach ($lotData as $lot) : ?>
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
