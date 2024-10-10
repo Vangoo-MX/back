@@ -1,9 +1,5 @@
 <?php
 
-use App\Models\Developments;
-use App\Models\Lots;
-use App\Models\Properties;
-
 if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot'])) {
     $title = $_GET['title'];
     $propertyIds = explode(',', $_GET['property']);
@@ -18,34 +14,41 @@ $properties = [];
 $developments = [];
 $lots = [];
 
-try {
-    foreach ($propertyIds as $propertyId) {
-        $property = Properties::find($propertyId);
-        if ($property) {
-            $properties[] = $property;
-        }
-    }
+function getApiData($url)
+{
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    curl_close($curl);
+    return json_decode($response, true);
+}
 
-    foreach ($developmentIds as $developmentId) {
-        $development = Developments::find($developmentId);
-        if ($development) {
-            $developments[] = $development;
-        }
+foreach ($propertyIds as $id) {
+    $urlApi = 'https://dashboard.vangoo.mx/ep/getProperty/' . $propertyId;
+    $propertyData = getApiData($urlApi);
+    if ($propertyData) {
+        $properties[] = $propertyData;
     }
+}
 
-    foreach ($lotIds as $lotId) {
-        $lot = Lots::find($lotId);
-        if ($lot) {
-            $lots[] = $lot;
-        }
+foreach ($developmentIds as $id) {
+    $urlApi = 'https://dashboard.vangoo.mx/ep/getDevelopment/' . $developmentId;
+    $developmentData = getApiData($urlApi);
+    if ($developmentData) {
+        $developments[] = $developmentData;
     }
+}
 
-    if (empty($properties) && empty($developments) && empty($lots)) {
-        echo 'No se encontraron propiedades, desarrollos o terrenos';
-        exit;
+foreach ($lotIds as $id) {
+    $urlApi = 'https://dashboard.vangoo.mx/ep/getLot/' . $lotId;
+    $lotData = getApiData($urlApi);
+    if ($lotData) {
+        $lots[] = $lotData;
     }
-} catch (Exception $e) {
-    echo 'Error al obtener los datos' . $e->getMessage();
+}
+
+if (empty($properties) && empty($developments) && empty($lots)) {
+    echo 'No se encontraron propiedades, desarrollos o terrenos';
     exit;
 }
 
