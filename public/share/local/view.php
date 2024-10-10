@@ -55,7 +55,7 @@ foreach ($lotIds as $lotId) {
     }
 }
 
-if (empty($properties) && empty($developments) && empty($lots)) {
+if (empty($propertyData) && empty($developmentData) && empty($lotData)) {
     echo 'No se encontraron propiedades, desarrollos o terrenos';
     exit;
 }
