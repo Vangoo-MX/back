@@ -2,17 +2,13 @@
 
 if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot'])) {
     $title = $_GET['title'];
-    $propertyIds = explode(',', $_GET['property']);
-    $developmentIds = explode(',', $_GET['development']);
-    $lotIds = explode(',', $_GET['lot']);
+    $propertyIds = explode('-', $_GET['property']);
+    $developmentIds = explode('-', $_GET['development']);
+    $lotIds = explode('-', $_GET['lot']);
 } else {
     echo 'No se encontraron datos';
     exit;
 }
-
-var_dump($propertyIds);
-var_dump($developmentIds);
-var_dump($lotIds);
 
 $urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title . '&property=' . $_GET['property'] . '&development=' . $_GET['development'] . '&lot=' . $_GET['lot'];
 
@@ -52,10 +48,6 @@ foreach ($lotIds as $lotId) {
         $lots[] = $lotData;
     }
 }
-
-var_dump($properties);
-var_dump($developments);
-var_dump($lots);
 
 if (empty($properties) && empty($developments) && empty($lots)) {
     echo 'No se encontraron propiedades, desarrollos o terrenos';
