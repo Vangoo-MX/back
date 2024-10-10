@@ -10,6 +10,10 @@ if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GE
     exit;
 }
 
+var_dump($propertyIds);
+var_dump($developmentIds);
+var_dump($lotIds);
+
 $urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title . '&property=' . $_GET['property'] . '&development=' . $_GET['development'] . '&lot=' . $_GET['lot'];
 
 $properties = [];
@@ -25,7 +29,7 @@ function getApiData($url)
     return json_decode($response, true);
 }
 
-foreach ($propertyIds as $id) {
+foreach ($propertyIds as $propertyId) {
     $urlApi = 'https://dashboard.vangoo.mx/ep/getProperty/' . $propertyId;
     $propertyData = getApiData($urlApi);
     if ($propertyData) {
@@ -33,7 +37,7 @@ foreach ($propertyIds as $id) {
     }
 }
 
-foreach ($developmentIds as $id) {
+foreach ($developmentIds as $developmentId) {
     $urlApi = 'https://dashboard.vangoo.mx/ep/getDevelopment/' . $developmentId;
     $developmentData = getApiData($urlApi);
     if ($developmentData) {
@@ -41,13 +45,17 @@ foreach ($developmentIds as $id) {
     }
 }
 
-foreach ($lotIds as $id) {
+foreach ($lotIds as $lotId) {
     $urlApi = 'https://dashboard.vangoo.mx/ep/getLot/' . $lotId;
     $lotData = getApiData($urlApi);
     if ($lotData) {
         $lots[] = $lotData;
     }
 }
+
+var_dump($properties);
+var_dump($developments);
+var_dump($lots);
 
 if (empty($properties) && empty($developments) && empty($lots)) {
     echo 'No se encontraron propiedades, desarrollos o terrenos';
