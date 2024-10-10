@@ -304,10 +304,10 @@ function moneyFormat($numero)
         const cardWidth = 380 + 10;
 
         document.querySelector('.next').addEventListener('click', () => {
-            console.log('currentPosition:', currentPosition, 'totalCards:', totalCards, 'visibleCards:', visibleCards);
-            if (currentPosition > -(totalCards - visibleCards)) {
+            if (Math.abs(currentPosition) < (totalCards - visibleCards)) {
                 currentPosition--;
                 slider.style.transform = `translateX(${currentPosition * cardWidth}px)`;
+                console.log('currentPosition:', currentPosition); // Para depuración
             }
         });
 
@@ -315,6 +315,7 @@ function moneyFormat($numero)
             if (currentPosition < 0) {
                 currentPosition++;
                 slider.style.transform = `translateX(${currentPosition * cardWidth}px)`;
+                console.log('currentPosition:', currentPosition); // Para depuración
             }
         });
     </script>
