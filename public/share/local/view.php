@@ -10,6 +10,8 @@ if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GE
     exit;
 }
 
+$urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title . '&property=' . $_GET['property'] . '&development=' . $_GET['development'] . '&lot=' . $_GET['lot'];
+
 $properties = [];
 $developments = [];
 $lots = [];
@@ -66,10 +68,10 @@ function moneyFormat($numero)
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vangoo | <?php echo $data['listdata']['title']; ?></title>
+    <title>Vangoo | <?php echo htmlspecialchars($title); ?></title>
     <link rel="icon" type="image/png" href="https://vangoo.mx/assets/icon/favicon.png">
 
-    <meta name="description" content="<?php echo $data['description']; ?>">
+    <meta name="description" content="Lista de favoritos compartida desde Vangoo">
     <meta name="keywords" content="comprar casa, comprar departamento,rentar,rentar casa,comprar nuevo león, rentar casa en nuevo león, comprar casa monterrey,publicar propiedad, buscar propiedades en nuevo león, buscar departamentos,sitio para vivir, lugar para vivir,encontrar dónde vivir, vender propiedades en nuevo león,comisión por venta de propiedad,propiedades destacados nuevo león,desarrollos inmobiliarios">
     <meta property="image" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
     <meta property="image:secure_url" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
@@ -77,8 +79,8 @@ function moneyFormat($numero)
     <link rel="canonical" href="<?php echo $urlShare; ?>">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="<?php echo $data['listdata']['title']; ?>">
-    <meta property="og:description" content="<?php echo $data['description']; ?>">
+    <meta property="og:title" content="<?php echo htmlspecialchars($title); ?>">
+    <meta property="og:description" content="Lista de favoritos compartida">
     <meta property="og:image" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
     <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
     <meta property="og:image:type" content="image/jpeg">
@@ -225,8 +227,8 @@ function moneyFormat($numero)
 
         <div class="slider-container">
             <div class="slider">
-                <?php if (!empty($data['properties'])) : ?>
-                    <?php foreach ($data['properties'] as $property) : ?>
+                <?php if (!empty($properties)) : ?>
+                    <?php foreach ($properties as $property) : ?>
                         <div class="card">
                             <div class="image-container">
                                 <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $property['id']; ?>/1.jpg?height=250&width=400" alt="Property" class="property-image">
@@ -240,8 +242,8 @@ function moneyFormat($numero)
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <?php if (!empty($data['developments'])) : ?>
-                    <?php foreach ($data['developments'] as $development) : ?>
+                <?php if (!empty($developments)) : ?>
+                    <?php foreach ($developments as $development) : ?>
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
@@ -257,8 +259,8 @@ function moneyFormat($numero)
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <?php if (!empty($data['lots'])) : ?>
-                    <?php foreach ($data['lots'] as $lot) : ?>
+                <?php if (!empty($lots)) : ?>
+                    <?php foreach ($lots as $lot) : ?>
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
