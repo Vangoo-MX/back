@@ -2,9 +2,15 @@
 
 if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot'])) {
     $title = $_GET['title'];
-    $propertyIds = explode('-', $_GET['property']);
-    $developmentIds = explode('-', $_GET['development']);
-    $lotIds = explode('-', $_GET['lot']);
+    $propertyIds = array_filter(explode('-', $_GET['property']), function ($id) {
+        return $id !== '0';
+    });
+    $developmentIds = array_filter(explode('-', $_GET['development']), function ($id) {
+        return $id !== '0';
+    });
+    $lotIds = array_filter(explode('-', $_GET['lot']), function ($id) {
+        return $id !== '0';
+    });
 } else {
     echo 'No se encontraron datos';
     exit;
@@ -16,49 +22,57 @@ $propertyData = [];
 $developmentData = [];
 $lotData = [];
 
-foreach ($propertyIds as $propertyId) {
-    $urlApi = 'https://dashboard.vangoo.mx/ep/getProperty/' . $propertyId;
-    $curl = curl_init($urlApi);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($curl);
-    curl_close($curl);
-    $property = json_decode($response, true);
+if (!empty($propertyIds)) {
+    foreach ($propertyIds as $propertyId) {
+        $urlApi = 'https://dashboard.vangoo.mx/ep/getProperty/' . $propertyId;
+        $curl = curl_init($urlApi);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $property = json_decode($response, true);
 
-    if (!empty($property) && isset($property[0])) {
-        $propertyData[] = $property[0];
-    } else {
-        echo 'No se encontraron propiedades';
-        exit;
+        if (!empty($property) && isset($property[0])) {
+            $propertyData[] = $property[0];
+        } else {
+            echo 'No se encontraron propiedades';
+            exit;
+        }
     }
 }
 
-foreach ($developmentIds as $developmentId) {
-    $urlApi = 'https://dashboard.vangoo.mx/ep/getDevelopment/' . $developmentId;
-    $curl = curl_init($urlApi);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($curl);
-    curl_close($curl);
-    $development = json_decode($response, true);
-    if (!empty($development) && isset($development[0])) {
-        $developmentData[] = $development[0];
-    } else {
-        echo 'No se encontraron desarrollos';
-        exit;
+if (!empty($developmentIds)) {
+    foreach ($developmentIds as $developmentId) {
+        $urlApi = 'https://dashboard.vangoo.mx/ep/getDevelopment/' . $developmentId;
+        $curl = curl_init($urlApi);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $development = json_decode($response, true);
+
+        if (!empty($development) && isset($development[0])) {
+            $developmentData[] = $development[0];
+        } else {
+            echo 'No se encontraron desarrollos';
+            exit;
+        }
     }
 }
 
-foreach ($lotIds as $lotId) {
-    $urlApi = 'https://dashboard.vangoo.mx/ep/getLot/' . $lotId;
-    $curl = curl_init($urlApi);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($curl);
-    curl_close($curl);
-    $lot = json_decode($response, true);
-    if (!empty($lot) && isset($lot[0])) {
-        $lotData[] = $lot[0];
-    } else {
-        echo 'No se encontraron terrenos';
-        exit;
+if (!empty($lotIds)) {
+    foreach ($lotIds as $lotId) {
+        $urlApi = 'https://dashboard.vangoo.mx/ep/getLot/' . $lotId;
+        $curl = curl_init($urlApi);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $lot = json_decode($response, true);
+
+        if (!empty($lot) && isset($lot[0])) {
+            $lotData[] = $lot[0];
+        } else {
+            echo 'No se encontraron terrenos';
+            exit;
+        }
     }
 }
 
