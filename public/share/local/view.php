@@ -38,8 +38,8 @@ foreach ($propertyIds as $propertyId) {
         exit;
     }
 
-    if (!empty($property) && isset($property['id'])) {
-        $propertyData[] = $property;
+    if (!empty($property) && isset($property[0])) {
+        $propertyData[] = $property[0];
     } else {
         echo 'No se encontraron propiedades';
         exit;
@@ -53,8 +53,8 @@ foreach ($developmentIds as $developmentId) {
     $response = curl_exec($curl);
     curl_close($curl);
     $development = json_decode($response, true);
-    if (!empty($development) && isset($development['id'])) {
-        $developmentData[] = $development;
+    if (!empty($development) && isset($development[0])) {
+        $developmentData[] = $development[0];
     } else {
         echo 'No se encontraron desarrollos';
         exit;
@@ -68,8 +68,8 @@ foreach ($lotIds as $lotId) {
     $response = curl_exec($curl);
     curl_close($curl);
     $lot = json_decode($response, true);
-    if (!empty($lot) && isset($lot['id'])) {
-        $lotData[] = $lot;
+    if (!empty($lot) && isset($lot[0])) {
+        $lotData[] = $lot[0];
     } else {
         echo 'No se encontraron terrenos';
         exit;
