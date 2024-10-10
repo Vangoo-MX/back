@@ -197,7 +197,7 @@ function moneyFormat($numero)
         .slider-container {
             position: relative;
             width: 100%;
-            max-width: 1900px;
+            max-width: calc(380px * 5 + 30px);
             overflow: hidden;
             margin: 0 auto;
         }
@@ -304,13 +304,9 @@ function moneyFormat($numero)
         const cardWidth = 380 + 10;
 
         document.querySelector('.next').addEventListener('click', () => {
-            if (Math.abs(currentPosition) < (totalCards - visibleCards)) {
+            if (currentPosition > -(totalCards - visibleCards)) {
                 currentPosition--;
                 slider.style.transform = `translateX(${currentPosition * cardWidth}px)`;
-                // Para depuración
-                console.log('currentPosition:', currentPosition);
-                console.log('Total width:', document.querySelector('.slider').scrollWidth);
-                console.log('Container width:', document.querySelector('.slider-container').offsetWidth);
             }
         });
 
@@ -318,7 +314,6 @@ function moneyFormat($numero)
             if (currentPosition < 0) {
                 currentPosition++;
                 slider.style.transform = `translateX(${currentPosition * cardWidth}px)`;
-                console.log('currentPosition:', currentPosition); // Para depuración
             }
         });
     </script>
