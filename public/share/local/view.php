@@ -28,6 +28,11 @@ function getApiData($url)
 foreach ($propertyIds as $propertyId) {
     $urlApi = 'https://dashboard.vangoo.mx/ep/getProperty/' . $propertyId;
     $propertyData = getApiData($urlApi);
+
+    echo '<pre>';
+    print_r($propertyData); // Ver la estructura de los datos
+    echo '</pre>';
+
     if ($propertyData) {
         $properties[] = $propertyData;
     }
