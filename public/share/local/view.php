@@ -231,6 +231,7 @@ function moneyFormat($numero)
                     <?php foreach ($properties as $property) : ?>
                         <div class="card">
                             <div class="image-container">
+                                <?php echo '<p>Property ID: ' . $property['id'] . '</p>'; ?>
                                 <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $property['id']; ?>/1.jpg?height=250&width=400" alt="Property" class="property-image">
                             </div>
                             <div class="card-content">
