@@ -21,8 +21,23 @@ foreach ($propertyIds as $propertyId) {
     $curl = curl_init($urlApi);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($curl);
+
+    if (curl_errno($curl)) {
+        echo 'Error cURL: ' . curl_error($curl);
+        curl_close($curl);
+        exit;
+    }
+
     curl_close($curl);
     $property = json_decode($response, true);
+
+    if (is_array($property)) {
+        var_dump($property); // Verifica la estructura aquí
+    } else {
+        echo "Error: la respuesta no es válida.";
+        exit;
+    }
+
     if (!empty($property) && isset($property['id'])) {
         $propertyData[] = $property;
     } else {
