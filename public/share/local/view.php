@@ -319,7 +319,7 @@ function moneyFormat($numero)
         const cardWidth = 380 + 10;
 
         document.querySelector('.next').addEventListener('click', () => {
-            if (currentPosition >= (totalCards - visibleCards)) {
+            if (currentPosition >= (totalCards - 1)) {
                 currentPosition--;
                 slider.style.transform = `translateX(${currentPosition * cardWidth}px)`;
             }
