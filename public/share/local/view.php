@@ -315,11 +315,11 @@ function moneyFormat($numero)
         const cards = document.querySelectorAll('.card');
         let currentPosition = 0;
         const visibleCards = 5;
-        const totalCards = Math.min(cards.length, visibleCards);
+        const totalCards = cards.length;
         const cardWidth = 380 + 10;
 
         document.querySelector('.next').addEventListener('click', () => {
-            if (currentPosition > -(totalCards - 1)) {
+            if (currentPosition >= (totalCards - visibleCards)) {
                 currentPosition--;
                 slider.style.transform = `translateX(${currentPosition * cardWidth}px)`;
             }
