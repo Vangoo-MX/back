@@ -315,7 +315,7 @@ function moneyFormat($numero)
         const cards = document.querySelectorAll('.card');
         let currentPosition = 0;
         const visibleCards = 5;
-        const totalCards = cards.length;
+        const totalCards = Math.min(cards.length, visibleCards);
         const cardWidth = 380 + 10;
 
         document.querySelector('.next').addEventListener('click', () => {
