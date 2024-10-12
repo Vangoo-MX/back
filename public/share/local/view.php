@@ -21,6 +21,7 @@ $urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title .
 $propertyData = [];
 $developmentData = [];
 $lotData = [];
+$titleFormatted = str_replace('-', ' ', $title);
 
 if (!empty($propertyIds)) {
     foreach ($propertyIds as $propertyId) {
@@ -95,7 +96,7 @@ function moneyFormat($numero)
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vangoo | <?php echo htmlspecialchars($title); ?></title>
+    <title>Vangoo | <?php echo htmlspecialchars($titleFormatted); ?></title>
     <link rel="icon" type="image/png" href="https://vangoo.mx/assets/icon/favicon.png">
 
     <meta name="description" content="Lista de favoritos compartida desde Vangoo">
@@ -106,7 +107,7 @@ function moneyFormat($numero)
     <link rel="canonical" href="<?php echo $urlShare; ?>">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="<?php echo htmlspecialchars($title); ?>">
+    <meta property="og:title" content="<?php echo htmlspecialchars($titleFormatted); ?>">
     <meta property="og:description" content="Lista de favoritos compartida">
     <meta property="og:image" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
     <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
