@@ -208,7 +208,7 @@ function moneyFormat($numero)
             <div class="content">
                 <a>
                     <div class="content-image">
-                        <img alt="house" loading="lazy" src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+                        <img alt="house" loading="lazy" src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
                     </div>
                     <div class="content-info">
                         <h3><?php echo $data['title']; ?></h3>
