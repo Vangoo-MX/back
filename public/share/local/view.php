@@ -99,7 +99,7 @@ function moneyFormat($numero)
     <title>Vangoo | <?php echo htmlspecialchars($titleFormatted); ?></title>
     <link rel="icon" type="image/png" href="https://vangoo.mx/assets/icon/favicon.png">
 
-    <meta name="description" content="Lista de favoritos compartida desde Vangoo">
+    <meta name="description" content="Mi lista de favoritos compartida desde Vangoo">
     <meta name="keywords" content="comprar casa, comprar departamento,rentar,rentar casa,comprar nuevo león, rentar casa en nuevo león, comprar casa monterrey,publicar propiedad, buscar propiedades en nuevo león, buscar departamentos,sitio para vivir, lugar para vivir,encontrar dónde vivir, vender propiedades en nuevo león,comisión por venta de propiedad,propiedades destacados nuevo león,desarrollos inmobiliarios">
     <meta property="image" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
     <meta property="image:secure_url" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
@@ -108,7 +108,7 @@ function moneyFormat($numero)
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="<?php echo htmlspecialchars($titleFormatted); ?>">
-    <meta property="og:description" content="Lista de favoritos compartida">
+    <meta property="og:description" content="Mi lista de favoritos compartida desde Vangoo">
     <meta property="og:image" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
     <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/share/list/preview.jpg">
     <meta property="og:image:type" content="image/jpeg">
