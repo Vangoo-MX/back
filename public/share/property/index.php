@@ -23,6 +23,16 @@ if (!$data) {
 }
 $data = $data[0];
 
+$imagePath = 'https://dashboard.vangoo.mx/storage/img/posts/' . $typeText . '/' . $data['id'] . '/1.jpg';
+$backupImage = 'https://www.vangoo.mx/assets/img/img404.jpg';
+
+$imageHeaders = @get_headers($imagePath);
+if (!$imageHeaders || strpos($imageHeaders[0], '404') !== false) {
+    $imageToUse = $backupImage;
+} else {
+    $imageToUse = $imagePath;
+}
+
 function moneyFormat($numero)
 {
     $formatted = number_format($numero, 2, '.', ',');
@@ -42,16 +52,16 @@ function moneyFormat($numero)
 
     <meta name="description" content="<?php echo $data['description']; ?>">
     <meta name="keywords" content="comprar casa, comprar departamento,rentar,rentar casa,comprar nuevo león, rentar casa en nuevo león, comprar casa monterrey,publicar propiedad, buscar propiedades en nuevo león, buscar departamentos,sitio para vivir, lugar para vivir,encontrar dónde vivir, vender propiedades en nuevo león,comisión por venta de propiedad,propiedades destacados nuevo león,desarrollos inmobiliarios">
-    <meta property="image" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
-    <meta property="image:secure_url" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+    <meta property="image" content="<?php echo $imageToUse; ?>">
+    <meta property="image:secure_url" content="<?php echo $imageToUse; ?>">
     <meta property="url" content="<?php echo $urlShare; ?>">
     <link rel="canonical" href="<?php echo $urlShare; ?>">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="<?php echo $data['title']; ?>">
     <meta property="og:description" content="<?php echo $data['description']; ?>">
-    <meta property="og:image" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
-    <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg">
+    <meta property="og:image" content="<?php echo $imageToUse; ?>">
+    <meta property="og:image:secure_url" content="<?php echo $imageToUse; ?>">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="400">
     <meta property="og:image:height" content="300">
