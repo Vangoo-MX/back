@@ -34,9 +34,6 @@ if (!empty($propertyIds)) {
 
         if (!empty($property) && isset($property[0])) {
             $propertyData[] = $property[0];
-        } else {
-            echo 'No se encontraron propiedades';
-            exit;
         }
     }
 }
@@ -52,9 +49,6 @@ if (!empty($developmentIds)) {
 
         if (!empty($development) && isset($development[0])) {
             $developmentData[] = $development[0];
-        } else {
-            echo 'No se encontraron desarrollos';
-            exit;
         }
     }
 }
@@ -70,9 +64,6 @@ if (!empty($lotIds)) {
 
         if (!empty($lot) && isset($lot[0])) {
             $lotData[] = $lot[0];
-        } else {
-            echo 'No se encontraron terrenos';
-            exit;
         }
     }
 }
