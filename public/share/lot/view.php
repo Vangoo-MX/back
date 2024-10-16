@@ -1,6 +1,10 @@
 <?php
 if ($_GET && isset($_GET['id'])) {
-    $id = $_GET['id'];
+    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+    if (!$id) {
+        echo "El link es incorrecto";
+        exit;
+    }
 } else {
     echo "El link es incorrecto";
     exit;
@@ -13,21 +17,33 @@ $urlApi = 'https://dashboard.vangoo.mx/ep/getLot/' . $id;
 $curl = curl_init($urlApi);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($curl);
-curl_close($curl);
-$data = json_decode($response);
-$data = json_decode(json_encode($data), true);
 
-if (!$data) {
-    echo "No se ha encontrado el lote";
+if ($response === false) {
+    echo "Error en la solicitud cURL: " . curl_error($curl);
+    curl_close($curl);
     exit;
 }
+
+curl_close($curl);
+$data = json_decode($response, true);
+
+if (json_last_error() !== JSON_ERROR_NONE) {
+    echo "Error al decodificar la respuesta JSON: " . json_last_error_msg();
+    exit;
+}
+
+if (!$data) {
+    echo "No se ha encontrado el desarrollo";
+    exit;
+}
+
 $data = $data[0];
 
 $imagePath = 'https://dashboard.vangoo.mx/storage/img/posts/' . $typeText . '/' . $data['id'] . '/1.jpg';
 $backupImage = 'https://www.vangoo.mx/assets/img/img404.jpg';
 
 $imageHeaders = @get_headers($imagePath);
-if (!$imageHeaders || strpos($imageHeaders[0], '404') !== false) {
+if ($imageHeaders === false || strpos($imageHeaders[0], '404') !== false) {
     $imageToUse = $backupImage;
 } else {
     $imageToUse = $imagePath;

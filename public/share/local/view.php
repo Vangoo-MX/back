@@ -1,6 +1,7 @@
 <?php
 
-if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot'])) {
+
+if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot']) && !empty($_GET['title']) && !empty($_GET['property']) && !empty($_GET['development']) && !empty($_GET['lot'])) {
     $title = $_GET['title'];
     $propertyIds = array_filter(explode('-', $_GET['property']), function ($id) {
         return $id !== '0';
@@ -16,7 +17,12 @@ if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GE
     exit;
 }
 
-$urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title . '&property=' . $_GET['property'] . '&development=' . $_GET['development'] . '&lot=' . $_GET['lot'];
+$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+$property = htmlspecialchars($_GET['property'], ENT_QUOTES, 'UTF-8');
+$development = htmlspecialchars($_GET['development'], ENT_QUOTES, 'UTF-8');
+$lot = htmlspecialchars($_GET['lot'], ENT_QUOTES, 'UTF-8');
+
+$urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title . '&property=' . $property . '&development=' . $development . '&lot=' . $lot;
 
 $propertyData = [];
 $developmentData = [];
@@ -29,8 +35,16 @@ if (!empty($propertyIds)) {
         $curl = curl_init($urlApi);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
+        if ($response === false) {
+            echo 'Error fetching property data';
+            exit;
+        }
         curl_close($curl);
         $property = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo 'Error decoding property data';
+            exit;
+        }
 
         if (!empty($property) && isset($property[0])) {
             $propertyData[] = $property[0];
@@ -44,8 +58,16 @@ if (!empty($developmentIds)) {
         $curl = curl_init($urlApi);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
+        if ($response === false) {
+            echo 'Error fetching development data';
+            exit;
+        }
         curl_close($curl);
         $development = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo 'Error decoding development data';
+            exit;
+        }
 
         if (!empty($development) && isset($development[0])) {
             $developmentData[] = $development[0];
@@ -59,8 +81,16 @@ if (!empty($lotIds)) {
         $curl = curl_init($urlApi);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
+        if ($response === false) {
+            echo 'Error fetching lot data';
+            exit;
+        }
         curl_close($curl);
         $lot = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo 'Error decoding lot data';
+            exit;
+        }
 
         if (!empty($lot) && isset($lot[0])) {
             $lotData[] = $lot[0];
