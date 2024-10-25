@@ -198,10 +198,16 @@ class DevelopmentsController extends Controller
         }
 
         if ($max == 0) {
-            $search = $search->where('price_min', '>', $min);
+            $search = $search->where('price_min', '<=', $min)->where('price_max', '>=', $min);
         } else {
-            $search = $search->where('price_min', '>', $min);
-            $search = $search->where('price_max', '<', $max);
+            $search = $search->where(function ($query) use ($min, $max) {
+                $query->whereBetween('price_min', [$min, $max])
+                    ->orWhereBetween('price_max', [$min, $max])
+                    ->orWhere(function ($subQuery) use ($min, $max) {
+                        $subQuery->where('price_min', '<=', $min)
+                            ->where('price_max', '>=', $max);
+                    });
+            });
         }
 
         if ($status == "presale") {
