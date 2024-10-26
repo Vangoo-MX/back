@@ -137,7 +137,7 @@ class LotsController
     public function getLotSearch($estado = "0", $municipio = "0", $colonia = "0", $status = 0, $min = 0, $max = 0)
     {
 
-        $search = Lots::select();
+        $search = Lots::query();
 
         if ($estado != "0") {
             $search = $search->where('id_estado', $estado);

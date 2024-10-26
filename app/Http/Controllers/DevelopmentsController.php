@@ -182,10 +182,10 @@ class DevelopmentsController extends Controller
         return $DevelopmentsRelated;
     }
 
-    public function getDevSearch($estado = "0", $municipio = "0", $colonia = "0", $status = 0, $min = 0, $max = 0)
+    public function getDevSearch($estado = "0", $municipio = "0", $colonia = "0", $status = "0", $min = 0, $max = 0)
     {
 
-        $search = Developments::select();
+        $search = Developments::query();
 
         if ($estado != "0") {
             $search = $search->where('id_estado', $estado);
