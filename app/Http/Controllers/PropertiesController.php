@@ -194,12 +194,6 @@ class PropertiesController extends Controller
         if ($colonia != "0" && $colonia != 0) {
             $search = $search->where('id_colonia', $colonia);
         }
-        // if ($max == 0) {
-        //     $search = $search->where('price', '>', $min);
-        // } else {
-        //     $search = $search->where('price', '>', $min);
-        //     $search = $search->where('price', '<', $max);
-        // }
 
         if ($min != 0 || $max != 0) {
             $search = $search->where(function ($query) use ($min, $max) {
