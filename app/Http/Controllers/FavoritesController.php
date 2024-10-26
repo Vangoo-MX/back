@@ -336,7 +336,7 @@ class FavoritesController extends Controller
             }
             $return[0]['developments'] = $dev->get();
 
-            $lot = Lots::selectRaw('id, title, status, type_lots, price_min, price_max, location, description, commission_percentage, images');
+            $lot = Lots::selectRaw('id, title, status, type_lots, price_min, price_max, location, description, slope, lots_min, lots_max, type_terrain, initial_fee, price_mt2, commission_percentage, images');
             if (!empty($lotsIds)) {
                 $lot->whereIn('id', $lotsIds);
             } else {
