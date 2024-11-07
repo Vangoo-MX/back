@@ -128,7 +128,7 @@
 
     document.getElementById('municipiosh-select').addEventListener('change', function() {
         var municipioId = this.options[this.selectedIndex].getAttribute('data-municipio-id');
-        var url = '../ep/get-properties-by-municipio/' + municipioId;
+        var url = '../ep/get-apartment-by-municipio/' + municipioId;
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');

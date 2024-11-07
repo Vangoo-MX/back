@@ -668,7 +668,7 @@ class ApartmentsController extends Controller
         return $ApartmentsQueue;
     }
 
-    public function getApartmentsbymunicipio($id)
+    public function getApartmentsByMunicipio($id)
     {
         $Apartments = Apartments::where('id_municipio', $id)->get();
         return response()->json($Apartments);
