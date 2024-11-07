@@ -154,8 +154,6 @@ Route::get('ep/deletePropertyEP/{id}', [PropertiesController::class, 'deleteProp
 
 Route::get('ep/get-properties-by-municipio/{id}', [PropertiesController::class, 'getpropertiesbymunicipio']);
 
-Route::get('ep/get-apartment-by-municipio/{id}', [ApartmentsController::class, 'getApartmentsByMunicipio']);
-
 /* Propiedades user */
 
 Route::get('ep/getUserProperties/{id}', [PropertiesController::class, 'getUserProperties']);
@@ -184,6 +182,10 @@ Route::post('ep/deleteImagesPropertyQueue', [PropertiesController::class, 'delet
 Route::get('ep/getPropertyQueueEP/{id}', [PropertiesController::class, 'getPropertyQueueEP']);
 
 Route::delete('ep/editpropertie/{propertieId}/{imageId}', [PropertiesController::class, 'deleteImage'])->name('propertie.images.delete');
+
+/* APARTAMENTOS */
+
+Route::get('ep/get-apartment-by-municipio/{id}', [ApartmentsController::class, 'getApartmentsByMunicipio']);
 
 /* DESARROLLOS */
 Route::get('ep/getAllDevelopments', [DevelopmentsController::class, 'getAll'])->name('epAllDevelopments.get');
@@ -314,6 +316,14 @@ Route::get('ep/deleteHighlight/{id}', [PropertiesController::class, 'deletePrope
 Route::post('ep/addHighlight', [PropertiesController::class, 'addPropertyHightlight'])->name('Highlight.add');
 
 Route::post('ep/orderHighlight', [PropertiesController::class, 'orderPropertyHightlight'])->name('Highlight.order');
+
+/*---------*/
+
+Route::get('ep/deleteHighlightApartment/{id}', [ApartmentsController::class, 'deleteApartmentHightlight'])->name('HighlightApartment.delete');
+
+Route::post('ep/addHighlightApartment', [ApartmentsController::class, 'addApartmentHightlight'])->name('HighlightApartment.add');
+
+Route::post('ep/orderHighlightApartment', [ApartmentsController::class, 'orderApartmentHightlight'])->name('HighlightApartment.order');
 
 /*---------*/
 

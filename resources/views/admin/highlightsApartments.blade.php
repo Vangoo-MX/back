@@ -10,7 +10,7 @@
 
 <h3>Nuevo apartamento destacado</h3>
 <br>
-<form method="post" action="{{ route('Highlight.add') }}">
+<form method="post" action="{{ route('HighlightApartment.add') }}">
     @csrf
     <div class="d-flex gap-2">
         <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">

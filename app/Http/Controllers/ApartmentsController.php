@@ -59,7 +59,7 @@ class ApartmentsController extends Controller
         return $Apartments;
     }
 
-    public function deletePropertyHightlight($id)
+    public function deleteApartmentHightlight($id)
     {
         $h = ApartmentsHighlights::find($id);
 
@@ -71,7 +71,7 @@ class ApartmentsController extends Controller
         }
     }
 
-    public function addPropertyHightlight(Request $request)
+    public function addApartmentHightlight(Request $request)
     {
         try {
             $h = new ApartmentsHighlights();
@@ -86,7 +86,7 @@ class ApartmentsController extends Controller
         return redirect('overview/Apartments-highlights');
     }
 
-    public function orderPropertyHightlight(Request $request)
+    public function orderApartmentHightlight(Request $request)
     {
         $idProperty = $request->id;
 
@@ -103,7 +103,7 @@ class ApartmentsController extends Controller
     }
 
 
-    public function getPropertyCard($id)
+    public function getApartmentCard($id)
     {
         $Apartments = Apartments::selectRaw('id,title,price,location,id_pais,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images')
             ->where('id', $id)
@@ -112,7 +112,7 @@ class ApartmentsController extends Controller
         return $Apartments;
     }
 
-    public function getMultiPropertyCard($array)
+    public function getMultiApartmentCard($array)
     {
 
         if (str_contains($array, '-')) {
@@ -151,7 +151,7 @@ class ApartmentsController extends Controller
         return $images;
     }
 
-    public function getProperty($id)
+    public function getApartment($id)
     {
         $Apartments = Apartments::where('id', $id)
             ->get();
@@ -159,28 +159,28 @@ class ApartmentsController extends Controller
         return $Apartments;
     }
 
-    public function getPropertyQueueEP($id)
+    public function getApartmentQueueEP($id)
     {
-        $propertyQueue = ApartmentsQueue::where('id', $id)->get();
-        return $propertyQueue;
+        $apartmentQueue = ApartmentsQueue::where('id', $id)->get();
+        return $apartmentQueue;
     }
 
-    public function getPropertyRelated($id)
+    public function getApartmentRelated($id)
     {
-        $Apartments = Apartments::where('id', $id)
+        $apartments = Apartments::where('id', $id)
             ->get();
-        $ApartmentsRelated = Apartments::where('id', '<>', $id)
-            ->where('type', $Apartments[0]->type)
-            ->where('bathrooms', $Apartments[0]->bathrooms)
-            ->where('rooms', $Apartments[0]->rooms)
-            ->where('id_municipio', $Apartments[0]->id_municipio)
+        $apartmentsRelated = Apartments::where('id', '<>', $id)
+            ->where('type', $apartments[0]->type)
+            ->where('bathrooms', $apartments[0]->bathrooms)
+            ->where('rooms', $apartments[0]->rooms)
+            ->where('id_municipio', $apartments[0]->id_municipio)
             ->take(10)
             ->get();
 
-        return $ApartmentsRelated;
+        return $apartmentsRelated;
     }
 
-    public function getPropertySearch($estado = "0", $municipio = "0", $colonia = "0", $type = "alltypes", $min = 0, $max = 0)
+    public function getApartmentSearch($estado = "0", $municipio = "0", $colonia = "0", $type = "alltypes", $min = 0, $max = 0)
     {
 
         $search = Apartments::select();
@@ -224,13 +224,13 @@ class ApartmentsController extends Controller
         return $search;
     }
 
-    public function rejectPropertyQueue($id)
+    public function rejectApartmentQueue($id)
     {
         ApartmentsQueue::where('id', $id)->update(array('status_aproved' => 2));
         return redirect()->route('admin.queue');
     }
 
-    public function revisionPropertyQueue($id)
+    public function revisionApartmentQueue($id)
     {
         ApartmentsQueue::where('id', $id)->update(array('status_aproved' => 3));
         return redirect()->route('admin.queue');
