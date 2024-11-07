@@ -16,6 +16,7 @@ use App\Models\DevelopmentsApartments;
 use App\Models\Tracker;
 use App\Models\Agenda;
 use App\Models\Apartments;
+use App\Models\ApartmentsHighlights;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
@@ -644,6 +645,24 @@ class AdminController extends Controller
         $municipiosh = Municipios::where('highlight', 1)->get();
 
         return view('admin.highlights', compact('propertieshl', 'estados', 'municipios', 'municipiosh'));
+    }
+
+    public function highlightsApartments()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $aparmentshl = ApartmentsHighlights::get();
+        $estados = Estados::get();
+        $municipios = Municipios::get();
+        $municipiosh = Municipios::where('highlight', 1)->get();
+
+        return view('admin.highlightsApartments', compact('aparmentshl', 'estados', 'municipios', 'municipiosh'));
     }
 
     public function highlightsdev()

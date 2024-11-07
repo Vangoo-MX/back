@@ -68,6 +68,8 @@ Route::get('overview/settingsinfo', [AdminController::class, 'settingsinfo'])->n
 
 Route::get('overview/properties-highlights', [AdminController::class, 'highlights'])->name('admin.highlights.properties');
 
+Route::get('overview/apartments-highlights', [AdminController::class, 'highlightsApartments'])->name('admin.highlights.apartments');
+
 Route::get('overview/developments-highlights', [AdminController::class, 'highlightsdev'])->name('admin.highlights.developments');
 
 Route::get('overview/lots-highlights', [AdminController::class, 'highlightsLot'])->name('admin.highlights.lots');
