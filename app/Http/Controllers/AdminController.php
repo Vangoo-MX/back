@@ -662,7 +662,7 @@ class AdminController extends Controller
         $municipios = Municipios::get();
         $municipiosh = Municipios::where('highlight', 1)->get();
 
-        return view('admin.highlightsApartments', compact('aparmentshl', 'estados', 'municipios', 'municipiosh'));
+        return view('admin.highlightsApartments', compact('apartmentshl', 'estados', 'municipios', 'municipiosh'));
     }
 
     public function highlightsdev()
