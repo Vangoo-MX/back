@@ -34,7 +34,7 @@
                     <td>{{limitString(colonia($apartment->id_colonia),30)}}</td>
                     <td>{{municipio($apartment->id_municipio)}}</td>
                     <td>{{estado($apartment->id_estado)}}</td>
-                    <td><a href="user/{{$p->id_user}}">{{username($apartment->id_user)}}</a></td>
+                    <td><a href="user/{{$apartment->id_user}}">{{username($apartment->id_user)}}</a></td>
                     <td>{{ convertDate($apartment->created_at) }}</td>
                     <td>
                         <div class="dropdown">
