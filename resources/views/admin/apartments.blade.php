@@ -43,13 +43,13 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{route('admin.details',$p->id)}}">
+                                    <a class="dropdown-item" href="{{route('admin.details',$apartment->id)}}">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/propiedad/{{$p->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/propiedad/{{$apartment->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
@@ -61,7 +61,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    @if ($p->status == 1)
+                                    @if ($apartment->status == 1)
                                     <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$apartment->id}})" id="propertyDeactiveConfirmBtn{{$apartment->id}}" data-url="{{route('epProperty.deactive',$apartment->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Desactivar
