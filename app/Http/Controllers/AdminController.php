@@ -657,7 +657,7 @@ class AdminController extends Controller
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        $aparmentshl = ApartmentsHighlights::get();
+        $apartmentshl = ApartmentsHighlights::get();
         $estados = Estados::get();
         $municipios = Municipios::get();
         $municipiosh = Municipios::where('highlight', 1)->get();

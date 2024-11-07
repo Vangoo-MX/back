@@ -43,7 +43,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($apartmentshl as $apartment)
+                @foreach($aparmentshl as $apartment)
                 <tr class="municipio-{{$apartment->id_municipio}}">
                     <td>{{$apartment->id_property}}</td>
                     <td>{{property($apartment->id_property)[0]['title']}}</td>
