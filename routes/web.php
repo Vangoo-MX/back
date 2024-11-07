@@ -46,6 +46,8 @@ Route::get('/getColonias', [AdminController::class, 'getColonias'])->name('getCo
 
 Route::post('admin/details/edit/{propiedad}', [AdminController::class, 'updateProperties'])->name('admin.propertiesUpdate');
 
+Route::get('overview/apartments', [AdminController::class, 'apartments'])->name('admin.apartments');
+
 Route::get('overview/developments', [AdminController::class, 'developments'])->name('admin.developments');
 
 Route::get('overview/lots', [AdminController::class, 'lots'])->name('admin.lots');

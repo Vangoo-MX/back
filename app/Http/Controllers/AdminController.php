@@ -15,6 +15,7 @@ use App\Models\DevelopmentsHighlights;
 use App\Models\DevelopmentsApartments;
 use App\Models\Tracker;
 use App\Models\Agenda;
+use App\Models\Apartments;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
@@ -127,8 +128,8 @@ class AdminController extends Controller
 
         $municipios = Municipios::where('id_estado', 19)->get();
 
-        $dev = Developments::where('id', $id)->get();
-        $app = DevelopmentsApartments::where('id_development', $id)->get();
+        $dev = Developments::where('id', $id)->first();
+        $app = DevelopmentsApartments::where('id_development', $id)->first();
 
         return response()->view('admin.editdev', compact('municipios', 'dev', 'app'))->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')->header('Pragma', 'no-cache')->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
     }
@@ -485,6 +486,21 @@ class AdminController extends Controller
         }
 
         return redirect()->route('admin.details', $propiedad)->with('success', 'Propiedad actualizada correctamente');
+    }
+
+    public function apartments()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $apartments = Apartments::get();
+
+        return view('admin.apartments', compact('apartments'));
     }
 
     public function editdevpage($id)
