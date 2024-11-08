@@ -65,7 +65,7 @@ class ApartmentsController extends Controller
 
         if ($h) {
             $h->delete();
-            return redirect('overview/Apartments-highlights');
+            return redirect('overview/apartments-highlights');
         } else {
             return json_encode('error: Agenda entry not found');
         }
@@ -83,7 +83,7 @@ class ApartmentsController extends Controller
             return json_encode($e->getMessage());
         }
 
-        return redirect('overview/Apartments-highlights');
+        return redirect('overview/apartments-highlights');
     }
 
     public function orderApartmentHightlight(Request $request)
@@ -96,7 +96,7 @@ class ApartmentsController extends Controller
             $h->num_order = $request->num_order;
             $h->save();
 
-            return redirect('overview/Apartments-highlights');
+            return redirect('overview/apartments-highlights');
         } else {
             return json_encode('error: entry for property with id ' . $idProperty . ' not found');
         }
