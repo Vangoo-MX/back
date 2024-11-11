@@ -123,7 +123,7 @@
             </thead>
             <tbody>
 
-                @foreach($apartmentRejected as $apartments)
+                @foreach($apartmentsRejected as $apartments)
                 <tr>
 
                     <td>{{$apartments->id}}</td>
