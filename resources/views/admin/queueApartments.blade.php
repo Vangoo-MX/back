@@ -47,15 +47,15 @@
                     <td>{{$apartments->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
-                            <form method="post" action="{{route('epPropertyQueue.aproved')}}">
+                            <form method="post" action="{{route('epApartmentsQueue.aproved')}}">
                                 @csrf
                                 <input type="hidden" id="id" name="id" value="{{$apartments->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <a href="{{route('epPropertyQueue.reject', $apartments->id)}}">
+                            <a href="{{route('epApartmentQueue.reject', $apartments->id)}}">
                                 <button class="btnDanger">Rechazar</button>
                             </a>
-                            <a href="{{route('epPropertyQueue.revision', $apartments->id)}}">
+                            <a href="{{route('epApartmentQueue.revision', $apartments->id)}}">
                                 <button class="btnWarning">Revisar</button>
                             </a>
                         </div>

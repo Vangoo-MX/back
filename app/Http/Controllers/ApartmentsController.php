@@ -236,13 +236,13 @@ class ApartmentsController extends Controller
         return redirect()->route('admin.queue');
     }
 
-    public function aprovedPropertyQueue(Request $request)
+    public function aprovedApartmentsQueue(Request $request)
     {
-        $propertyQueue = ApartmentsQueue::findOrFail($request->id);
-        $propertyData = Arr::except($propertyQueue->toArray(), ['id']);
-        $newProperty = Apartments::create($propertyData);
+        $apartmentQueue = ApartmentsQueue::findOrFail($request->id);
+        $apartmentData = Arr::except($apartmentQueue->toArray(), ['id']);
+        $newApartment = Apartments::create($apartmentData);
         $sourcePath = public_path("storage/img/postsqueue/apartments/" . $request->id . "/");
-        $destinationPath = public_path("storage/img/posts/apartments/" . $newProperty->id . "/");
+        $destinationPath = public_path("storage/img/posts/apartments/" . $newApartment->id . "/");
 
         if (!File::exists($destinationPath)) {
             File::makeDirectory($destinationPath, 0777, true);
@@ -254,7 +254,7 @@ class ApartmentsController extends Controller
             File::move($sourcePath . $filename, $destinationPath . $filename);
         }
 
-        $propertyQueue->delete();
+        $apartmentQueue->delete();
 
         return redirect()->route('admin.queue');
     }
