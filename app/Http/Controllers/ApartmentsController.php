@@ -227,13 +227,13 @@ class ApartmentsController extends Controller
     public function rejectApartmentQueue($id)
     {
         ApartmentsQueue::where('id', $id)->update(array('status_aproved' => 2));
-        return redirect()->route('admin.queue');
+        return redirect()->route('admin.queueApartments');
     }
 
     public function revisionApartmentQueue($id)
     {
         ApartmentsQueue::where('id', $id)->update(array('status_aproved' => 3));
-        return redirect()->route('admin.queue');
+        return redirect()->route('admin.queueApartments');
     }
 
     public function aprovedApartmentsQueue(Request $request)
@@ -256,7 +256,7 @@ class ApartmentsController extends Controller
 
         $apartmentQueue->delete();
 
-        return redirect()->route('admin.queue');
+        return redirect()->route('admin.queueApartments');
     }
 
 
