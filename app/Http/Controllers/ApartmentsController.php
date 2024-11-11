@@ -276,12 +276,12 @@ class ApartmentsController extends Controller
         return json_encode("success");
     }
 
-    public function deleteProperty($id)
+    public function deleteApartment($id)
     {
 
-        $property = Apartments::findOrFail($id);
+        $apartment = Apartments::findOrFail($id);
 
-        $directoryPath = public_path("storage/img/posts/apartments/{$property->id}");
+        $directoryPath = public_path("storage/img/posts/apartments/{$apartment->id}");
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
@@ -290,8 +290,8 @@ class ApartmentsController extends Controller
             rmdir($directoryPath);
         }
 
-        $property->delete();
-        return redirect()->route('admin.Apartments');
+        $apartment->delete();
+        return redirect()->route('admin.apartments');
     }
 
     public function deleteImage(Request $request, $propertieId, $imageId)
@@ -320,25 +320,25 @@ class ApartmentsController extends Controller
         }
     }
 
-    public function deactiveProperty($id)
+    public function deactiveApartment($id)
     {
 
-        $property = Apartments::findOrFail($id);
+        $apartment = Apartments::findOrFail($id);
 
-        $property->status = 0;
+        $apartment->status = 0;
 
-        $property->save();
+        $apartment->save();
         return redirect()->route('admin.apartments');
     }
 
-    public function activeProperty($id)
+    public function activeApartment($id)
     {
 
-        $property = Apartments::findOrFail($id);
+        $aparment = Apartments::findOrFail($id);
 
-        $property->status = 1;
+        $aparment->status = 1;
 
-        $property->save();
+        $aparment->save();
         return redirect()->route('admin.apartments');
     }
 
