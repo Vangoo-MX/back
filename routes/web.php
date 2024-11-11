@@ -55,6 +55,8 @@ Route::get('overview/lots', [AdminController::class, 'lots'])->name('admin.lots'
 
 Route::get('overview/queue', [AdminController::class, 'queue'])->name('admin.queue');
 
+Route::get('overview/apartments-queue', [AdminController::class, 'queueApartments'])->name('admin.queueApartments');
+
 Route::get('overview/users', [AdminController::class, 'allusers'])->name('admin.users');
 
 Route::delete('overview/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');

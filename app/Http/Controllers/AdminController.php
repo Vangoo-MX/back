@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\Models\User;
 use App\Models\Roles;
@@ -17,6 +17,7 @@ use App\Models\Tracker;
 use App\Models\Agenda;
 use App\Models\Apartments;
 use App\Models\ApartmentsHighlights;
+use App\Models\ApartmentsQueue;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
@@ -588,6 +589,25 @@ class AdminController extends Controller
         $propiedadesrevision = PropertiesQueue::where('status_aproved', 3)->get();
 
         return view('admin.queue', compact('propiedadesqueue', 'propiedadesrejected', 'propiedadesrevision'));
+    }
+
+    public function queueApartments()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $apartmentsQueue = ApartmentsQueue::where('status_aproved', 0)->get();
+
+        $apartmentsRejected = ApartmentsQueue::where('status_aproved', 2)->get();
+
+        $apartmentsRevision = ApartmentsQueue::where('status_aproved', 3)->get();
+
+        return view('admin.queueApartments', compact('apartmentsQueue', 'apartmentsRejected', 'apartmentsRevision'));
     }
 
     public function files()
