@@ -75,13 +75,13 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="https://vangoo.mx/details/propertyqueue/{{$apartments->id}}" target="_blank">
+                                    <a class="dropdown-item" href="https://vangoo.mx/details/apartmentqueue/{{$apartments->id}}" target="_blank">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/propertyqueue/{{$apartments->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/apartmentqueue/{{$apartments->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
@@ -151,13 +151,13 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="https://vangoo.mx/details/propertyqueue/{{$apartments->id}}" target="_blank">
+                                    <a class="dropdown-item" href="https://vangoo.mx/details/apartmentqueue/{{$apartments->id}}" target="_blank">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/propertyqueue/{{$apartments->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/apartmentqueue/{{$apartments->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
@@ -232,13 +232,13 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="https://vangoo.mx/details/propertyqueue/{{$apartments->id}}" target="_blank">
+                                    <a class="dropdown-item" href="https://vangoo.mx/details/apartmentqueue/{{$apartments->id}}" target="_blank">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/propertyqueue/{{$apartments->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/apartmentqueue/{{$apartments->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
