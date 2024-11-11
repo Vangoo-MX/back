@@ -123,7 +123,7 @@
             </thead>
             <tbody>
 
-                @foreach($apartmentsropiedadesrejected as $apartments)
+                @foreach($apartmentRejected as $apartments)
                 <tr>
 
                     <td>{{$apartments->id}}</td>
@@ -202,7 +202,7 @@
             </thead>
             <tbody>
 
-                @foreach($apartmentsropiedadesrevision as $apartments)
+                @foreach($apartmentsRevision as $apartments)
                 <tr>
 
                     <td>{{$apartments->id}}</td>
