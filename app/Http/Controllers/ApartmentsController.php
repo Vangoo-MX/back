@@ -673,4 +673,89 @@ class ApartmentsController extends Controller
         $Apartments = Apartments::where('id_municipio', $id)->get();
         return response()->json($Apartments);
     }
+
+    public function updateApartments(Request $request, Apartments $apartments)
+    {
+        $updates = [];
+        $colonia = Colonias::find($request->id_colonia);
+        $municipio = Municipios::find($request->id_municipio);
+        $estado = Estados::find($apartments->id_estado);
+        $location = $colonia->nombre . ', ' . $municipio->nombre . ', ' . $estado->nombre;
+        if ($request->hasFile('images')) {
+            $numImages = $apartments->images + sizeof($request->file('images'));
+        } else {
+            $numImages = $apartments->images;
+        }
+        $apartments->update([
+            'title' => $request->title,
+            'operation_type' => $request->operation_type,
+            'type' => $request->type,
+            'price' => $request->price,
+            'price_maintenance' => $request->price_maintenance,
+            'description' => $request->description,
+            'rooms' => $request->rooms,
+            'bathrooms' => $request->bathrooms,
+            'parkings' => $request->parkings,
+            'map' => $request->map,
+            'area' => $request->area,
+            'id_municipio' => $request->id_municipio,
+            'id_colonia' => $request->id_colonia,
+            'street' => $request->street,
+            'num_ext' => $request->num_ext,
+            'num_int' => $request->num_int,
+            'cp' => $request->cp,
+            'amenities' => $request->amenities,
+            'services' => $request->services,
+            'sell_type' => $request->sell_type,
+            'share_conditions' => $request->share_conditions,
+            'antiquity' => $request->antiquity,
+            'location' => $location,
+            'images' => $numImages
+        ]);
+
+        if ($request->type == "departamento") {
+            $updates['floor'] = $request->floor;
+            $updates['dev_type'] = $request->dev_type;
+        }
+
+        if ($request->type == "terreno") {
+            $updates['area_terrain'] = $request->area_terrain;
+        }
+
+        if ($request->price_m2) {
+            $updates['price_m2'] = $request->price_m2;
+        }
+
+        if (!empty($updates)) {
+            $apartments->update($updates);
+        }
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $index => $image) {
+
+                $nameimg = Str::slug($apartments->images + $index + 1) . "." . $image->getClientOriginalExtension();
+                $image->storeAs('public/img/posts/apartments/' . $apartments->id . '/', $nameimg);
+            }
+        }
+
+        if ($request->orderimg) {
+            foreach ($request->orderimg as $index => $order) {
+                $path = storage_path('app/public/img/posts/apartments/' . $apartments->id);
+                $key = $index;
+                if (file_exists($path . "/{$order}.jpg")) {
+                    rename($path . "/{$order}.jpg", $path . "/{$order}temp.jpg");
+                }
+            }
+
+            foreach ($request->orderimg as $index => $order) {
+                $path = storage_path('app/public/img/posts/apartments/' . $apartments->id);
+                $key = $index;
+                if (file_exists($path . "/{$key}temp.jpg")) {
+                    rename($path . "/{$key}temp.jpg", $path . "/{$order}.jpg");
+                }
+            }
+        }
+
+        return redirect()->route('admin.detailsApartments', $apartments)->with('success', 'Propiedad actualizada correctamente');
+    }
 }
