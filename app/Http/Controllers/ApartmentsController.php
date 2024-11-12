@@ -733,7 +733,7 @@ class ApartmentsController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
 
-                $nameimg = Str::slug($apartments->images + $index + 1) . "." . $image->getClientOriginalExtension();
+                $nameimg = Str::slug($apartments->images + $index) . "." . $image->getClientOriginalExtension();
                 $image->storeAs('public/img/posts/apartments/' . $apartments->id . '/', $nameimg);
             }
         }
