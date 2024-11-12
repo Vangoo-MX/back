@@ -201,6 +201,8 @@ Route::get('ep/deactiveApartment/{id}', [ApartmentsController::class, 'deactiveA
 
 Route::get('ep/activeApartment/{id}', [ApartmentsController::class, 'activeApartment'])->name('epApartment.activate');
 
+Route::delete('ep/edit-apartment/{apartmentId}/{imageId}', [ApartmentsController::class, 'deleteImage'])->name('apartment.images.delete');
+
 Route::get('ep/deletePropertyEP/{id}', [PropertiesController::class, 'deletePropertyEP']);
 
 /* apartments queue */
@@ -223,8 +225,6 @@ Route::post('ep/imagesPropertyQueue', [PropertiesController::class, 'imagesPrope
 Route::post('ep/deleteImagesPropertyQueue', [PropertiesController::class, 'deleteImagesPropertyQueue']);
 
 Route::get('ep/getPropertyQueueEP/{id}', [PropertiesController::class, 'getPropertyQueueEP']);
-
-Route::delete('ep/editpropertie/{propertieId}/{imageId}', [PropertiesController::class, 'deleteImage'])->name('propertie.images.delete');
 
 /* DESARROLLOS */
 Route::get('ep/getAllDevelopments', [DevelopmentsController::class, 'getAll'])->name('epAllDevelopments.get');
