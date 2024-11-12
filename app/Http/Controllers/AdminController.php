@@ -380,7 +380,7 @@ class AdminController extends Controller
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
         $municipios = Municipios::where('id_estado', 19)->get();
-        $apartment = Properties::find($id);
+        $apartment = Apartments::find($id);
 
         return view('admin.detailsApartments', compact('apartment', 'municipios'));
     }
