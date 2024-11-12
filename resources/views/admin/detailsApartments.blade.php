@@ -17,8 +17,8 @@ Detalle
 <!-- Content Row -->
 
 <div class="d-flex justify-content-end gap-2 mb-2">
-    <a href="{{route('admin.showProperties', $apartment->id)}}"><button class="btn1">Editar apartamento</button></a>
-    <a href="{{route('admin.properties')}}"><button class="btn2">volver</button></a>
+    <a href="{{route('admin.editApartmentPage', $apartment->id)}}"><button class="btn1">Editar apartamento</button></a>
+    <a href="{{route('admin.apartments')}}"><button class="btn2">volver</button></a>
 </div>
 
 <?php if ($apartment->status == 0) { ?>

@@ -51,6 +51,8 @@ Route::get('overview/apartments', [AdminController::class, 'apartments'])->name(
 
 Route::get('overview/details-apartments/{id}', [AdminController::class, 'detailsApartments'])->name('admin.detailsApartments');
 
+Route::get('overview/details/edit/{id}', [AdminController::class, 'editApartmentPage'])->name('admin.editApartmentPage');
+
 Route::get('overview/developments', [AdminController::class, 'developments'])->name('admin.developments');
 
 Route::get('overview/lots', [AdminController::class, 'lots'])->name('admin.lots');
