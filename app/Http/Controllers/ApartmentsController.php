@@ -294,20 +294,20 @@ class ApartmentsController extends Controller
         return redirect()->route('admin.apartments');
     }
 
-    public function deleteImage(Request $request, $propertieId, $imageId)
+    public function deleteImage(Request $request, $apartmentId, $imageId)
     {
-        $imagePath = 'public/img/posts/apartments/' . $propertieId . '/' . $imageId . '.jpg';
+        $imagePath = 'public/img/posts/apartments/' . $apartmentId . '/' . $imageId . '.jpg';
 
         if (Storage::exists($imagePath)) {
             Storage::delete($imagePath);
 
-            $propertie = Apartments::findOrFail($propertieId);
-            $propertie->images -= 1;
-            $propertie->save();
+            $apartment = Apartments::findOrFail($apartmentId);
+            $apartment->images -= 1;
+            $apartment->save();
 
-            for ($i = $imageId + 1; $i <= $propertie->images + 1; $i++) {
-                $oldImagePath = 'public/img/posts/apartments/' . $propertieId . '/' . $i . '.jpg';
-                $newImagePath = 'public/img/posts/apartments/' . $propertieId . '/' . ($i - 1) . '.jpg';
+            for ($i = $imageId + 1; $i <= $apartment->images + 1; $i++) {
+                $oldImagePath = 'public/img/posts/apartments/' . $apartmentId . '/' . $i . '.jpg';
+                $newImagePath = 'public/img/posts/apartments/' . $apartmentId . '/' . ($i - 1) . '.jpg';
 
                 if (Storage::exists($oldImagePath)) {
                     Storage::move($oldImagePath, $newImagePath);
