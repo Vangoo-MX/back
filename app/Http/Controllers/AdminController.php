@@ -370,6 +370,21 @@ class AdminController extends Controller
         return view('admin.details', compact('propiedad', 'municipios'));
     }
 
+    public function detailsApartments($id)
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+        $municipios = Municipios::where('id_estado', 19)->get();
+        $apartment = Properties::find($id);
+
+        return view('admin.detailsApartments', compact('apartment', 'municipios'));
+    }
+
     public function getColonias(Request $request)
     {
         try {
