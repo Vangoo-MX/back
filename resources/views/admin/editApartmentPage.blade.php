@@ -466,7 +466,7 @@ Editar apartamento
                 var coloniasHtml = '';
                 var selected = '';
                 for (var i = 0; i < colonias.length; i++) {
-                    if (colonias[i].id == <?php echo $dev[0]->id_colonia; ?>) {
+                    if (colonias[i].id == <?php echo $apartment->id_colonia; ?>) {
                         selected = 'selected';
                     } else {
                         selected = '';
