@@ -465,6 +465,7 @@ Editar apartamento
         $('#id_municipio').change(function() {
             var municipioId = $(this).val();
             console.log(municipioId);
+            alert(municipioId);
             $.ajax({
                 url: '{{ route("getColonias") }}',
                 method: 'GET',
