@@ -370,28 +370,28 @@ class ApartmentsController extends Controller
     public function postApartmentsQueue(Request $request)
     {
 
-        $property = new ApartmentsQueue();
-        $property->title = $request->propertyTitle;
-        $property->price = $request->propertySellPrice;
+        $apartment = new ApartmentsQueue();
+        $apartment->title = $request->propertyTitle;
+        $apartment->price = $request->propertySellPrice;
         if (isset($request->propertyIntNumber)) {
-            $property->num_int = $request->propertyIntNumber;
+            $apartment->num_int = $request->propertyIntNumber;
         }
         if (isset($request->propertyExtNumber)) {
-            $property->num_ext = $request->propertyExtNumber;
+            $apartment->num_ext = $request->propertyExtNumber;
         }
         if (isset($request->propertyStreet)) {
-            $property->street = $request->propertyStreet;
+            $apartment->street = $request->propertyStreet;
         }
 
-        $property->id_colonia = $request->propertyColonia;
+        $apartment->id_colonia = $request->propertyColonia;
 
-        $property->id_municipio = $request->propertyMunicipio;
+        $apartment->id_municipio = $request->propertyMunicipio;
 
-        $property->id_estado = $request->propertyEstado;
+        $apartment->id_estado = $request->propertyEstado;
 
-        $property->id_pais = 1;
+        $apartment->id_pais = 1;
         if (isset($request->propertyCP)) {
-            $property->cp = $request->propertyCP;
+            $apartment->cp = $request->propertyCP;
         }
 
 
@@ -404,86 +404,86 @@ class ApartmentsController extends Controller
         $colonia = Colonias::where('id', $request->propertyColonia)->get();
         $colonia = $colonia[0]['nombre'];
 
-        $property->location = $colonia . ', ' . $municipio . ', ' . $estado;
+        $apartment->location = $colonia . ', ' . $municipio . ', ' . $estado;
 
 
         if (isset($request->propertyAreaConstruction)) {
-            $property->area = $request->propertyAreaConstruction;
+            $apartment->area = $request->propertyAreaConstruction;
         }
         if (isset($request->propertyAreaTerrain)) {
-            $property->area_terrain = $request->propertyAreaTerrain;
+            $apartment->area_terrain = $request->propertyAreaTerrain;
         }
         if (isset($request->propertyBathrooms)) {
-            $property->bathrooms = $request->propertyBathrooms;
+            $apartment->bathrooms = $request->propertyBathrooms;
         }
         if (isset($request->propertyRooms)) {
-            $property->rooms = $request->propertyRooms;
+            $apartment->rooms = $request->propertyRooms;
         }
         if (isset($request->propertyType)) {
-            $property->type = $request->propertyType;
+            $apartment->type = $request->propertyType;
         }
         if (isset($request->propertyDevType)) {
-            $property->dev_type = $request->propertyDevType;
+            $apartment->dev_type = $request->propertyDevType;
         }
         if (isset($request->propertyParkings)) {
-            $property->parkings = $request->propertyParkings;
+            $apartment->parkings = $request->propertyParkings;
         }
         if (isset($request->propertyDescription)) {
-            $property->description = $request->propertyDescription;
+            $apartment->description = $request->propertyDescription;
         }
         if (isset($request->propertyMap)) {
-            $property->map = $request->propertyMap;
+            $apartment->map = $request->propertyMap;
         }
         if (isset($request->propertyMapLat)) {
-            $property->map_lat = $request->propertyMapLat;
+            $apartment->map_lat = $request->propertyMapLat;
         }
         if (isset($request->propertyMapLong)) {
-            $property->map_long = $request->propertyMapLong;
+            $apartment->map_long = $request->propertyMapLong;
         }
         if (isset($request->propertyAgeConstruction)) {
-            $property->antiquity = $request->propertyAgeConstruction;
+            $apartment->antiquity = $request->propertyAgeConstruction;
         }
         if (isset($request->propertyAmenities)) {
-            $property->amenities = $request->propertyAmenities;
+            $apartment->amenities = $request->propertyAmenities;
         }
         if (isset($request->propertyFloor)) {
-            $property->floor = $request->propertyFloor;
+            $apartment->floor = $request->propertyFloor;
         }
         if (isset($request->propertyPriceMaintenance)) {
-            $property->price_maintenance = $request->propertyPriceMaintenance;
+            $apartment->price_maintenance = $request->propertyPriceMaintenance;
         }
         if (isset($request->propertyOperationType)) {
-            $property->operation_type = $request->propertyOperationType;
+            $apartment->operation_type = $request->propertyOperationType;
         }
         if (isset($request->propertyAmountPriceBasedM2)) {
-            $property->price_m2 = $request->propertyAmountPriceBasedM2;
+            $apartment->price_m2 = $request->propertyAmountPriceBasedM2;
         }
         if (isset($request->propertySellType)) {
-            $property->sell_type = $request->propertySellType;
+            $apartment->sell_type = $request->propertySellType;
         }
         if (isset($request->propertyShareConditions)) {
-            $property->share_conditions = $request->propertySharedConditions;
+            $apartment->share_conditions = $request->propertySharedConditions;
         }
         if (isset($request->propertyServices)) {
-            $property->services = $request->propertyServices;
+            $apartment->services = $request->propertyServices;
         }
         if (isset($request->propertyExactLocation)) {
-            $property->no_exact_location = $request->propertyExactLocation == true ? 0 : 1;
+            $apartment->no_exact_location = $request->propertyExactLocation == true ? 0 : 1;
         }
         if (isset($request->number_images)) {
-            $property->images = $request->number_images;
+            $apartment->images = $request->number_images;
         }
         if (isset($request->id_user)) {
-            $property->id_user = $request->id_user;
+            $apartment->id_user = $request->id_user;
         }
-        $property->views = 0;
+        $apartment->views = 0;
 
-        $property->save();
+        $apartment->save();
 
-        return json_encode($property->id);
+        return json_encode($apartment->id);
     }
 
-    public function imagesPropertyQueue(Request $request)
+    public function imagesApartmentsQueue(Request $request)
     {
 
         if ($request->hasFile('image')) {

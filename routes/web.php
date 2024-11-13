@@ -206,7 +206,7 @@ Route::delete('ep/edit-apartment/{apartmentId}/{imageId}', [ApartmentsController
 Route::get('ep/deletePropertyEP/{id}', [PropertiesController::class, 'deletePropertyEP']);
 
 /* apartments queue */
-Route::post('ep/postPropertyQueue', [PropertiesController::class, 'postPropertiesQueue'])->name('epPropertyQueue.post');
+Route::post('ep/postApartmentsQueue', [ApartmentsController::class, 'postApartmentsQueue'])->name('epApartmentsQueue.post');
 
 Route::get('ep/rejectApartmentQueue/{id}', [ApartmentsController::class, 'rejectApartmentQueue'])->name('epApartmentQueue.reject');
 
@@ -220,7 +220,7 @@ Route::get('ep/deletePropertyQueueEP/{id}', [PropertiesController::class, 'delet
 
 Route::post('ep/updatePropertiesQueue', [PropertiesController::class, 'updatePropertiesQueue']);
 
-Route::post('ep/imagesPropertyQueue', [PropertiesController::class, 'imagesPropertyQueue']);
+Route::post('ep/imagesApartmentsQueue', [ApartmentsController::class, 'imagesApartmentsQueue']);
 
 Route::post('ep/deleteImagesPropertyQueue', [PropertiesController::class, 'deleteImagesPropertyQueue']);
 
