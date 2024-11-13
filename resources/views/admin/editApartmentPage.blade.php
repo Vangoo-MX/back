@@ -462,6 +462,7 @@ Editar apartamento
     }
 
     $(document).ready(function() {
+        console.log('Document ready');
         $('#id_municipio').change(function() {
             var municipioId = $(this).val();
             console.log(municipioId);
