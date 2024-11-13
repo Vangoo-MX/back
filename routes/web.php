@@ -218,11 +218,11 @@ Route::get('ep/deletePropertyQueue/{id}', [PropertiesController::class, 'deleteP
 
 Route::get('ep/deletePropertyQueueEP/{id}', [PropertiesController::class, 'deletePropertyQueueEP']);
 
-Route::post('ep/updatePropertiesQueue', [PropertiesController::class, 'updatePropertiesQueue']);
+Route::post('ep/updateApartmentsQueue', [ApartmentsController::class, 'updateApartmentsQueue']);
 
 Route::post('ep/imagesApartmentsQueue', [ApartmentsController::class, 'imagesApartmentsQueue']);
 
-Route::post('ep/deleteImagesPropertyQueue', [PropertiesController::class, 'deleteImagesPropertyQueue']);
+Route::post('ep/deleteImagesApartmentsQueue', [ApartmentsController::class, 'deleteImagesApartmentsQueue']);
 
 Route::get('ep/getPropertyQueueEP/{id}', [PropertiesController::class, 'getPropertyQueueEP']);
 
