@@ -520,7 +520,7 @@ class AdminController extends Controller
         return view('admin.apartments', compact('apartments'));
     }
 
-    public function editApartmentPage($id)
+    public function editApartmentPage($apartments)
     {
         if (!Auth::check()) {
             return redirect('/');
@@ -528,7 +528,7 @@ class AdminController extends Controller
         if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
-        $apartment = Apartments::find($id);
+        $apartment = Apartments::find($apartments);
         $municipio_propiedad = Municipios::find($apartment->id_municipio);
         $estado_propiedad = $municipio_propiedad->id_estado;
         $municipios = Municipios::where('id_estado', $estado_propiedad)->get();
