@@ -180,7 +180,14 @@ Editar apartamento
                         </div>
                         <div class="mb-3 mt-3">
                             <label for="id_colonia" class="form-label">Colonia:</label>
-                            <span id="coloniashtml"></span>
+                            <select class="form-select" name="id_colonia" id="id_colonia">
+                                <option hidden>Selecciona una colonia</option>
+                                @foreach($colonias as $colonia)
+                                <option value="{{$colonia->id}}" data-id="{{$colonia->id}}" <?php if ($apartment->id_colonia == $colonia->id) {
+                                                                                                echo 'selected';
+                                                                                            } ?>>{{$colonia->nombre}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="mb-3 mt-3">
@@ -454,40 +461,24 @@ Editar apartamento
         }
     }
 
-    function changeMuninicio() {
-        var municipioId = document.getElementById('id_municipio').value;
-        var url = '../../ep/getColoniasFromMunicipio/' + municipioId;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var colonias = JSON.parse(xhr.responseText);
-                var coloniasHtml = '<select class="form-select" name="id_colonia" id="id_colonia" required>';
-                coloniasHtml += '<option hidden>Selecciona una colonia</option>';
-                var selected = '';
-
-                for (var i = 0; i < colonias.length; i++) {
-                    if (colonias[i].id == <?php echo $apartment->id_colonia; ?>) {
-                        selected = 'selected';
-                    } else {
-                        selected = '';
-                    }
-                    coloniasHtml += '<option value="' + colonias[i].id + '" ' + selected + '>' + colonias[i].nombre + '</option>';
+    $(document).ready(function() {
+        $('#id_municipio').change(function() {
+            var municipioId = $(this).val();
+            console.log(municipioId);
+            $.ajax({
+                url: '{{ route("getColonias") }}',
+                method: 'GET',
+                data: {
+                    municipio_id: municipioId
+                },
+                success: function(response) {
+                    $('#id_colonia').empty();
+                    $('#id_colonia').append('<option hidden>Selecciona una colonia</option>');
+                    $.each(response, function(index, colonia) {
+                        $('#id_colonia').append('<option value="' + colonia.id + '">' + colonia.nombre + '</option>');
+                    });
                 }
-
-                coloniasHtml += '</select>';
-                document.getElementById('coloniashtml').innerHTML = coloniasHtml;
-            } else {
-                console.log('Error al cargar las colonias');
-            }
-        };
-        xhr.send();
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        changeMuninicio();
+            });
+        });
     });
-
-    document.getElementById('id_municipio').addEventListener('change', changeMuninicio);
 </script>
