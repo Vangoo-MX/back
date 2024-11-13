@@ -172,7 +172,7 @@ Editar apartamento
                             <select class="form-select" name="id_municipio" id="id_municipio">
                                 <option hidden>Selecciona un municipio</option>
                                 @foreach($municipios as $e)
-                                <option value="{{$e->id}}" data-id="{{$e->id}}" <?php if ($apartment->id_municipio == $e->id) {
+                                <option value="{{$e->id}}" data-id="{{$e->id}}" <?php if ($apartment[0]->id_municipio == $e->id) {
                                                                                     echo 'selected';
                                                                                 } ?>>{{$e->nombre}}</option>
                                 @endforeach
@@ -466,7 +466,8 @@ Editar apartamento
                 var coloniasHtml = '';
                 var selected = '';
                 for (var i = 0; i < colonias.length; i++) {
-                    if (colonias[i].id == <?php echo $apartment->id_colonia; ?>) {
+                    if (colonias[i].id == <?php echo $apartment[0]
+                                                ->id_colonia; ?>) {
                         selected = 'selected';
                     } else {
                         selected = '';
