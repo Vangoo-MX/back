@@ -455,7 +455,7 @@ Editar apartamento
     }
 
     function changeMuninicio() {
-        var municipioId = document.getElementById('id_municipio').options[document.getElementById('id_municipio').selectedIndex].getAttribute('data-id');
+        var municipioId = document.getElementById('id_municipio').value;
         var url = '../../ep/getColoniasFromMunicipio/' + municipioId;
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
@@ -463,34 +463,31 @@ Editar apartamento
         xhr.onload = function() {
             if (xhr.status === 200) {
                 var colonias = JSON.parse(xhr.responseText);
-                var coloniasHtml = '';
+                var coloniasHtml = '<select class="form-select" name="id_colonia" id="id_colonia" required>';
+                coloniasHtml += '<option hidden>Selecciona una colonia</option>';
                 var selected = '';
+
                 for (var i = 0; i < colonias.length; i++) {
-                    if (colonias[i].id == <?php echo $apartment
-                                                ->id_colonia; ?>) {
+                    if (colonias[i].id == <?php echo $apartment->id_colonia; ?>) {
                         selected = 'selected';
                     } else {
                         selected = '';
                     }
                     coloniasHtml += '<option value="' + colonias[i].id + '" ' + selected + '>' + colonias[i].nombre + '</option>';
                 }
-                var selectHtml = '';
-                if (municipioId != 0) {
-                    selectHtml = '<select class="form-select" name="id_colonia" id="id_colonia" required>' + coloniasHtml + '</select>';
-                }
-                document.getElementById('coloniashtml').innerHTML = selectHtml;
+
+                coloniasHtml += '</select>';
+                document.getElementById('coloniashtml').innerHTML = coloniasHtml;
             } else {
-                console.log('Error');
+                console.log('Error al cargar las colonias');
             }
         };
         xhr.send();
     }
 
-    document.addEventListener("DOMContentLoaded", function(event) {
+    document.addEventListener("DOMContentLoaded", function() {
         changeMuninicio();
     });
 
-    document.getElementById('id_municipio').addEventListener('change', function() {
-        changeMuninicio();
-    });
+    document.getElementById('id_municipio').addEventListener('change', changeMuninicio);
 </script>
