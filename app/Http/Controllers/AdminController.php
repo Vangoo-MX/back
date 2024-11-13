@@ -528,13 +528,11 @@ class AdminController extends Controller
         if (Auth::user()->rol != 1) {
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
-        $apartment = Apartments::find($id);
-        $municipio_propiedad = Municipios::find($apartment->id_municipio);
-        $estado_propiedad = $municipio_propiedad->id_estado;
-        $municipios = Municipios::where('id_estado', $estado_propiedad)->get();
-        $colonias = Colonias::where('id_municipio', $apartment->id_municipio)->get();
 
-        return view('admin.editApartmentPage', compact('municipios', 'colonias', 'apartment'));
+        $municipios = Municipios::where('id_estado', 19)->get();
+        $apartment = Apartments::where('id', $id)->first();
+
+        return view('admin.editApartmentPage', compact('municipios', 'apartment'));
     }
 
     public function editdevpage($id)
