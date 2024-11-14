@@ -505,6 +505,19 @@ class ApartmentsController extends Controller
         return response()->json("success");
     }
 
+    private function renameImages($route)
+    {
+        $images = collect(File::files($route))
+            ->sortBy(function ($file) {
+                return $file->getFilename();
+            });
+
+        $images->each(function ($file, $index) use ($route) {
+            $newName = ($index + 1) . '.' . $file->getExtension();
+            $file->move($route, $newName);
+        });
+    }
+
     public function updateApartmentsQueue(Request $request)
     {
 
