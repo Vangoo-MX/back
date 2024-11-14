@@ -88,9 +88,9 @@ class ApartmentsController extends Controller
 
     public function orderApartmentHightlight(Request $request)
     {
-        $idProperty = $request->id;
+        $apartmentID = $request->id;
 
-        $h = ApartmentsHighlights::where('id_property', $idProperty)->first();
+        $h = ApartmentsHighlights::where('id_property', $apartmentID)->first();
 
         if ($h) {
             $h->num_order = $request->num_order;
@@ -98,7 +98,7 @@ class ApartmentsController extends Controller
 
             return redirect('overview/apartments-highlights');
         } else {
-            return json_encode('error: entry for property with id ' . $idProperty . ' not found');
+            return json_encode('error: entry for property with id ' . $apartmentID . ' not found');
         }
     }
 
@@ -165,7 +165,7 @@ class ApartmentsController extends Controller
         return $apartmentQueue;
     }
 
-    public function getApartmentRelated($id)
+    public function getApartmentsRelated($id)
     {
         $apartments = Apartments::where('id', $id)
             ->get();
@@ -260,20 +260,12 @@ class ApartmentsController extends Controller
     }
 
 
-    public function deletePropertyQueue($id)
+    public function deleteApartmentQueue($id)
     {
 
         $propertyQueue = ApartmentsQueue::findOrFail($id);
         $propertyQueue->delete();
         return redirect()->route('admin.queue');
-    }
-
-    public function deletePropertyQueueEP($id)
-    {
-
-        $propertyQueue = ApartmentsQueue::findOrFail($id);
-        $propertyQueue->delete();
-        return json_encode("success");
     }
 
     public function deleteApartment($id)
@@ -342,12 +334,12 @@ class ApartmentsController extends Controller
         return redirect()->route('admin.apartments');
     }
 
-    public function deletePropertyEP($id)
+    public function deleteApartmentEP($id)
     {
 
-        $property = Apartments::findOrFail($id);
+        $apartment = Apartments::findOrFail($id);
 
-        $directoryPath = public_path("storage/img/posts/apartments/{$property->id}");
+        $directoryPath = public_path("storage/img/posts/apartments/{$apartment->id}");
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
@@ -356,15 +348,8 @@ class ApartmentsController extends Controller
             rmdir($directoryPath);
         }
 
-        $property->delete();
+        $apartment->delete();
         return json_encode("success");
-    }
-
-    public function getPropertyQueue($id)
-    {
-
-        $propertyQueue = ApartmentsQueue::where('id', $id)->get();
-        return view('admin.propertyqueue', compact('propertyQueue'));
     }
 
     public function postApartmentsQueue(Request $request)
@@ -519,20 +504,6 @@ class ApartmentsController extends Controller
 
         return response()->json("success");
     }
-
-    private function renameImages($route)
-    {
-        $images = collect(File::files($route))
-            ->sortBy(function ($file) {
-                return $file->getFilename();
-            });
-
-        $images->each(function ($file, $index) use ($route) {
-            $newName = ($index + 1) . '.' . $file->getExtension();
-            $file->move($route, $newName);
-        });
-    }
-
 
     public function updateApartmentsQueue(Request $request)
     {

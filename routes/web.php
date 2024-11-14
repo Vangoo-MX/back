@@ -193,6 +193,26 @@ Route::delete('ep/editpropertie/{propertieId}/{imageId}', [PropertiesController:
 
 /* APARTAMENTOS */
 
+Route::get('ep/getAllApartments', [ApartmentsController::class, 'getAll'])->name('epApartments.get');
+
+Route::get('ep/getApartmentsHightlights', [ApartmentsController::class, 'getApartmentsHightlights'])->name('epApartmentsHightlights.get');
+
+Route::get('ep/getApartmentsHightlightFromMunicipio/{id}', [ApartmentsController::class, 'getApartmentsHightlightFromMunicipio'])->name('epApartmentsHightlightFromMunicipio.get');
+
+Route::get('ep/getApartmentCard/{id}', [ApartmentsController::class, 'getApartmentCard'])->name('epApartmentCard.get');
+
+Route::get('ep/getMultiApartmentCard/{array}', [ApartmentsController::class, 'getMultiApartmentCard'])->name('epMultiApartmentCard.get');
+
+Route::get('ep/getApartmentsImagesCards', [ApartmentsController::class, 'getApartmentsImagesCards'])->name('epApartmentsImagesCards.get');
+
+Route::get('ep/getApartmentsImagesDetail/{id}', [ApartmentsController::class, 'getApartmentsImagesDetail'])->name('epApartmentsImagesDetail.get');
+
+Route::get('ep/getApartment/{id}', [ApartmentsController::class, 'getApartment'])->name('epApartment.get');
+
+Route::get('ep/getApartmentsRelated/{id}', [ApartmentsController::class, 'getApartmentsRelated'])->name('epApartmentsRelated.get');
+
+Route::get('ep/getApartmentSearch/{estado?}/{municipio?}/{colonia?}/{type?}/{min?}/{max?}', [ApartmentsController::class, 'getApartmentSearch'])->name('epApartmentSearch.get');
+
 Route::get('ep/get-apartment-by-municipio/{id}', [ApartmentsController::class, 'getApartmentsByMunicipio']);
 
 Route::get('ep/deleteApartment/{id}', [ApartmentsController::class, 'deleteApartment'])->name('epApartment.delete');
@@ -203,7 +223,13 @@ Route::get('ep/activeApartment/{id}', [ApartmentsController::class, 'activeApart
 
 Route::delete('ep/edit-apartment/{apartmentId}/{imageId}', [ApartmentsController::class, 'deleteImage'])->name('apartment.images.delete');
 
-Route::get('ep/deletePropertyEP/{id}', [PropertiesController::class, 'deletePropertyEP']);
+Route::get('ep/deleteApartmentEP/{id}', [ApartmentsController::class, 'deleteApartmentEP']);
+
+/* Apartamentos user */
+
+Route::get('ep/getUserApartments/{id}', [ApartmentsController::class, 'getUserApartments']);
+
+Route::get('ep/getUserApartmentsQueue/{id}', [ApartmentsController::class, 'getUserApartmentsQueue']);
 
 /* apartments queue */
 Route::post('ep/postApartmentsQueue', [ApartmentsController::class, 'postApartmentsQueue'])->name('epApartmentsQueue.post');
@@ -214,7 +240,7 @@ Route::get('ep/revisionApartmentQueue/{id}', [ApartmentsController::class, 'revi
 
 Route::post('ep/aprovedApartmentQueue', [ApartmentsController::class, 'aprovedApartmentsQueue'])->name('epApartmentsQueue.aproved');
 
-Route::get('ep/deletePropertyQueue/{id}', [PropertiesController::class, 'deletePropertyQueue'])->name('epPropertyQueue.delete');
+Route::get('ep/deleteApartmentQueue/{id}', [ApartmentsController::class, 'deleteApartmentQueue'])->name('epApartmentQueue.delete');
 
 Route::get('ep/deletePropertyQueueEP/{id}', [PropertiesController::class, 'deletePropertyQueueEP']);
 
@@ -224,7 +250,7 @@ Route::post('ep/imagesApartmentsQueue', [ApartmentsController::class, 'imagesApa
 
 Route::post('ep/deleteImagesApartmentsQueue', [ApartmentsController::class, 'deleteImagesApartmentsQueue']);
 
-Route::get('ep/getPropertyQueueEP/{id}', [PropertiesController::class, 'getPropertyQueueEP']);
+Route::get('ep/getApartmentQueueEP/{id}', [ApartmentsController::class, 'getApartmentQueueEP']);
 
 /* DESARROLLOS */
 Route::get('ep/getAllDevelopments', [DevelopmentsController::class, 'getAll'])->name('epAllDevelopments.get');
