@@ -529,7 +529,7 @@ class PropertiesController extends Controller
 
         $images->each(function ($file, $index) use ($route) {
             $newName = ($index + 1) . '.' . $file->getExtension();
-            $file->move($route, $newName);
+            File::move($file->getPathname(), $route . $newName);
         });
     }
 
