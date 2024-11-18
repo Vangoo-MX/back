@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Apartments;
-use App\Models\ApartmentsFavorites;
+
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Properties;
@@ -12,9 +11,10 @@ use App\Models\DevelopmentsFavorites;
 use App\Models\Developments;
 use App\Models\Lots;
 use App\Models\LotsFavorites;
+use App\Models\Apartments;
+use App\Models\ApartmentsFavorites;
 use App\Models\ListsUser;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 
 class FavoritesController extends Controller
 {
