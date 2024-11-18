@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Apartments;
+use App\Models\ApartmentsFavorites;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Properties;
@@ -40,6 +42,14 @@ class FavoritesController extends Controller
         return $return;
     }
 
+    public function apartmentsFavoritesUsuario($id)
+    {
+        $return = ApartmentsFavorites::where('id_user', $id)
+            ->get();
+
+        return $return;
+    }
+
     public function allFavoritesUsuario($id)
     {
         $return = [];
@@ -49,6 +59,8 @@ class FavoritesController extends Controller
         $dev = DevelopmentsFavorites::where('id_user', $id)
             ->get();
         $lot = LotsFavorites::where('id_user', $id)
+            ->get();
+        $apartment = ApartmentsFavorites::where('id_user', $id)
             ->get();
 
         if ($properties) {
@@ -69,6 +81,12 @@ class FavoritesController extends Controller
             $return[0]['lots'] = [];
         }
 
+        if ($apartment) {
+            $return[0]['apartments'] = $apartment;
+        } else {
+            $return[0]['apartments'] = [];
+        }
+
         return $return;
     }
 
@@ -82,6 +100,9 @@ class FavoritesController extends Controller
             ->where('id_list', null)
             ->get();
         $lotFav = LotsFavorites::where('id_user', $id)
+            ->where('id_list', null)
+            ->get();
+        $apartmentFav = ApartmentsFavorites::where('id_user', $id)
             ->where('id_list', null)
             ->get();
 
@@ -113,12 +134,22 @@ class FavoritesController extends Controller
         } else {
             $lot = [];
         }
+        if (sizeof($apartmentFav) > 0) {
+            $apartment = Apartments::selectRaw('id, title, status, type_apartment, price_min, price_max, location, description, commission_percentage, images');
+            foreach ($apartmentFav as $value) {
+                $apartment = $apartment->orwhere('id', $value['id_apartment']);
+            }
+            $apartment = $apartment->get();
+        } else {
+            $apartment = [];
+        }
 
         $return = [];
 
         $return[0]['properties'] = $properties;
         $return[0]['developments'] = $dev;
         $return[0]['lots'] = $lot;
+        $return[0]['apartments'] = $apartment;
 
         return $return;
     }
@@ -139,6 +170,11 @@ class FavoritesController extends Controller
         } else if ($type == 'lot') {
             $return = LotsFavorites::where('id_user', $id)
                 ->where('id_lot', $idproperty)
+                ->where('id_list', NULL)
+                ->get();
+        } else if ($type == 'apartment') {
+            $return = ApartmentsFavorites::where('id_user', $id)
+                ->where('id_apartment', $idproperty)
                 ->where('id_list', NULL)
                 ->get();
         }
@@ -166,6 +202,11 @@ class FavoritesController extends Controller
             ->get();
 
         $lotFav = LotsFavorites::where('id_user', $id)
+            ->where('id_list', 0)
+            ->orwhere('id_list', null)
+            ->get();
+
+        $apartmentFav = ApartmentsFavorites::where('id_user', $id)
             ->where('id_list', 0)
             ->orwhere('id_list', null)
             ->get();
@@ -203,6 +244,17 @@ class FavoritesController extends Controller
             $return[0]['lots'] = $lot;
         } else {
             $return[0]['lots'] = [];
+        }
+
+        if (sizeof($apartmentFav) > 0) {
+            $apartment = Apartments::selectRaw('id, title, status, type_apartment, price_min, price_max, location, description, commission_percentage, images');
+            foreach ($apartmentFav as $value) {
+                $apartment = $apartment->orwhere('id', $value['id_apartment']);
+            }
+            $apartment = $apartment->get();
+            $return[0]['apartments'] = $apartment;
+        } else {
+            $return[0]['apartments'] = [];
         }
 
         return $return;
@@ -241,6 +293,15 @@ class FavoritesController extends Controller
         return json_encode('success');
     }
 
+    public function postApartmentFavUser(Request $request)
+    {
+        $fav = new ApartmentsFavorites();
+        $fav->id_user = $request->id_user;
+        $fav->id_apartment = $request->id_apartment;
+        $fav->save();
+        return json_encode('success');
+    }
+
     public function deletePropertyFavUser($id_list, $id_property, $type_property)
     {
 
@@ -255,6 +316,10 @@ class FavoritesController extends Controller
         } else if ($type_property == 'lot') {
             $fav = LotsFavorites::where('id_list', $id_list)
                 ->where('id_lot', $id_property)
+                ->first();
+        } else if ($type_property == 'apartment') {
+            $fav = ApartmentsFavorites::where('id_list', $id_list)
+                ->where('id_apartment', $id_property)
                 ->first();
         }
 
@@ -281,10 +346,15 @@ class FavoritesController extends Controller
         $fav->delete();
         $propertiesFav = PropertiesFavorites::where('id_user', $id_user)->where('id_list', $id_list);
         $propertiesFav->delete();
+
         $devFav = DevelopmentsFavorites::where('id_user', $id_user)->where('id_list', $id_list);
         $devFav->delete();
+
         $lotFav = LotsFavorites::where('id_user', $id_user)->where('id_list', $id_list);
         $lotFav->delete();
+
+        $apartmentFav = ApartmentsFavorites::where('id_user', $id_user)->where('id_list', $id_list);
+        $apartmentFav->delete();
 
         return json_encode('success');
     }
@@ -315,10 +385,12 @@ class FavoritesController extends Controller
             $propertiesFav = PropertiesFavorites::where('id_list', $id)->get();
             $devFav = DevelopmentsFavorites::where('id_list', $id)->get();
             $lotFav = LotsFavorites::where('id_list', $id)->get();
+            $apartmentFav = ApartmentsFavorites::where('id_list', $id)->get();
 
             $propertiesIds = $propertiesFav->pluck('id_property')->toArray();
             $developmentsIds = $devFav->pluck('id_development')->toArray();
             $lotsIds = $lotFav->pluck('id_lot')->toArray();
+            $apartmentsIds = $apartmentFav->pluck('id_apartment')->toArray();
 
             $properties = Properties::selectRaw('id, title, price, location, rooms, parkings, type, bathrooms, area, area_terrain, description, commission_percentage, views, images');
             if (!empty($propertiesIds)) {
@@ -343,6 +415,14 @@ class FavoritesController extends Controller
                 $lot->whereNull('id');
             }
             $return[0]['lots'] = $lot->get();
+
+            $apartment = Apartments::selectRaw('id, title, status, type_apartment, price_min, price_max, location, description, commission_percentage, views, images');
+            if (!empty($apartmentsIds)) {
+                $apartment->whereIn('id', $apartmentsIds);
+            } else {
+                $apartment->whereNull('id');
+            }
+            $return[0]['apartments'] = $apartment->get();
         } catch (Exception $e) {
             return json_encode("error: " . $e->getMessage());
         }
@@ -399,6 +479,19 @@ class FavoritesController extends Controller
                     $fav = new LotsFavorites();
                     $fav->id_user = $request->id_user;
                     $fav->id_lot = $request->id_lot;
+                    $fav->id_list = $request->id_list;
+                    $fav->save();
+                }
+            } elseif ($request->type == 'apartment') {
+                $favu = ApartmentsFavorites::where('id_user', $request->id_user)
+                    ->where('id_apartment', $request->id_apartment)
+                    ->where('id_list', $request->id_list)
+                    ->first();
+
+                if (!$favu) {
+                    $fav = new ApartmentsFavorites();
+                    $fav->id_user = $request->id_user;
+                    $fav->id_apartment = $request->id_apartment;
                     $fav->id_list = $request->id_list;
                     $fav->save();
                 }
