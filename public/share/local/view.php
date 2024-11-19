@@ -1,7 +1,7 @@
 <?php
 
 
-if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot']) && !empty($_GET['title']) && !empty($_GET['property']) && !empty($_GET['development']) && !empty($_GET['lot'])) {
+if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot']) && !empty($_GET['title']) && !empty($_GET['property']) && !empty($_GET['development']) && !empty($_GET['lot']) && !empty($_GET['apartment'])) {
     $title = $_GET['title'];
     $propertyIds = array_filter(explode('-', $_GET['property']), function ($id) {
         return $id !== '0';
@@ -10,6 +10,9 @@ if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GE
         return $id !== '0';
     });
     $lotIds = array_filter(explode('-', $_GET['lot']), function ($id) {
+        return $id !== '0';
+    });
+    $apartmentIds = array_filter(explode('-', $_GET['apartment']), function ($id) {
         return $id !== '0';
     });
 } else {
@@ -21,12 +24,14 @@ $title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 $property = htmlspecialchars($_GET['property'], ENT_QUOTES, 'UTF-8');
 $development = htmlspecialchars($_GET['development'], ENT_QUOTES, 'UTF-8');
 $lot = htmlspecialchars($_GET['lot'], ENT_QUOTES, 'UTF-8');
+$apartment = htmlspecialchars($_GET['apartment'], ENT_QUOTES, 'UTF-8');
 
-$urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title . '&property=' . $property . '&development=' . $development . '&lot=' . $lot;
+$urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title . '&property=' . $property . '&development=' . $development . '&lot=' . $lot . '&apartment=' . $apartment;
 
 $propertyData = [];
 $developmentData = [];
 $lotData = [];
+$apartmentData = [];
 $titleFormatted = str_replace('-', ' ', $title);
 
 if (!empty($propertyIds)) {
@@ -98,7 +103,30 @@ if (!empty($lotIds)) {
     }
 }
 
-if (empty($propertyData) && empty($developmentData) && empty($lotData)) {
+if (!empty($apartmentIds)) {
+    foreach ($apartmentIds as $apartmentId) {
+        $urlApi = 'https://dashboard.vangoo.mx/ep/getApartment/' . $apartmentId;
+        $curl = curl_init($urlApi);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl);
+        if ($response === false) {
+            echo 'Error fetching apartment data';
+            exit;
+        }
+        curl_close($curl);
+        $apartment = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo 'Error decoding apartment data';
+            exit;
+        }
+
+        if (!empty($apartment) && isset($apartment[0])) {
+            $apartmentData[] = $apartment[0];
+        }
+    }
+}
+
+if (empty($propertyData) && empty($developmentData) && empty($lotData) && empty($apartmentData)) {
     echo 'No se encontraron propiedades, desarrollos o terrenos';
     exit;
 }
@@ -323,6 +351,23 @@ function moneyFormat($numero)
                                 <h3 class="property-title"><?php echo $lot['title']; ?></h3>
                                 <p class="property-price"><?php echo moneyFormat($lot['price_min']); ?> - <?php echo moneyFormat($lot['price_max']); ?></p>
                                 <p class="property-address"><?php echo $lot['location']; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+                <?php if (!empty($apartmentData)) : ?>
+                    <?php foreach ($apartmentData as $apartment) : ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="image-container">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/apartments/<?php echo $apartment['id']; ?>/1.jpg?height=250&width=400" alt="Apartment" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="property-title"><?php echo $apartment['title']; ?></h3>
+                                <p class="property-price"><?php echo moneyFormat($apartment['price_min']); ?> - <?php echo moneyFormat($apartment['price_max']); ?></p>
+                                <p class="property-address"><?php echo $apartment['location']; ?></p>
                             </div>
                         </div>
                     <?php endforeach; ?>

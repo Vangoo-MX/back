@@ -243,6 +243,22 @@ function moneyFormat($numero)
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
+
+                <?php if (!empty($data['apartments'])) : ?>
+                    <?php foreach ($data['apartments'] as $rental) : ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="image-container">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/apartments/<?php echo $rental['id']; ?>/1.jpg?height=250&width=400" alt="Rental" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="property-title"><?php echo $rental['title']; ?></h3>
+                                <p class="property-price"><?php echo moneyFormat($rental['price']); ?></p>
+                                <p class="property-address"><?php echo $rental['location']; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
             </div>
 
             <button class="prev">⟨</button>
