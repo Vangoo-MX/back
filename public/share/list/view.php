@@ -27,7 +27,6 @@ function moneyFormat($numero)
     $formatted = number_format($numero, 2, '.', ',');
     return '$' . $formatted . ' MXN';
 }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -259,6 +258,7 @@ function moneyFormat($numero)
                             </div>
                         </div>
                     <?php endforeach; ?>
+                <?php endif; ?>
             </div>
 
             <button class="prev">⟨</button>
