@@ -366,7 +366,7 @@ function moneyFormat($numero)
                             </div>
                             <div class="card-content">
                                 <h3 class="property-title"><?php echo $apartment['title']; ?></h3>
-                                <p class="property-price"><?php echo moneyFormat($apartment['price_min']); ?> - <?php echo moneyFormat($apartment['price_max']); ?></p>
+                                <p class="property-price"><?php echo moneyFormat($apartment['price']); ?></p>
                                 <p class="property-address"><?php echo $apartment['location']; ?></p>
                             </div>
                         </div>
