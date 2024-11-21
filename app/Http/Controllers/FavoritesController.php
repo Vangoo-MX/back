@@ -430,7 +430,7 @@ class FavoritesController extends Controller
             }
             $return[0]['lots'] = $lot->get();
 
-            $apartment = Apartments::selectRaw('id, title, status, type_apartment, price_min, price_max, location, description, commission_percentage, views, images');
+            $apartment = Apartments::selectRaw('id, title, status, price, location, description, commission_percentage, views, images');
             if (!empty($apartmentsIds)) {
                 $apartment->whereIn('id', $apartmentsIds);
             } else {
