@@ -710,8 +710,8 @@ class AdminController extends Controller
         }
 
         $apartmentshl = ApartmentsHighlights::with('apartment')->get();
-        $estados = Estados::get();
-        $municipios = Municipios::get();
+        $estados = Estados::pluck('nombre', 'id');
+        $municipios = Municipios::pluck('nombre', 'id');
         $municipiosh = Municipios::where('highlight', 1)->get();
 
         return view('admin.highlightsApartments', compact('apartmentshl', 'estados', 'municipios', 'municipiosh'));
