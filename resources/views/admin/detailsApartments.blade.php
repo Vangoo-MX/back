@@ -47,27 +47,8 @@ Detalle
                         <div class="mb-3 mt-3">
                             <label for="operation_type" class="form-label">Tipo de operación:</label>
                             <select class="form-select" name="operation_type" disabled>
-                                <option value="venta" <?php if ($apartment->operation_type == 'venta') {
-                                                            echo 'selected';
-                                                        } ?>>Venta</option>
-                                <option value="renta" <?php if ($apartment->operation_type == 'renta') {
-                                                            echo 'selected';
-                                                        } ?>>Renta</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3 mt-3">
-                            <label for="type" class="form-label">Tipo:</label>
-                            <select class="form-select" name="type" disabled>
-                                <option value="casa" <?php if ($apartment->type == 'casa') {
-                                                            echo 'selected';
-                                                        } ?>>casa</option>
-                                <option value="departamento" <?php if ($apartment->type == 'departamento') {
-                                                                    echo 'selected';
-                                                                } ?>>departamento</option>
-                                <option value="terreno" <?php if ($apartment->type == 'terreno') {
-                                                            echo 'selected';
-                                                        } ?>>terreno</option>
+                                <option value="venta" @if ($apartment->operation_type == 'venta') selected @endif>Venta</option>
+                                <option value="renta" @if ($apartment->operation_type == 'renta') selected @endif>Renta</option>
                             </select>
                         </div>
 
@@ -99,12 +80,10 @@ Detalle
                             </div>
                         </div>
 
-                        <?php if ($apartment->type == "departamento") { ?>
-                            <div class="mb-3 mt-3">
-                                <label for="floor" class="form-label">Piso en el que se encuentra:</label>
-                                <input type="number" class="form-control" id="floor" value="{{$apartment->floor}}" placeholder="Piso en el que se encuentra" name="floor" disabled>
-                            </div>
-                        <?php } ?>
+                        <div class="mb-3 mt-3">
+                            <label for="floor" class="form-label">Piso en el que se encuentra:</label>
+                            <input type="number" class="form-control" id="floor" value="{{$apartment->floor}}" placeholder="Piso en el que se encuentra" name="floor" disabled>
+                        </div>
 
                         <div class="mb-3 mt-3">
                             <label for="parkings" class="form-label">Lugares de estacionamiento:</label>
@@ -128,13 +107,10 @@ Detalle
                             </div>
                         <?php } ?>
 
-                        <?php if ($apartment->type == "departamento") { ?>
-                            <div class="mb-3 mt-3">
-                                <label for="dev_type" class="form-label">Tipo de desarrollo:</label>
-                                <input type="number" class="form-control" id="dev_type" value="{{$apartment->dev_type}}" placeholder="tipo de desarrollo en el que se encuentra" name="dev_type" disabled>
-                            </div>
-                        <?php } ?>
-
+                        <div class="mb-3 mt-3">
+                            <label for="dev_type" class="form-label">Tipo de desarrollo:</label>
+                            <input type="text" class="form-control" id="dev_type" value="{{$apartment->dev_type}}" placeholder="tipo de desarrollo en el que se encuentra" name="dev_type" disabled>
+                        </div>
                     </div>
 
 
