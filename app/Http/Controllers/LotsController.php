@@ -337,7 +337,11 @@ class LotsController
 
     public function deleteLot($id)
     {
+        $highlight = LotsHighlights::where('id_property', $id)->first();
 
+        if ($highlight) {
+            $highlight->delete();
+        }
         $lot = Lots::findOrFail($id);
 
         $directoryPath = public_path("storage/img/posts/lots/{$lot->id}");

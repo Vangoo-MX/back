@@ -278,7 +278,11 @@ class PropertiesController extends Controller
 
     public function deleteProperty($id)
     {
+        $highlight = PropertiesHighlights::where('id_property', $id)->first();
 
+        if ($highlight) {
+            $highlight->delete();
+        }
         $property = Properties::findOrFail($id);
 
         $directoryPath = public_path("storage/img/posts/properties/{$property->id}");

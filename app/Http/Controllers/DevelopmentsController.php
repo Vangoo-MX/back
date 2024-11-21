@@ -599,6 +599,11 @@ class DevelopmentsController extends Controller
 
     public function deleteDev($id)
     {
+        $highlight = DevelopmentsHighlights::where('id_property', $id)->first();
+
+        if ($highlight) {
+            $highlight->delete();
+        }
 
         $dev = Developments::findOrFail($id);
 
