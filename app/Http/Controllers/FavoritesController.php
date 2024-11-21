@@ -182,6 +182,10 @@ class FavoritesController extends Controller
             ->where('id_list', NULL)
             ->get();
 
+        echo $return;
+        echo $model;
+        echo $id_type;
+
         if (!$return->isEmpty()) {
             $return = 1;
         } else {
