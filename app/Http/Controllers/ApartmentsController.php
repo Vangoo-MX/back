@@ -270,7 +270,11 @@ class ApartmentsController extends Controller
 
     public function deleteApartment($id)
     {
+        $highlight = ApartmentsHighlights::where('id_property', $id)->first();
 
+        if ($highlight) {
+            $highlight->delete();
+        }
         $apartment = Apartments::findOrFail($id);
 
         $directoryPath = public_path("storage/img/posts/apartments/{$apartment->id}");
