@@ -55,10 +55,10 @@
                         <a href="{{ route('Highlight.delete', $apartment->id) }}" class="btn btn-danger">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </a>
-                        <a href="https://vangoo.mx/details/propiedad/{{$apartment->id}}" target="_blank">
+                        <a href="https://www.vangoo.mx/detailsDepa/apartments/{{$apartment->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$apartment->id_property}}" action="{{ route('Highlight.order') }}" method="POST">
+                        <form id="orden-form{{$apartment->id_property}}" action="{{ route('HighlightApartment.order') }}" method="POST">
                             @csrf
                             <span class="d-flex gap-1">
                                 <input type="hidden" name="id" value="{{$apartment->id_property}}">
