@@ -156,30 +156,33 @@ class FavoritesController extends Controller
 
     public function checkIfFav($id, $idproperty, $type)
     {
-
-        if ($type == 'property') {
-            $return = PropertiesFavorites::where('id_user', $id)
-                ->where('id_property', $idproperty)
-                ->where('id_list', NULL)
-                ->get();
-        } elseif ($type == 'development') {
-            $return = DevelopmentsFavorites::where('id_user', $id)
-                ->where('id_development', $idproperty)
-                ->where('id_list', NULL)
-                ->get();
-        } else if ($type == 'lot') {
-            $return = LotsFavorites::where('id_user', $id)
-                ->where('id_lot', $idproperty)
-                ->where('id_list', NULL)
-                ->get();
-        } else if ($type == 'apartment') {
-            $return = ApartmentsFavorites::where('id_user', $id)
-                ->where('id_apartment', $idproperty)
-                ->where('id_list', NULL)
-                ->get();
+        switch ($type) {
+            case 'property':
+                $model = PropertiesFavorites::class;
+                $id_type = 'id_property';
+                break;
+            case 'development':
+                $model = DevelopmentsFavorites::class;
+                $id_type = 'id_development';
+                break;
+            case 'lot':
+                $model = LotsFavorites::class;
+                $id_type = 'id_lot';
+                break;
+            case 'apartment':
+                $model = ApartmentsFavorites::class;
+                $id_type = 'id_apartment';
+                break;
+            default:
+                return response()->json(['error' => 'Invalid type'], 400);
         }
 
-        if (sizeof($return) > 0) {
+        $return = $model::where('id_user', $id)
+            ->where($id_type, $idproperty)
+            ->where('id_list', NULL)
+            ->get();
+
+        if (!$return->isEmpty()) {
             $return = 1;
         } else {
             $return = 0;
@@ -193,22 +196,22 @@ class FavoritesController extends Controller
 
         $propertiesFav = PropertiesFavorites::where('id_user', $id)
             ->where('id_list', 0)
-            ->orwhere('id_list', null)
+            ->orWhere('id_list', null)
             ->get();
 
         $devFav = DevelopmentsFavorites::where('id_user', $id)
             ->where('id_list', 0)
-            ->orwhere('id_list', null)
+            ->orWhere('id_list', null)
             ->get();
 
         $lotFav = LotsFavorites::where('id_user', $id)
             ->where('id_list', 0)
-            ->orwhere('id_list', null)
+            ->orWhere('id_list', null)
             ->get();
 
         $apartmentFav = ApartmentsFavorites::where('id_user', $id)
             ->where('id_list', 0)
-            ->orwhere('id_list', null)
+            ->orWhere('id_list', null)
             ->get();
 
         $return = [];
@@ -216,7 +219,7 @@ class FavoritesController extends Controller
         if (sizeof($propertiesFav) > 0) {
             $properties = Properties::selectRaw('id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images');
             foreach ($propertiesFav as $value) {
-                $properties = $properties->orwhere('id', $value['id_property']);
+                $properties = $properties->orWhere('id', $value['id_property']);
             }
             $properties = $properties->get();
             $return[0]['properties'] = $properties;
@@ -227,7 +230,7 @@ class FavoritesController extends Controller
         if (sizeof($devFav) > 0) {
             $dev = Developments::selectRaw('id,status,title,price_min,price_max,location,description,views,images');
             foreach ($devFav as $value) {
-                $dev = $dev->orwhere('id', $value['id_development']);
+                $dev = $dev->orWhere('id', $value['id_development']);
             }
             $dev = $dev->get();
             $return[0]['developments'] = $dev;
@@ -238,7 +241,7 @@ class FavoritesController extends Controller
         if (sizeof($lotFav) > 0) {
             $lot = Lots::selectRaw('id, title, status, type_lots, price_min, price_max, location, description, commission_percentage, images');
             foreach ($lotFav as $value) {
-                $lot = $lot->orwhere('id', $value['id_lot']);
+                $lot = $lot->orWhere('id', $value['id_lot']);
             }
             $lot = $lot->get();
             $return[0]['lots'] = $lot;
@@ -249,7 +252,7 @@ class FavoritesController extends Controller
         if (sizeof($apartmentFav) > 0) {
             $apartment = Apartments::selectRaw('id, title, status, type_apartment, price_min, price_max, location, description, commission_percentage, images');
             foreach ($apartmentFav as $value) {
-                $apartment = $apartment->orwhere('id', $value['id_apartment']);
+                $apartment = $apartment->orWhere('id', $value['id_apartment']);
             }
             $apartment = $apartment->get();
             $return[0]['apartments'] = $apartment;
@@ -269,7 +272,7 @@ class FavoritesController extends Controller
 
         $fav->save();
 
-        return json_encode('success');
+        return response()->json(['message' => 'success']);
     }
 
     public function postDevFavUser(Request $request)
@@ -281,7 +284,7 @@ class FavoritesController extends Controller
 
         $fav->save();
 
-        return json_encode('success');
+        return response()->json(['message' => 'success']);
     }
 
     public function postLotFavUser(Request $request)
@@ -290,7 +293,7 @@ class FavoritesController extends Controller
         $fav->id_user = $request->id_user;
         $fav->id_lot = $request->id_lot;
         $fav->save();
-        return json_encode('success');
+        return response()->json(['message' => 'success']);
     }
 
     public function postApartmentFavUser(Request $request)
@@ -299,35 +302,46 @@ class FavoritesController extends Controller
         $fav->id_user = $request->id_user;
         $fav->id_apartment = $request->id_apartment;
         $fav->save();
-        return json_encode('success');
+        return response()->json(['message' => 'success']);
     }
 
     public function deletePropertyFavUser($id_list, $id_property, $type_property)
     {
-
-        if ($type_property == 'property') {
-            $fav = PropertiesFavorites::where('id_list', $id_list)
-                ->where('id_property', $id_property)
-                ->first();
-        } elseif ($type_property == 'development') {
-            $fav = DevelopmentsFavorites::where('id_list', $id_list)
-                ->where('id_development', $id_property)
-                ->first();
-        } else if ($type_property == 'lot') {
-            $fav = LotsFavorites::where('id_list', $id_list)
-                ->where('id_lot', $id_property)
-                ->first();
-        } else if ($type_property == 'apartment') {
-            $fav = ApartmentsFavorites::where('id_list', $id_list)
-                ->where('id_apartment', $id_property)
-                ->first();
+        if (empty($id_list) || empty($id_property)) {
+            return response()->json(['error' => 'Invalid parameters'], 400);
         }
+
+        switch ($type_property) {
+            case 'property':
+                $model = PropertiesFavorites::class;
+                $id_type = 'id_property';
+                break;
+            case 'development':
+                $model = DevelopmentsFavorites::class;
+                $id_type = 'id_development';
+                break;
+            case 'lot':
+                $model = LotsFavorites::class;
+                $id_type = 'id_lot';
+                break;
+            case 'apartment':
+                $model = ApartmentsFavorites::class;
+                $id_type = 'id_apartment';
+                break;
+            default:
+                return response()->json(['error' => 'Invalid type'], 400);
+        }
+
+        $fav = $model::where('id_list', $id_list)
+            ->where($id_type, $id_property)
+            ->first();
 
         if ($fav) {
             $fav->delete();
+            return response()->json(['message' => 'success']);
+        } else {
+            return response()->json(['error' => 'Favorite not found'], 404);
         }
-
-        return json_encode('success');
     }
 
     public function listsUser($id)
@@ -446,55 +460,40 @@ class FavoritesController extends Controller
     {
 
         try {
-            if ($request->type == 'property') {
+            switch ($request->type) {
+                case 'property':
+                    $model = PropertiesFavorites::class;
+                    $id_type = 'id_property';
+                    break;
+                case 'development':
+                    $model = DevelopmentsFavorites::class;
+                    $id_type = 'id_development';
+                    break;
+                case 'lot':
+                    $model = LotsFavorites::class;
+                    $id_type = 'id_lot';
+                    break;
+                case 'apartment':
+                    $model = ApartmentsFavorites::class;
+                    $id_type = 'id_apartment';
+                    break;
+                default:
+                    return response()->json(['error' => 'Invalid type'], 400);
+            }
 
-                $favu = PropertiesFavorites::where('id_user', $request->id_user)->where('id_property', $request->id_property)->where('id_list', $request->id_list)->first();
+            $favu = $model::where('id_user', $request->id_user)
+                ->where($id_type, $request->id_property)
+                ->where('id_list', $request->id_list)
+                ->first();
 
-                if (!$favu) {
-                    $fav = new PropertiesFavorites();
-                    $fav->id_user = $request->id_user;
-                    $fav->id_property = $request->id_property;
-                    $fav->id_list = $request->id_list;
-                    $fav->save();
-                }
-            } elseif ($request->type == 'development') {
-
-                $favu = DevelopmentsFavorites::where('id_user', $request->id_user)->where('id_development', $request->id_development)->where('id_list', $request->id_list)->first();
-
-                if (!$favu) {
-
-                    $fav = new DevelopmentsFavorites();
-                    $fav->id_user = $request->id_user;
-                    $fav->id_development = $request->id_development;
-                    $fav->id_list = $request->id_list;
-                    $fav->save();
-                }
-            } elseif ($request->type == 'lot') {
-                $favu = LotsFavorites::where('id_user', $request->id_user)
-                    ->where('id_lot', $request->id_lot)
-                    ->where('id_list', $request->id_list)
-                    ->first();
-
-                if (!$favu) {
-                    $fav = new LotsFavorites();
-                    $fav->id_user = $request->id_user;
-                    $fav->id_lot = $request->id_lot;
-                    $fav->id_list = $request->id_list;
-                    $fav->save();
-                }
-            } elseif ($request->type == 'apartment') {
-                $favu = ApartmentsFavorites::where('id_user', $request->id_user)
-                    ->where('id_apartment', $request->id_apartment)
-                    ->where('id_list', $request->id_list)
-                    ->first();
-
-                if (!$favu) {
-                    $fav = new ApartmentsFavorites();
-                    $fav->id_user = $request->id_user;
-                    $fav->id_apartment = $request->id_apartment;
-                    $fav->id_list = $request->id_list;
-                    $fav->save();
-                }
+            if (!$favu) {
+                $fav = new $model();
+                $fav->id_user = $request->id_user;
+                $fav->$id_type = $request->id_property;
+                $fav->id_list = $request->id_list;
+                $fav->save();
+            } else {
+                return json_encode('error: Ya existe en la lista');
             }
         } catch (Exception $e) {
             return json_encode("error: " . $e->getMessage());
