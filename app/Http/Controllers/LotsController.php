@@ -337,7 +337,7 @@ class LotsController
 
     public function deleteLot($id)
     {
-        $highlight = LotsHighlights::where('id_property', $id)->first();
+        $highlight = LotsHighlights::where('id_lot', $id)->first();
 
         if ($highlight) {
             $highlight->delete();
