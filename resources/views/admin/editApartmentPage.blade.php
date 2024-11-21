@@ -150,10 +150,7 @@ Editar apartamento
                                                             } ?>>Vertical</option>
                             </select>
                         </div>
-
-
                     </div>
-
 
                     <div class="w-100">
                         <div class="mb-3 mt-3">

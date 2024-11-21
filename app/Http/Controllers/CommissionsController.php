@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Apartments;
 use App\Models\Developments;
 use App\Models\Lots;
 use App\Models\Properties;
@@ -25,6 +26,11 @@ class CommissionsController extends Controller
             return $commissions;
         } else if ($type == "lot") {
             $commissions = Lots::whereNotNull('commission_percentage')
+                ->distinct('commission_percentage')
+                ->pluck('commission_percentage');
+            return $commissions;
+        } else if ($type == "apartment") {
+            $commissions = Apartments::whereNotNull('commission_percentage')
                 ->distinct('commission_percentage')
                 ->pluck('commission_percentage');
             return $commissions;
