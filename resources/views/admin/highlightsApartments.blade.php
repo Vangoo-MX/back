@@ -52,7 +52,7 @@
                     <td>{{municipio($apartment->id_municipio)}}</td>
                     <td>{{$apartment->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('Highlight.delete', $apartment->id) }}" class="btn btn-danger">
+                        <a href="{{ route('HighlightApartment.delete', $apartment->id) }}" class="btn btn-danger">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </a>
                         <a href="https://www.vangoo.mx/detailsDepa/apartments/{{$apartment->id}}" target="_blank">
