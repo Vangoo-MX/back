@@ -58,21 +58,6 @@ Editar apartamento
                         </div>
 
                         <div class="mb-3 mt-3">
-                            <label for="type" class="form-label">Tipo:</label>
-                            <select class="form-select" name="type">
-                                <option value="casa" <?php if ($apartment->type == 'casa') {
-                                                            echo 'selected';
-                                                        } ?>>casa</option>
-                                <option value="departamento" <?php if ($apartment->type == 'departamento') {
-                                                                    echo 'selected';
-                                                                } ?>>departamento</option>
-                                <option value="terreno" <?php if ($apartment->type == 'terreno') {
-                                                            echo 'selected';
-                                                        } ?>>terreno</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3 mt-3">
                             <label for="price" class="form-label">Precio:</label>
                             <input type="number" class="form-control" step="0.01" id="price" value="{{old('price', $apartment->price)}}" placeholder="Precio de venta/renta" name="price">
                             @error('price')
@@ -115,15 +100,13 @@ Editar apartamento
                             </div>
                         </div>
 
-                        <?php if ($apartment->type == "departamento") { ?>
-                            <div class="mb-3 mt-3">
-                                <label for="floor" class="form-label">Piso en el que se encuentra:</label>
-                                <input type="number" class="form-control" id="floor" value="{{old('floor', $apartment->floor)}}" placeholder="Piso en el que se encuentra" name="floor">
-                                @error('floor')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        <?php } ?>
+                        <div class="mb-3 mt-3">
+                            <label for="floor" class="form-label">Piso en el que se encuentra:</label>
+                            <input type="number" class="form-control" id="floor" value="{{old('floor', $apartment->floor)}}" placeholder="Piso en el que se encuentra" name="floor">
+                            @error('floor')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
 
                         <div class="mb-3 mt-3">
                             <label for="parkings" class="form-label">Lugares de estacionamiento:</label>
@@ -156,12 +139,18 @@ Editar apartamento
                             </div>
                         <?php } ?>
 
-                        <?php if ($apartment->type == "departamento") { ?>
-                            <div class="mb-3 mt-3">
-                                <label for="dev_type" class="form-label">Tipo de desarrollo:</label>
-                                <input type="number" class="form-control" id="dev_type" value="{{old('dev_type', $apartment->dev_type)}}" placeholder="tipo de desarrollo en el que se encuentra" name="dev_type">
-                            </div>
-                        <?php } ?>
+                        <div class="mb-3 mt-3">
+                            <label for="dev_type" class="form-label">Tipo de desarrollo:</label>
+                            <select class="form-select" name="dev_type">
+                                <option value="horizontal" <?php if ($apartment->dev_type == 'horizontal') {
+                                                                echo 'selected';
+                                                            } ?>>Horizontal</option>
+                                <option value="vertical" <?php if ($apartment->dev_type == 'vertical') {
+                                                                echo 'selected';
+                                                            } ?>>Vertical</option>
+                            </select>
+                        </div>
+
 
                     </div>
 
