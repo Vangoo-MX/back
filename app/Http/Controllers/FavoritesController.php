@@ -182,13 +182,6 @@ class FavoritesController extends Controller
             ->where('id_list', NULL)
             ->get();
 
-        echo $model . "\n";
-        echo $id_type . "\n";
-        echo $idproperty . "\n";
-        echo $id . "\n";
-        echo $type . "\n";
-        echo $return . "\n";
-
         if (!$return->isEmpty()) {
             $return = 1;
         } else {
