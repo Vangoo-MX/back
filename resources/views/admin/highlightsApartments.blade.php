@@ -46,7 +46,7 @@
                 @foreach($apartmentshl as $apartment)
                 <tr class="municipio-{{$apartment->id_municipio}}">
                     <td>{{$apartment->id_property}}</td>
-                    <td>{{$apartment->id_property->title}}</td>
+                    <td>{{$apartment->apartment->title ?? 'Sin título'}}</td>
                     <td>{{estado($apartment->id_estado)}}</td>
                     <td>{{$apartment->id_municipio}}</td>
                     <td>{{municipio($apartment->id_municipio)}}</td>

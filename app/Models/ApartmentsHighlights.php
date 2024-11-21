@@ -13,4 +13,9 @@ class ApartmentsHighlights extends Model
      */
     public $timestamps = false;
     protected $table = 'post_apartments_highlights';
+
+    public function apartment()
+    {
+        return $this->belongsTo(Apartments::class, 'id_property');
+    }
 }
