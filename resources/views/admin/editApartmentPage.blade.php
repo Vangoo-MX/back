@@ -48,12 +48,8 @@ Editar apartamento
                         <div class="mb-3 mt-3">
                             <label for="operation_type" class="form-label">Tipo de operación:</label>
                             <select class="form-select" name="operation_type">
-                                <option value="venta" <?php if ($apartment->operation_type == 'venta') {
-                                                            echo 'selected';
-                                                        } ?>>Venta</option>
-                                <option value="renta" <?php if ($apartment->operation_type == 'renta') {
-                                                            echo 'selected';
-                                                        } ?>>Renta</option>
+                                <option value="venta" @if ($apartment->operation_type == 'venta') selected @endif>Venta</option>
+                                <option value="renta" @if ($apartment->operation_type == 'renta') selected @endif>Renta</option>
                             </select>
                         </div>
 
@@ -142,12 +138,8 @@ Editar apartamento
                         <div class="mb-3 mt-3">
                             <label for="dev_type" class="form-label">Tipo de desarrollo:</label>
                             <select class="form-select" name="dev_type">
-                                <option value="horizontal" <?php if ($apartment->dev_type == 'horizontal') {
-                                                                echo 'selected';
-                                                            } ?>>Horizontal</option>
-                                <option value="vertical" <?php if ($apartment->dev_type == 'vertical') {
-                                                                echo 'selected';
-                                                            } ?>>Vertical</option>
+                                <option value="horizontal" @if ($apartment->dev_type == 'horizontal') selected @endif>Horizontal</option>
+                                <option value="vertical" @if ($apartment->dev_type == 'vertical') selected @endif>Vertical</option>
                             </select>
                         </div>
                     </div>
