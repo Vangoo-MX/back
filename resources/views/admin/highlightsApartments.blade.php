@@ -47,13 +47,9 @@
                 <tr class="municipio-{{$apartment->id_municipio}}">
                     <td>{{$apartment->id_property}}</td>
                     <td>{{$apartment->apartment->title ?? 'Sin título'}}</td>
-                    <td>
-                        {{ $estados->firstWhere('id', $apartment->id_estado)->nombre ?? 'Sin estado' }}
-                    </td>
+                    <td>{{ $apartment->estado->nombre ?? 'Sin estado' }}</td>
                     <td>{{$apartment->id_municipio}}</td>
-                    <td>
-                        {{ $municipios->firstWhere('id', $apartment->id_municipio)->nombre ?? 'Sin municipio' }}
-                    </td>
+                    <td>{{ $apartment->municipio->nombre ?? 'Sin municipio' }}</td>
                     <td>{{$apartment->num_order}}</td>
                     <td class="d-flex gap-3">
                         <a href="{{ route('HighlightApartment.delete', $apartment->id) }}" class="btn btn-danger">

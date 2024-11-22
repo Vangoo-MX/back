@@ -709,7 +709,7 @@ class AdminController extends Controller
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        $apartmentshl = ApartmentsHighlights::with('apartment')->get();
+        $apartmentshl = ApartmentsHighlights::with(['estado', 'municipio', 'apartment'])->get();
         $estados = Estados::get();
         $municipios = Municipios::get();
         $municipiosh = Municipios::where('highlight', 1)->get();

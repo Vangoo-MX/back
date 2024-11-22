@@ -18,4 +18,14 @@ class ApartmentsHighlights extends Model
     {
         return $this->belongsTo(Apartments::class, 'id_property');
     }
+
+    public function estado()
+    {
+        return $this->belongsTo(Estados::class, 'id_estado');
+    }
+
+    public function municipio()
+    {
+        return $this->belongsTo(Municipios::class, 'id_municipio');
+    }
 }
