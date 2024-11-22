@@ -693,6 +693,8 @@ class ApartmentsController extends Controller
             'num_ext' => $request->num_ext,
             'num_int' => $request->num_int,
             'cp' => $request->cp,
+            'map_lat' => $request->map_lat,
+            'map_long' => $request->map_long,
             'amenities' => $request->amenities,
             'services' => $request->services,
             'sell_type' => $request->sell_type,
