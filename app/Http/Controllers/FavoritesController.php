@@ -475,7 +475,7 @@ class FavoritesController extends Controller
                     break;
                 case 'apartment':
                     $model = ApartmentsFavorites::class;
-                    $id_type = 'id_apartment';
+                    $id_type = 'id_property';
                     break;
                 default:
                     return response()->json(['error' => 'Invalid type'], 400);
