@@ -37,6 +37,8 @@ class ContactAgentMail extends Mailable
             $content .= "Nombre del desarrollo: " . $this->formData['title_property'] . "\n";
         } elseif ($this->formData['type_property'] === 'lots') {
             $content .= "Nombre del lote: " . $this->formData['title_property'] . "\n";
+        } else if ($this->formData['type_property'] === 'apartment') {
+            $content .= "Nombre del apartamento: " . $this->formData['title_property'] . "\n";
         }
 
         if ($this->formData['type_property'] === 'propiedad') {
@@ -45,6 +47,8 @@ class ContactAgentMail extends Mailable
             $content .= "Ubicacion del desarrollo: " . $this->formData['location_property'] . "\n";
         } elseif ($this->formData['type_property'] === 'lots') {
             $content .= "Ubicacion del lote: " . $this->formData['location_property'] . "\n";
+        } else if ($this->formData['type_property'] === 'apartment') {
+            $content .= "Ubicacion del apartamento: " . $this->formData['location_property'] . "\n";
         }
 
         $content .= "Nombre: " . $this->formData['name'] . "\n";
