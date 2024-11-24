@@ -137,7 +137,7 @@ class FavoritesController extends Controller
         if (sizeof($apartmentFav) > 0) {
             $apartment = Apartments::selectRaw('id, title, status, type_apartment, price_min, price_max, location, description, commission_percentage, images');
             foreach ($apartmentFav as $value) {
-                $apartment = $apartment->orwhere('id', $value['id_apartment']);
+                $apartment = $apartment->orwhere('id', $value['id_property']);
             }
             $apartment = $apartment->get();
         } else {
@@ -171,7 +171,7 @@ class FavoritesController extends Controller
                 break;
             case 'apartment':
                 $model = ApartmentsFavorites::class;
-                $id_type = 'id_apartment';
+                $id_type = 'id_property';
                 break;
             default:
                 return response()->json(['error' => 'Invalid type'], 400);
@@ -252,7 +252,7 @@ class FavoritesController extends Controller
         if (sizeof($apartmentFav) > 0) {
             $apartment = Apartments::selectRaw('id, title, status, type_apartment, price_min, price_max, location, description, commission_percentage, images');
             foreach ($apartmentFav as $value) {
-                $apartment = $apartment->orWhere('id', $value['id_apartment']);
+                $apartment = $apartment->orWhere('id', $value['id_property']);
             }
             $apartment = $apartment->get();
             $return[0]['apartments'] = $apartment;
@@ -326,7 +326,7 @@ class FavoritesController extends Controller
                 break;
             case 'apartment':
                 $model = ApartmentsFavorites::class;
-                $id_type = 'id_apartment';
+                $id_type = 'id_property';
                 break;
             default:
                 return response()->json(['error' => 'Invalid type'], 400);
@@ -404,7 +404,7 @@ class FavoritesController extends Controller
             $propertiesIds = $propertiesFav->pluck('id_property')->toArray();
             $developmentsIds = $devFav->pluck('id_development')->toArray();
             $lotsIds = $lotFav->pluck('id_lot')->toArray();
-            $apartmentsIds = $apartmentFav->pluck('id_apartment')->toArray();
+            $apartmentsIds = $apartmentFav->pluck('id_property')->toArray();
 
             $properties = Properties::selectRaw('id, title, price, location, rooms, parkings, type, bathrooms, area, area_terrain, description, commission_percentage, views, images');
             if (!empty($propertiesIds)) {
