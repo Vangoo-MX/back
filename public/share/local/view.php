@@ -1,7 +1,7 @@
 <?php
 
 
-if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot']) && !empty($_GET['title']) && !empty($_GET['property']) && !empty($_GET['development']) && !empty($_GET['lot']) && !empty($_GET['apartment'])) {
+if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot'])) {
     $title = $_GET['title'];
     $propertyIds = array_filter(explode('-', $_GET['property']), function ($id) {
         return $id !== '0';
