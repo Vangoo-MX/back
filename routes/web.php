@@ -319,8 +319,6 @@ Route::get('ep/getEstadoMunicipioColonia/{estado}/{municipio}/{colonia}', [InfoC
 
 /* FAVORITOS */
 
-//Route::get('ep/allFavoritesUsuario/{id}', [FavoritesController::class,'allFavoritesUsuario']);
-
 Route::get('ep/allFavoritesUsuarioData/{id}', [FavoritesController::class, 'allFavoritesUsuarioData']);
 
 Route::get('ep/checkIfFav/{id}/{idproperty}/{type}', [FavoritesController::class, 'checkIfFav']);
@@ -332,6 +330,8 @@ Route::post('ep/postPropertiesFavUser', [FavoritesController::class, 'postProper
 Route::post('ep/postDevFavUser', [FavoritesController::class, 'postDevFavUser']);
 
 Route::post('ep/postLotFavUser', [FavoritesController::class, 'postLotFavUser']);
+
+Route::post('ep/postApartmentFavUser', [FavoritesController::class, 'postApartmentFavUser']);
 
 Route::get('ep/deletePropertyFavUser/{id_list}/{id_property}/{type_property}', [FavoritesController::class, 'deletePropertyFavUser']);
 
