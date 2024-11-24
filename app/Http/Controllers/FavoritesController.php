@@ -303,73 +303,69 @@ class FavoritesController extends Controller
 
     public function propertiesFromList($id)
     {
-
         try {
-            $listdata = ListsUser::selectRaw('id, id_user, title, timestamp')
-                ->where('id', $id)
-                ->first();
+            // Buscar la lista por ID
+            $listData = ListsUser::select('id', 'id_user', 'title', 'timestamp')
+                ->find($id);
 
-            if (!$listdata) {
-                return json_encode("error: Lista no encontrada");
+            // Validar si la lista existe
+            if (!$listData) {
+                return response()->json(["error" => "Lista no encontrada"], 404);
             }
 
-            $id_user = $listdata->id_user;
-            $name_user = User::select('name')->find($id_user);
+            // Buscar el usuario relacionado
+            $user = User::select('name')->find($listData->id_user);
 
-            if (!$name_user) {
-                return json_encode("error: Usuario no encontrado");
+            // Validar si el usuario existe
+            if (!$user) {
+                return response()->json(["error" => "Usuario no encontrado"], 404);
             }
 
-            $return = [];
-            $return[0]['listdata'] = $listdata->toArray();
-            $return[0]['listdata']['name_user'] = $name_user->name;
+            // Preparar la respuesta inicial con los datos de la lista y el usuario
+            $return = [
+                'listdata' => array_merge(
+                    $listData->toArray(),
+                    ['name_user' => $user->name]
+                ),
+            ];
 
-            $propertiesFav = PropertiesFavorites::where('id_list', $id)->get();
-            $devFav = DevelopmentsFavorites::where('id_list', $id)->get();
-            $lotFav = LotsFavorites::where('id_list', $id)->get();
-            $apartmentFav = ApartmentsFavorites::where('id_list', $id)->get();
+            // Definir los datos de favoritos
+            $favorites = [
+                'properties' => [
+                    'model' => Properties::class,
+                    'favorites' => PropertiesFavorites::where('id_list', $id)->pluck('id_property')->toArray(),
+                    'columns' => 'id, title, price, location, rooms, parkings, type, bathrooms, area, area_terrain, description, commission_percentage, views, images',
+                ],
+                'developments' => [
+                    'model' => Developments::class,
+                    'favorites' => DevelopmentsFavorites::where('id_list', $id)->pluck('id_development')->toArray(),
+                    'columns' => 'id, status, title, price_min, price_max, location, description, commission_percentage, mode, views, images',
+                ],
+                'lots' => [
+                    'model' => Lots::class,
+                    'favorites' => LotsFavorites::where('id_list', $id)->pluck('id_lot')->toArray(),
+                    'columns' => 'id, title, status, type_lots, price_min, price_max, location, description, slope, lots_min, lots_max, type_terrain, initial_fee, price_mt2, commission_percentage, images',
+                ],
+                'apartments' => [
+                    'model' => Apartments::class,
+                    'favorites' => ApartmentsFavorites::where('id_list', $id)->pluck('id_property')->toArray(),
+                    'columns' => 'id, title, status, price, location, description, commission_percentage, views, images',
+                ],
+            ];
 
-            $propertiesIds = $propertiesFav->pluck('id_property')->toArray();
-            $developmentsIds = $devFav->pluck('id_development')->toArray();
-            $lotsIds = $lotFav->pluck('id_lot')->toArray();
-            $apartmentsIds = $apartmentFav->pluck('id_property')->toArray();
-
-            $properties = Properties::selectRaw('id, title, price, location, rooms, parkings, type, bathrooms, area, area_terrain, description, commission_percentage, views, images');
-            if (!empty($propertiesIds)) {
-                $properties->whereIn('id', $propertiesIds);
-            } else {
-                $properties->whereNull('id');
+            // Obtener los datos de cada tipo de favoritos
+            foreach ($favorites as $key => $data) {
+                $model = $data['model']::selectRaw($data['columns']);
+                $return[$key] = !empty($data['favorites'])
+                    ? $model->whereIn('id', $data['favorites'])->get()
+                    : [];
             }
-            $return[0]['properties'] = $properties->get();
 
-            $dev = Developments::selectRaw('id, status, title, price_min, price_max, location, description, commission_percentage, mode, views, images');
-            if (!empty($developmentsIds)) {
-                $dev->whereIn('id', $developmentsIds);
-            } else {
-                $dev->whereNull('id');
-            }
-            $return[0]['developments'] = $dev->get();
-
-            $lot = Lots::selectRaw('id, title, status, type_lots, price_min, price_max, location, description, slope, lots_min, lots_max, type_terrain, initial_fee, price_mt2, commission_percentage, images');
-            if (!empty($lotsIds)) {
-                $lot->whereIn('id', $lotsIds);
-            } else {
-                $lot->whereNull('id');
-            }
-            $return[0]['lots'] = $lot->get();
-
-            $apartment = Apartments::selectRaw('id, title, status, price, location, description, commission_percentage, views, images');
-            if (!empty($apartmentsIds)) {
-                $apartment->whereIn('id', $apartmentsIds);
-            } else {
-                $apartment->whereNull('id');
-            }
-            $return[0]['apartments'] = $apartment->get();
+            return $return;
         } catch (Exception $e) {
-            return json_encode("error: " . $e->getMessage());
+            // Capturar cualquier error inesperado
+            return response()->json(["error" => $e->getMessage()], 500);
         }
-
-        return $return;
     }
 
     public function createListUser(Request $request)
