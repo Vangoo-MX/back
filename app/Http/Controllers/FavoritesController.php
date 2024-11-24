@@ -327,6 +327,10 @@ class FavoritesController extends Controller
                     $listData->toArray(),
                     ['name_user' => $user->name]
                 ),
+                'properties' => [],
+                'developments' => [],
+                'lots' => [],
+                'apartments' => [],
             ];
 
             // Definir los datos de favoritos
@@ -361,7 +365,7 @@ class FavoritesController extends Controller
                     : [];
             }
 
-            return $return;
+            return response()->json($return);
         } catch (Exception $e) {
             // Capturar cualquier error inesperado
             return response()->json(["error" => $e->getMessage()], 500);
