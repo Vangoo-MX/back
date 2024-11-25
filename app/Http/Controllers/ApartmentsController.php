@@ -494,13 +494,16 @@ class ApartmentsController extends Controller
     {
         $imageNames = $request->imageNames;
         $id = $request->id;
-
         $route = public_path("storage/img/postsqueue/apartments/{$id}/");
+        $extensions = ['jpg', 'jpeg', 'png'];
 
         foreach ($imageNames as $imageName) {
-            $imagePath = $route . $imageName . 'jpg';
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
+            foreach ($extensions as $extension) {
+                $imagePath = $route . $imageName . '.' . $extension;
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+                break;
             }
         }
 
