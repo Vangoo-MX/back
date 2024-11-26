@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use App\Models\User;
 use App\Models\Roles;
 use App\Models\Properties;
@@ -13,7 +12,6 @@ use App\Models\PropertiesHighlights;
 use App\Models\Developments;
 use App\Models\DevelopmentsHighlights;
 use App\Models\DevelopmentsApartments;
-use App\Models\Tracker;
 use App\Models\Agenda;
 use App\Models\Apartments;
 use App\Models\ApartmentsHighlights;
