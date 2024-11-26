@@ -23,11 +23,16 @@ use App\Models\Municipios;
 use App\Models\Colonias;
 use App\Models\Lots;
 use App\Models\LotsHighlights;
+use App\Models\Terrains;
+use App\Models\TerrainsHighlights;
+use App\Models\TerrainsQueue;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
+
+    //index
     public function index()
     {
 
@@ -50,6 +55,7 @@ class AdminController extends Controller
         ));
     }
 
+    //users
     public function create()
     {
         if (!Auth::check()) {
@@ -103,51 +109,6 @@ class AdminController extends Controller
         $user->save();
 
         return redirect()->route('admin.users');
-    }
-
-    public function createdev()
-    {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
-        $municipios = Municipios::where('id_estado', 19)->get();
-
-        return view('admin.createdev', compact('municipios'));
-    }
-
-    public function editdev($id)
-    {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
-        $municipios = Municipios::where('id_estado', 19)->get();
-
-        $dev = Developments::where('id', $id)->first();
-        $app = DevelopmentsApartments::where('id_development', $id)->first();
-
-        return response()->view('admin.editdev', compact('municipios', 'dev', 'app'))->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')->header('Pragma', 'no-cache')->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
-    }
-
-    public function createLot()
-    {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
-        $municipios = Municipios::where('id_estado', 19)->get();
-
-        return view('admin.createlot', compact('municipios'));
     }
 
     public function show($id = 0)
@@ -340,6 +301,19 @@ class AdminController extends Controller
         $user->update(['password' => $request->password]);
         return redirect()->route('admin.user', $user)->with('success', 'Contraseña actualizada correctamente');
     }
+
+    public function getColonias(Request $request)
+    {
+        try {
+            $municipioId = $request->municipio_id;
+            $colonias = Colonias::where('id_municipio', $municipioId)->get();
+            return response()->json($colonias);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    //properties
     public function properties()
     {
 
@@ -368,32 +342,6 @@ class AdminController extends Controller
         $propiedad = Properties::find($id);
 
         return view('admin.details', compact('propiedad', 'municipios'));
-    }
-
-    public function detailsApartments($id)
-    {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-        $municipios = Municipios::where('id_estado', 19)->get();
-        $apartment = Apartments::find($id);
-
-        return view('admin.detailsApartments', compact('apartment', 'municipios'));
-    }
-
-    public function getColonias(Request $request)
-    {
-        try {
-            $municipioId = $request->municipio_id;
-            $colonias = Colonias::where('id_municipio', $municipioId)->get();
-            return response()->json($colonias);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
     }
 
     public function showProperties($propiedad)
@@ -505,6 +453,44 @@ class AdminController extends Controller
         return redirect()->route('admin.details', $propiedad)->with('success', 'Propiedad actualizada correctamente');
     }
 
+    public function queue()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $propiedadesqueue = PropertiesQueue::where('status_aproved', 0)->get();
+
+        $propiedadesrejected = PropertiesQueue::where('status_aproved', 2)->get();
+
+        $propiedadesrevision = PropertiesQueue::where('status_aproved', 3)->get();
+
+        return view('admin.queue', compact('propiedadesqueue', 'propiedadesrejected', 'propiedadesrevision'));
+    }
+
+    public function highlights()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $propertieshl = PropertiesHighlights::get();
+        $estados = Estados::get();
+        $municipios = Municipios::get();
+        $municipiosh = Municipios::where('highlight', 1)->get();
+
+        return view('admin.highlights', compact('propertieshl', 'estados', 'municipios', 'municipiosh'));
+    }
+
+    //apartments
     public function apartments()
     {
 
@@ -518,6 +504,21 @@ class AdminController extends Controller
         $apartments = Apartments::get();
 
         return view('admin.apartments', compact('apartments'));
+    }
+
+    public function detailsApartments($id)
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+        $municipios = Municipios::where('id_estado', 19)->get();
+        $apartment = Apartments::find($id);
+
+        return view('admin.detailsApartments', compact('apartment', 'municipios'));
     }
 
     public function editApartmentPage($apartments)
@@ -537,8 +538,9 @@ class AdminController extends Controller
         return view('admin.editApartmentPage', compact('municipios', 'colonias', 'apartment'));
     }
 
-    public function editdevpage($id)
+    public function queueApartments()
     {
+
         if (!Auth::check()) {
             return redirect('/');
         }
@@ -546,14 +548,119 @@ class AdminController extends Controller
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        $municipios = Municipios::where('id_estado', 19)->get();
+        $apartmentsQueue = ApartmentsQueue::where('status_aproved', 0)->get();
 
-        $dev = Developments::where('id', $id)->get();
-        $app = DevelopmentsApartments::where('id_development', $id)->get();
+        $apartmentsRejected = ApartmentsQueue::where('status_aproved', 2)->get();
 
-        return response()->view('admin.editdev', compact('municipios', 'dev', 'app'))->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')->header('Pragma', 'no-cache')->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+        $apartmentsRevision = ApartmentsQueue::where('status_aproved', 3)->get();
+
+        return view('admin.queueApartments', compact('apartmentsQueue', 'apartmentsRejected', 'apartmentsRevision'));
     }
 
+    public function highlightsApartments()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $apartmentshl = ApartmentsHighlights::with(['estado', 'municipio', 'apartment'])->get();
+        $estados = Estados::get();
+        $municipios = Municipios::get();
+        $municipiosh = Municipios::where('highlight', 1)->get();
+
+        return view('admin.highlightsApartments', compact('apartmentshl', 'estados', 'municipios', 'municipiosh'));
+    }
+
+    //terrains
+    public function terrains()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $terrains = Terrains::get();
+
+        return view('admin.terrains', compact('terrains'));
+    }
+
+    public function detailsTerrains($id)
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+        $municipios = Municipios::where('id_estado', 19)->get();
+        $terrain = Terrains::find($id);
+
+        return view('admin.detailsTerrains', compact('terrain', 'municipios'));
+    }
+
+    public function editTerrainPage($terrains)
+    {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+        $terrain = Terrains::find($terrains);
+        $municipio_propiedad = Municipios::find($terrain->id_municipio);
+        $estado_propiedad = $municipio_propiedad->id_estado;
+        $municipios = Municipios::where('id_estado', $estado_propiedad)->get();
+        $colonias = Colonias::where('id_municipio', $terrain->id_municipio)->get();
+
+        return view('admin.editTerrainPage', compact('municipios', 'colonias', 'terrain'));
+    }
+
+    public function queueTerrains()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $terrainsQueue = TerrainsQueue::where('status_aproved', 0)->get();
+
+        $terrainsRejected = TerrainsQueue::where('status_aproved', 2)->get();
+
+        $terrainsRevision = TerrainsQueue::where('status_aproved', 3)->get();
+
+        return view('admin.queueTerrains', compact('terrainsQueue', 'terrainsRejected', 'terrainsRevision'));
+    }
+
+    public function highlightsTerrains()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $terrainshl = TerrainsHighlights::with(['estado', 'municipio', 'apartment'])->get();
+        $estados = Estados::get();
+        $municipios = Municipios::get();
+        $municipiosh = Municipios::where('highlight', 1)->get();
+
+        return view('admin.highlightsTerrains', compact('terrainshl', 'estados', 'municipios', 'municipiosh'));
+    }
+
+    //developments
     public function developments()
     {
 
@@ -569,6 +676,56 @@ class AdminController extends Controller
         return view('admin.developments', compact('desarrollos'));
     }
 
+    public function createdev()
+    {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $municipios = Municipios::where('id_estado', 19)->get();
+
+        return view('admin.createdev', compact('municipios'));
+    }
+
+    public function editdev($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $municipios = Municipios::where('id_estado', 19)->get();
+
+        $dev = Developments::where('id', $id)->first();
+        $app = DevelopmentsApartments::where('id_development', $id)->first();
+
+        return response()->view('admin.editdev', compact('municipios', 'dev', 'app'))->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')->header('Pragma', 'no-cache')->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+    }
+
+    public function highlightsdev()
+    {
+
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $devshl = DevelopmentsHighlights::get();
+        $estados = Estados::get();
+        $municipios = Municipios::get();
+        $municipiosh = Municipios::where('highlight', 1)->get();
+
+        return view('admin.highlightsdev', compact('devshl', 'estados', 'municipios', 'municipiosh'));
+    }
+
+    //lots
     public function lots()
     {
 
@@ -582,6 +739,20 @@ class AdminController extends Controller
         $lots = Lots::get();
 
         return view('admin.lots', compact('lots'));
+    }
+
+    public function createLot()
+    {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (Auth::user()->rol != 1) {
+            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        }
+
+        $municipios = Municipios::where('id_estado', 19)->get();
+
+        return view('admin.createlot', compact('municipios'));
     }
 
     public function editLotPage($id)
@@ -604,7 +775,7 @@ class AdminController extends Controller
             ->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
     }
 
-    public function queue()
+    public function highlightsLot()
     {
 
         if (!Auth::check()) {
@@ -614,34 +785,15 @@ class AdminController extends Controller
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        $propiedadesqueue = PropertiesQueue::where('status_aproved', 0)->get();
+        $lotshl = LotsHighlights::get();
+        $estados = Estados::get();
+        $municipios = Municipios::get();
+        $municipiosh = Municipios::where('highlight', 1)->get();
 
-        $propiedadesrejected = PropertiesQueue::where('status_aproved', 2)->get();
-
-        $propiedadesrevision = PropertiesQueue::where('status_aproved', 3)->get();
-
-        return view('admin.queue', compact('propiedadesqueue', 'propiedadesrejected', 'propiedadesrevision'));
+        return view('admin.highlightslots', compact('lotshl', 'estados', 'municipios', 'municipiosh'));
     }
 
-    public function queueApartments()
-    {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
-        $apartmentsQueue = ApartmentsQueue::where('status_aproved', 0)->get();
-
-        $apartmentsRejected = ApartmentsQueue::where('status_aproved', 2)->get();
-
-        $apartmentsRevision = ApartmentsQueue::where('status_aproved', 3)->get();
-
-        return view('admin.queueApartments', compact('apartmentsQueue', 'apartmentsRejected', 'apartmentsRevision'));
-    }
-
+    //various
     public function files()
     {
 
@@ -679,78 +831,6 @@ class AdminController extends Controller
         }
 
         return view('admin.settingsinfo');
-    }
-
-    public function highlights()
-    {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
-        $propertieshl = PropertiesHighlights::get();
-        $estados = Estados::get();
-        $municipios = Municipios::get();
-        $municipiosh = Municipios::where('highlight', 1)->get();
-
-        return view('admin.highlights', compact('propertieshl', 'estados', 'municipios', 'municipiosh'));
-    }
-
-    public function highlightsApartments()
-    {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
-        $apartmentshl = ApartmentsHighlights::with(['estado', 'municipio', 'apartment'])->get();
-        $estados = Estados::get();
-        $municipios = Municipios::get();
-        $municipiosh = Municipios::where('highlight', 1)->get();
-
-        return view('admin.highlightsApartments', compact('apartmentshl', 'estados', 'municipios', 'municipiosh'));
-    }
-
-    public function highlightsdev()
-    {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
-        $devshl = DevelopmentsHighlights::get();
-        $estados = Estados::get();
-        $municipios = Municipios::get();
-        $municipiosh = Municipios::where('highlight', 1)->get();
-
-        return view('admin.highlightsdev', compact('devshl', 'estados', 'municipios', 'municipiosh'));
-    }
-
-    public function highlightsLot()
-    {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
-        $lotshl = LotsHighlights::get();
-        $estados = Estados::get();
-        $municipios = Municipios::get();
-        $municipiosh = Municipios::where('highlight', 1)->get();
-
-        return view('admin.highlightslots', compact('lotshl', 'estados', 'municipios', 'municipiosh'));
     }
 
     public function email_confirm()

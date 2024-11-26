@@ -9,7 +9,6 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CommissionsController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\UserController;
-
 use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\DevelopmentsController;
 use App\Http\Controllers\DevelopmentsApartmentsController;
@@ -17,15 +16,19 @@ use App\Http\Controllers\InfoController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\LotsController;
 use App\Http\Controllers\MailsController;
+use App\Models\Terrains;
 
 Route::get('/', HomeController::class)->name('home');
 
 /*---------------------------------------------------------------------*/
 /* PAGES */
 
+//admin user
 Route::get('overview/home', [AdminController::class, 'index'])->name('admin.index');
 
 Route::get('overview/create', [AdminController::class, 'create'])->name('admin.create');
+
+Route::post('admin/store', [AdminController::class, 'store'])->name('admin.storeuser');
 
 Route::get('overview/user/{id?}', [AdminController::class, 'show'])->name('admin.user');
 
@@ -37,16 +40,28 @@ Route::get('overview/password/{user}', [AdminController::class, 'password'])->na
 
 Route::post('admin/password/{user}', [AdminController::class, 'updatePassword'])->name('admin.passUpdate');
 
+Route::get('overview/users', [AdminController::class, 'allusers'])->name('admin.users');
+
+Route::delete('overview/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+
+Route::get('overview/contacts', [AdminController::class, 'contacts'])->name('admin.contacts');
+
+Route::get('/getColonias', [AdminController::class, 'getColonias'])->name('getColonias');
+
+//admin properties
 Route::get('overview/properties', [AdminController::class, 'properties'])->name('admin.properties');
 
 Route::get('overview/details/{id}', [AdminController::class, 'details'])->name('admin.details');
 
 Route::get('overview/details/edit/{propiedad}', [AdminController::class, 'showProperties'])->name('admin.showProperties');
 
-Route::get('/getColonias', [AdminController::class, 'getColonias'])->name('getColonias');
-
 Route::post('admin/details/edit/{propiedad}', [AdminController::class, 'updateProperties'])->name('admin.propertiesUpdate');
 
+Route::get('overview/queue', [AdminController::class, 'queue'])->name('admin.queue');
+
+Route::get('overview/properties-highlights', [AdminController::class, 'highlights'])->name('admin.highlights.properties');
+
+//admin apartments
 Route::get('overview/apartments', [AdminController::class, 'apartments'])->name('admin.apartments');
 
 Route::get('overview/details-apartments/{id}', [AdminController::class, 'detailsApartments'])->name('admin.detailsApartments');
@@ -55,41 +70,47 @@ Route::get('overview/details-apartments/edit/{apartments}', [AdminController::cl
 
 Route::post('admin/details-apartments/edit/{apartments}', [ApartmentsController::class, 'updateApartments'])->name('admin.apartmentsUpdate');
 
-Route::get('overview/developments', [AdminController::class, 'developments'])->name('admin.developments');
-
-Route::get('overview/lots', [AdminController::class, 'lots'])->name('admin.lots');
-
-Route::get('overview/queue', [AdminController::class, 'queue'])->name('admin.queue');
-
 Route::get('overview/apartments-queue', [AdminController::class, 'queueApartments'])->name('admin.queueApartments');
-
-Route::get('overview/users', [AdminController::class, 'allusers'])->name('admin.users');
-
-Route::delete('overview/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
-
-Route::get('overview/contacts', [AdminController::class, 'contacts'])->name('admin.contacts');
-
-Route::get('overview/files', [AdminController::class, 'files'])->name('admin.files');
-
-Route::get('overview/statistics', [AdminController::class, 'statistics'])->name('admin.statistics');
-
-Route::get('overview/settingsinfo', [AdminController::class, 'settingsinfo'])->name('admin.settingsinfo');
-
-Route::get('overview/properties-highlights', [AdminController::class, 'highlights'])->name('admin.highlights.properties');
 
 Route::get('overview/apartments-highlights', [AdminController::class, 'highlightsApartments'])->name('admin.highlights.apartments');
 
+//admin terrains
+Route::get('overview/terrains', [AdminController::class, 'terrains'])->name('admin.terrains');
+
+Route::get('overview/details-terrains/{id}', [AdminController::class, 'detailsTerrains'])->name('admin.detailsTerrains');
+
+Route::get('overview/details-terrains/edit/{terrains}', [AdminController::class, 'editTerrainPage'])->name('admin.editTerrainPage');
+
+Route::post('admin/details-Terrains/edit/{terrains}', [TerrainsController::class, 'updateTerrains'])->name('admin.terrainsUpdate');
+
+Route::get('overview/terrains-queue', [AdminController::class, 'queueTerrains'])->name('admin.queueTerrains');
+
+Route::get('overview/terrains-highlights', [AdminController::class, 'highlightsTerrains'])->name('admin.highlights.terrains');
+
+//admin developments
+Route::get('overview/developments', [AdminController::class, 'developments'])->name('admin.developments');
+
 Route::get('overview/developments-highlights', [AdminController::class, 'highlightsdev'])->name('admin.highlights.developments');
-
-Route::get('overview/lots-highlights', [AdminController::class, 'highlightsLot'])->name('admin.highlights.lots');
-
-Route::post('admin/store', [AdminController::class, 'store'])->name('admin.storeuser');
 
 Route::get('overview/createdev', [AdminController::class, 'createdev'])->name('admin.createdev');
 
 Route::get('overview/editdev/{id}', [AdminController::class, 'editdev'])->name('admin.editdev');
 
+//admin lots
+Route::get('overview/lots', [AdminController::class, 'lots'])->name('admin.lots');
+
+Route::get('overview/lots-highlights', [AdminController::class, 'highlightsLot'])->name('admin.highlights.lots');
+
 Route::get('overview/createlot', [AdminController::class, 'createLot'])->name('admin.createLot');
+
+Route::get('ep/editlots/{id}', [AdminController::class, 'editLotPage'])->name('lot.edit');
+
+//admin various
+Route::get('overview/files', [AdminController::class, 'files'])->name('admin.files');
+
+Route::get('overview/statistics', [AdminController::class, 'statistics'])->name('admin.statistics');
+
+Route::get('overview/settingsinfo', [AdminController::class, 'settingsinfo'])->name('admin.settingsinfo');
 
 Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('emails.confirm');
 
@@ -279,8 +300,6 @@ Route::post('ep/storedev', [DevelopmentsController::class, 'storeDev'])->name('e
 
 Route::get('ep/deletedev/{id}', [DevelopmentsController::class, 'deleteDev'])->name('epDev.delete');
 
-Route::get('ep/editdevelopments/{id}', [AdminController::class, 'editdevpage'])->name('dev.edit');
-
 Route::post('ep/editdev', [DevelopmentsController::class, 'editdev'])->name('epDev.edit');
 
 Route::delete('ep/dev/{developmentId}/{imageId}', [DevelopmentsController::class, 'deleteImage'])->name('development.images.delete');
@@ -292,20 +311,31 @@ Route::get('ep/getApartmentsImages/{id}', [DevelopmentsApartmentsController::cla
 
 /* LOTES */
 Route::post('ep/storelot', [LotsController::class, 'storeLot'])->name('epLot.store');
+
 Route::get('ep/deletelot/{id}', [LotsController::class, 'deleteLot'])->name('epLot.delete');
-Route::get('ep/editlots/{id}', [AdminController::class, 'editLotPage'])->name('lot.edit');
+
 Route::post('ep/editlot', [LotsController::class, 'editLot'])->name('epLot.edit');
+
 Route::delete('ep/editlot/{lotId}/{imageId}', [LotsController::class, 'deleteImage'])->name('lot.images.delete');
+
 Route::get('ep/get-lots-by-municipio/{id}', [LotsController::class, 'getLotsByMunicipio']);
 
 Route::get('ep/getLotsHightlights', [LotsController::class, 'getLotsHightlights'])->name('epLotsHightlights.get');
+
 Route::get('ep/getLotsHightlightFromMunicipio/{id}', [LotsController::class, 'getLotsHightlightFromMunicipio'])->name('epLotsHightlightFromMunicipio.get');
+
 Route::get('ep/getLotsImagesDetail/{id}', [LotsController::class, 'getLotsImagesDetail'])->name('epLotsImagesDetail.get');
+
 Route::get('ep/getLotsImagesCards', [LotsController::class, 'getLotsImagesCards'])->name('epLotsImagesCards.get');
+
 Route::get('ep/getLot/{id}', [LotsController::class, 'getLot'])->name('epLot.get');
+
 Route::get('ep/getLotsRelated/{id}', [LotsController::class, 'getLotsRelated'])->name('epLotsRelated.get');
+
 Route::get('ep/getLotCard/{id}', [LotsController::class, 'getLotCard'])->name('epLotCard.get');
+
 Route::get('ep/getMultiLotCard/{id}', [LotsController::class, 'getMultiLotCard'])->name('epMultiLotCard.get');
+
 Route::get('ep/getLotSearch/{estado?}/{municipio?}/{colonia?}/{status?}/{min?}/{max?}', [LotsController::class, 'getLotSearch'])->name('epLotSearch.get');
 
 /* INFORMACIÓN */
