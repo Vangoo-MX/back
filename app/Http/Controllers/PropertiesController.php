@@ -511,18 +511,28 @@ class PropertiesController extends Controller
         $id = $request->id;
         $route = public_path("storage/img/postsqueue/properties/{$id}/");
         $extensions = ['jpg', 'jpeg', 'png'];
+        $deletedCount = 0;
 
         foreach ($imageNames as $imageName) {
             foreach ($extensions as $extension) {
                 $imagePath = $route . $imageName . '.' . $extension;
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
+                    $deletedCount++;
+                    break;
                 }
-                break;
             }
         }
 
         $this->renameImages($route);
+
+        if ($deletedCount > 0) {
+            $property = PropertiesQueue::find($id);
+            if ($property) {
+                $property->images = max(0, $property->images - $deletedCount);
+                $property->save();
+            }
+        }
 
         return response()->json("success");
     }
