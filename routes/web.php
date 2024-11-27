@@ -281,6 +281,8 @@ Route::get('ep/activeTerrain/{id}', [TerrainsController::class, 'activeTerrain']
 
 Route::get('ep/deleteTerrain/{id}', [TerrainsController::class, 'deleteTerrain'])->name('epTerrain.delete');
 
+Route::delete('ep/edit-terrain/{terrainId}/{imageId}', [TerrainsController::class, 'deleteImage'])->name('terrain.images.delete');
+
 /* DESARROLLOS */
 Route::get('ep/getAllDevelopments', [DevelopmentsController::class, 'getAll'])->name('epAllDevelopments.get');
 
