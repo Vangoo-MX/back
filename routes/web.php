@@ -274,6 +274,11 @@ Route::post('ep/deleteImagesApartmentsQueue', [ApartmentsController::class, 'del
 
 Route::get('ep/getApartmentQueueEP/{id}', [ApartmentsController::class, 'getApartmentQueueEP']);
 
+/* TERRENOS */
+Route::get('ep/deactiveTerrain/{id}', [TerrainsController::class, 'deactiveTerrain'])->name('epTerrain.deactive');
+
+Route::get('ep/activeTerrain/{id}', [TerrainsController::class, 'activeTerrain'])->name('epTerrain.activate');
+
 /* DESARROLLOS */
 Route::get('ep/getAllDevelopments', [DevelopmentsController::class, 'getAll'])->name('epAllDevelopments.get');
 
