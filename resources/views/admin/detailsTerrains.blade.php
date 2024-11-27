@@ -79,12 +79,6 @@ Detalle
                                 </div>
                             </div>
                         </div>
-
-                        <div class="mb-3 mt-3">
-                            <label for="floor" class="form-label">Piso en el que se encuentra:</label>
-                            <input type="number" class="form-control" id="floor" value="{{$terrain->floor}}" placeholder="Piso en el que se encuentra" name="floor" disabled>
-                        </div>
-
                         <div class="mb-3 mt-3">
                             <label for="parkings" class="form-label">Lugares de estacionamiento:</label>
                             <input type="number" class="form-control" step="1" id="parkings" value="{{$terrain->parkings}}" placeholder="Lugares de estacionamiento" name="parkings" disabled>
