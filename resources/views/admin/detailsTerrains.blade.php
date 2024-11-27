@@ -94,14 +94,13 @@ Detalle
                             <label for="map" class="form-label">Mapa:</label>
                             <input type="text" class="form-control" id="map" value="{{$terrain->map}}" placeholder="Ingresa el link de google maps" name="map" disabled>
                         </div>
-
-                        <div class="mb-3 mt-3">
-                            <label for="area" class="form-label">Area:</label>
-                            <input type="number" step="0.01" class="form-control" id="area" value="{{$terrain->area}}" placeholder="Ingresa el area del inmueble" name="area" disabled>
-                        </div>
                         <div class="mb-3 mt-3">
                             <label for="area" class="form-label">Area del terreno:</label>
                             <input type="number" class="form-control" id="area_terrain" value="{{$terrain->area_terrain}}" placeholder="Ingresa el area del terreno" name="area_terrain" disabled>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label for="price_m2" class="form-label">Precio basado en m2:</label>
+                            <input type="text" class="form-control" id="price_m2" value="{{$terrain->price_m2}}" placeholder="Precio basado en m2" name="price_m2" disabled>
                         </div>
                     </div>
 
@@ -180,11 +179,6 @@ Detalle
                             <label for="share-conditions">Condiciones para compartir:</label>
                             <textarea class="form-control" rows="5" id="share_conditions" name="share_conditions" disabled>{{$terrain->share_conditions}}</textarea>
                         </div>
-                        <div class="mb-3 mt-3">
-                            <label for="price_m2" class="form-label">Precio basado en m2:</label>
-                            <input type="text" class="form-control" id="price_m2" value="{{$terrain->price_m2}}" placeholder="Precio basado en m2" name="price_m2" disabled>
-                        </div>
-
                         <div class="mb-3 mt-3">
                             <label for="antiquity" class="form-label">Antiguedad:</label>
                             <input type="text" class="form-control" id="antiquity" value="{{$terrain->antiquity}}" placeholder="Antiguedad del inmueble" name="antiquity" disabled>
