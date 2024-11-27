@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApartmentsController;
+use App\Http\Controllers\TerrainsController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CommissionsController;
@@ -16,7 +17,7 @@ use App\Http\Controllers\InfoController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\LotsController;
 use App\Http\Controllers\MailsController;
-use App\Models\Terrains;
+
 
 Route::get('/', HomeController::class)->name('home');
 
