@@ -262,8 +262,8 @@ class TerrainsController extends Controller
     public function deleteTerrainQueue($id)
     {
 
-        $propertyQueue = TerrainsQueue::findOrFail($id);
-        $propertyQueue->delete();
+        $terrainQueue = TerrainsQueue::findOrFail($id);
+        $terrainQueue->delete();
         return redirect()->route('admin.queue');
     }
 
