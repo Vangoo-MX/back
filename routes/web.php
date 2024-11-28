@@ -275,13 +275,63 @@ Route::post('ep/deleteImagesApartmentsQueue', [ApartmentsController::class, 'del
 Route::get('ep/getApartmentQueueEP/{id}', [ApartmentsController::class, 'getApartmentQueueEP']);
 
 /* TERRENOS */
+Route::get('ep/getAllTerrains', [TerrainsController::class, 'getAll'])->name('epTerrains.get');
+
+Route::get('ep/getTerrainsHightlights', [TerrainsController::class, 'getTerrainsHightlights'])->name('epTerrainsHightlights.get');
+
+Route::get('ep/getTerrainsHightlightFromMunicipio/{id}', [TerrainsController::class, 'getTerrainsHightlightFromMunicipio'])->name('epTerrainsHightlightFromMunicipio.get');
+
+Route::get('ep/getTerrainCard/{id}', [TerrainsController::class, 'getTerrainCard'])->name('epTerrainCard.get');
+
+Route::get('ep/getMultiTerrainCard/{array}', [TerrainsController::class, 'getMultiTerrainCard'])->name('epMultiTerrainCard.get');
+
+Route::get('ep/getTerrainsImagesCards', [TerrainsController::class, 'getTerrainsImagesCards'])->name('epTerrainsImagesCards.get');
+
+Route::get('ep/getTerrainsImagesDetail/{id}', [TerrainsController::class, 'getTerrainsImagesDetail'])->name('epTerrainsImagesDetail.get');
+
+Route::get('ep/getTerrain/{id}', [TerrainsController::class, 'getTerrain'])->name('epTerrain.get');
+
+Route::get('ep/getTerrainsRelated/{id}', [TerrainsController::class, 'getTerrainsRelated'])->name('epTerrainsRelated.get');
+
+Route::get('ep/getTerrainSearch/{estado?}/{municipio?}/{colonia?}/{type?}/{min?}/{max?}', [TerrainsController::class, 'getTerrainSearch'])->name('epTerrainSearch.get');
+
+Route::get('ep/get-terrain-by-municipio/{id}', [TerrainsController::class, 'getTerrainsByMunicipio']);
+
+Route::get('ep/deleteTerrain/{id}', [TerrainsController::class, 'deleteTerrain'])->name('epTerrain.delete');
+
 Route::get('ep/deactiveTerrain/{id}', [TerrainsController::class, 'deactiveTerrain'])->name('epTerrain.deactive');
 
 Route::get('ep/activeTerrain/{id}', [TerrainsController::class, 'activeTerrain'])->name('epTerrain.activate');
 
-Route::get('ep/deleteTerrain/{id}', [TerrainsController::class, 'deleteTerrain'])->name('epTerrain.delete');
-
 Route::delete('ep/edit-terrain/{terrainId}/{imageId}', [TerrainsController::class, 'deleteImage'])->name('terrain.images.delete');
+
+Route::get('ep/deleteTerrainEP/{id}', [TerrainsController::class, 'deleteTerrainEP']);
+
+/* Terrenos user */
+Route::get('ep/getUserTerrains/{id}', [TerrainsController::class, 'getUserTerrains']);
+
+Route::get('ep/getUserTerrainsQueue/{id}', [TerrainsController::class, 'getUserTerrainsQueue']);
+
+/* terrains queue */
+Route::post('ep/postTerrainsQueue', [TerrainsController::class, 'postTerrainsQueue'])->name('epTerrainsQueue.post');
+
+Route::get('ep/rejectTerrainQueue/{id}', [TerrainsController::class, 'rejectTerrainQueue'])->name('epTerrainQueue.reject');
+
+Route::get('ep/revisionTerrainQueue/{id}', [TerrainsController::class, 'revisionTerrainQueue'])->name('epTerrainQueue.revision');
+
+Route::post('ep/aprovedTerrainQueue', [TerrainsController::class, 'aprovedTerrainsQueue'])->name('epTerrainsQueue.aproved');
+
+Route::get('ep/deleteTerrainQueue/{id}', [TerrainsController::class, 'deleteTerrainQueue'])->name('epTerrainQueue.delete');
+
+Route::get('ep/deleteTerrainQueueEP/{id}', [TerrainsController::class, 'deleteTerrainQueueEP']);
+
+Route::post('ep/updateTerrainsQueue', [TerrainsController::class, 'updateTerrainsQueue']);
+
+Route::post('ep/imagesTerrainsQueue', [TerrainsController::class, 'imagesTerrainsQueue']);
+
+Route::post('ep/deleteImagesTerrainsQueue', [TerrainsController::class, 'deleteImagesTerrainsQueue']);
+
+Route::get('ep/getTerrainQueueEP/{id}', [TerrainsController::class, 'getTerrainQueueEP']);
 
 /* DESARROLLOS */
 Route::get('ep/getAllDevelopments', [DevelopmentsController::class, 'getAll'])->name('epAllDevelopments.get');
@@ -350,11 +400,17 @@ Route::get('ep/getLotSearch/{estado?}/{municipio?}/{colonia?}/{status?}/{min?}/{
 
 /* INFORMACIÓN */
 Route::get('ep/getEstado/{id}', [InfoController::class, 'getEstado'])->name('estado.get');
+
 Route::get('ep/getAllEstados', [InfoController::class, 'getEstados']);
+
 Route::get('ep/getMunicipiosFromEstado/{id}', [InfoController::class, 'getMunicipiosFromEstado']);
+
 Route::get('ep/getMunicipio/{id}', [InfoController::class, 'getMunicipio']);
+
 Route::get('ep/getColoniasFromMunicipio/{id}', [InfoController::class, 'getColoniasFromMunicipio']);
+
 Route::get('ep/getColonia/{id}', [InfoController::class, 'getColonia']);
+
 Route::get('ep/getEstadoMunicipioColonia/{estado}/{municipio}/{colonia}', [InfoController::class, 'getEstadoMunicipioColonia']);
 
 /* FAVORITOS */
@@ -429,6 +485,13 @@ Route::get('ep/deleteHighlightApartment/{id}', [ApartmentsController::class, 'de
 Route::post('ep/addHighlightApartment', [ApartmentsController::class, 'addApartmentHightlight'])->name('HighlightApartment.add');
 
 Route::post('ep/orderHighlightApartment', [ApartmentsController::class, 'orderApartmentHightlight'])->name('HighlightApartment.order');
+
+/*---------*/
+Route::get('ep/deleteHighlightTerrain/{id}', [TerrainsController::class, 'deleteTerrainHightlight'])->name('HighlightTerrain.delete');
+
+Route::post('ep/addHighlightTerrain', [TerrainsController::class, 'addTerrainHightlight'])->name('HighlightTerrain.add');
+
+Route::post('ep/orderHighlightTerrain', [TerrainsController::class, 'orderTerrainHightlight'])->name('HighlightTerrain.order');
 
 /*---------*/
 
