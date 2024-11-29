@@ -697,6 +697,8 @@ class ApartmentsController extends Controller
             'rooms' => $request->rooms,
             'bathrooms' => $request->bathrooms,
             'parkings' => $request->parkings,
+            'floor' => $request->floor,
+            'dev_type' => $request->dev_type,
             'map' => $request->map,
             'area' => $request->area,
             'dev_type' => $request->dev_type,
@@ -716,23 +718,6 @@ class ApartmentsController extends Controller
             'location' => $location,
             'images' => $numImages
         ]);
-
-        if ($request->type == "departamento") {
-            $updates['floor'] = $request->floor;
-            $updates['dev_type'] = $request->dev_type;
-        }
-
-        if ($request->type == "terreno") {
-            $updates['area_terrain'] = $request->area_terrain;
-        }
-
-        if ($request->price_m2) {
-            $updates['price_m2'] = $request->price_m2;
-        }
-
-        if (!empty($updates)) {
-            $apartments->update($updates);
-        }
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
