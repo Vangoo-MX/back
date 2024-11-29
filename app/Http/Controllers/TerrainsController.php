@@ -713,25 +713,10 @@ class TerrainsController extends Controller
             'share_conditions' => $request->share_conditions,
             'antiquity' => $request->antiquity,
             'location' => $location,
-            'images' => $numImages
+            'images' => $numImages,
+            'area_terrain' => $request->area_terrain,
+            'price_m2' => $request->price_m2,
         ]);
-
-        if ($request->type == "departamento") {
-            $updates['floor'] = $request->floor;
-            $updates['dev_type'] = $request->dev_type;
-        }
-
-        if ($request->type == "terreno") {
-            $updates['area_terrain'] = $request->area_terrain;
-        }
-
-        if ($request->price_m2) {
-            $updates['price_m2'] = $request->price_m2;
-        }
-
-        if (!empty($updates)) {
-            $terrains->update($updates);
-        }
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
