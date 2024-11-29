@@ -57,21 +57,6 @@ Detalle
                         </div>
 
                         <div class="mb-3 mt-3">
-                            <label for="type" class="form-label">Tipo:</label>
-                            <select class="form-select" name="type" disabled>
-                                <option value="casa" <?php if ($propiedad->type == 'casa') {
-                                                            echo 'selected';
-                                                        } ?>>casa</option>
-                                <option value="departamento" <?php if ($propiedad->type == 'departamento') {
-                                                                    echo 'selected';
-                                                                } ?>>departamento</option>
-                                <option value="terreno" <?php if ($propiedad->type == 'terreno') {
-                                                            echo 'selected';
-                                                        } ?>>terreno</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3 mt-3">
                             <label for="price" class="form-label">Precio:</label>
                             <input type="number" class="form-control" step="0.01" id="price" value="{{$propiedad->price}}" placeholder="Precio de venta/renta" name="price" disabled>
                         </div>
@@ -99,13 +84,6 @@ Detalle
                             </div>
                         </div>
 
-                        <?php if ($propiedad->type == "departamento") { ?>
-                            <div class="mb-3 mt-3">
-                                <label for="floor" class="form-label">Piso en el que se encuentra:</label>
-                                <input type="number" class="form-control" id="floor" value="{{$propiedad->floor}}" placeholder="Piso en el que se encuentra" name="floor" disabled>
-                            </div>
-                        <?php } ?>
-
                         <div class="mb-3 mt-3">
                             <label for="parkings" class="form-label">Lugares de estacionamiento:</label>
                             <input type="number" class="form-control" step="1" id="parkings" value="{{$propiedad->parkings}}" placeholder="Lugares de estacionamiento" name="parkings" disabled>
@@ -120,20 +98,6 @@ Detalle
                             <label for="area" class="form-label">Area:</label>
                             <input type="number" step="0.01" class="form-control" id="area" value="{{$propiedad->area}}" placeholder="Ingresa el area del inmueble" name="area" disabled>
                         </div>
-
-                        <?php if ($propiedad->type == "terreno") { ?>
-                            <div class="mb-3 mt-3">
-                                <label for="area" class="form-label">Area del terreno:</label>
-                                <input type="number" class="form-control" id="area_terrain" value="{{$propiedad->area_terrain}}" placeholder="Ingresa el area del terreno" name="area_terrain" disabled>
-                            </div>
-                        <?php } ?>
-
-                        <?php if ($propiedad->type == "departamento") { ?>
-                            <div class="mb-3 mt-3">
-                                <label for="dev_type" class="form-label">Tipo de desarrollo:</label>
-                                <input type="number" class="form-control" id="dev_type" value="{{$propiedad->dev_type}}" placeholder="tipo de desarrollo en el que se encuentra" name="dev_type" disabled>
-                            </div>
-                        <?php } ?>
 
                     </div>
 

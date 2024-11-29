@@ -677,7 +677,6 @@ class ApartmentsController extends Controller
 
     public function updateApartments(Request $request, Apartments $apartments)
     {
-        $updates = [];
         $colonia = Colonias::find($request->id_colonia);
         $municipio = Municipios::find($request->id_municipio);
         $estado = Estados::find($apartments->id_estado);

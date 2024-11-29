@@ -368,7 +368,6 @@ class AdminController extends Controller
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        $updates = [];
         $colonia = Colonias::find($request->id_colonia);
         $municipio = Municipios::find($request->id_municipio);
         $estado = Estados::find($propiedad->id_estado);
@@ -404,23 +403,6 @@ class AdminController extends Controller
             'location' => $location,
             'images' => $numImages
         ]);
-
-        if ($request->type == "departamento") {
-            $updates['floor'] = $request->floor;
-            $updates['dev_type'] = $request->dev_type;
-        }
-
-        if ($request->type == "terreno") {
-            $updates['area_terrain'] = $request->area_terrain;
-        }
-
-        if ($request->price_m2) {
-            $updates['price_m2'] = $request->price_m2;
-        }
-
-        if (!empty($updates)) {
-            $propiedad->update($updates);
-        }
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {

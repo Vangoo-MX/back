@@ -676,7 +676,6 @@ class TerrainsController extends Controller
 
     public function updateTerrains(Request $request, Terrains $terrains)
     {
-        $updates = [];
         $colonia = Colonias::find($request->id_colonia);
         $municipio = Municipios::find($request->id_municipio);
         $estado = Estados::find($terrains->id_estado);

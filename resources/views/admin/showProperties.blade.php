@@ -58,21 +58,6 @@ Editar propiedad
                         </div>
 
                         <div class="mb-3 mt-3">
-                            <label for="type" class="form-label">Tipo:</label>
-                            <select class="form-select" name="type">
-                                <option value="casa" <?php if ($propiedad->type == 'casa') {
-                                                            echo 'selected';
-                                                        } ?>>casa</option>
-                                <option value="departamento" <?php if ($propiedad->type == 'departamento') {
-                                                                    echo 'selected';
-                                                                } ?>>departamento</option>
-                                <option value="terreno" <?php if ($propiedad->type == 'terreno') {
-                                                            echo 'selected';
-                                                        } ?>>terreno</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3 mt-3">
                             <label for="price" class="form-label">Precio:</label>
                             <input type="number" class="form-control" step="0.01" id="price" value="{{old('price', $propiedad->price)}}" placeholder="Precio de venta/renta" name="price">
                             @error('price')
@@ -115,16 +100,6 @@ Editar propiedad
                             </div>
                         </div>
 
-                        <?php if ($propiedad->type == "departamento") { ?>
-                            <div class="mb-3 mt-3">
-                                <label for="floor" class="form-label">Piso en el que se encuentra:</label>
-                                <input type="number" class="form-control" id="floor" value="{{old('floor', $propiedad->floor)}}" placeholder="Piso en el que se encuentra" name="floor">
-                                @error('floor')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        <?php } ?>
-
                         <div class="mb-3 mt-3">
                             <label for="parkings" class="form-label">Lugares de estacionamiento:</label>
                             <input type="number" class="form-control" step="1" id="parkings" value="{{old('parkings', $propiedad->parkings)}}" placeholder="Lugares de estacionamiento" name="parkings">
@@ -145,23 +120,6 @@ Editar propiedad
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
-                        <?php if ($propiedad->type == "terreno") { ?>
-                            <div class="mb-3 mt-3">
-                                <label for="area" class="form-label">Area del terreno:</label>
-                                <input type="number" class="form-control" id="area_terrain" value="{{old('area_terrain', $propiedad->area_terrain)}}" placeholder="Ingresa el area del terreno" name="area_terrain">
-                                @error('area_terrain')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        <?php } ?>
-
-                        <?php if ($propiedad->type == "departamento") { ?>
-                            <div class="mb-3 mt-3">
-                                <label for="dev_type" class="form-label">Tipo de desarrollo:</label>
-                                <input type="number" class="form-control" id="dev_type" value="{{old('dev_type', $propiedad->dev_type)}}" placeholder="tipo de desarrollo en el que se encuentra" name="dev_type">
-                            </div>
-                        <?php } ?>
 
                     </div>
 
