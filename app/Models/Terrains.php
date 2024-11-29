@@ -24,7 +24,7 @@ class Terrains extends Model
         'cp',
         'location',
         'area',
-        'arrea_terrain',
+        'area_terrain',
         'bathrooms',
         'rooms',
         'type',
