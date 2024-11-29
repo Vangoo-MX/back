@@ -650,7 +650,7 @@ class AdminController extends Controller
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        $terrainshl = TerrainsHighlights::with(['estado', 'municipio', 'apartment'])->get();
+        $terrainshl = TerrainsHighlights::with(['estado', 'municipio', 'terrain'])->get();
         $estados = Estados::get();
         $municipios = Municipios::get();
         $municipiosh = Municipios::where('highlight', 1)->get();

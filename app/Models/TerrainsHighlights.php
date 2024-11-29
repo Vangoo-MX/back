@@ -14,7 +14,7 @@ class TerrainsHighlights extends Model
     public $timestamps = false;
     protected $table = 'post_terrains_highlights';
 
-    public function apartment()
+    public function terrain()
     {
         return $this->belongsTo(Terrains::class, 'id_property');
     }
