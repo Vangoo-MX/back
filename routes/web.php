@@ -56,7 +56,7 @@ Route::get('overview/details/{id}', [AdminController::class, 'details'])->name('
 
 Route::get('overview/details/edit/{propiedad}', [AdminController::class, 'showProperties'])->name('admin.showProperties');
 
-Route::post('admin/details/edit/{propiedad}', [AdminController::class, 'updateProperties'])->name('admin.propertiesUpdate');
+Route::post('admin/details/edit/{propiedad}', [PropertiesController::class, 'updateProperties'])->name('admin.propertiesUpdate');
 
 Route::get('overview/queue', [AdminController::class, 'queue'])->name('admin.queue');
 
