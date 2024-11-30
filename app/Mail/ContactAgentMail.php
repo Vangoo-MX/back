@@ -28,29 +28,39 @@ class ContactAgentMail extends Mailable
     public function build()
     {
         $content = "Una persona está interesada: \n";
-        $content .= "Id propiedad: {$this->formData['id_property']}\n";
-        $content .= "Tipo: {$this->formData['type_property']}\n";
+        $content .= "Id propiedad: " . $this->formData['id_property'] . "\n";
+        $content .= "Tipo: " . $this->formData['type_property'] . "\n";
 
-        $propertyTypes = [
-            'propiedad' => 'propiedad',
-            'desarrollo' => 'desarrollo',
-            'lots' => 'lote',
-            'apartment' => 'apartamento',
-            'terrains' => 'terreno',
-        ];
-
-        if (isset($propertyTypes[$this->formData['type_property']])) {
-            $type = $propertyTypes[$this->formData['type_property']];
-            $content .= "Nombre del {$type}: {$this->formData['title_property']}\n";
-            $content .= "Ubicacion del {$type}: {$this->formData['location_property']}\n";
+        if ($this->formData['type_property'] === 'propiedad') {
+            $content .= "Nombre de la propiedad: " . $this->formData['title_property'] . "\n";
+        } elseif ($this->formData['type_property'] === 'desarrollo') {
+            $content .= "Nombre del desarrollo: " . $this->formData['title_property'] . "\n";
+        } elseif ($this->formData['type_property'] === 'lots') {
+            $content .= "Nombre del lote: " . $this->formData['title_property'] . "\n";
+        } else if ($this->formData['type_property'] === 'apartment') {
+            $content .= "Nombre del apartamento: " . $this->formData['title_property'] . "\n";
+        } else if ($this->formData['type_property'] === 'terrains') {
+            $content .= "Nombre del terreno: " . $this->formData['title_property'] . "\n";
         }
 
-        $content .= "Nombre: {$this->formData['name']}\n";
-        $content .= "Email: {$this->formData['email']}\n";
-        $content .= "Tel: {$this->formData['tel']}\n";
-        $content .= "Mensaje: {$this->formData['msg']}\n";
-        $content .= "Horario para contactar: {$this->formData['horario']}\n";
-        $content .= "Preferencia de contacto: {$this->formData['pref_contact']}\n";
+        if ($this->formData['type_property'] === 'propiedad') {
+            $content .= "Ubicacion de la propiedad: " . $this->formData['location_property'] . "\n";
+        } elseif ($this->formData['type_property'] === 'desarrollo') {
+            $content .= "Ubicacion del desarrollo: " . $this->formData['location_property'] . "\n";
+        } elseif ($this->formData['type_property'] === 'lots') {
+            $content .= "Ubicacion del lote: " . $this->formData['location_property'] . "\n";
+        } else if ($this->formData['type_property'] === 'apartment') {
+            $content .= "Ubicacion del apartamento: " . $this->formData['location_property'] . "\n";
+        } else if ($this->formData['type_property'] === 'terrains') {
+            $content .= "Ubicacion del terreno: " . $this->formData['location_property'] . "\n";
+        }
+
+        $content .= "Nombre: " . $this->formData['name'] . "\n";
+        $content .= "Email: " . $this->formData['email'] . "\n";
+        $content .= "Tel: " . $this->formData['tel'] . "\n";
+        $content .= "Mensaje: " . $this->formData['msg'] . "\n";
+        $content .= "Horario para contactar: " . $this->formData['horario'] . "\n";
+        $content .= "Preferencia de contacto: " . $this->formData['pref_contact'] . "\n";
 
         return $this->subject('Nuevo formulario de contactar agente Vangoo')
             ->view('emails.template')
