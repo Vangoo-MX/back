@@ -54,7 +54,7 @@
                         <a href="{{ route('HighlightTerrain.delete', $terrain->id) }}" class="btn btn-danger">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </a>
-                        <a href="https://www.vangoo.mx/detailsDepa/terrains/{{$terrain->id_property}}" target="_blank">
+                        <a href="https://www.vangoo.mx/detailsTerrain/terrains/{{$terrain->id_property}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
                         <form id="orden-form{{$terrain->id_property}}" action="{{ route('HighlightTerrain.order') }}" method="POST">

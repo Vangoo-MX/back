@@ -49,7 +49,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://www.vangoo.mx/detailsDepa/terrains/{{$terrain->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://www.vangoo.mx/detailsTerrain/terrains/{{$terrain->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
