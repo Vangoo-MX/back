@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class ContactAgentMail extends Mailable
 {
@@ -27,6 +28,7 @@ class ContactAgentMail extends Mailable
 
     public function build()
     {
+        Log::info('Datos en el Mailable:', $this->formData);
         $content = "Una persona está interesada: \n";
         $content .= "Id propiedad: " . $this->formData['id_property'] . "\n";
         $content .= "Tipo: " . $this->formData['type_property'] . "\n";
