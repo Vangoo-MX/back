@@ -36,6 +36,7 @@ class ContactAgentMail extends Mailable
             'desarrollo' => 'desarrollo',
             'lots' => 'lote',
             'apartment' => 'apartamento',
+            'terrains' => 'terreno',
         ];
 
         if (isset($propertyTypes[$this->formData['type_property']])) {
