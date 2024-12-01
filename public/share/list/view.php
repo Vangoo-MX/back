@@ -259,6 +259,22 @@ function moneyFormat($numero)
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
+                <?php if (!empty($data['terrains'])) : ?>
+                    <?php foreach ($data['terrains'] as $terrain) : ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="image-container">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/terrains/<?php echo $terrain['id']; ?>/1.jpg?height=250&width=400" alt="Terrain" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="property-title"><?php echo $terrain['title']; ?></h3>
+                                <p class="property-price"><?php echo moneyFormat($terrain['price']); ?></p>
+                                <p class="property-address"><?php echo $terrain['location']; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
 
             <button class="prev">⟨</button>

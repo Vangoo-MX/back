@@ -1,7 +1,7 @@
 <?php
 
 
-if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot'])) {
+if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot'], $_GET['apartment'], $_GET['terrain'])) {
     $title = $_GET['title'];
     $propertyIds = array_filter(explode('-', $_GET['property']), function ($id) {
         return $id !== '0';
@@ -15,6 +15,9 @@ if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GE
     $apartmentIds = array_filter(explode('-', $_GET['apartment']), function ($id) {
         return $id !== '0';
     });
+    $terrainIds = array_filter(explode('-', $_GET['terrain']), function ($id) {
+        return $id !== '0';
+    });
 } else {
     echo 'No se encontraron datos';
     exit;
@@ -25,13 +28,15 @@ $property = htmlspecialchars($_GET['property'], ENT_QUOTES, 'UTF-8');
 $development = htmlspecialchars($_GET['development'], ENT_QUOTES, 'UTF-8');
 $lot = htmlspecialchars($_GET['lot'], ENT_QUOTES, 'UTF-8');
 $apartment = htmlspecialchars($_GET['apartment'], ENT_QUOTES, 'UTF-8');
+$terrain = htmlspecialchars($_GET['terrain'], ENT_QUOTES, 'UTF-8');
 
-$urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title . '&property=' . $property . '&development=' . $development . '&lot=' . $lot . '&apartment=' . $apartment;
+$urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title . '&property=' . $property . '&development=' . $development . '&lot=' . $lot . '&apartment=' . $apartment . '&terrain=' . $terrain;
 
 $propertyData = [];
 $developmentData = [];
 $lotData = [];
 $apartmentData = [];
+$terrainData = [];
 $titleFormatted = str_replace('-', ' ', $title);
 
 if (!empty($propertyIds)) {
@@ -126,7 +131,30 @@ if (!empty($apartmentIds)) {
     }
 }
 
-if (empty($propertyData) && empty($developmentData) && empty($lotData) && empty($apartmentData)) {
+if (!empty($terrainIds)) {
+    foreach ($terrainIds as $terrainId) {
+        $urlApi = 'https://dashboard.vangoo.mx/ep/getTerrain/' . $terrainId;
+        $curl = curl_init($urlApi);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl);
+        if ($response === false) {
+            echo 'Error fetching terrain data';
+            exit;
+        }
+        curl_close($curl);
+        $terrain = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo 'Error decoding terrain data';
+            exit;
+        }
+
+        if (!empty($terrain) && isset($terrain[0])) {
+            $terrainData[] = $terrain[0];
+        }
+    }
+}
+
+if (empty($propertyData) && empty($developmentData) && empty($lotData) && empty($apartmentData) && empty($terrainData)) {
     echo 'No se encontraron propiedades, desarrollos o terrenos';
     exit;
 }
@@ -299,7 +327,7 @@ function moneyFormat($numero)
             <a href="https://vangoo.mx">
                 <img src="https://www.vangoo.mx/assets/img/system/new_logo.png" alt="Vangoo Logo" class="logo">
             </a>
-            <a href="https://www.vangoo.mx/sharesearch/<?php echo $title; ?>/<?php echo $_GET['property']; ?>/<?php echo $_GET['development']; ?>/<?php echo $_GET['lot']; ?>"><button class="btn">Ver lista completa</button></a>
+            <a href="https://www.vangoo.mx/sharesearch/<?php echo $title; ?>/<?php echo $_GET['property']; ?>/<?php echo $_GET['development']; ?>/<?php echo $_GET['lot']; ?>/<?php echo $_GET['apartment']; ?>/<?php echo $_GET['terrain']; ?>"><button class="btn">Ver lista completa</button></a>
         </div>
 
         <div class="slider-container">
@@ -368,6 +396,22 @@ function moneyFormat($numero)
                                 <h3 class="property-title"><?php echo $apartment['title']; ?></h3>
                                 <p class="property-price"><?php echo moneyFormat($apartment['price']); ?></p>
                                 <p class="property-address"><?php echo $apartment['location']; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <?php if (!empty($terrainData)) : ?>
+                    <?php foreach ($terrainData as $terrain) : ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="image-container">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/terrains/<?php echo $terrain['id']; ?>/1.jpg?height=250&width=400" alt="Terrain" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="property-title"><?php echo $terrain['title']; ?></h3>
+                                <p class="property-price"><?php echo moneyFormat($terrain['price']); ?></p>
+                                <p class="property-address"><?php echo $terrain['location']; ?></p>
                             </div>
                         </div>
                     <?php endforeach; ?>
