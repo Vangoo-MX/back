@@ -254,6 +254,12 @@ class PropertiesController extends Controller
             File::move($sourcePath . $filename, $destinationPath . $filename);
         }
 
+        if (is_dir($sourcePath)) {
+            File::deleteDirectory($sourcePath, true);
+            sleep(1);
+            rmdir($sourcePath);
+        }
+
         $propertyQueue->delete();
 
         return redirect()->route('admin.queue');

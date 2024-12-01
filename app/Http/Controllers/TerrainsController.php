@@ -253,6 +253,12 @@ class TerrainsController extends Controller
             File::move($sourcePath . $filename, $destinationPath . $filename);
         }
 
+        if (is_dir($sourcePath)) {
+            File::deleteDirectory($sourcePath, true);
+            sleep(1);
+            rmdir($sourcePath);
+        }
+
         $terrainQueue->delete();
 
         return redirect()->route('admin.queueTerrains');
@@ -280,7 +286,6 @@ class TerrainsController extends Controller
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            // Esperar 1 segundo antes de intentar eliminar la carpeta
             sleep(1);
             rmdir($directoryPath);
         }
