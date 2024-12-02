@@ -13,6 +13,8 @@ use App\Models\Lots;
 use App\Models\LotsFavorites;
 use App\Models\Apartments;
 use App\Models\ApartmentsFavorites;
+use App\Models\Terrains;
+use App\Models\TerrainsFavorites;
 use App\Models\ListsUser;
 use App\Models\User;
 
@@ -31,6 +33,9 @@ class FavoritesController extends Controller
             ->where('id_list', null)
             ->get();
         $apartmentFav = ApartmentsFavorites::where('id_user', $id)
+            ->where('id_list', null)
+            ->get();
+        $terrainFav = TerrainsFavorites::where('id_user', $id)
             ->where('id_list', null)
             ->get();
 
@@ -71,6 +76,15 @@ class FavoritesController extends Controller
         } else {
             $apartment = [];
         }
+        if (sizeof($terrainFav) > 0) {
+            $terrain = Terrains::selectRaw('id, title, status, type_terrain, price_min, price_max, location, description, commission_percentage, images');
+            foreach ($terrainFav as $value) {
+                $terrain = $terrain->orwhere('id', $value['id_terrain']);
+            }
+            $terrain = $terrain->get();
+        } else {
+            $terrain = [];
+        }
 
         $return = [];
 
@@ -78,6 +92,7 @@ class FavoritesController extends Controller
         $return[0]['developments'] = $dev;
         $return[0]['lots'] = $lot;
         $return[0]['apartments'] = $apartment;
+        $return[0]['terrains'] = $terrain;
 
         return $return;
     }
@@ -99,6 +114,10 @@ class FavoritesController extends Controller
                 break;
             case 'apartment':
                 $model = ApartmentsFavorites::class;
+                $id_type = 'id_property';
+                break;
+            case 'terrain':
+                $model = TerrainsFavorites::class;
                 $id_type = 'id_property';
                 break;
             default:
@@ -141,6 +160,10 @@ class FavoritesController extends Controller
             ->where('id_list', 0)
             ->orWhere('id_list', null)
             ->get();
+        $terrainFav = TerrainsFavorites::where('id_user', $id)
+            ->where('id_list', 0)
+            ->orWhere('id_list', null)
+            ->get();
 
         $return = [];
 
@@ -178,7 +201,7 @@ class FavoritesController extends Controller
         }
 
         if (sizeof($apartmentFav) > 0) {
-            $apartment = Apartments::selectRaw('id, title, status, type_apartment, price_min, price_max, location, description, commission_percentage, images');
+            $apartment = Apartments::selectRaw('id, title, status, type_apartment, price, location, description, commission_percentage, images');
             foreach ($apartmentFav as $value) {
                 $apartment = $apartment->orWhere('id', $value['id_property']);
             }
@@ -186,6 +209,17 @@ class FavoritesController extends Controller
             $return[0]['apartments'] = $apartment;
         } else {
             $return[0]['apartments'] = [];
+        }
+
+        if (sizeof($terrainFav) > 0) {
+            $terrain = Terrains::selectRaw('id, title, status, type_terrain, price, location, description, commission_percentage, images');
+            foreach ($terrainFav as $value) {
+                $terrain = $terrain->orWhere('id', $value['id_terrain']);
+            }
+            $terrain = $terrain->get();
+            $return[0]['terrains'] = $terrain;
+        } else {
+            $return[0]['terrains'] = [];
         }
 
         return $return;
@@ -233,6 +267,15 @@ class FavoritesController extends Controller
         return response()->json(['message' => 'success']);
     }
 
+    public function postTerrainFavUser(Request $request)
+    {
+        $fav = new TerrainsFavorites();
+        $fav->id_user = $request->id_user;
+        $fav->id_terrain = $request->id_terrain;
+        $fav->save();
+        return response()->json(['message' => 'success']);
+    }
+
     public function deletePropertyFavUser($id_list, $id_property, $type_property)
     {
         if (empty($id_list) || empty($id_property)) {
@@ -254,6 +297,10 @@ class FavoritesController extends Controller
                 break;
             case 'apartment':
                 $model = ApartmentsFavorites::class;
+                $id_type = 'id_property';
+                break;
+            case 'terrain':
+                $model = TerrainsFavorites::class;
                 $id_type = 'id_property';
                 break;
             default:
@@ -283,22 +330,22 @@ class FavoritesController extends Controller
 
     public function deleteListUser($id_user, $id_list)
     {
+        $models = [
+            ListsUser::class,
+            PropertiesFavorites::class,
+            DevelopmentsFavorites::class,
+            LotsFavorites::class,
+            ApartmentsFavorites::class,
+            TerrainsFavorites::class,
+        ];
 
-        $fav = ListsUser::where('id_user', $id_user)->where('id', $id_list);
-        $fav->delete();
-        $propertiesFav = PropertiesFavorites::where('id_user', $id_user)->where('id_list', $id_list);
-        $propertiesFav->delete();
+        foreach ($models as $model) {
+            $model::where('id_user', $id_user)
+                ->where('id_list', $id_list)
+                ->delete();
+        }
 
-        $devFav = DevelopmentsFavorites::where('id_user', $id_user)->where('id_list', $id_list);
-        $devFav->delete();
-
-        $lotFav = LotsFavorites::where('id_user', $id_user)->where('id_list', $id_list);
-        $lotFav->delete();
-
-        $apartmentFav = ApartmentsFavorites::where('id_user', $id_user)->where('id_list', $id_list);
-        $apartmentFav->delete();
-
-        return json_encode('success');
+        return response()->json(['status' => 'success']);
     }
 
     public function propertiesFromList($id)
@@ -328,11 +375,13 @@ class FavoritesController extends Controller
             $devFav = DevelopmentsFavorites::where('id_list', $id)->get();
             $lotFav = LotsFavorites::where('id_list', $id)->get();
             $apartmentFav = ApartmentsFavorites::where('id_list', $id)->get();
+            $terrainFav = TerrainsFavorites::where('id_list', $id)->get();
 
             $propertiesIds = $propertiesFav->pluck('id_property')->toArray();
             $developmentsIds = $devFav->pluck('id_development')->toArray();
             $lotsIds = $lotFav->pluck('id_lot')->toArray();
             $apartmentsIds = $apartmentFav->pluck('id_property')->toArray();
+            $terrainsIds = $terrainFav->pluck('id_terrain')->toArray();
 
             $properties = Properties::selectRaw('id, title, price, location, rooms, parkings, type, bathrooms, area, area_terrain, description, commission_percentage, views, images');
             if (!empty($propertiesIds)) {
@@ -365,6 +414,14 @@ class FavoritesController extends Controller
                 $apartment->whereNull('id');
             }
             $return[0]['apartments'] = $apartment->get();
+
+            $terrain = Terrains::selectRaw('id, title, status, type_terrain, price, location, description, commission_percentage, views, images');
+            if (!empty($terrainsIds)) {
+                $terrain->whereIn('id', $terrainsIds);
+            } else {
+                $terrain->whereNull('id');
+            }
+            $return[0]['terrains'] = $terrain->get();
         } catch (Exception $e) {
             return json_encode("error: " . $e->getMessage());
         }
@@ -403,6 +460,10 @@ class FavoritesController extends Controller
                     break;
                 case 'apartment':
                     $model = ApartmentsFavorites::class;
+                    $id_type = 'id_property';
+                    break;
+                case 'terrain':
+                    $model = TerrainsFavorites::class;
                     $id_type = 'id_property';
                     break;
                 default:
