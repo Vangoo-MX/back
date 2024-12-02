@@ -113,89 +113,55 @@ class FavoritesController extends Controller
 
     public function allFavNoListUser($id)
     {
+        $favoritesModels = [
+            'properties' => [
+                'favoritesModel' => PropertiesFavorites::class,
+                'mainModel' => Properties::class,
+                'key' => 'id_property',
+                'select' => 'id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images',
+            ],
+            'developments' => [
+                'favoritesModel' => DevelopmentsFavorites::class,
+                'mainModel' => Developments::class,
+                'key' => 'id_development',
+                'select' => 'id,status,title,price_min,price_max,location,description,views,images',
+            ],
+            'lots' => [
+                'favoritesModel' => LotsFavorites::class,
+                'mainModel' => Lots::class,
+                'key' => 'id_lot',
+                'select' => 'id,title,status,type_lots,price_min,price_max,location,description,commission_percentage,images',
+            ],
+            'apartments' => [
+                'favoritesModel' => ApartmentsFavorites::class,
+                'mainModel' => Apartments::class,
+                'key' => 'id_property',
+                'select' => 'id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images',
+            ],
+            'terrains' => [
+                'favoritesModel' => TerrainsFavorites::class,
+                'mainModel' => Terrains::class,
+                'key' => 'id_property',
+                'select' => 'id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images',
+            ],
+        ];
 
-        $propertiesFav = PropertiesFavorites::where('id_user', $id)
-            ->where('id_list', 0)
-            ->orWhere('id_list', null)
-            ->get();
+        $result = [];
 
-        $devFav = DevelopmentsFavorites::where('id_user', $id)
-            ->where('id_list', 0)
-            ->orWhere('id_list', null)
-            ->get();
+        foreach ($favoritesModels as $key => $data) {
+            $favorites = $data['favoritesModel']::where('id_user', $id)
+                ->where(function ($query) {
+                    $query->where('id_list', 0)
+                        ->orWhereNull('id_list');
+                })
+                ->pluck($data['key']);
 
-        $lotFav = LotsFavorites::where('id_user', $id)
-            ->where('id_list', 0)
-            ->orWhere('id_list', null)
-            ->get();
-
-        $apartmentFav = ApartmentsFavorites::where('id_user', $id)
-            ->where('id_list', 0)
-            ->orWhere('id_list', null)
-            ->get();
-        $terrainFav = TerrainsFavorites::where('id_user', $id)
-            ->where('id_list', 0)
-            ->orWhere('id_list', null)
-            ->get();
-
-        $return = [];
-
-        if (sizeof($propertiesFav) > 0) {
-            $properties = Properties::selectRaw('id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images');
-            foreach ($propertiesFav as $value) {
-                $properties = $properties->orWhere('id', $value['id_property']);
-            }
-            $properties = $properties->get();
-            $return[0]['properties'] = $properties;
-        } else {
-            $return[0]['properties'] = [];
+            $result[$key] = $favorites->isNotEmpty()
+                ? $data['mainModel']::selectRaw($data['select'])->whereIn('id', $favorites)->get()
+                : [];
         }
 
-        if (sizeof($devFav) > 0) {
-            $dev = Developments::selectRaw('id,status,title,price_min,price_max,location,description,views,images');
-            foreach ($devFav as $value) {
-                $dev = $dev->orWhere('id', $value['id_development']);
-            }
-            $dev = $dev->get();
-            $return[0]['developments'] = $dev;
-        } else {
-            $return[0]['developments'] = [];
-        }
-
-        if (sizeof($lotFav) > 0) {
-            $lot = Lots::selectRaw('id, title, status, type_lots, price_min, price_max, location, description, commission_percentage, images');
-            foreach ($lotFav as $value) {
-                $lot = $lot->orWhere('id', $value['id_lot']);
-            }
-            $lot = $lot->get();
-            $return[0]['lots'] = $lot;
-        } else {
-            $return[0]['lots'] = [];
-        }
-
-        if (sizeof($apartmentFav) > 0) {
-            $apartment = Apartments::selectRaw('id, title, status, type_apartment, price, location, description, commission_percentage, images');
-            foreach ($apartmentFav as $value) {
-                $apartment = $apartment->orWhere('id', $value['id_property']);
-            }
-            $apartment = $apartment->get();
-            $return[0]['apartments'] = $apartment;
-        } else {
-            $return[0]['apartments'] = [];
-        }
-
-        if (sizeof($terrainFav) > 0) {
-            $terrain = Terrains::selectRaw('id, title, status, type_terrain, price, location, description, commission_percentage, images');
-            foreach ($terrainFav as $value) {
-                $terrain = $terrain->orWhere('id', $value['id_terrain']);
-            }
-            $terrain = $terrain->get();
-            $return[0]['terrains'] = $terrain;
-        } else {
-            $return[0]['terrains'] = [];
-        }
-
-        return $return;
+        return [$result];
     }
 
     public function postPropertiesFavUser(Request $request)
