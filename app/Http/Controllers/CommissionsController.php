@@ -6,6 +6,7 @@ use App\Models\Apartments;
 use App\Models\Developments;
 use App\Models\Lots;
 use App\Models\Properties;
+use App\Models\Terrains;
 use Illuminate\Http\Request;
 
 class CommissionsController extends Controller
@@ -24,6 +25,9 @@ class CommissionsController extends Controller
                 break;
             case 'apartment':
                 $model = Apartments::class;
+                break;
+            case 'terrain':
+                $model = Terrains::class;
                 break;
             default:
                 return response()->json(['error' => 'Invalid type'], 400);
