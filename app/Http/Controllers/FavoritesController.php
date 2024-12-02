@@ -350,80 +350,68 @@ class FavoritesController extends Controller
 
     public function propertiesFromList($id)
     {
+        $listdata = ListsUser::select('id', 'id_user', 'title', 'timestamp')->find($id);
 
-        try {
-            $listdata = ListsUser::selectRaw('id, id_user, title, timestamp')
-                ->where('id', $id)
-                ->first();
+        if (!$listdata) {
+            return response()->json(['error' => 'Lista no encontrada']);
+        }
 
-            if (!$listdata) {
-                return json_encode("error: Lista no encontrada");
-            }
+        $name_user = User::select('name')->find($listdata->id_user);
 
-            $id_user = $listdata->id_user;
-            $name_user = User::select('name')->find($id_user);
+        if (!$name_user) {
+            return response()->json(['error' => 'Usuario no encontrado']);
+        }
 
-            if (!$name_user) {
-                return json_encode("error: Usuario no encontrado");
-            }
+        $return = [
+            [
+                'listdata' => array_merge(
+                    $listdata->toArray(),
+                    ['name_user' => $name_user->name]
+                )
+            ]
+        ];
 
-            $return = [];
-            $return[0]['listdata'] = $listdata->toArray();
-            $return[0]['listdata']['name_user'] = $name_user->name;
+        $entities = [
+            'properties' => [
+                'model' => Properties::class,
+                'relation' => PropertiesFavorites::class,
+                'column' => 'id_property',
+                'select' => 'id, title, price, location, rooms, parkings, type, bathrooms, area, area_terrain, description, commission_percentage, views, images'
+            ],
+            'developments' => [
+                'model' => Developments::class,
+                'relation' => DevelopmentsFavorites::class,
+                'column' => 'id_development',
+                'select' => 'id, status, title, price_min, price_max, location, description, commission_percentage, mode, views, images'
+            ],
+            'lots' => [
+                'model' => Lots::class,
+                'relation' => LotsFavorites::class,
+                'column' => 'id_lot',
+                'select' => 'id, title, status, type_lots, price_min, price_max, location, description, slope, lots_min, lots_max, type_terrain, initial_fee, price_mt2, commission_percentage, images'
+            ],
+            'apartments' => [
+                'model' => Apartments::class,
+                'relation' => ApartmentsFavorites::class,
+                'column' => 'id_property',
+                'select' => 'id, title, status, price, location, description, commission_percentage, views, images'
+            ],
+            'terrains' => [
+                'model' => Terrains::class,
+                'relation' => TerrainsFavorites::class,
+                'column' => 'id_terrain',
+                'select' => 'id, title, status, type_terrain, price, location, description, commission_percentage, views, images'
+            ]
+        ];
 
-            $propertiesFav = PropertiesFavorites::where('id_list', $id)->get();
-            $devFav = DevelopmentsFavorites::where('id_list', $id)->get();
-            $lotFav = LotsFavorites::where('id_list', $id)->get();
-            $apartmentFav = ApartmentsFavorites::where('id_list', $id)->get();
-            $terrainFav = TerrainsFavorites::where('id_list', $id)->get();
+        foreach ($entities as $key => $entity) {
+            $favoriteIds = $entity['relation']::where('id_list', $id)->pluck($entity['column'])->toArray();
 
-            $propertiesIds = $propertiesFav->pluck('id_property')->toArray();
-            $developmentsIds = $devFav->pluck('id_development')->toArray();
-            $lotsIds = $lotFav->pluck('id_lot')->toArray();
-            $apartmentsIds = $apartmentFav->pluck('id_property')->toArray();
-            $terrainsIds = $terrainFav->pluck('id_terrain')->toArray();
+            $data = $entity['model']::selectRaw($entity['select'])
+                ->whereIn('id', $favoriteIds)
+                ->get();
 
-            $properties = Properties::selectRaw('id, title, price, location, rooms, parkings, type, bathrooms, area, area_terrain, description, commission_percentage, views, images');
-            if (!empty($propertiesIds)) {
-                $properties->whereIn('id', $propertiesIds);
-            } else {
-                $properties->whereNull('id');
-            }
-            $return[0]['properties'] = $properties->get();
-
-            $dev = Developments::selectRaw('id, status, title, price_min, price_max, location, description, commission_percentage, mode, views, images');
-            if (!empty($developmentsIds)) {
-                $dev->whereIn('id', $developmentsIds);
-            } else {
-                $dev->whereNull('id');
-            }
-            $return[0]['developments'] = $dev->get();
-
-            $lot = Lots::selectRaw('id, title, status, type_lots, price_min, price_max, location, description, slope, lots_min, lots_max, type_terrain, initial_fee, price_mt2, commission_percentage, images');
-            if (!empty($lotsIds)) {
-                $lot->whereIn('id', $lotsIds);
-            } else {
-                $lot->whereNull('id');
-            }
-            $return[0]['lots'] = $lot->get();
-
-            $apartment = Apartments::selectRaw('id, title, status, price, location, description, commission_percentage, views, images');
-            if (!empty($apartmentsIds)) {
-                $apartment->whereIn('id', $apartmentsIds);
-            } else {
-                $apartment->whereNull('id');
-            }
-            $return[0]['apartments'] = $apartment->get();
-
-            $terrain = Terrains::selectRaw('id, title, status, type_terrain, price, location, description, commission_percentage, views, images');
-            if (!empty($terrainsIds)) {
-                $terrain->whereIn('id', $terrainsIds);
-            } else {
-                $terrain->whereNull('id');
-            }
-            $return[0]['terrains'] = $terrain->get();
-        } catch (Exception $e) {
-            return json_encode("error: " . $e->getMessage());
+            $return[0][$key] = $data;
         }
 
         return $return;
