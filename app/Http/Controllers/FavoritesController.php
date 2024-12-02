@@ -401,7 +401,7 @@ class FavoritesController extends Controller
                 'model' => Terrains::class,
                 'relation' => TerrainsFavorites::class,
                 'column' => 'id_property',
-                'select' => 'id, title, status, type_terrain, price, location, description, commission_percentage, views, images'
+                'select' => 'id, title, status, area_terrain, price, location, description, commission_percentage, views, images'
             ]
         ];
 
