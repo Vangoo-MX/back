@@ -350,7 +350,8 @@ class FavoritesController extends Controller
 
     public function propertiesFromList($id)
     {
-        $listdata = ListsUser::select('id', 'id_user', 'title', 'timestamp')->find($id);
+        $listdata = ListsUser::select('id', 'id_user', 'title', 'timestamp')
+            ->find($id);
 
         if (!$listdata) {
             return response()->json(['error' => 'Lista no encontrada']);
@@ -399,7 +400,7 @@ class FavoritesController extends Controller
             'terrains' => [
                 'model' => Terrains::class,
                 'relation' => TerrainsFavorites::class,
-                'column' => 'id_terrain',
+                'column' => 'id_property',
                 'select' => 'id, title, status, type_terrain, price, location, description, commission_percentage, views, images'
             ]
         ];
