@@ -330,8 +330,13 @@ class FavoritesController extends Controller
 
     public function deleteListUser($id_user, $id_list)
     {
+        $list = ListsUser::where('id_user', $id_user)->where('id', $id_list)->first();
+        if (!$list) {
+            return response()->json(['error' => 'La lista no existe o no pertenece al usuario'], 404);
+        }
+        $list->delete();
+
         $models = [
-            ListsUser::class,
             PropertiesFavorites::class,
             DevelopmentsFavorites::class,
             LotsFavorites::class,
@@ -406,7 +411,9 @@ class FavoritesController extends Controller
         ];
 
         foreach ($entities as $key => $entity) {
-            $favoriteIds = $entity['relation']::where('id_list', $id)->pluck($entity['column'])->toArray();
+            $favoriteIds = $entity['relation']::where('id_list', $id)
+                ->pluck($entity['column'])
+                ->toArray();
 
             $data = $entity['model']::selectRaw($entity['select'])
                 ->whereIn('id', $favoriteIds)
