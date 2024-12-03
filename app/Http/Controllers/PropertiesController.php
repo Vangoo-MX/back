@@ -420,20 +420,11 @@ class PropertiesController extends Controller
         if (isset($request->propertyAreaConstruction)) {
             $property->area = $request->propertyAreaConstruction;
         }
-        if (isset($request->propertyAreaTerrain)) {
-            $property->area_terrain = $request->propertyAreaTerrain;
-        }
         if (isset($request->propertyBathrooms)) {
             $property->bathrooms = $request->propertyBathrooms;
         }
         if (isset($request->propertyRooms)) {
             $property->rooms = $request->propertyRooms;
-        }
-        if (isset($request->propertyType)) {
-            $property->type = $request->propertyType;
-        }
-        if (isset($request->propertyDevType)) {
-            $property->dev_type = $request->propertyDevType;
         }
         if (isset($request->propertyParkings)) {
             $property->parkings = $request->propertyParkings;
@@ -456,12 +447,6 @@ class PropertiesController extends Controller
         if (isset($request->propertyAmenities)) {
             $property->amenities = $request->propertyAmenities;
         }
-        if (isset($request->propertyFloor)) {
-            $property->floor = $request->propertyFloor;
-        }
-        if (isset($request->propertyPriceMaintenance)) {
-            $property->price_maintenance = $request->propertyPriceMaintenance;
-        }
         if (isset($request->propertyOperationType)) {
             $property->operation_type = $request->propertyOperationType;
         }
@@ -473,9 +458,6 @@ class PropertiesController extends Controller
         }
         if (isset($request->propertyShareConditions)) {
             $property->share_conditions = $request->propertySharedConditions;
-        }
-        if (isset($request->propertyServices)) {
-            $property->services = $request->propertyServices;
         }
         if (isset($request->propertyExactLocation)) {
             $property->no_exact_location = $request->propertyExactLocation == true ? 0 : 1;
@@ -601,20 +583,11 @@ class PropertiesController extends Controller
         if (isset($request->propertyAreaConstruction)) {
             $property->area = $request->propertyAreaConstruction;
         }
-        if (isset($request->propertyAreaTerrain)) {
-            $property->area_terrain = $request->propertyAreaTerrain;
-        }
         if (isset($request->propertyBathrooms)) {
             $property->bathrooms = $request->propertyBathrooms;
         }
         if (isset($request->propertyRooms)) {
             $property->rooms = $request->propertyRooms;
-        }
-        if (isset($request->propertyType)) {
-            $property->type = $request->propertyType;
-        }
-        if (isset($request->propertyDevType)) {
-            $property->dev_type = $request->propertyDevType;
         }
         if (isset($request->propertyParkings)) {
             $property->parkings = $request->propertyParkings;
@@ -637,12 +610,6 @@ class PropertiesController extends Controller
         if (isset($request->propertyAmenities)) {
             $property->amenities = $request->propertyAmenities;
         }
-        if (isset($request->propertyFloor)) {
-            $property->floor = $request->propertyFloor;
-        }
-        if (isset($request->propertyPriceMaintenance)) {
-            $property->price_maintenance = $request->propertyPriceMaintenance;
-        }
         if (isset($request->propertyOperationType)) {
             $property->operation_type = $request->propertyOperationType;
         }
@@ -654,9 +621,6 @@ class PropertiesController extends Controller
         }
         if (isset($request->propertyShareConditions)) {
             $property->share_conditions = $request->propertySharedConditions;
-        }
-        if (isset($request->propertyServices)) {
-            $property->services = $request->propertyServices;
         }
         if (isset($request->propertyExactLocation)) {
             $property->no_exact_location = $request->propertyExactLocation == true ? 0 : 1;
@@ -711,9 +675,7 @@ class PropertiesController extends Controller
         $propiedad->update([
             'title' => $request->title,
             'operation_type' => $request->operation_type,
-            'type' => $request->type,
             'price' => $request->price,
-            'price_maintenance' => $request->price_maintenance,
             'description' => $request->description,
             'rooms' => $request->rooms,
             'bathrooms' => $request->bathrooms,
@@ -727,7 +689,6 @@ class PropertiesController extends Controller
             'num_int' => $request->num_int,
             'cp' => $request->cp,
             'amenities' => $request->amenities,
-            'services' => $request->services,
             'sell_type' => $request->sell_type,
             'share_conditions' => $request->share_conditions,
             'antiquity' => $request->antiquity,

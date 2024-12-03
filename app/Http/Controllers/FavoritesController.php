@@ -27,7 +27,7 @@ class FavoritesController extends Controller
                 'favoritesModel' => PropertiesFavorites::class,
                 'mainModel' => Properties::class,
                 'key' => 'id_property',
-                'select' => 'id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images',
+                'select' => 'id,title,price,location,rooms,parkings,bathrooms,area,description,views,images',
             ],
             'developments' => [
                 'favoritesModel' => DevelopmentsFavorites::class,
@@ -118,7 +118,7 @@ class FavoritesController extends Controller
                 'favoritesModel' => PropertiesFavorites::class,
                 'mainModel' => Properties::class,
                 'key' => 'id_property',
-                'select' => 'id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images',
+                'select' => 'id,title,price,location,rooms,parkings,bathrooms,area,description,views,images',
             ],
             'developments' => [
                 'favoritesModel' => DevelopmentsFavorites::class,
@@ -321,7 +321,7 @@ class FavoritesController extends Controller
                 'model' => Properties::class,
                 'relation' => PropertiesFavorites::class,
                 'column' => 'id_property',
-                'select' => 'id, title, price, location, rooms, parkings, type, bathrooms, area, area_terrain, description, commission_percentage, views, images'
+                'select' => 'id,title,price,location,rooms,parkings,bathrooms,area,description,views,images',
             ],
             'developments' => [
                 'model' => Developments::class,
