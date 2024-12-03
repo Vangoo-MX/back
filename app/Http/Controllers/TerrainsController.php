@@ -104,7 +104,7 @@ class TerrainsController extends Controller
 
     public function getTerrainCard($id)
     {
-        $terrains = Terrains::selectRaw('id,title,price,location,id_pais,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images')
+        $terrains = Terrains::selectRaw('id,title,price,location,id_pais,parkings,area_terrain,description,services, views,images')
             ->where('id', $id)
             ->get();
 
@@ -120,7 +120,7 @@ class TerrainsController extends Controller
             $list[] = $array;
         }
 
-        $terrains = Terrains::selectRaw('id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images');
+        $terrains = Terrains::selectRaw('id,title,price,location,id_pais,parkings,area_terrain,description,services, views,images');
 
         foreach ($list as $value) {
             $terrains = $terrains->orWhere('id', $value);
@@ -169,7 +169,6 @@ class TerrainsController extends Controller
         $terrains = Terrains::where('id', $id)
             ->get();
         $terrainsRelated = Terrains::where('id', '<>', $id)
-            ->where('type', $terrains[0]->type)
             ->where('bathrooms', $terrains[0]->bathrooms)
             ->where('rooms', $terrains[0]->rooms)
             ->where('id_municipio', $terrains[0]->id_municipio)
@@ -399,24 +398,8 @@ class TerrainsController extends Controller
 
         $terrain->location = $colonia . ', ' . $municipio . ', ' . $estado;
 
-
-        if (isset($request->propertyAreaConstruction)) {
-            $terrain->area = $request->propertyAreaConstruction;
-        }
         if (isset($request->propertyAreaTerrain)) {
             $terrain->area_terrain = $request->propertyAreaTerrain;
-        }
-        if (isset($request->propertyBathrooms)) {
-            $terrain->bathrooms = $request->propertyBathrooms;
-        }
-        if (isset($request->propertyRooms)) {
-            $terrain->rooms = $request->propertyRooms;
-        }
-        if (isset($request->propertyType)) {
-            $terrain->type = $request->propertyType;
-        }
-        if (isset($request->propertyDevType)) {
-            $terrain->dev_type = $request->propertyDevType;
         }
         if (isset($request->propertyParkings)) {
             $terrain->parkings = $request->propertyParkings;
@@ -435,15 +418,6 @@ class TerrainsController extends Controller
         }
         if (isset($request->propertyAgeConstruction)) {
             $terrain->antiquity = $request->propertyAgeConstruction;
-        }
-        if (isset($request->propertyAmenities)) {
-            $terrain->amenities = $request->propertyAmenities;
-        }
-        if (isset($request->propertyFloor)) {
-            $terrain->floor = $request->propertyFloor;
-        }
-        if (isset($request->propertyPriceMaintenance)) {
-            $terrain->price_maintenance = $request->propertyPriceMaintenance;
         }
         if (isset($request->propertyOperationType)) {
             $terrain->operation_type = $request->propertyOperationType;
@@ -580,23 +554,8 @@ class TerrainsController extends Controller
 
         $terrain->location = $colonia . ', ' . $municipio . ', ' . $estado;
 
-        if (isset($request->propertyAreaConstruction)) {
-            $terrain->area = $request->propertyAreaConstruction;
-        }
         if (isset($request->propertyAreaTerrain)) {
             $terrain->area_terrain = $request->propertyAreaTerrain;
-        }
-        if (isset($request->propertyBathrooms)) {
-            $terrain->bathrooms = $request->propertyBathrooms;
-        }
-        if (isset($request->propertyRooms)) {
-            $terrain->rooms = $request->propertyRooms;
-        }
-        if (isset($request->propertyType)) {
-            $terrain->type = $request->propertyType;
-        }
-        if (isset($request->propertyDevType)) {
-            $terrain->dev_type = $request->propertyDevType;
         }
         if (isset($request->propertyParkings)) {
             $terrain->parkings = $request->propertyParkings;
@@ -615,15 +574,6 @@ class TerrainsController extends Controller
         }
         if (isset($request->propertyAgeConstruction)) {
             $terrain->antiquity = $request->propertyAgeConstruction;
-        }
-        if (isset($request->propertyAmenities)) {
-            $terrain->amenities = $request->propertyAmenities;
-        }
-        if (isset($request->propertyFloor)) {
-            $terrain->floor = $request->propertyFloor;
-        }
-        if (isset($request->propertyPriceMaintenance)) {
-            $terrain->price_maintenance = $request->propertyPriceMaintenance;
         }
         if (isset($request->propertyOperationType)) {
             $terrain->operation_type = $request->propertyOperationType;
@@ -693,16 +643,10 @@ class TerrainsController extends Controller
         $terrains->update([
             'title' => $request->title,
             'operation_type' => $request->operation_type,
-            'type' => $request->type,
             'price' => $request->price,
-            'price_maintenance' => $request->price_maintenance,
             'description' => $request->description,
-            'rooms' => $request->rooms,
-            'bathrooms' => $request->bathrooms,
             'parkings' => $request->parkings,
             'map' => $request->map,
-            'area' => $request->area,
-            'dev_type' => $request->dev_type,
             'id_municipio' => $request->id_municipio,
             'id_colonia' => $request->id_colonia,
             'street' => $request->street,
@@ -711,7 +655,6 @@ class TerrainsController extends Controller
             'cp' => $request->cp,
             'map_lat' => $request->map_lat,
             'map_long' => $request->map_long,
-            'amenities' => $request->amenities,
             'services' => $request->services,
             'sell_type' => $request->sell_type,
             'share_conditions' => $request->share_conditions,

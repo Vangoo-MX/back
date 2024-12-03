@@ -51,7 +51,7 @@ class FavoritesController extends Controller
                 'favoritesModel' => TerrainsFavorites::class,
                 'mainModel' => Terrains::class,
                 'key' => 'id_property',
-                'select' => 'id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images',
+                'select' => 'id,title,price,location,id_pais,parkings,area_terrain,description,services, views,images',
             ],
         ];
 
@@ -142,7 +142,7 @@ class FavoritesController extends Controller
                 'favoritesModel' => TerrainsFavorites::class,
                 'mainModel' => Terrains::class,
                 'key' => 'id_property',
-                'select' => 'id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images',
+                'select' => 'id,title,price,location,id_pais,parkings,area_terrain,description,services, views,images',
             ],
         ];
 
@@ -345,7 +345,7 @@ class FavoritesController extends Controller
                 'model' => Terrains::class,
                 'relation' => TerrainsFavorites::class,
                 'column' => 'id_property',
-                'select' => 'id, title, status, area_terrain, price, location, description, commission_percentage, views, images'
+                'select' => 'id,title,price,location,id_pais,parkings,area_terrain,description,services, views,images'
             ]
         ];
 
