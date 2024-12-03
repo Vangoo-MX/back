@@ -105,7 +105,7 @@ class ApartmentsController extends Controller
 
     public function getApartmentCard($id)
     {
-        $Apartments = Apartments::selectRaw('id,title,price,location,id_pais,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images')
+        $Apartments = Apartments::selectRaw('id,title,price,location,id_pais,rooms,dev_type,parkings,bathrooms,area,description,views,images')
             ->where('id', $id)
             ->get();
 
@@ -121,7 +121,7 @@ class ApartmentsController extends Controller
             $list[] = $array;
         }
 
-        $Apartments = Apartments::selectRaw('id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images');
+        $Apartments = Apartments::selectRaw('id,title,price,location,id_pais,rooms,dev_type,parkings,bathrooms,area,description,views,images');
 
         foreach ($list as $value) {
             $Apartments = $Apartments->orWhere('id', $value);
@@ -170,7 +170,6 @@ class ApartmentsController extends Controller
         $apartments = Apartments::where('id', $id)
             ->get();
         $apartmentsRelated = Apartments::where('id', '<>', $id)
-            ->where('type', $apartments[0]->type)
             ->where('bathrooms', $apartments[0]->bathrooms)
             ->where('rooms', $apartments[0]->rooms)
             ->where('id_municipio', $apartments[0]->id_municipio)
@@ -405,17 +404,11 @@ class ApartmentsController extends Controller
         if (isset($request->propertyAreaConstruction)) {
             $apartment->area = $request->propertyAreaConstruction;
         }
-        if (isset($request->propertyAreaTerrain)) {
-            $apartment->area_terrain = $request->propertyAreaTerrain;
-        }
         if (isset($request->propertyBathrooms)) {
             $apartment->bathrooms = $request->propertyBathrooms;
         }
         if (isset($request->propertyRooms)) {
             $apartment->rooms = $request->propertyRooms;
-        }
-        if (isset($request->propertyType)) {
-            $apartment->type = $request->propertyType;
         }
         if (isset($request->propertyDevType)) {
             $apartment->dev_type = $request->propertyDevType;
@@ -458,9 +451,6 @@ class ApartmentsController extends Controller
         }
         if (isset($request->propertyShareConditions)) {
             $apartment->share_conditions = $request->propertySharedConditions;
-        }
-        if (isset($request->propertyServices)) {
-            $apartment->services = $request->propertyServices;
         }
         if (isset($request->propertyExactLocation)) {
             $apartment->no_exact_location = $request->propertyExactLocation == true ? 0 : 1;
@@ -585,17 +575,11 @@ class ApartmentsController extends Controller
         if (isset($request->propertyAreaConstruction)) {
             $apartment->area = $request->propertyAreaConstruction;
         }
-        if (isset($request->propertyAreaTerrain)) {
-            $apartment->area_terrain = $request->propertyAreaTerrain;
-        }
         if (isset($request->propertyBathrooms)) {
             $apartment->bathrooms = $request->propertyBathrooms;
         }
         if (isset($request->propertyRooms)) {
             $apartment->rooms = $request->propertyRooms;
-        }
-        if (isset($request->propertyType)) {
-            $apartment->type = $request->propertyType;
         }
         if (isset($request->propertyDevType)) {
             $apartment->dev_type = $request->propertyDevType;
@@ -638,9 +622,6 @@ class ApartmentsController extends Controller
         }
         if (isset($request->propertyShareConditions)) {
             $apartment->share_conditions = $request->propertySharedConditions;
-        }
-        if (isset($request->propertyServices)) {
-            $apartment->services = $request->propertyServices;
         }
         if (isset($request->propertyExactLocation)) {
             $apartment->no_exact_location = $request->propertyExactLocation == true ? 0 : 1;
@@ -695,7 +676,6 @@ class ApartmentsController extends Controller
         $apartments->update([
             'title' => $request->title,
             'operation_type' => $request->operation_type,
-            'type' => $request->type,
             'price' => $request->price,
             'price_maintenance' => $request->price_maintenance,
             'description' => $request->description,
@@ -716,7 +696,6 @@ class ApartmentsController extends Controller
             'map_lat' => $request->map_lat,
             'map_long' => $request->map_long,
             'amenities' => $request->amenities,
-            'services' => $request->services,
             'sell_type' => $request->sell_type,
             'share_conditions' => $request->share_conditions,
             'antiquity' => $request->antiquity,

@@ -105,7 +105,7 @@ class PropertiesController extends Controller
 
     public function getPropertyCard($id)
     {
-        $properties = Properties::selectRaw('id,title,price,location,id_pais,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images')
+        $properties = Properties::selectRaw('id,title,price,location,id_pais,rooms,parkings,bathrooms,area,description,views,images')
             ->where('id', $id)
             ->get();
 
@@ -121,7 +121,7 @@ class PropertiesController extends Controller
             $list[] = $array;
         }
 
-        $properties = Properties::selectRaw('id,title,price,location,rooms,parkings,type,bathrooms,area,area_terrain,description,views,images');
+        $properties = Properties::selectRaw('id,title,price,location,id_pais,rooms,parkings,bathrooms,area,description,views,images');
 
         foreach ($list as $value) {
             $properties = $properties->orWhere('id', $value);
@@ -170,7 +170,6 @@ class PropertiesController extends Controller
         $properties = Properties::where('id', $id)
             ->get();
         $propertiesRelated = Properties::where('id', '<>', $id)
-            ->where('type', $properties[0]->type)
             ->where('bathrooms', $properties[0]->bathrooms)
             ->where('rooms', $properties[0]->rooms)
             ->where('id_municipio', $properties[0]->id_municipio)
