@@ -386,22 +386,16 @@ class TerrainsController extends Controller
         }
 
 
-        $estado = Estados::where('id', $request->propertyEstado)->first();
-        if (!$estado) {
-            return response()->json(['error' => 'Estado no encontrado'], 404);
-        }
+        $estado = Estados::where('id', $request->propertyEstado)->get();
+        $estado = $estado[0]['nombre'];
 
-        $municipio = Municipios::where('id', $request->propertyMunicipio)->first();
-        if (!$municipio) {
-            return response()->json(['error' => 'Municipio no encontrado'], 404);
-        }
+        $municipio = Municipios::where('id', $request->propertyMunicipio)->get();
+        $municipio = $municipio[0]['nombre'];
 
-        $colonia = Colonias::where('id', $request->propertyColonia)->first();
-        if (!$colonia) {
-            return response()->json(['error' => 'Colonia no encontrada'], 404);
-        }
+        $colonia = Colonias::where('id', $request->propertyColonia)->get();
+        $colonia = $colonia[0]['nombre'];
 
-        $terrain->location = $colonia->nombre . ', ' . $municipio->nombre . ', ' . $estado->nombre;
+        $terrain->location = $colonia . ', ' . $municipio . ', ' . $estado;
 
         if (isset($request->propertyAreaTerrain)) {
             $terrain->area_terrain = $request->propertyAreaTerrain;
