@@ -271,6 +271,21 @@ class TerrainsController extends Controller
         return redirect()->route('admin.queue');
     }
 
+    public function deleteTerrainQueueEP($id)
+    {
+        $terrainQueue = TerrainsQueue::findOrFail($id);
+        $directoryPath = public_path("storage/img/postsqueue/terrains/{$terrainQueue->id}");
+
+        if (is_dir($directoryPath)) {
+            File::deleteDirectory($directoryPath, true);
+            sleep(1);
+            rmdir($directoryPath);
+        }
+
+        $terrainQueue->delete();
+        return json_encode("success");
+    }
+
     public function deleteTerrain($id)
     {
         $highlight = TerrainsHighlights::where('id_property', $id)->first();

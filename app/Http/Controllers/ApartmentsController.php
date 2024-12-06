@@ -273,6 +273,21 @@ class ApartmentsController extends Controller
         return redirect()->route('admin.queue');
     }
 
+    public function deleteApartmentQueueEP($id)
+    {
+        $apartmentQueue = ApartmentsQueue::findOrFail($id);
+        $directoryPath = public_path("storage/img/postsqueue/apartments/{$apartmentQueue->id}");
+
+        if (is_dir($directoryPath)) {
+            File::deleteDirectory($directoryPath, true);
+            sleep(1);
+            rmdir($directoryPath);
+        }
+
+        $apartmentQueue->delete();
+        return json_encode("success");
+    }
+
     public function deleteApartment($id)
     {
         $highlight = ApartmentsHighlights::where('id_property', $id)->first();
