@@ -513,7 +513,7 @@ class ApartmentsController extends Controller
             foreach ($extensions as $extension) {
                 $imagePath = $route . $imageName . '.' . $extension;
                 if (file_exists($imagePath)) {
-                    unlink($imagePath);
+                    Storage::delete($imagePath);
                     // $deletedCount++;
                     break;
                 }
