@@ -15,6 +15,7 @@ use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class TerrainsController extends Controller
 {
@@ -442,6 +443,8 @@ class TerrainsController extends Controller
             $terrain->id_user = $request->id_user;
         }
         $terrain->views = 0;
+
+        Log::info('Request recibido:', $request->all());
 
         $terrain->save();
 
