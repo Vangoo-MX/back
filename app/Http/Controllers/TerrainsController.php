@@ -274,13 +274,13 @@ class TerrainsController extends Controller
     public function deleteTerrainQueueEP($id)
     {
         $terrainQueue = TerrainsQueue::findOrFail($id);
-        // $directoryPath = public_path("storage/img/postsqueue/terrains/{$terrainQueue->id}");
+        $directoryPath = public_path("storage/img/postsqueue/terrains/{$terrainQueue->id}");
 
-        // if (is_dir($directoryPath)) {
-        //     File::deleteDirectory($directoryPath, true);
-        //     sleep(1);
-        //     rmdir($directoryPath);
-        // }
+        if (is_dir($directoryPath)) {
+            File::deleteDirectory($directoryPath, true);
+            sleep(1);
+            rmdir($directoryPath);
+        }
 
         $terrainQueue->delete();
         return json_encode("success");
