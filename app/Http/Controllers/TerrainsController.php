@@ -169,8 +169,6 @@ class TerrainsController extends Controller
         $terrains = Terrains::where('id', $id)
             ->get();
         $terrainsRelated = Terrains::where('id', '<>', $id)
-            ->where('bathrooms', $terrains[0]->bathrooms)
-            ->where('rooms', $terrains[0]->rooms)
             ->where('id_municipio', $terrains[0]->id_municipio)
             ->take(10)
             ->get();
