@@ -488,6 +488,9 @@ class TerrainsController extends Controller
     {
         $imageNames = $request->imageNames;
         $id = $request->id;
+        if (empty($id)) {
+            return response()->json(['error' => 'ID inválido'], 400);
+        }
         $route = public_path("storage/img/postsqueue/terrains/{$id}/");
         $extensions = ['jpg', 'jpeg', 'png'];
 
