@@ -494,18 +494,21 @@ class PropertiesController extends Controller
 
     public function deleteImagesPropertyQueue(Request $request)
     {
-        $imageNames = $request->imageNames;
         $id = $request->id;
+        if (empty($id)) {
+            return response()->json(['error' => 'ID inválido'], 400);
+        }
+        $imageNames = $request->imageNames;
         $route = public_path("storage/img/postsqueue/properties/{$id}/");
         $extensions = ['jpg', 'jpeg', 'png'];
-        // $deletedCount = 0;
+        $deletedCount = 0;
 
         foreach ($imageNames as $imageName) {
             foreach ($extensions as $extension) {
                 $imagePath = $route . $imageName . '.' . $extension;
                 if (file_exists($imagePath)) {
-                    Storage::delete($imagePath);
-                    // $deletedCount++;
+                    unlink($imagePath);
+                    $deletedCount++;
                     break;
                 }
             }
@@ -513,13 +516,13 @@ class PropertiesController extends Controller
 
         $this->renameImages($route);
 
-        // if ($deletedCount > 0) {
-        //     $property = PropertiesQueue::find($id);
-        //     if ($property) {
-        //         $property->images = max(0, $property->images - $deletedCount);
-        //         $property->save();
-        //     }
-        // }
+        if ($deletedCount > 0) {
+            $property = PropertiesQueue::find($id);
+            if ($property) {
+                $property->images = max(0, $property->images - $deletedCount);
+                $property->save();
+            }
+        }
 
         return response()->json("success");
     }

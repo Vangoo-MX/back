@@ -486,27 +486,35 @@ class TerrainsController extends Controller
 
     public function deleteImagesTerrainsQueue(Request $request)
     {
-        $imageNames = $request->imageNames;
         $id = $request->id;
         if (empty($id)) {
             return response()->json(['error' => 'ID inválido'], 400);
         }
+        $imageNames = $request->imageNames;
         $route = public_path("storage/img/postsqueue/terrains/{$id}/");
         $extensions = ['jpg', 'jpeg', 'png'];
+        $deletedCount = 0;
 
         foreach ($imageNames as $imageName) {
             foreach ($extensions as $extension) {
                 $imagePath = $route . $imageName . '.' . $extension;
-                Log::info("Checking file: $imagePath");
                 if (file_exists($imagePath)) {
-                    Log::info("Deleting file: $imagePath");
                     unlink($imagePath);
+                    $deletedCount++;
                     break;
                 }
             }
         }
 
         $this->renameImages($route);
+
+        if ($deletedCount > 0) {
+            $terrain = TerrainsQueue::findOrFail($id);
+            if ($terrain) {
+                $terrain->images = max(0, $terrain->images - $deletedCount);
+                $terrain->save();
+            }
+        }
 
         return response()->json("success");
     }
