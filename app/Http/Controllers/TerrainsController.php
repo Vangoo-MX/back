@@ -490,28 +490,20 @@ class TerrainsController extends Controller
         $id = $request->id;
         $route = public_path("storage/img/postsqueue/terrains/{$id}/");
         $extensions = ['jpg', 'jpeg', 'png'];
-        // $deletedCount = 0;
 
         foreach ($imageNames as $imageName) {
             foreach ($extensions as $extension) {
                 $imagePath = $route . $imageName . '.' . $extension;
+                Log::info("Checking file: $imagePath");
                 if (file_exists($imagePath)) {
-                    Storage::delete($imagePath);
-                    // $deletedCount++;
+                    Log::info("Deleting file: $imagePath");
+                    unlink($imagePath);
                     break;
                 }
             }
         }
 
         $this->renameImages($route);
-
-        // if ($deletedCount > 0) {
-        //     $terrain = TerrainsQueue::find($id);
-        //     if ($terrain) {
-        //         $terrain->images = max(0, $terrain->images - $deletedCount);
-        //         $terrain->save();
-        //     }
-        // }
 
         return response()->json("success");
     }

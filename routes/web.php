@@ -264,7 +264,7 @@ Route::post('ep/aprovedApartmentQueue', [ApartmentsController::class, 'aprovedAp
 
 Route::get('ep/deleteApartmentQueue/{id}', [ApartmentsController::class, 'deleteApartmentQueue'])->name('epApartmentQueue.delete');
 
-Route::get('ep/deletePropertyQueueEP/{id}', [PropertiesController::class, 'deletePropertyQueueEP']);
+Route::get('ep/deleteApartmentQueueEP/{id}', [ApartmentsController::class, 'deleteApartmentQueueEP']);
 
 Route::post('ep/updateApartmentsQueue', [ApartmentsController::class, 'updateApartmentsQueue']);
 
