@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ApartmentsController extends Controller
@@ -470,13 +471,18 @@ class ApartmentsController extends Controller
         if (isset($request->propertyExactLocation)) {
             $apartment->no_exact_location = $request->propertyExactLocation == true ? 0 : 1;
         }
+
+        Log::info('Request de numero de imagenes:', $request->number_images);
         if (isset($request->number_images)) {
+            Log::info('Request de numero de imagenes:', $request->number_images);
             $apartment->images = $request->number_images;
         }
         if (isset($request->id_user)) {
             $apartment->id_user = $request->id_user;
         }
         $apartment->views = 0;
+
+        Log::info('Request recibido:', $request->all());
 
         $apartment->save();
 
