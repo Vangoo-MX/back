@@ -27,13 +27,15 @@ class DevelopmentsController extends Controller
         return $developments;
     }
 
-    public function getDevelopmentsHightlights()
+    public function getDevelopmentsVerticalHightlights()
     {
         $highlights = DevelopmentsHighlights::orderBy('num_order', 'asc')->get();
 
         if (sizeof($highlights) > 0) {
             $highlightIds = $highlights->pluck('id_development')->toArray();
-            $highlights = Developments::whereIn('id', $highlightIds)->get();
+            $highlights = Developments::whereIn('id', $highlightIds)
+                ->where('mode', 'vertical')
+                ->get();
         } else {
             $highlights = [];
         }
@@ -42,18 +44,57 @@ class DevelopmentsController extends Controller
     }
 
 
-    public function getDevelopmentsHightlightFromMunicipio($id)
+    public function getDevelopmentsHorizontalHightlights()
     {
+        $highlights = DevelopmentsHighlights::orderBy('num_order', 'asc')->get();
 
-        $highlight = DevelopmentsHighlights::where('id_municipio', $id)
+        if (sizeof($highlights) > 0) {
+            $highlightIds = $highlights->pluck('id_development')->toArray();
+            $highlights = Developments::whereIn('id', $highlightIds)
+                ->where('mode', 'horizontal')
+                ->get();
+        } else {
+            $highlights = [];
+        }
+
+        return $highlights;
+    }
+
+    public function getDevelopmentsVerticalHightlightFromMunicipio($id)
+    {
+        $highlights = DevelopmentsHighlights::where('id_municipio', $id)
             ->orderBy('num_order', 'asc')
             ->get();
 
-        if (sizeof($highlight) > 0) {
-            $developments = Developments::select();
-            foreach ($highlight as $value) {
-                $developments = $developments->orwhere('id', $value->id_development);
+        if ($highlights->isNotEmpty()) {
+            $developments = Developments::where('mode', 'vertical');
+
+            foreach ($highlights as $highlight) {
+                $developments = $developments->orWhere('id', $highlight->id_development);
             }
+
+            $developments = $developments->get();
+        } else {
+            $developments = [];
+        }
+
+        return $developments;
+    }
+
+    public function getDevelopmentsHorizontalHightlightFromMunicipio($id)
+    {
+
+        $highlights = DevelopmentsHighlights::where('id_municipio', $id)
+            ->orderBy('num_order', 'asc')
+            ->get();
+
+        if ($highlights->isNotEmpty()) {
+            $developments = Developments::where('mode', 'horizontal');
+
+            foreach ($highlights as $highlight) {
+                $developments = $developments->orWhere('id', $highlight->id_development);
+            }
+
             $developments = $developments->get();
         } else {
             $developments = [];

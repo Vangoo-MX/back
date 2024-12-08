@@ -336,9 +336,13 @@ Route::get('ep/getTerrainQueueEP/{id}', [TerrainsController::class, 'getTerrainQ
 /* DESARROLLOS */
 Route::get('ep/getAllDevelopments', [DevelopmentsController::class, 'getAll'])->name('epAllDevelopments.get');
 
-Route::get('ep/getDevelopmentsHightlights', [DevelopmentsController::class, 'getDevelopmentsHightlights'])->name('epDevelopmentsHightlights.get');
+Route::get('ep/getDevelopmentsVerticalHightlights', [DevelopmentsController::class, 'getDevelopmentsVerticalHightlights'])->name('epDevelopmentsVerticalHightlights.get');
 
-Route::get('ep/getDevelopmentsHightlightFromMunicipio/{id}', [DevelopmentsController::class, 'getDevelopmentsHightlightFromMunicipio'])->name('epDevelopmentsHightlightFromMunicipio.get');
+Route::get('ep/getDevelopmentsHorizontalHightlights', [DevelopmentsController::class, 'getDevelopmentsHorizontalHightlights'])->name('epDevelopmentsHorizontalHightlights.get');
+
+Route::get('ep/getDevelopmentsVerticalHightlightFromMunicipio/{id}', [DevelopmentsController::class, 'getDevelopmentsVerticalHightlightFromMunicipio'])->name('epDevelopmentsVerticalHightlightFromMunicipio.get');
+
+Route::get('ep/getDevelopmentsHorizontalHightlightFromMunicipio/{id}', [DevelopmentsController::class, 'getDevelopmentsHorizontalHightlightFromMunicipio'])->name('epDevelopmentsHorizontalHightlightFromMunicipio.get');
 
 Route::get('ep/get-devs-by-municipio/{id}', [DevelopmentsController::class, 'getdevsbymunicipio']);
 
