@@ -27,7 +27,7 @@ class DevelopmentsController extends Controller
         return $developments;
     }
 
-    public function getDevelopmentsVerticalHighlights()
+    public function getDevelopmentsVerticalHightlights()
     {
         $highlightIds = DevelopmentsHighlights::orderBy('num_order', 'asc')
             ->pluck('id_development')
