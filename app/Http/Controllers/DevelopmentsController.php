@@ -56,41 +56,32 @@ class DevelopmentsController extends Controller
 
     public function getDevelopmentsVerticalHightlightFromMunicipio($id)
     {
-        $highlights = DevelopmentsHighlights::where('id_municipio', $id)
+        $highlightIds = DevelopmentsHighlights::where('id_municipio', $id)
             ->orderBy('num_order', 'asc')
-            ->get();
+            ->pluck('id_development')
+            ->toArray();
 
-        if ($highlights->isNotEmpty()) {
-            $highlightsIds = $highlights->pluck('id_development')->toArray();
-            $developments = Developments::whereIn('id', $highlightsIds)
-                ->where('id_municipio', $id)
-                ->where('mode', 'vertical')
-                ->get();
-        } else {
-            $developments = [];
-        }
-
-        return $developments;
+        return !empty($highlightIds)
+            ? Developments::whereIn('id', $highlightIds)
+            ->where('id_municipio', $id)
+            ->where('mode', 'vertical')
+            ->get()
+            : collect();
     }
 
     public function getDevelopmentsHorizontalHightlightFromMunicipio($id)
     {
-
-        $highlights = DevelopmentsHighlights::where('id_municipio', $id)
+        $highlightIds = DevelopmentsHighlights::where('id_municipio', $id)
             ->orderBy('num_order', 'asc')
-            ->get();
+            ->pluck('id_development')
+            ->toArray();
 
-        if ($highlights->isNotEmpty()) {
-            $highlightsIds = $highlights->pluck('id_development')->toArray();
-            $developments = Developments::whereIn('id', $highlightsIds)
-                ->where('id_municipio', $id)
-                ->where('mode', 'horizontal')
-                ->get();
-        } else {
-            $developments = [];
-        }
-
-        return $developments;
+        return !empty($highlightIds)
+            ? Developments::whereIn('id', $highlightIds)
+            ->where('id_municipio', $id)
+            ->where('mode', 'horizontal')
+            ->get()
+            : collect();
     }
 
     public function deleteDevHightlight($id)
