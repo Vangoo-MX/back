@@ -67,13 +67,11 @@ class DevelopmentsController extends Controller
             ->get();
 
         if ($highlights->isNotEmpty()) {
-            $developments = Developments::where('mode', 'vertical');
-
-            foreach ($highlights as $highlight) {
-                $developments = $developments->orWhere('id', $highlight->id_development);
-            }
-
-            $developments = $developments->get();
+            $highlightsIds = $highlights->pluck('id_development')->toArray();
+            $developments = Developments::whereIn('id', $highlightsIds)
+                ->where('id_municipio', $id)
+                ->where('mode', 'vertical')
+                ->get();
         } else {
             $developments = [];
         }
@@ -89,13 +87,11 @@ class DevelopmentsController extends Controller
             ->get();
 
         if ($highlights->isNotEmpty()) {
-            $developments = Developments::where('mode', 'horizontal');
-
-            foreach ($highlights as $highlight) {
-                $developments = $developments->orWhere('id', $highlight->id_development);
-            }
-
-            $developments = $developments->get();
+            $highlightsIds = $highlights->pluck('id_development')->toArray();
+            $developments = Developments::whereIn('id', $highlightsIds)
+                ->where('id_municipio', $id)
+                ->where('mode', 'horizontal')
+                ->get();
         } else {
             $developments = [];
         }
