@@ -154,7 +154,7 @@ class DevelopmentsController extends Controller
 
     public function getDevCard($id)
     {
-        return Developments::selectRaw('id', 'status', 'title', 'price_min', 'price_max', 'location', 'description', 'views', 'images')
+        return Developments::select('id', 'status', 'title', 'price_min', 'price_max', 'location', 'description', 'views', 'images')
             ->find($id);
     }
 
