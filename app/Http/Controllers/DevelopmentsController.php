@@ -43,18 +43,15 @@ class DevelopmentsController extends Controller
 
     public function getDevelopmentsHorizontalHightlights()
     {
-        $highlights = DevelopmentsHighlights::orderBy('num_order', 'asc')->get();
+        $highlightIds = DevelopmentsHighlights::orderBy('num_order', 'asc')
+            ->pluck('id_development')
+            ->toArray();
 
-        if (sizeof($highlights) > 0) {
-            $highlightIds = $highlights->pluck('id_development')->toArray();
-            $highlights = Developments::whereIn('id', $highlightIds)
-                ->where('mode', 'horizontal')
-                ->get();
-        } else {
-            $highlights = [];
-        }
-
-        return $highlights;
+        return !empty($highlightIds)
+            ? Developments::whereIn('id', $highlightIds)
+            ->where('mode', 'horizontal')
+            ->get()
+            : collect();
     }
 
     public function getDevelopmentsVerticalHightlightFromMunicipio($id)
