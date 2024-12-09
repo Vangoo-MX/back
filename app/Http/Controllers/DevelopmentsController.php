@@ -22,9 +22,7 @@ class DevelopmentsController extends Controller
 {
     public function getAll()
     {
-        $developments = Developments::all();
-
-        return $developments;
+        return Developments::all();
     }
 
     public function getDevelopmentsVerticalHightlights()
@@ -86,29 +84,30 @@ class DevelopmentsController extends Controller
 
     public function deleteDevHightlight($id)
     {
-        $h = DevelopmentsHighlights::find($id);
+        $highlight = DevelopmentsHighlights::find($id);
 
-        if ($h) {
-            $h->delete();
-            return redirect('overview/developments-highlights');
-        } else {
-            return json_encode('error: Agenda entry not found');
+        if (!$highlight) {
+            return response()->json(['error' => 'Agenda entry not found'], 404);
         }
+
+        $highlight->delete();
+
+        return redirect()->route('admin.highlights.developments');
     }
 
     public function addDevHightlight(Request $request)
     {
         try {
-            $h = new DevelopmentsHighlights();
-            $h->id_estado = 19;
-            $h->id_municipio = $request->id_municipio;
-            $h->id_development = $request->id_development;
-            $h->save();
+            DevelopmentsHighlights::create([
+                'id_estado' => 19,
+                'id_municipio' => $request->id_municipio,
+                'id_development' => $request->id_development,
+            ]);
         } catch (Exception $e) {
-            return json_encode($e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
 
-        return redirect('overview/developments-highlights');
+        return redirect()->route('admin.highlights.developments');
     }
 
     public function orderDevHightlight(Request $request)
