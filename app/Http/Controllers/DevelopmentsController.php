@@ -112,18 +112,17 @@ class DevelopmentsController extends Controller
 
     public function orderDevHightlight(Request $request)
     {
-        $idProperty = $request->id;
+        $highlight = DevelopmentsHighlights::where('id_development', $request->id)->first();
 
-        $h = DevelopmentsHighlights::where('id_development', $idProperty)->first();
-
-        if ($h) {
-            $h->num_order = $request->num_order;
-            $h->save();
-
-            return redirect('overview/developments-highlights');
-        } else {
-            return json_encode('error: entry for property with id ' . $idProperty . ' not found');
+        if (!$highlight) {
+            return response()->json([
+                'error' => 'Entry for property with ID ' . $request->id . ' not found'
+            ], 404);
         }
+
+        $highlight->update(['num_order' => $request->num_order]);
+
+        return redirect()->route('admin.highlights.developments');
     }
 
     public function getdevsbymunicipio($id)
