@@ -285,13 +285,24 @@ class DevelopmentsController extends Controller
             $apartment->bathrooms = $option['bathrooms'];
             $apartment->parkings = $option['parkings'];
             $apartment->area = $option['area'];
-            $apartment->image_plans = $request->hasFile('imageoption.' . $key) ? count($request->file('imageoption.' . $key)) : 0;
-            $apartment->num_available = $option['num_available'] ?? 0;
+            if ($request->file('imageoption.' . $key) && is_array($request->file('imageoption.' . $key))) {
+                $apartment->image_plans = sizeof($request->file('imageoption.' . $key));
+            } elseif ($request->file('imageoption.' . $key) && !is_array($request->file('imageoption.' . $key))) {
+                $apartment->image_plans = 1;
+            } else {
+                $apartment->image_plans = 0;
+            }
 
-            if ($request->hasFile('imageoption.' . $key)) {
-                $directory = 'public/img/posts/developments/' . $development->id . '/plans/';
+            if ($option['num_available']) {
+                $apartment->num_available = $option['num_available'];
+            } else {
+                $apartment->num_available = 0;
+            }
+
+            if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
+                $directory = 'public/img/posts/developments/' . $development->id . '/' . 'plans/';
                 $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
-                $path = storage_path('app/public/img/posts/developments/' . $development->id . '/plans/');
+                $path = storage_path('app/public/img/posts/developments/' . $development->id . '/' . 'plans/');
                 if (!file_exists($path)) {
                     mkdir($path, 0755, true);
                 }
