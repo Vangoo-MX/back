@@ -170,14 +170,16 @@ class DevelopmentsController extends Controller
     public function getDevelopmentsRelated($id)
     {
 
-        $Developments = Developments::where('id', $id)
-            ->get();
-        $DevelopmentsRelated = Developments::where('status', $Developments[0]->status)
-            ->where('id_municipio', $Developments[0]->id_municipio)
+        $development = Developments::find($id);
+
+        if (!$development) {
+            return collect();
+        }
+
+        return Developments::where('status', $development->status)
+            ->where('id_municipio', $development->id_municipio)
             ->take(10)
             ->get();
-
-        return $DevelopmentsRelated;
     }
 
     public function getDevSearch($estado = "0", $municipio = "0", $colonia = "0", $status = "0", $min = 0, $max = 0)
