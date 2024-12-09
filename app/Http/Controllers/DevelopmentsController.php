@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DevelopmentRequest;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Developments;
 use App\Models\DevelopmentsHighlights;
 use App\Models\DevelopmentsApartments;
-use App\Models\Properties;
 use App\Models\Images;
 use Illuminate\support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -223,56 +223,8 @@ class DevelopmentsController extends Controller
         return $search;
     }
 
-    public function storeDev(Request $request)
+    public function storeDev(DevelopmentRequest $request)
     {
-        $request->validate([
-            'title' => 'required|min:5|max:100',
-            'price_min' => 'required|numeric|lte:price_max',
-            'price_max' => 'required|numeric|gte:price_min',
-            'description' => 'required|min:10|max:500',
-            'availability' => 'required|date',
-            'street' => 'required|min:3|max:20',
-            'num_ext' => 'required|numeric',
-            'cp' => 'required|numeric',
-            'amenities' => 'min:3',
-            'area' => 'required|numeric',
-            'commission_percentage' => 'required|numeric',
-            'id_municipio' => 'required',
-            // 'images' => 'required|array',
-            // 'images.*' => 'image|mimes:jpeg,jpg|max:2048',
-        ], [
-            'title.required' => 'El título es obligatorio',
-            'title.min' => 'El título debe tener mas de 10 caracteres',
-            'title.max' => 'El título debe tener menos de 100 caracteres',
-            'price_min.required' => 'El precio mínimo es obligatorio',
-            'price_min.numeric' => 'El precio mínimo debe ser un numero',
-            'price_min.lte' => 'El precio mínimo debe ser menor o igual al precio máximo',
-            'price_max.required' => 'El precio máximo es obligatorio',
-            'price_max.numeric' => 'El precio máximo debe ser un numero',
-            'price_max.gte' => 'El precio máximo debe ser mayor o igual al precio mínimo',
-            'description.required' => 'La descripción es obligatoria',
-            'description.min' => 'La descripción debe tener mas de 10 caracteres',
-            'description.max' => 'La descripción debe tener menos de 500 caracteres',
-            'availability.required' => 'La fecha de disponibilidad es obligatoria',
-            'availability.date' => 'La fecha de disponibilidad debe ser una fecha valida',
-            'street.required' => 'La calle es requerida',
-            'street.min' => 'La calle debe tener mas de 3 caracteres',
-            'street.max' => 'La calle debe tener menos de 100 caracteres',
-            'num_ext.required' => 'El número exterior es requerido',
-            'num_ext.numeric' => 'El numero exterior solo puede ser un numero',
-            'cp.required' => 'El codigo postal es requerido',
-            'cp.numeric' => 'El codigo solo puede ser un numero',
-            'amenities.min' => 'Ingrese minimo una amenidad',
-            'area.required' => 'La medida del area es requerida',
-            'area.numeric' => 'La medida del area debe ser un número',
-            'commission_percentage.required' => 'El porcentaje de comisión es requerido',
-            'commission_percentage.numeric' => 'El porcentaje de comisión debe ser un número',
-            'id_municipio.required' => 'El municipio es requerido',
-            // 'imagen.required' => 'Sube al menos una imagen',
-            // 'images.*.image' => 'Cada archivo debe ser una imagen.',
-            // 'images.*.mimes' => 'Cada imagen debe ser de tipo jpeg o jpg.',
-            // 'images.*.max' => 'Cada imagen no puede ser mayor de 2MB.',
-        ]);
         $development = new Developments;
         $development->title = $request->title;
         $development->status = $request->status;
@@ -288,14 +240,9 @@ class DevelopmentsController extends Controller
         $development->street = $request->street;
         $development->num_ext = $request->num_ext;
 
-        $estado = Estados::where('id', $request->id_estado)->get();
-        $estado = $estado[0]['nombre'];
-
-        $municipio = Municipios::where('id', $request->id_municipio)->get();
-        $municipio = $municipio[0]['nombre'];
-
-        $colonia = Colonias::where('id', $request->id_colonia)->get();
-        $colonia = $colonia[0]['nombre'];
+        $estado = Estados::find($request->id_estado)->nombre;
+        $municipio = Municipios::find($request->id_municipio)->nombre;
+        $colonia = Colonias::find($request->id_colonia)->nombre;
 
         $development->location = $colonia . ', ' . $municipio . ', ' . $estado;
 
@@ -307,9 +254,11 @@ class DevelopmentsController extends Controller
         $development->amenities = $request->amenities;
         $development->commission_percentage = $request->commission_percentage;
         $development->id_user = Auth::user()->id;
+
         if ($request->hasFile('images')) {
-            $development->images = sizeof($request->file('images'));
+            $development->images = count($request->file('images'));
         }
+
         $development->save();
 
         if ($request->hasFile('images')) {
@@ -318,7 +267,6 @@ class DevelopmentsController extends Controller
                 $nameimg = Str::slug($index + 1) . "." . $image->getClientOriginalExtension();
 
                 $path = storage_path('app/public/img/posts/developments/' . $development->id . '/');
-
                 if (!file_exists($path)) {
                     mkdir($path, 0755, true);
                 }
@@ -328,35 +276,22 @@ class DevelopmentsController extends Controller
         }
 
         $key = 1;
-
         foreach ($request->option as $option) {
-            $appartment = new DevelopmentsApartments;
-            $appartment->id_development = $development->id;
-            $appartment->title = $option['title'];
-            $appartment->price = $option['price'];
-            $appartment->rooms = $option['rooms'];
-            $appartment->bathrooms = $option['bathrooms'];
-            $appartment->parkings = $option['parkings'];
-            $appartment->area = $option['area'];
-            if ($request->file('imageoption.' . $key) && is_array($request->file('imageoption.' . $key))) {
-                $appartment->image_plans = sizeof($request->file('imageoption.' . $key));
-            } elseif ($request->file('imageoption.' . $key) && !is_array($request->file('imageoption.' . $key))) {
-                $appartment->image_plans = 1;
-            } else {
-                $appartment->image_plans = 0;
-            }
+            $apartment = new DevelopmentsApartments;
+            $apartment->id_development = $development->id;
+            $apartment->title = $option['title'];
+            $apartment->price = $option['price'];
+            $apartment->rooms = $option['rooms'];
+            $apartment->bathrooms = $option['bathrooms'];
+            $apartment->parkings = $option['parkings'];
+            $apartment->area = $option['area'];
+            $apartment->image_plans = $request->hasFile('imageoption.' . $key) ? count($request->file('imageoption.' . $key)) : 0;
+            $apartment->num_available = $option['num_available'] ?? 0;
 
-            if ($option['num_available']) {
-                $appartment->num_available = $option['num_available'];
-            } else {
-                $appartment->num_available = 0;
-            }
-
-
-            if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
-                $directory = 'public/img/posts/developments/' . $development->id . '/' . 'plans/';
+            if ($request->hasFile('imageoption.' . $key)) {
+                $directory = 'public/img/posts/developments/' . $development->id . '/plans/';
                 $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
-                $path = storage_path('app/public/img/posts/developments/' . $development->id . '/' . 'plans/');
+                $path = storage_path('app/public/img/posts/developments/' . $development->id . '/plans/');
                 if (!file_exists($path)) {
                     mkdir($path, 0755, true);
                 }
@@ -364,7 +299,7 @@ class DevelopmentsController extends Controller
                 $request->file('imageoption.' . $key)->storeAs($directory, $nameimg);
             }
 
-            $appartment->save();
+            $apartment->save();
             $key++;
         }
 
