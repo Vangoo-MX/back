@@ -160,23 +160,11 @@ class DevelopmentsController extends Controller
 
     public function getMultiDevCard($array)
     {
+        $list = str_contains($array, '-') ? explode('-', $array) : [$array];
 
-        if (str_contains($array, '-')) {
-            $list = explode('-', $array);
-        } else {
-            $list[] = $array;
-        }
-
-
-        $dev = Developments::selectRaw('id,status,title,price_min,price_max,location,description,views,images');
-
-        foreach ($list as $value) {
-            $dev = $dev->orWhere('id', $value);
-        }
-
-        $dev = $dev->get();
-
-        return $dev;
+        return Developments::select('id', 'status', 'title', 'price_min', 'price_max', 'location', 'description', 'views', 'images')
+            ->whereIn('id', $list)
+            ->get();
     }
 
     public function getDevelopmentsRelated($id)
