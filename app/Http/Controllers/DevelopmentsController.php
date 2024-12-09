@@ -125,47 +125,37 @@ class DevelopmentsController extends Controller
         return redirect()->route('admin.highlights.developments');
     }
 
-    public function getdevsbymunicipio($id)
+    public function getDevsByMunicipio($id)
     {
-        $dev = Developments::where('id_municipio', $id)->get();
-        return response()->json($dev);
+        $developments = Developments::where('id_municipio', $id)->get();
+        return response()->json($developments);
     }
 
     public function getDevelopmentsImagesCards()
     {
-        $images = Images::where('type_property', 'development')
+        return Images::where('type_property', 'development')
             ->where('category', 'card')
             ->get();
-
-        return $images;
     }
 
     public function getDevelopmentsImagesDetail($id)
     {
-        $images = Images::where('type_property', 'property')
+        return Images::where('type_property', 'property')
             ->where('category', 'card')
             ->where('id_property', $id)
             ->get();
-
-        return $images;
     }
 
 
     public function getDevelopment($id)
     {
-        $developments = Developments::where('id', $id)
-            ->get();
-
-        return $developments;
+        return Developments::find($id);
     }
 
     public function getDevCard($id)
     {
-        $dev = Developments::selectRaw('id,status,title,price_min,price_max,location,description,views,images')
-            ->where('id', $id)
-            ->get();
-
-        return $dev;
+        return Developments::select('id', 'status', 'title', 'price_min', 'price_max', 'location', 'description', 'views', 'images')
+            ->find($id);
     }
 
     public function getMultiDevCard($array)

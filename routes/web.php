@@ -344,7 +344,7 @@ Route::get('ep/getDevelopmentsVerticalHightlightFromMunicipio/{id}', [Developmen
 
 Route::get('ep/getDevelopmentsHorizontalHightlightFromMunicipio/{id}', [DevelopmentsController::class, 'getDevelopmentsHorizontalHightlightFromMunicipio'])->name('epDevelopmentsHorizontalHightlightFromMunicipio.get');
 
-Route::get('ep/get-devs-by-municipio/{id}', [DevelopmentsController::class, 'getdevsbymunicipio']);
+Route::get('ep/get-devs-by-municipio/{id}', [DevelopmentsController::class, 'getDevsByMunicipio']);
 
 Route::get('ep/getDevelopmentsImagesCards', [DevelopmentsController::class, 'getDevelopmentsImagesCards'])->name('epDevelopmentsImagesCards.get');
 
