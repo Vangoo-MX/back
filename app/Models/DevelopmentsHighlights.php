@@ -17,6 +17,7 @@ class DevelopmentsHighlights extends Model
         'id_estado',
         'id_municipio',
         'id_development',
+        'num_order',
     ];
     protected $table = 'post_developments_highlights';
 }
