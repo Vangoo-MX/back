@@ -120,7 +120,9 @@ class DevelopmentsController extends Controller
             ], 404);
         }
 
-        $highlight->update(['num_order' => $request->num_order]);
+        $highlight->update([
+            'num_order' => $request->num_order
+        ]);
 
         return redirect()->route('admin.highlights.developments');
     }

@@ -12,5 +12,12 @@ class LotsHighlights extends Model
      * @var string
      */
     public $timestamps = false;
+
+    protected $fillable = [
+        'id_estado',
+        'id_municipio',
+        'id_development',
+        'num_order',
+    ];
     protected $table = 'post_lots_highlights';
 }

@@ -20,42 +20,30 @@ class LotsController
 {
     public function getAll()
     {
-        $lots = Lots::all();
-        return $lots;
+        return Lots::all();
     }
 
     public function getLotsHightlights()
     {
-        $highlights = LotsHighlights::orderBy('num_order', 'asc')->get();
+        $highlightIds = LotsHighlights::orderBy('num_order', 'asc')
+            ->pluck('id_lot')
+            ->toArray();
 
-        if (sizeof($highlights) > 0) {
-            $highlightIds = $highlights->pluck('id_lot')->toArray();
-            $highlights = Lots::whereIn('id', $highlightIds)->get();
-        } else {
-            $highlights = [];
-        }
-
-        return $highlights;
+        return !empty($highlightIds)
+            ? Lots::whereIn('id', $highlightIds)->get()
+            : collect();
     }
 
     public function getLotsHightlightFromMunicipio($id)
     {
-
-        $highlight = LotsHighlights::where('id_municipio', $id)
+        $highlightIds = LotsHighlights::where('id_municipio', $id)
             ->orderBy('num_order', 'asc')
-            ->get();
+            ->pluck('id_lot')
+            ->toArray();
 
-        if (sizeof($highlight) > 0) {
-            $lots = Lots::select();
-            foreach ($highlight as $value) {
-                $lots = $lots->orwhere('id', $value->id_lot);
-            }
-            $lots = $lots->get();
-        } else {
-            $lots = [];
-        }
-
-        return $lots;
+        return !empty($highlightIds)
+            ? Lots::whereIn('id', $highlightIds)->get()
+            : collect();
     }
 
     public function getLotsImagesDetail($id)
@@ -70,11 +58,9 @@ class LotsController
 
     public function getLotsImagesCards()
     {
-        $images = Images::where('type_property', 'development')
+        return Images::where('type_property', 'lot')
             ->where('category', 'card')
             ->get();
-
-        return $images;
     }
 
     public function getLotsByMunicipality($id)
@@ -85,53 +71,36 @@ class LotsController
 
     public function getLot($id)
     {
-        $lots = Lots::where('id', $id)
-            ->get();
-
-        return $lots;
+        return Lots::find($id);
     }
 
     public function getLotsRelated($id)
     {
+        $lot = Lots::find($id);
 
-        $lots = Lots::where('id', $id)
-            ->get();
-        $lotsRelated = Lots::where('status', $lots[0]->status)
-            ->where('id_municipio', $lots[0]->id_municipio)
+        if (!$lot) {
+            return collect();
+        }
+
+        return Lots::where('status', $lot->status)
+            ->where('id_municipio', $lot->id_municipio)
             ->take(10)
             ->get();
-
-        return $lotsRelated;
     }
 
     public function getLotCard($id)
     {
-        $lot = Lots::selectRaw('id,status,title,price_min,price_max,location,description,images')
-            ->where('id', $id)
-            ->get();
-
-        return $lot;
+        return Lots::select('id,status,title,price_min,price_max,location,description,images')
+            ->find($id);
     }
 
     public function getMultiLotCard($array)
     {
+        $list = str_contains($array, '-') ? explode('-', $array) : [$array];
 
-        if (str_contains($array, '-')) {
-            $list = explode('-', $array);
-        } else {
-            $list[] = $array;
-        }
-
-
-        $lot = Lots::selectRaw('id,status,title,price_min,price_max,location,description,images');
-
-        foreach ($list as $value) {
-            $lot = $lot->orWhere('id', $value);
-        }
-
-        $lot = $lot->get();
-
-        return $lot;
+        return Lots::select('id,status,title,price_min,price_max,location,description,images')
+            ->whereIn('id', $list)
+            ->get();
     }
 
     public function getLotSearch($estado = "0", $municipio = "0", $colonia = "0", $status = 0, $min = 0, $max = 0)
@@ -311,44 +280,51 @@ class LotsController
 
     public function deleteImage(Request $request, $lotId, $imageId)
     {
-        $imagePath = 'public/img/posts/lots/' . $lotId . '/' . $imageId . '.jpg';
+        $extensions = ['jpg', 'jpeg', 'png'];
+        $imageDeleted = false;
 
-        if (Storage::exists($imagePath)) {
-            Storage::delete($imagePath);
+        $lot = Lots::findOrFail($lotId);
 
-            $lot = Lots::findOrFail($lotId);
-            $lot->images -= 1;
-            $lot->save();
+        foreach ($extensions as $extension) {
+            $imagePath = 'public/img/posts/lots/' . $lotId . '/' . $imageId . '.' . $extension;
 
-            for ($i = $imageId + 1; $i <= $lot->images + 1; $i++) {
-                $oldImagePath = 'public/img/posts/lots/' . $lotId . '/' . $i . '.jpg';
-                $newImagePath = 'public/img/posts/lots/' . $lotId . '/' . ($i - 1) . '.jpg';
+            if (Storage::exists($imagePath)) {
+                Storage::delete($imagePath);
+                $imageDeleted = true;
+                $lot->decrement('images');
+                break;
+            }
+        }
+
+        if (!$imageDeleted) {
+            return response()->json(['error' => 'No se encontró la imagen a eliminar.'], 404);
+        }
+
+        for ($i = $imageId + 1; $i <= $lot->images + 1; $i++) {
+            foreach ($extensions as $extension) {
+                $oldImagePath = 'public/img/posts/lots/' . $lotId . '/' . $i . '.' . $extension;
+                $newImagePath = 'public/img/posts/lots/' . $lotId . '/' . ($i - 1) . '.' . $extension;
 
                 if (Storage::exists($oldImagePath)) {
                     Storage::move($oldImagePath, $newImagePath);
+                    break;
                 }
             }
-
-            return redirect()->back()->with('success', 'La imagen se eliminó correctamente.');
-        } else {
-            return response()->json(['error' => 'Imagen no encontrada.'], 404);
         }
+
+        return redirect()->back()->with('success', 'Imagen eliminada correctamente.');
     }
 
     public function deleteLot($id)
     {
-        $highlight = LotsHighlights::where('id_lot', $id)->first();
+        LotsHighlights::where('id_lot', $id)->delete();
 
-        if ($highlight) {
-            $highlight->delete();
-        }
         $lot = Lots::findOrFail($id);
 
-        $directoryPath = public_path("storage/img/posts/lots/{$lot->id}");
+        $directoryPath = public_path('storage/img/posts/lots/' . $lot->id);
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            // Esperar 1 segundo antes de intentar eliminar la carpeta
             sleep(1);
             rmdir($directoryPath);
         }
@@ -367,43 +343,43 @@ class LotsController
     public function addLotHightlight(Request $request)
     {
         try {
-            $h = new LotsHighlights();
-            $h->id_estado = 19;
-            $h->id_municipio = $request->id_municipio;
-            $h->id_lot = $request->id_lot;
-            $h->save();
+            LotsHighlights::create([
+                'id_estado' => 19,
+                'id_municipio' => $request->id_municipio,
+                'id_lot' => $request->id_lot,
+            ]);
         } catch (Exception $e) {
-            return json_encode($e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
 
-        return redirect('overview/lots-highlights');
+        return redirect()->route('admin.highlights.lots');
     }
 
     public function deleteLotHightlight($id)
     {
-        $h = LotsHighlights::find($id);
+        $highlight = LotsHighlights::find($id);
 
-        if ($h) {
-            $h->delete();
-            return redirect('overview/lots-highlights');
-        } else {
-            return json_encode('error: Agenda entry not found');
+        if (!$highlight) {
+            return response()->json(['error' => 'No se encontró el destacado a eliminar.'], 404);
         }
+
+        $highlight->delete();
+
+        return redirect()->route('admin.highlights.lots');
     }
 
     public function orderLotHightlight(Request $request)
     {
-        $idProperty = $request->id;
+        $highlight = LotsHighlights::where('id_lot', $request->id)->first();
 
-        $h = LotsHighlights::where('id_lot', $idProperty)->first();
-
-        if ($h) {
-            $h->num_order = $request->num_order;
-            $h->save();
-
-            return redirect('overview/lots-highlights');
-        } else {
-            return json_encode('error: entry for property with id ' . $idProperty . ' not found');
+        if (!$highlight) {
+            return response()->json(['error' => 'No se encontró el destacado a ordenar.'], 404);
         }
+
+        $highlight->update([
+            'num_order' => $request->order,
+        ]);
+
+        return redirect()->route('admin.highlights.lots');
     }
 }
