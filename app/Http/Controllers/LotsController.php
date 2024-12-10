@@ -71,7 +71,8 @@ class LotsController
 
     public function getLot($id)
     {
-        return Lots::find($id);
+        return Lots::where('id', $id)
+            ->get();
     }
 
     public function getLotsRelated($id)

@@ -151,7 +151,8 @@ class DevelopmentsController extends Controller
 
     public function getDevelopment($id)
     {
-        return Developments::find($id);
+        return Developments::where('id', $id)
+            ->get();
     }
 
     public function getDevCard($id)
