@@ -276,7 +276,7 @@ Editar terreno
                 </div>
                 <br><br>
                 <div class="d-flex justify-content-center mt-4">
-                    <button type="submit" class="btn1">Editar apartamento</button>
+                    <button type="submit" class="btn1">Editar terreno</button>
                 </div>
             </form>
             <form id="delete-form" action="{{ route('terrain.images.delete', ['terrainId' => $terrain->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
