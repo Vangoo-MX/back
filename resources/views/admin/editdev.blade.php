@@ -451,11 +451,7 @@
     });
 
     //opciones de apartamentos
-    let optionCount = <?php if ($app) {
-                            echo sizeof($app);
-                        } else {
-                            echo '0';
-                        } ?>;
+    let optionCount = <?php echo is_array($app) ? sizeof($app) : 0; ?>;
     const addOptionBtn = document.getElementById('add-option-btn');
     const optionsContainer = document.querySelector('.options-container');
 
