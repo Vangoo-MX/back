@@ -374,6 +374,9 @@ Route::get('ep/getApartmentsFromDev/{id}', [DevelopmentsApartmentsController::cl
 Route::get('ep/getApartmentsImages/{id}', [DevelopmentsApartmentsController::class, 'getApartmentsImages'])->name('epApartmentsImages.get');
 
 /* LOTES */
+
+Route::get('ep/getAllLots', [LotsController::class, 'getAll'])->name('epAllLots.get');
+
 Route::post('ep/storelot', [LotsController::class, 'storeLot'])->name('epLot.store');
 
 Route::get('ep/deletelot/{id}', [LotsController::class, 'deleteLot'])->name('epLot.delete');
