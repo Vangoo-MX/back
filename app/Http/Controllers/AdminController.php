@@ -608,7 +608,7 @@ class AdminController extends Controller
         $municipios = Municipios::where('id_estado', 19)->get();
 
         $dev = Developments::where('id', $id)->first();
-        $app = DevelopmentsApartments::where('id_development', $id)->first();
+        $app = DevelopmentsApartments::where('id_development', $id)->get();
 
         return response()->view('admin.editdev', compact('municipios', 'dev', 'app'))->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')->header('Pragma', 'no-cache')->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
     }
