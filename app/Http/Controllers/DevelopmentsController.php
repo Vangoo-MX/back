@@ -317,55 +317,8 @@ class DevelopmentsController extends Controller
         return redirect()->route('admin.developments');
     }
 
-    public function editdev(Request $request)
+    public function editdev(DevelopmentRequest $request)
     {
-        $request->validate([
-            'title' => 'required|min:10|max:100',
-            'price_min' => 'required|numeric|lte:price_max',
-            'price_max' => 'required|numeric|gte:price_min',
-            'description' => 'required|min:10|max:500',
-            'availability' => 'required|date',
-            'street' => 'required|min:3|max:20',
-            'num_ext' => 'required|numeric',
-            'cp' => 'required|numeric',
-            'amenities' => 'min:3',
-            'area' => 'required|numeric',
-            'commission_percentage' => 'required|numeric',
-            'id_municipio' => 'required',
-            // 'images' => 'array',
-            // 'images.*' => 'image|mimes:jpeg,jpg|max:2048'
-        ], [
-            'title.required' => 'El título es obligatorio',
-            'title.min' => 'El título debe tener mas de 10 caracteres',
-            'title.max' => 'El título debe tener menos de 100 caracteres',
-            'price_min.required' => 'El precio mínimo es obligatorio',
-            'price_min.numeric' => 'El precio mínimo debe ser un numero',
-            'price_min.lte' => 'El precio mínimo debe ser menor o igual al precio máximo',
-            'price_max.required' => 'El precio máximo es obligatorio',
-            'price_max.numeric' => 'El precio máximo debe ser un numero',
-            'price_max.gte' => 'El precio máximo debe ser mayor o igual al precio mínimo',
-            'description.required' => 'La descripción es obligatoria',
-            'description.min' => 'La descripción debe tener mas de 10 caracteres',
-            'description.max' => 'La descripción debe tener menos de 500 caracteres',
-            'availability.required' => 'La fecha de disponibilidad es obligatoria',
-            'availability.date' => 'La fecha de disponibilidad debe ser una fecha valida',
-            'street.required' => 'La calle es requerida',
-            'street.min' => 'La calle debe tener mas de 3 caracteres',
-            'street.max' => 'La calle debe tener menos de 100 caracteres',
-            'num_ext.required' => 'El número exterior es requerido',
-            'num_ext.numeric' => 'El numero exterior solo puede ser un numero',
-            'cp.required' => 'El codigo postal es requerido',
-            'cp.numeric' => 'El codigo solo puede ser un numero',
-            'amenities.min' => 'Ingrese minimo una amenidad',
-            'area.required' => 'La medida del area es requerida',
-            'area.numeric' => 'La medida del area debe ser un número',
-            'commission_percentage.required' => 'El porcentaje de comisión es requerido',
-            'commission_percentage.numeric' => 'El porcentaje de comisión debe ser un número',
-            'id_municipio.required' => 'El municipio es requerido',
-            // 'images.*.image' => 'Cada archivo debe ser una imagen.',
-            // 'images.*.mimes' => 'Cada imagen debe ser de tipo jpeg o jpg.',
-            // 'images.*.max' => 'Cada imagen no puede ser mayor de 2MB.',
-        ]);
         $development = Developments::findOrFail($request->id);
         $development->title = $request->title;
         $development->status = $request->status;
@@ -519,37 +472,43 @@ class DevelopmentsController extends Controller
 
     public function deleteImage(Request $request, $developmentId, $imageId)
     {
-        $imagePath = 'public/img/posts/developments/' . $developmentId . '/' . $imageId . '.jpg';
+        $extensions = ['jpg', 'jpeg', 'png'];
+        $imageDeleted = false;
 
-        if (Storage::exists($imagePath)) {
-            Storage::delete($imagePath);
+        $development = Developments::findOrFail($developmentId);
 
-            $development = Developments::findOrFail($developmentId);
-            $development->images -= 1;
-            $development->save();
+        foreach ($extensions as $extension) {
+            $imagePath = 'public/img/posts/developments/' . $developmentId . '/' . $imageId . '.' . $extension;
 
-            for ($i = $imageId + 1; $i <= $development->images + 1; $i++) {
-                $oldImagePath = 'public/img/posts/developments/' . $developmentId . '/' . $i . '.jpg';
-                $newImagePath = 'public/img/posts/developments/' . $developmentId . '/' . ($i - 1) . '.jpg';
+            if (Storage::exists($imagePath)) {
+                Storage::delete($imagePath);
+                $imageDeleted = true;
+                $development->decrement('images');
+                break;
+            }
+        }
+
+        if (!$imageDeleted) {
+            return response()->json(['error' => 'Imagen no encontrada.'], 404);
+        }
+
+        for ($i = $imageId + 1; $i <= $development->images + 1; $i++) {
+            foreach ($extensions as $extension) {
+                $oldImagePath = 'public/img/posts/developments/' . $developmentId . '/' . $i . '.' . $extension;
+                $newImagePath = 'public/img/posts/developments/' . $developmentId . '/' . ($i - 1) . '.' . $extension;
 
                 if (Storage::exists($oldImagePath)) {
                     Storage::move($oldImagePath, $newImagePath);
+                    break;
                 }
             }
-
-            return redirect()->back()->with('success', 'La imagen se eliminó correctamente.');
-        } else {
-            return response()->json(['error' => 'Imagen no encontrada.'], 404);
         }
+        return redirect()->back()->with('success', 'La imagen se eliminó correctamente.');
     }
 
     public function deleteDev($id)
     {
-        $highlight = DevelopmentsHighlights::where('id_development', $id)->first();
-
-        if ($highlight) {
-            $highlight->delete();
-        }
+        DevelopmentsHighlights::where('id_development', $id)->delete();
 
         $dev = Developments::findOrFail($id);
 
@@ -557,15 +516,11 @@ class DevelopmentsController extends Controller
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            // Esperar 1 segundo antes de intentar eliminar la carpeta
             sleep(1);
             rmdir($directoryPath);
         }
-
+        DevelopmentsApartments::where('id_development', $id)->delete();
         $dev->delete();
-
-        $apartments = DevelopmentsApartments::where('id_development', $id);
-        $apartments->delete();
 
         return redirect()->back();
     }
