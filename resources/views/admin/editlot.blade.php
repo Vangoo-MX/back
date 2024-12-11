@@ -312,7 +312,13 @@ Editar
                             @endif
 
                             <div class="mt-1">
-                                <input class="form-control" type="number" name="orderimg[{{$i}}]" value="{{$i}}" max="{{$lot[0]->images}}" min="1" style="width:100%">
+                                <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%">
+                                    @for($j = 1; $j <= $lot[0]->images; $j++)
+                                        <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
+                                            {{ $j }}
+                                        </option>
+                                        @endfor
+                                </select>
                             </div>
                             <span class="delete-icon" onclick="confirmDelete(event, {{$i}})">❌</span>
                         </div>
