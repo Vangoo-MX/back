@@ -263,16 +263,24 @@ class LotsController
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/posts/lots/' . $lot->id);
                 $key = $index;
-                if (file_exists($path . "/{$order}.jpg")) {
-                    rename($path . "/{$order}.jpg", $path . "/{$order}temp.jpg");
+                $extensions = ['jpg', 'jpeg', 'png'];
+
+                foreach ($extensions as $ext) {
+                    if (file_exists($path . "/{$order}.{$ext}")) {
+                        rename($path . "/{$order}.{$ext}", $path . "/{$order}temp.{$ext}");
+                    }
                 }
             }
 
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/posts/lots/' . $lot->id);
                 $key = $index;
-                if (file_exists($path . "/{$key}temp.jpg")) {
-                    rename($path . "/{$key}temp.jpg", $path . "/{$order}.jpg");
+                $extensions = ['jpg', 'jpeg', 'png'];
+
+                foreach ($extensions as $ext) {
+                    if (file_exists($path . "/{$key}temp.{$ext}")) {
+                        rename($path . "/{$key}temp.{$ext}", $path . "/{$order}.{$ext}");
+                    }
                 }
             }
         }
