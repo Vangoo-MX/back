@@ -206,7 +206,7 @@
                                 <input type="number" class="form-control app-input" placeholder="Precio" name="option[1][price]">
                                 <input type="number" step="0.01" class="form-control app-input" placeholder="Area" name="option[1][area]" required>
                                 <input type="number" class="form-control app-input" placeholder="Habitaciones" name="option[1][rooms]" required>
-                                <input type="number" class="form-control app-input" placeholder="Baños" name="option[1][bathrooms]" required>
+                                <input type="number" step="0.01" class="form-control app-input" placeholder="Baños" name="option[1][bathrooms]" required>
                                 <input type="number" class="form-control app-input" placeholder="Estacionamientos" name="option[1][parkings]" required>
                                 <input type="number" class="form-control app-input" placeholder="Num disponibles" name="option[1][num_available]" required>
                             </div>

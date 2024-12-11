@@ -235,7 +235,7 @@
                                 <input type="number" class="form-control app-input" placeholder="Precio" value="{{old('price', $a->price)}}" name="optionapp[{{$loop->index+1}}][price]" required>
                                 <input type="number" step="0.01" class="form-control app-input" placeholder="Area" value="{{old('area', $a->area)}}" name="optionapp[{{$loop->index+1}}][area]" required>
                                 <input type="number" class="form-control app-input" placeholder="Habitaciones" value="{{old('rooms', $a->rooms)}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
-                                <input type="number" class="form-control app-input" placeholder="Baños" value="{{old('bathrooms', $a->bathrooms)}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
+                                <input type="number" step="0.01" class="form-control app-input" placeholder="Baños" value="{{old('bathrooms', $a->bathrooms)}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
                                 <input type="number" class="form-control app-input" placeholder="Estacionamientos" value="{{old('parkings',$a->parkings)}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
                                 <input type="number" class="form-control app-input" placeholder="Num disponibles" value="{{old('num_available', $a->num_available)}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
                             </div>
