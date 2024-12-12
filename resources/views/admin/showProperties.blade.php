@@ -273,7 +273,13 @@ Editar propiedad
                             @endif
 
                             <div class="mt-1">
-                                <input class="form-control" type="number" name="orderimg[{{$i}}]" value="{{$i}}" max="{{$propiedad->images}}" min="1" style="width:100%">
+                                <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%" required>
+                                    @for($j = 1; $j <= $propiedad->images; $j++)
+                                        <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
+                                            {{ $j }}
+                                        </option>
+                                        @endfor
+                                </select>
                             </div>
                             <span class="delete-icon" onclick="confirmDelete(event, {{$i}})">❌</span>
                         </div>
@@ -443,6 +449,18 @@ Editar propiedad
                     $.each(response, function(index, colonia) {
                         $('#id_colonia').append('<option value="' + colonia.id + '">' + colonia.nombre + '</option>');
                     });
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('.reorder-select').forEach(select => {
+        select.addEventListener('change', () => {
+            const currentValue = select.value;
+
+            document.querySelectorAll('.reorder-select').forEach(otherSelect => {
+                if (otherSelect !== select && otherSelect.value === currentValue) {
+                    otherSelect.value = '';
                 }
             });
         });
