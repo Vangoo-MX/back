@@ -497,7 +497,7 @@ class TerrainsController extends Controller
         if (empty($id)) {
             return response()->json(['error' => 'ID inválido'], 400);
         }
-        $imageNames = $request->imageNames;
+        $imageNames = array_unique($request->imageNames);
         $route = public_path("storage/img/postsqueue/terrains/{$id}/");
         $extensions = ['jpg', 'jpeg', 'png'];
         $deletedCount = 0;
