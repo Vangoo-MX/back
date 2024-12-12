@@ -520,18 +520,13 @@ Editar
 
     document.querySelectorAll('.reorder-select').forEach(select => {
         select.addEventListener('change', () => {
-            const selectedValues = Array.from(document.querySelectorAll('.reorder-select'))
-                .map(sel => sel.value);
+            const currentValue = select.value;
 
-            // Actualizar todos los selects
-            document.querySelectorAll('.reorder-select').forEach(currentSelect => {
-                if (currentSelect !== select) { // No afecta al select actual
-                    const currentValue = currentSelect.value;
-
-                    // Si el valor seleccionado ya está en uso y no es el actual, resetea a vacío
-                    if (selectedValues.includes(currentValue) && currentValue !== select.value) {
-                        currentSelect.value = ''; // Dejar vacío
-                    }
+            // Recorremos todos los select
+            document.querySelectorAll('.reorder-select').forEach(otherSelect => {
+                if (otherSelect !== select && otherSelect.value === currentValue) {
+                    // Si otro select tiene el mismo valor, lo dejamos en vacío
+                    otherSelect.value = '';
                 }
             });
         });
