@@ -645,7 +645,7 @@ class ApartmentsController extends Controller
             $apartment->no_exact_location = $request->propertyExactLocation == true ? 0 : 1;
         }
         if (isset($request->number_images)) {
-            $apartment->images = $request->number_images;
+            $apartment->images += $request->number_images;
         }
         if (isset($request->status_aproved)) {
             $apartment->status_aproved = $request->status_aproved;

@@ -628,7 +628,7 @@ class PropertiesController extends Controller
             $property->no_exact_location = $request->propertyExactLocation == true ? 0 : 1;
         }
         if (isset($request->number_images)) {
-            $property->images = $request->number_images;
+            $property->images += $request->number_images;
         }
         if (isset($request->status_aproved)) {
             $property->status_aproved = $request->status_aproved;
