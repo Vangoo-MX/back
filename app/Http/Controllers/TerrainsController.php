@@ -481,6 +481,13 @@ class TerrainsController extends Controller
             $imagen->storeAs($directory, $nameimg);
         }
 
+        $terrain = TerrainsQueue::findOrFail($request->id);
+        if (!$terrain->images) {
+            $terrain->images = sizeof($request->file('image'));
+        } else {
+            $terrain->images += sizeof($request->file('image'));
+        }
+
         return json_encode('success');
     }
 
