@@ -312,7 +312,7 @@ Editar
                             @endif
 
                             <div class="mt-1">
-                                <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%">
+                                <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%" required>
                                     @for($j = 1; $j <= $lot[0]->images; $j++)
                                         <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
                                             {{ $j }}
@@ -522,10 +522,8 @@ Editar
         select.addEventListener('change', () => {
             const currentValue = select.value;
 
-            // Recorremos todos los select
             document.querySelectorAll('.reorder-select').forEach(otherSelect => {
                 if (otherSelect !== select && otherSelect.value === currentValue) {
-                    // Si otro select tiene el mismo valor, lo dejamos en vacío
                     otherSelect.value = '';
                 }
             });
