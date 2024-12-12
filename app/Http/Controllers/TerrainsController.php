@@ -481,12 +481,12 @@ class TerrainsController extends Controller
             $imagen->storeAs($directory, $nameimg);
         }
 
-        $terrain = TerrainsQueue::findOrFail($request->id);
-        if (!$terrain->images) {
-            $terrain->images = sizeof($request->file('image'));
-        } else {
-            $terrain->images += sizeof($request->file('image'));
-        }
+        // $terrain = TerrainsQueue::findOrFail($request->id);
+        // if (!$terrain->images) {
+        //     $terrain->images = sizeof($request->file('image'));
+        // } else {
+        //     $terrain->images += sizeof($request->file('image'));
+        // }
 
         return json_encode('success');
     }
@@ -620,7 +620,7 @@ class TerrainsController extends Controller
             $terrain->no_exact_location = $request->propertyExactLocation == true ? 0 : 1;
         }
         if (isset($request->number_images)) {
-            $terrain->images = $request->number_images;
+            $terrain->images += $request->number_images;
         }
         if (isset($request->status_aproved)) {
             $terrain->status_aproved = $request->status_aproved;
