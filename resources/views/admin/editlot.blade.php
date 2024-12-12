@@ -518,16 +518,22 @@ Editar
         changeMuninicio();
     });
 
-    // document.querySelectorAll('.reorder-select').forEach(select => {
-    //     select.addEventListener('change', () => {
-    //         const selectedValues = Array.from(document.querySelectorAll('.reorder-select'))
-    //             .map(sel => sel.value);
+    document.querySelectorAll('.reorder-select').forEach(select => {
+        select.addEventListener('change', () => {
+            // Obtener todos los valores seleccionados
+            const selectedValues = Array.from(document.querySelectorAll('.reorder-select'))
+                .map(sel => sel.value);
 
-    //         document.querySelectorAll('.reorder-select option').forEach(option => {
-    //             option.disabled = selectedValues.includes(option.value) && !option.selected;
-    //         });
-    //     });
-    // });
+            // Actualizar opciones en todos los select
+            document.querySelectorAll('.reorder-select').forEach(currentSelect => {
+                const currentValue = currentSelect.value; // Valor actual del select
+                currentSelect.querySelectorAll('option').forEach(option => {
+                    // Habilitar opción si no está seleccionada por otro select
+                    option.disabled = selectedValues.includes(option.value) && option.value !== currentValue;
+                });
+            });
+        });
+    });
 </script>
 
 @endsection()
