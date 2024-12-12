@@ -518,16 +518,16 @@ Editar
         changeMuninicio();
     });
 
-    document.querySelectorAll('.reorder-select').forEach(select => {
-        select.addEventListener('change', () => {
-            const selectedValues = Array.from(document.querySelectorAll('.reorder-select'))
-                .map(sel => sel.value);
+    // document.querySelectorAll('.reorder-select').forEach(select => {
+    //     select.addEventListener('change', () => {
+    //         const selectedValues = Array.from(document.querySelectorAll('.reorder-select'))
+    //             .map(sel => sel.value);
 
-            document.querySelectorAll('.reorder-select option').forEach(option => {
-                option.disabled = selectedValues.includes(option.value) && !option.selected;
-            });
-        });
-    });
+    //         document.querySelectorAll('.reorder-select option').forEach(option => {
+    //             option.disabled = selectedValues.includes(option.value) && !option.selected;
+    //         });
+    //     });
+    // });
 </script>
 
 @endsection()
