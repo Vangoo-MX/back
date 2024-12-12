@@ -520,17 +520,19 @@ Editar
 
     document.querySelectorAll('.reorder-select').forEach(select => {
         select.addEventListener('change', () => {
-            // Obtener todos los valores seleccionados
             const selectedValues = Array.from(document.querySelectorAll('.reorder-select'))
                 .map(sel => sel.value);
 
-            // Actualizar opciones en todos los select
+            // Actualizar todos los selects
             document.querySelectorAll('.reorder-select').forEach(currentSelect => {
-                const currentValue = currentSelect.value; // Valor actual del select
-                currentSelect.querySelectorAll('option').forEach(option => {
-                    // Habilitar opción si no está seleccionada por otro select
-                    option.disabled = selectedValues.includes(option.value) && option.value !== currentValue;
-                });
+                if (currentSelect !== select) { // No afecta al select actual
+                    const currentValue = currentSelect.value;
+
+                    // Si el valor seleccionado ya está en uso y no es el actual, resetea a vacío
+                    if (selectedValues.includes(currentValue) && currentValue !== select.value) {
+                        currentSelect.value = ''; // Dejar vacío
+                    }
+                }
             });
         });
     });
