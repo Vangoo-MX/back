@@ -208,13 +208,15 @@
                                 <img class="pe-2" src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px">
                             </a>
                             @endif
-                            <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%">
-                                @for($j = 1; $j <= $dev->images; $j++)
-                                    <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
-                                        {{ $j }}
-                                    </option>
-                                    @endfor
-                            </select>
+                            <div class="mt-1">
+                                <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%">
+                                    @for($j = 1; $j <= $dev->images; $j++)
+                                        <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
+                                            {{ $j }}
+                                        </option>
+                                        @endfor
+                                </select>
+                            </div>
                             <span class="delete-icon" onclick="confirmDelete(event, {{$i}})">❌</span>
                         </div>
                         @endfor
