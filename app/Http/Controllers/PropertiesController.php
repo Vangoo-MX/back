@@ -503,14 +503,12 @@ class PropertiesController extends Controller
         $extensions = ['jpg', 'jpeg', 'png'];
         $deletedCount = 0;
 
-        foreach ($imageNames as $imageName) {
-            foreach ($extensions as $extension) {
-                $imagePath = $route . $imageName . '.' . $extension;
-                if (file_exists($imagePath)) {
-                    unlink($imagePath);
-                    $deletedCount++;
-                    break;
-                }
+        foreach ($extensions as $extension) {
+            $imagePath = $route . $imageNames . '.' . $extension;
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+                $deletedCount++;
+                break;
             }
         }
 
