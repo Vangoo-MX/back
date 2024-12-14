@@ -617,10 +617,9 @@ class TerrainsController extends Controller
             $terrain->status_aproved = $request->status_aproved;
         }
 
-        if ($request->orderimg) {
+        if ($request->has('orderimg')) {
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/posts/terrains/' . $terrain->id);
-                $key = $index;
                 if (file_exists($path . "/{$order}.jpg")) {
                     rename($path . "/{$order}.jpg", $path . "/{$order}temp.jpg");
                 }
@@ -628,9 +627,8 @@ class TerrainsController extends Controller
 
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/posts/terrains/' . $terrain->id);
-                $key = $index;
-                if (file_exists($path . "/{$key}temp.jpg")) {
-                    rename($path . "/{$key}temp.jpg", $path . "/{$order}.jpg");
+                if (file_exists($path . "/{$index}temp.jpg")) {
+                    rename($path . "/{$index}temp.jpg", $path . "/{$order}.jpg");
                 }
             }
         }
