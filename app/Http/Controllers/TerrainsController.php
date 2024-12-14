@@ -617,28 +617,22 @@ class TerrainsController extends Controller
             $terrain->status_aproved = $request->status_aproved;
         }
 
-        Log::info('Orderimg recibido:', ['orderimg' => $request->orderimg]);
-
-        if ($request->has('orderimg') && is_array($request->orderimg)) {
-            Log::info('Array recibido:', $request->orderimg);
+        if ($request->orderimg) {
             foreach ($request->orderimg as $index => $order) {
-                $path = storage_path('app/public/img/postsqueue/terrains/' . $terrain->id);
-                Log::info("Verificando existencia del archivo: {$path}");
+                $path = storage_path('app/public/img/postsque/terrains/' . $terrain->id);
+                $key = $index;
                 if (file_exists($path . "/{$order}.jpg")) {
                     rename($path . "/{$order}.jpg", $path . "/{$order}temp.jpg");
-                } else {
-                    Log::warning("El archivo no existe: {$path}");
                 }
             }
 
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/postsqueue/terrains/' . $terrain->id);
-                if (file_exists($path . "/{$order}temp.jpg")) {
-                    rename($path . "/{$order}temp.jpg", $path . "/{$order}.jpg");
+                $key = $index;
+                if (file_exists($path . "/{$key}temp.jpg")) {
+                    rename($path . "/{$key}temp.jpg", $path . "/{$order}.jpg");
                 }
             }
-        } else {
-            Log::warning('No se recibió el campo orderimg o está vacío');
         }
 
         $terrain->save();
