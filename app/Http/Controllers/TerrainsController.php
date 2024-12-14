@@ -618,10 +618,14 @@ class TerrainsController extends Controller
         }
 
         if ($request->has('orderimg')) {
+            Log::info('Array recibido:', $request->orderimg);
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/postsqueue/terrains/' . $terrain->id);
+                Log::info("Verificando existencia del archivo: {$path}");
                 if (file_exists($path . "/{$order}.jpg")) {
                     rename($path . "/{$order}.jpg", $path . "/{$order}temp.jpg");
+                } else {
+                    Log::warning("El archivo no existe: {$path}");
                 }
             }
 
