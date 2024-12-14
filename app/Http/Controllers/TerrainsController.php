@@ -617,6 +617,8 @@ class TerrainsController extends Controller
             $terrain->status_aproved = $request->status_aproved;
         }
 
+        Log::info('Orderimg recibido:', ['orderimg' => $request->orderimg]);
+
         if ($request->has('orderimg')) {
             Log::info('Array recibido:', $request->orderimg);
             foreach ($request->orderimg as $index => $order) {
