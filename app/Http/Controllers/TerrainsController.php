@@ -619,7 +619,7 @@ class TerrainsController extends Controller
 
         Log::info('Orderimg recibido:', ['orderimg' => $request->orderimg]);
 
-        if ($request->has('orderimg')) {
+        if ($request->has('orderimg') && is_array($request->orderimg)) {
             Log::info('Array recibido:', $request->orderimg);
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/postsqueue/terrains/' . $terrain->id);
@@ -637,6 +637,8 @@ class TerrainsController extends Controller
                     rename($path . "/{$index}temp.jpg", $path . "/{$order}.jpg");
                 }
             }
+        } else {
+            Log::warning('No se recibió el campo orderimg o está vacío');
         }
 
         $terrain->save();
