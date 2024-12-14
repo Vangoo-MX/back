@@ -619,14 +619,14 @@ class TerrainsController extends Controller
 
         if ($request->has('orderimg')) {
             foreach ($request->orderimg as $index => $order) {
-                $path = storage_path('app/public/img/posts/terrains/' . $terrain->id);
+                $path = storage_path('app/public/img/postsqueue/terrains/' . $terrain->id);
                 if (file_exists($path . "/{$order}.jpg")) {
                     rename($path . "/{$order}.jpg", $path . "/{$order}temp.jpg");
                 }
             }
 
             foreach ($request->orderimg as $index => $order) {
-                $path = storage_path('app/public/img/posts/terrains/' . $terrain->id);
+                $path = storage_path('app/public/img/postsqueue/terrains/' . $terrain->id);
                 if (file_exists($path . "/{$index}temp.jpg")) {
                     rename($path . "/{$index}temp.jpg", $path . "/{$order}.jpg");
                 }
