@@ -610,7 +610,7 @@ class TerrainsController extends Controller
         if (isset($request->propertyExactLocation)) {
             $terrain->no_exact_location = $request->propertyExactLocation == true ? 0 : 1;
         }
-        Log::info('Request number_images:', ['number_images' => $request->number_images]);
+
         if (isset($request->number_images)) {
             $terrain->images += $request->number_images;
         }
