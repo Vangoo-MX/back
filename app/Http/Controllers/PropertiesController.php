@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class PropertiesController extends Controller
@@ -275,8 +276,15 @@ class PropertiesController extends Controller
 
     public function deletePropertyQueueEP($id)
     {
-
         $propertyQueue = PropertiesQueue::findOrFail($id);
+        $directoryPath = public_path("storage/img/postsqueue/properties/{$propertyQueue->id}");
+
+        if (is_dir($directoryPath)) {
+            File::deleteDirectory($directoryPath, true);
+            sleep(1);
+            rmdir($directoryPath);
+        }
+
         $propertyQueue->delete();
         return json_encode("success");
     }
@@ -294,7 +302,6 @@ class PropertiesController extends Controller
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            // Esperar 1 segundo antes de intentar eliminar la carpeta
             sleep(1);
             rmdir($directoryPath);
         }
@@ -360,7 +367,6 @@ class PropertiesController extends Controller
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            // Esperar 1 segundo antes de intentar eliminar la carpeta
             sleep(1);
             rmdir($directoryPath);
         }
@@ -630,6 +636,35 @@ class PropertiesController extends Controller
         }
         if (isset($request->status_aproved)) {
             $property->status_aproved = $request->status_aproved;
+        }
+
+        if ($request->has('orderArray') && is_array($request->orderArray)) {
+            $orderArray = $request->orderArray;
+
+            foreach ($orderArray as $index => $order) {
+                $path = storage_path('app/public/img/postsqueue/properties/' . $request->id);
+                $tempFile = $path . "/{$order}.jpg";
+
+                if (file_exists($tempFile)) {
+                    rename($tempFile, $path . "/{$order}temp.jpg");
+                } else {
+                    Log::warning("File not found during temp rename: {$tempFile}");
+                }
+            }
+
+            foreach ($orderArray as $index => $order) {
+                $path = storage_path('app/public/img/postsqueue/properties/' . $request->id);
+                $tempFile = $path . "/{$order}temp.jpg";
+                $finalFile = $path . "/" . ($index + 1) . ".jpg";
+
+                if (file_exists($tempFile)) {
+                    rename($tempFile, $finalFile);
+                } else {
+                    Log::warning("Temp file not found during final rename: {$tempFile}");
+                }
+            }
+        } else {
+            return response()->json(['error' => 'orderArray must be an array'], 400);
         }
 
         $property->save();

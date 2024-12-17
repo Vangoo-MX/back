@@ -364,7 +364,6 @@ class TerrainsController extends Controller
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            // Esperar 1 segundo antes de intentar eliminar la carpeta
             sleep(1);
             rmdir($directoryPath);
         }
@@ -458,8 +457,6 @@ class TerrainsController extends Controller
             $terrain->id_user = $request->id_user;
         }
         $terrain->views = 0;
-
-        Log::info('Request recibido:', $request->all());
 
         $terrain->save();
 
