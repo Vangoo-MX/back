@@ -620,22 +620,24 @@ class TerrainsController extends Controller
 
         Log::info('Request recibido:', $request->all());
 
-        if (is_array($request->orderimg)) {
-            $path = storage_path('app/public/img/postsqueue/terrains/' . $request->id);
-            foreach ($request->orderimg as $index => $order) {
-                $originalFile = $path . "/{$order}.jpg";
-                $tempFile = $path . "/{$order}temp.jpg";
+        if ($request->has('orderArray') && is_array($request->orderArray)) {
+            $orderArray = $request->orderArray;
 
-                if (file_exists($originalFile)) {
-                    rename($originalFile, $tempFile);
+            foreach ($orderArray as $index => $order) {
+                $path = storage_path('app/public/img/postsqueue/terrains/' . $request->id);
+                $tempFile = $path . "/{$order}.jpg";
+
+                if (file_exists($tempFile)) {
+                    rename($tempFile, $path . "/{$order}temp.jpg");
                 } else {
-                    Log::warning("File not found during rename to temp: {$originalFile}");
+                    Log::warning("File not found during temp rename: {$tempFile}");
                 }
             }
 
-            foreach ($request->orderimg as $index => $order) {
+            foreach ($orderArray as $index => $order) {
+                $path = storage_path('app/public/img/postsqueue/terrains/' . $request->id);
                 $tempFile = $path . "/{$order}temp.jpg";
-                $finalFile = $path . "/{" . ($index + 1) . "}.jpg";
+                $finalFile = $path . "/" . ($index + 1) . ".jpg";
 
                 if (file_exists($tempFile)) {
                     rename($tempFile, $finalFile);
@@ -644,7 +646,7 @@ class TerrainsController extends Controller
                 }
             }
         } else {
-            return response()->json(['error' => 'orderimg must be an array'], 400);
+            return response()->json(['error' => 'orderArray must be an array'], 400);
         }
 
         $terrain->save();
