@@ -618,6 +618,8 @@ class TerrainsController extends Controller
             $terrain->status_aproved = $request->status_aproved;
         }
 
+        Log::info('Request recibido:', $request->all());
+
         if (is_array($request->orderimg)) {
             $path = storage_path('app/public/img/postsqueue/terrains/' . $request->id);
             foreach ($request->orderimg as $index => $order) {
