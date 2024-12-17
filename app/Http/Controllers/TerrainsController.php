@@ -618,10 +618,9 @@ class TerrainsController extends Controller
             $terrain->status_aproved = $request->status_aproved;
         }
 
-        if ($request->orderimg) {
+        if (is_array($request->orderimg)) {
             foreach ($request->orderimg as $index => $order) {
-                $path = storage_path('app/public/img/postsque/terrains/' . $terrain->id);
-                $key = $index;
+                $path = storage_path('app/public/img/postsqueue/terrains/' . $terrain->id);
                 if (file_exists($path . "/{$order}.jpg")) {
                     rename($path . "/{$order}.jpg", $path . "/{$order}temp.jpg");
                 }
@@ -629,11 +628,12 @@ class TerrainsController extends Controller
 
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/postsqueue/terrains/' . $terrain->id);
-                $key = $index;
-                if (file_exists($path . "/{$key}temp.jpg")) {
-                    rename($path . "/{$key}temp.jpg", $path . "/{$order}.jpg");
+                if (file_exists($path . "/{$index}temp.jpg")) {
+                    rename($path . "/{$index}temp.jpg", $path . "/{$order}.jpg");
                 }
             }
+        } else {
+            return response()->json(['error' => 'orderimg must be an array'], 400);
         }
 
         $terrain->save();
