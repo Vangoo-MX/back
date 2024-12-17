@@ -618,8 +618,6 @@ class TerrainsController extends Controller
             $terrain->status_aproved = $request->status_aproved;
         }
 
-        Log::info('Request recibido:', $request->all());
-
         if ($request->has('orderArray') && is_array($request->orderArray)) {
             $orderArray = $request->orderArray;
 
