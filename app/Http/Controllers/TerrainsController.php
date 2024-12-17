@@ -619,17 +619,26 @@ class TerrainsController extends Controller
         }
 
         if (is_array($request->orderimg)) {
+            $path = storage_path('app/public/img/postsqueue/terrains/' . $request->id);
             foreach ($request->orderimg as $index => $order) {
-                $path = storage_path('app/public/img/postsqueue/terrains/' . $request->id);
-                if (file_exists($path . "/{$order}.jpg")) {
-                    rename($path . "/{$order}.jpg", $path . "/{$order}temp.jpg");
+                $originalFile = $path . "/{$order}.jpg";
+                $tempFile = $path . "/{$order}temp.jpg";
+
+                if (file_exists($originalFile)) {
+                    rename($originalFile, $tempFile);
+                } else {
+                    Log::warning("File not found during rename to temp: {$originalFile}");
                 }
             }
 
             foreach ($request->orderimg as $index => $order) {
-                $path = storage_path('app/public/img/postsqueue/terrains/' . $request->id);
-                if (file_exists($path . "/{$index}temp.jpg")) {
-                    rename($path . "/{$index}temp.jpg", $path . "/{$order}.jpg");
+                $tempFile = $path . "/{$order}temp.jpg";
+                $finalFile = $path . "/{" . ($index + 1) . "}.jpg";
+
+                if (file_exists($tempFile)) {
+                    rename($tempFile, $finalFile);
+                } else {
+                    Log::warning("Temp file not found during final rename: {$tempFile}");
                 }
             }
         } else {
