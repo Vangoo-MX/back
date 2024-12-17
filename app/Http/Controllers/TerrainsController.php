@@ -635,7 +635,7 @@ class TerrainsController extends Controller
             foreach ($orderArray as $index => $order) {
                 $path = storage_path('app/public/img/postsqueue/terrains/' . $request->id);
                 $tempFile = $path . "/{$order}temp.jpg";
-                $finalFile = $path . "/" . ($index) . ".jpg";
+                $finalFile = $path . "/" . ($index + 1) . ".jpg";
 
                 if (file_exists($tempFile)) {
                     rename($tempFile, $finalFile);
