@@ -14,6 +14,7 @@ use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
 use App\Models\LotsHighlights;
+use Intervention\Image\Facades\Image;
 use PHPUnit\TextUI\XmlConfiguration\Loader;
 
 class LotsController
@@ -185,16 +186,18 @@ class LotsController
         ]);
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
-                $directory = 'public/img/posts/lots/' . $lot->id . '/';
-                $nameimg = Str::slug($index + 1) . "." . $image->getClientOriginalExtension();
-
                 $path = storage_path('app/public/img/posts/lots/' . $lot->id . '/');
 
                 if (!file_exists($path)) {
                     mkdir($path, 0755, true);
                 }
                 chmod($path, 0755);
-                $image->storeAs($directory, $nameimg);
+
+                $imageName = Str::slug($index + 1) . '.webp';
+                $imageWebp = Image::make($image->getRealPath())
+                    ->encode('webp', 90);
+
+                $imageWebp->save($path . $imageName);
             }
         }
         return redirect()->route('admin.lots');
