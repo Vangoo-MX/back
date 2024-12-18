@@ -284,7 +284,7 @@ class LotsController
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/posts/lots/' . $lot->id);
                 $key = $index;
-                $extensions = ['jpg', 'jpeg', 'png'];
+                $extensions = ['jpg', 'jpeg', 'png', 'webp'];
 
                 foreach ($extensions as $ext) {
                     if (file_exists($path . "/{$order}.{$ext}")) {
@@ -296,7 +296,7 @@ class LotsController
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/posts/lots/' . $lot->id);
                 $key = $index;
-                $extensions = ['jpg', 'jpeg', 'png'];
+                $extensions = ['jpg', 'jpeg', 'png', 'webp'];
 
                 foreach ($extensions as $ext) {
                     if (file_exists($path . "/{$key}temp.{$ext}")) {
@@ -310,7 +310,7 @@ class LotsController
 
     public function deleteImage(Request $request, $lotId, $imageId)
     {
-        $extensions = ['jpg', 'jpeg', 'png'];
+        $extensions = ['jpg', 'jpeg', 'png', 'webp'];
         $imageDeleted = false;
 
         $lot = Lots::findOrFail($lotId);
