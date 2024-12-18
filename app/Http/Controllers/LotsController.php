@@ -184,6 +184,7 @@ class LotsController
             'id_user' => Auth::user()->id,
             'images' => $request->hasFile('images') ? sizeof($request->file('images')) : 0
         ]);
+
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 $path = storage_path('app/public/img/posts/lots/' . $lot->id . '/');
@@ -194,10 +195,14 @@ class LotsController
                 chmod($path, 0755);
 
                 $imageName = Str::slug($index + 1) . '.webp';
-                $imageWebp = Image::make($image->getRealPath())
-                    ->encode('webp', 90);
+                if ($image->getClientOriginalExtension() === 'webp') {
+                    $image->move($path, $imageName);
+                } else {
+                    $imageWebp = Image::make($image->getRealPath())
+                        ->encode('webp', 90);
 
-                $imageWebp->save($path . $imageName);
+                    $imageWebp->save($path . $imageName);
+                }
             }
         }
         return redirect()->route('admin.lots');
@@ -256,9 +261,22 @@ class LotsController
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
+                $path = storage_path('app/public/img/posts/lots/' . $lot->id . '/');
 
-                $nameimg = Str::slug($lot->images + $index + 1) . "." . $image->getClientOriginalExtension();
-                $image->storeAs('public/img/posts/lots/' . $lot->id . '/', $nameimg);
+                if (!file_exists($path)) {
+                    mkdir($path, 0755, true);
+                }
+                chmod($path, 0755);
+
+                $imageName = Str::slug($index + 1) . '.webp';
+                if ($image->getClientOriginalExtension() === 'webp') {
+                    $image->move($path, $imageName);
+                } else {
+                    $imageWebp = Image::make($image->getRealPath())
+                        ->encode('webp', 90);
+
+                    $imageWebp->save($path . $imageName);
+                }
             }
         }
 
