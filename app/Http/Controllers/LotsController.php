@@ -262,7 +262,7 @@ class LotsController
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 $path = storage_path('app/public/img/posts/lots/' . $request->id . '/');
-                $imageName = Str::slug($lot->images + $index + 1) . '.webp';
+                $imageName = Str::slug($lot->images + $index) . '.webp';
 
                 if ($image->getClientOriginalExtension() === 'webp') {
                     $image->move($path, $imageName);
