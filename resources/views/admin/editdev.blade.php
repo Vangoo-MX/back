@@ -198,9 +198,7 @@
                     @for ($i = 1; $i <= $dev->images; $i++)
                         <div class="d-flex flex-column align-items-center image-container">
                             @php
-                            $jpgExists = file_exists(public_path('storage/img/posts/developments/' . $dev->id . '/' . $i . '.jpg'));
-                            $jpegExists = file_exists(public_path('storage/img/posts/developments/' . $dev->id . '/' . $i . '.jpeg'));
-                            $imageUrl = $jpgExists ? asset('storage/img/posts/developments/' . $dev->id . '/' . $i . '.jpg') : ($jpegExists ? asset('storage/img/posts/developments/' . $dev . '/' . $i . '.jpeg') : null);
+                            $imageUrl = asset('storage/img/posts/developments/' . $dev->id . '/' . $i . '.webp');
                             @endphp
 
                             @if($imageUrl)
