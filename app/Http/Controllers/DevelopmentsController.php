@@ -13,6 +13,7 @@ use Illuminate\support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 use App\Models\Estados;
 use App\Models\Municipios;
@@ -266,15 +267,22 @@ class DevelopmentsController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
-                $directory = 'public/img/posts/developments/' . $development->id . '/';
-                $nameimg = Str::slug($index + 1) . "." . $image->getClientOriginalExtension();
-
                 $path = storage_path('app/public/img/posts/developments/' . $development->id . '/');
+
                 if (!file_exists($path)) {
                     mkdir($path, 0755, true);
                 }
                 chmod($path, 0755);
-                $image->storeAs($directory, $nameimg);
+
+                $imageName = Str::slug($index + 1) . '.webp';
+                if ($image->getClientOriginalExtension() === 'webp') {
+                    $image->move($path, $imageName);
+                } else {
+                    $imageWebp = Image::make($image->getRealPath())
+                        ->encode('webp', 90);
+
+                    $imageWebp->save($path . $imageName);
+                }
             }
         }
 
@@ -304,13 +312,22 @@ class DevelopmentsController extends Controller
 
             if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
                 $directory = 'public/img/posts/developments/' . $development->id . '/' . 'plans/';
-                $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
+                $nameimg = Str::slug($key) . ".webp";
                 $path = storage_path('app/public/img/posts/developments/' . $development->id . '/' . 'plans/');
                 if (!file_exists($path)) {
                     mkdir($path, 0755, true);
                 }
                 chmod($path, 0755);
-                $request->file('imageoption.' . $key)->storeAs($directory, $nameimg);
+
+                $extension = $request->file('imageoption.' . $key)->getClientOriginalExtension();
+
+                if (strtolower($extension) !== 'webp') {
+                    $imageWebp = Image::make($request->file('imageoption.' . $key)->getRealPath())
+                        ->encode('webp', 90);
+                    $imageWebp->save($path . $nameimg);
+                } else {
+                    $request->file('imageoption.' . $key)->storeAs($directory, $nameimg);
+                }
             }
 
             $apartment->save();
@@ -364,9 +381,17 @@ class DevelopmentsController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
+                $path = storage_path('app/public/img/posts/developments/' . $development->id . '/');
+                $nameimg = Str::slug($request->num_images + $index + 1) . ".webp";
 
-                $nameimg = Str::slug($request->num_images + $index + 1) . "." . $image->getClientOriginalExtension();
-                $image->storeAs('public/img/posts/developments/' . $request->id . '/', $nameimg);
+                if ($image->getClientOriginalExtension() === 'webp') {
+                    $image->move($path, $nameimg);
+                } else {
+                    $imageWebp = Image::make($image->getRealPath())
+                        ->encode('webp', 90);
+
+                    $imageWebp->save($path . $nameimg);
+                }
             }
         }
 
@@ -374,7 +399,7 @@ class DevelopmentsController extends Controller
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/posts/developments/' . $development->id);
                 $key = $index;
-                $extensions = ['jpg', 'jpeg', 'png'];
+                $extensions = ['jpg', 'jpeg', 'png', 'webp'];
 
                 foreach ($extensions as $ext) {
                     if (file_exists($path . "/{$order}.{$ext}")) {
@@ -386,7 +411,7 @@ class DevelopmentsController extends Controller
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/posts/developments/' . $development->id);
                 $key = $index;
-                $extensions = ['jpg', 'jpeg', 'png'];
+                $extensions = ['jpg', 'jpeg', 'png', 'webp'];
 
                 foreach ($extensions as $ext) {
                     if (file_exists($path . "/{$key}temp.{$ext}")) {
@@ -425,8 +450,19 @@ class DevelopmentsController extends Controller
                 $appartment->num_available = $option['num_available'] ?? 0;
 
                 if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
-                    $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
-                    $request->file('imageoption.' . $key)->storeAs('public/img/posts/developments/' . $development->id . '/' . 'plans/', $nameimg);
+                    $directory = 'public/img/posts/developments/' . $development->id . '/' . 'plans/';
+                    $nameimg = Str::slug($key) . ".webp";
+                    $path = storage_path('app/public/img/posts/developments/' . $development->id . '/' . 'plans/');
+
+                    $extension = $request->file('imageoption.' . $key)->getClientOriginalExtension();
+
+                    if (strtolower($extension) !== 'webp') {
+                        $imageWebp = Image::make($request->file('imageoption.' . $key)->getRealPath())
+                            ->encode('webp', 90);
+                        $imageWebp->save($path . $nameimg);
+                    } else {
+                        $request->file('imageoption.' . $key)->storeAs($directory, $nameimg);
+                    }
                 }
 
                 $appartment->save();
@@ -466,10 +502,19 @@ class DevelopmentsController extends Controller
 
 
                 if (isset($request->imageoption[$key]) && $request->hasFile('imageoption.' . $key)) {
-                    //foreach ($request->file('imageoption.' . $key) as $i => $image) {
-                    $nameimg = Str::slug($key) . "." . $request->file('imageoption.' . $key)->getClientOriginalExtension();
-                    $request->file('imageoption.' . $key)->storeAs('public/img/posts/developments/' . $development->id . '/' . 'plans/', $nameimg);
-                    //}
+                    $directory = 'public/img/posts/developments/' . $development->id . '/' . 'plans/';
+                    $nameimg = Str::slug($key) . ".webp";
+                    $path = storage_path('app/public/img/posts/developments/' . $development->id . '/' . 'plans/');
+
+                    $extension = $request->file('imageoption.' . $key)->getClientOriginalExtension();
+
+                    if (strtolower($extension) !== 'webp') {
+                        $imageWebp = Image::make($request->file('imageoption.' . $key)->getRealPath())
+                            ->encode('webp', 90);
+                        $imageWebp->save($path . $nameimg);
+                    } else {
+                        $request->file('imageoption.' . $key)->storeAs($directory, $nameimg);
+                    }
                 }
 
                 $appartment->save();
@@ -483,7 +528,7 @@ class DevelopmentsController extends Controller
 
     public function deleteImage(Request $request, $developmentId, $imageId)
     {
-        $extensions = ['jpg', 'jpeg', 'png'];
+        $extensions = ['jpg', 'jpeg', 'png', 'webp'];
         $imageDeleted = false;
 
         $development = Developments::findOrFail($developmentId);
