@@ -16,6 +16,7 @@ use App\Models\Municipios;
 use App\Models\Colonias;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ApartmentsController extends Controller
 {
@@ -508,7 +509,7 @@ class ApartmentsController extends Controller
         }
         $imageNames = $request->imageNames;
         $route = public_path("storage/img/postsqueue/apartments/{$id}/");
-        $extensions = ['jpg', 'jpeg', 'png'];
+        $extensions = ['jpg', 'jpeg', 'png', 'webp'];
         $deletedCount = 0;
 
         foreach ($extensions as $extension) {
@@ -749,9 +750,17 @@ class ApartmentsController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
+                $path = storage_path('app/public/img/posts/apartments/' . $request->id . '/');
+                $imageName = Str::slug($apartments->images + $index) . '.webp';
 
-                $nameimg = Str::slug($apartments->images + $index) . "." . $image->getClientOriginalExtension();
-                $image->storeAs('public/img/posts/apartments/' . $apartments->id . '/', $nameimg);
+                if ($image->getClientOriginalExtension() === 'webp') {
+                    $image->move($path, $imageName);
+                } else {
+                    $imageWebp = Image::make($image->getRealPath())
+                        ->encode('webp', 90);
+
+                    $imageWebp->save($path . $imageName);
+                }
             }
         }
 

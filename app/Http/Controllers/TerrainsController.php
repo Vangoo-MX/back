@@ -16,6 +16,7 @@ use App\Models\Municipios;
 use App\Models\Colonias;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Intervention\Image\Facades\Image;
 
 class TerrainsController extends Controller
 {
@@ -489,7 +490,7 @@ class TerrainsController extends Controller
         }
         $imageNames = $request->imageNames;
         $route = public_path("storage/img/postsqueue/terrains/{$id}/");
-        $extensions = ['jpg', 'jpeg', 'png'];
+        $extensions = ['jpg', 'jpeg', 'png', 'webp'];
         $deletedCount = 0;
 
         foreach ($extensions as $extension) {
@@ -711,9 +712,17 @@ class TerrainsController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
+                $path = storage_path('app/public/img/posts/terrains/' . $request->id . '/');
+                $imageName = Str::slug($terrains->images + $index) . '.webp';
 
-                $nameimg = Str::slug($terrains->images + $index) . "." . $image->getClientOriginalExtension();
-                $image->storeAs('public/img/posts/terrains/' . $terrains->id . '/', $nameimg);
+                if ($image->getClientOriginalExtension() === 'webp') {
+                    $image->move($path, $imageName);
+                } else {
+                    $imageWebp = Image::make($image->getRealPath())
+                        ->encode('webp', 90);
+
+                    $imageWebp->save($path . $imageName);
+                }
             }
         }
 

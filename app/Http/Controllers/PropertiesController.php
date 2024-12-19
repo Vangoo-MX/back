@@ -11,7 +11,7 @@ use App\Models\Images;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
-
+use Intervention\Image\Facades\Image;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
@@ -506,7 +506,7 @@ class PropertiesController extends Controller
         }
         $imageNames = $request->imageNames;
         $route = public_path("storage/img/postsqueue/properties/{$id}/");
-        $extensions = ['jpg', 'jpeg', 'png'];
+        $extensions = ['jpg', 'jpeg', 'png', 'webp'];
         $deletedCount = 0;
 
         foreach ($extensions as $extension) {
@@ -733,9 +733,17 @@ class PropertiesController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
+                $path = storage_path('app/public/img/posts/properties/' . $request->id . '/');
+                $imageName = Str::slug($propiedad->images + $index) . '.webp';
 
-                $nameimg = Str::slug($propiedad->images + $index + 1) . "." . $image->getClientOriginalExtension();
-                $image->storeAs('public/img/posts/properties/' . $propiedad->id . '/', $nameimg);
+                if ($image->getClientOriginalExtension() === 'webp') {
+                    $image->move($path, $imageName);
+                } else {
+                    $imageWebp = Image::make($image->getRealPath())
+                        ->encode('webp', 90);
+
+                    $imageWebp->save($path . $imageName);
+                }
             }
         }
 
