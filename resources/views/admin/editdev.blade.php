@@ -242,6 +242,7 @@
                         @foreach($app as $a)
                         <div class="option-appartment" id="option-appartment-{{$loop->index+1}}">
                             <div class="input-group mb-3 gap-2 flex-column flex-lg-row">
+                                <input type="hidden" name="optionapp[{{$loop->index+1}}][id]" value="{{$a->id}}">
                                 <input type="text" class="form-control app-input" placeholder="Titulo" value="{{old('title', $a->title)}}" name="optionapp[{{$loop->index+1}}][title]" required>
                                 <input type="number" class="form-control app-input" placeholder="Precio" value="{{old('price', $a->price)}}" name="optionapp[{{$loop->index+1}}][price]" required>
                                 <input type="number" step="0.01" class="form-control app-input" placeholder="Area" value="{{old('area', $a->area)}}" name="optionapp[{{$loop->index+1}}][area]" required>
