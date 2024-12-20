@@ -15,6 +15,17 @@ class DevelopmentsApartments extends Model
     public $timestamps = false;
     protected $table = 'post_developments_apartments';
 
+    protected $fillable = [
+        'title',
+        'price',
+        'area',
+        'rooms',
+        'bathrooms',
+        'parkings',
+        'num_available',
+        'image_plans'
+    ];
+
     protected $casts = [
         'bathrooms' => 'decimal:1',
     ];
