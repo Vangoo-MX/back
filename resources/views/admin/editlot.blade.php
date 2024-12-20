@@ -287,6 +287,7 @@ Editar
                             <div class="col-md-6">
                                 <label for="commission_percentage" class="form-label">Porcentaje de comisión de venta:</label>
                                 <input type="number" class="form-control" id="commission_percentage" placeholder="Porcentaje en números sin signos" name="commission_percentage" value="{{old('commission_percentage', $lot[0]->commission_percentage)}}">
+                                <span>%</span>
                                 @error('commission_percentage')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
