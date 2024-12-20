@@ -182,12 +182,17 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3 mt-3">
-                            <label for="commission_percentage" class="form-label">Porcentaje de comisión de venta:</label>
-                            <input type="number" class="form-control" id="commission_percentage" placeholder="Porcentaje en números sin signos" name="commission_percentage" value="{{old('commission_percentage', $dev->commission_percentage)}}">
-                            @error('commission_percentage')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                        <div class="row mb-3 mt-3">
+                            <div class="col-md-6">
+                                <label for="commission_percentage" class="form-label">Porcentaje de comisión de venta:</label>
+                                <div class="d-flex align-items-center">
+                                    <input type="number" class="form-control" id="commission_percentage" placeholder="Porcentaje en números sin signos" name="commission_percentage" value="{{old('commission_percentage', $dev->commission_percentage)}}">
+                                    <span class="ms-2">%</span>
+                                </div>
+                                @error('commission_percentage')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                         <input type="hidden" name="num_images" value="{{old('images', $dev->images)}}">
                     </div>
