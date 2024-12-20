@@ -11,6 +11,16 @@
 <!-- Content Row -->
 <div class="row">
     <div class="container mt-3 px-4">
+        <form method="GET" action="{{ route('admin.developments') }}" class="mb-4">
+            <div class="form-group">
+                <label for="modeSelect">Filtrar por tipo de desarrollo:</label>
+                <select name="mode" id="modeSelect" class="form-control" onchange="this.form.submit()">
+                    <option value="all" {{ $selectedMode == 'all' ? 'selected' : '' }}>Todos</option>
+                    <option value="horizontal" {{ $selectedMode == 'horizontal' ? 'selected' : '' }}>Horizontal</option>
+                    <option value="vertical" {{ $selectedMode == 'vertical' ? 'selected' : '' }}>Vertical</option>
+                </select>
+            </div>
+        </form>
         <table class="table table-striped table-bordered" id="propertiesTable">
             <thead>
                 <tr>

@@ -567,7 +567,7 @@ class AdminController extends Controller
     }
 
     //developments
-    public function developments()
+    public function developments(Request $request)
     {
 
         if (!Auth::check()) {
@@ -577,9 +577,13 @@ class AdminController extends Controller
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        $desarrollos = Developments::get();
+        $selectedMode = $request->input('mode', 'all');
 
-        return view('admin.developments', compact('desarrollos'));
+        $desarrollos = Developments::when($selectedMode !== 'all', function ($query) use ($selectedMode) {
+            return $query->where('mode', $selectedMode);
+        })->get();
+
+        return view('admin.developments', compact('desarrollos', 'selectedMode'));
     }
 
     public function createdev()
