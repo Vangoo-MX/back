@@ -374,16 +374,17 @@ class DevelopmentsController extends Controller
         $development->amenities = $request->amenities;
         $development->commission_percentage = $request->commission_percentage;
 
+        $images = $development->images;
         if ($request->hasFile('images')) {
-            $development->images = $request->num_images + sizeof($request->file('images'));
+            $development->images = $images + sizeof($request->file('images'));
         } else {
-            $development->images = $request->num_images;
+            $development->images = $images;
         }
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 $path = storage_path('app/public/img/posts/developments/' . $development->id . '/');
-                $nameimg = Str::slug($request->num_images + $index + 1) . ".webp";
+                $nameimg = Str::slug($images + $index + 1) . ".webp";
 
                 if ($image->getClientOriginalExtension() === 'webp') {
                     $image->move($path, $nameimg);
