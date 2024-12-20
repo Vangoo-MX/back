@@ -275,23 +275,23 @@ Editar
                             <label for="financing" class="form-label">Financiación:</label>
                             <input type="text" class="form-control" id="financing" placeholder="Financiado" name="financing" value="{{old('financing', $lot[0]->financing)}}">
                         </div>
+                        <div class="row mb-3 mt-3">
+                            <div class="col-md-6">
+                                <label for="initial_fee" class="form-label">Enganche:</label>
+                                <input type="number" class="form-control" id="initial_fee" placeholder="Cuota inicial del lote" name="initial_fee" value="{{old('initial_fee', $lot[0]->initial_fee)}}">
+                                @error('initial_fee')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
 
-                        <div class="mb-3 mt-3">
-                            <label for="initial_fee" class="form-label">Enganche:</label>
-                            <input type="number" class="form-control" id="initial_fee" placeholder="Cuota inicial del lote" name="initial_fee" value="{{old('initial_fee', $lot[0]->initial_fee)}}">
-                            @error('initial_fee')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <div class="col-md-6">
+                                <label for="commission_percentage" class="form-label">Porcentaje de comisión de venta:</label>
+                                <input type="number" class="form-control" id="commission_percentage" placeholder="Porcentaje en números sin signos" name="commission_percentage" value="{{old('commission_percentage', $lot[0]->commission_percentage)}}">
+                                @error('commission_percentage')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
-
-                        <div class="mb-3 mt-3">
-                            <label for="commission_percentage" class="form-label">Porcentaje de comisión de venta:</label>
-                            <input type="number" class="form-control" id="commission_percentage" placeholder="Porcentaje en números sin signos" name="commission_percentage" value="{{old('commission_percentage', $lot[0]->commission_percentage)}}">
-                            @error('commission_percentage')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
                     </div>
                 </div>
 
