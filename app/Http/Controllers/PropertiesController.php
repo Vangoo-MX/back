@@ -702,11 +702,15 @@ class PropertiesController extends Controller
         $municipio = Municipios::find($request->id_municipio);
         $estado = Estados::find($propiedad->id_estado);
         $location = $colonia->nombre . ', ' . $municipio->nombre . ', ' . $estado->nombre;
+
+        $images = $propiedad->images;
+
         if ($request->hasFile('images')) {
-            $numImages = $propiedad->images + sizeof($request->file('images'));
+            $numImages = $images + sizeof($request->file('images'));
         } else {
-            $numImages = $propiedad->images;
+            $numImages = $images;
         }
+
         $propiedad->update([
             'title' => $request->title,
             'operation_type' => $request->operation_type,
@@ -734,7 +738,7 @@ class PropertiesController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 $path = storage_path('app/public/img/posts/properties/' . $request->id . '/');
-                $imageName = Str::slug($propiedad->images + $index) . '.webp';
+                $imageName = Str::slug($images + $index) . '.webp';
 
                 if ($image->getClientOriginalExtension() === 'webp') {
                     $image->move($path, $imageName);
