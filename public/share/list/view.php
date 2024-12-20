@@ -198,7 +198,7 @@ function moneyFormat($numero)
                     <?php foreach ($data['properties'] as $property) : ?>
                         <div class="card">
                             <div class="image-container">
-                                <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $property['id']; ?>/1.jpg?height=250&width=400" alt="Property" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                                <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $property['id']; ?>/1.webp?height=250&width=400" alt="Property" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
                             </div>
                             <div class="card-content">
                                 <h3 class="property-title"><?php echo $property['title']; ?></h3>
@@ -214,7 +214,7 @@ function moneyFormat($numero)
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/developments/<?php echo $development['id']; ?>/1.jpg?height=250&width=400" alt="Development" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/developments/<?php echo $development['id']; ?>/1.webp?height=250&width=400" alt="Development" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
                                 </div>
                             </div>
                             <div class="card-content">
@@ -231,7 +231,7 @@ function moneyFormat($numero)
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/lots/<?php echo $lot['id']; ?>/1.jpg?height=250&width=400" alt="Lot" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/lots/<?php echo $lot['id']; ?>/1.webp?height=250&width=400" alt="Lot" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
                                 </div>
                             </div>
                             <div class="card-content">
@@ -248,7 +248,7 @@ function moneyFormat($numero)
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/apartments/<?php echo $apartment['id']; ?>/1.jpg?height=250&width=400" alt="Rental" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/apartments/<?php echo $apartment['id']; ?>/1.webp?height=250&width=400" alt="Rental" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
                                 </div>
                             </div>
                             <div class="card-content">
@@ -264,7 +264,7 @@ function moneyFormat($numero)
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/terrains/<?php echo $terrain['id']; ?>/1.jpg?height=250&width=400" alt="Terrain" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/terrains/<?php echo $terrain['id']; ?>/1.webp?height=250&width=400" alt="Terrain" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
                                 </div>
                             </div>
                             <div class="card-content">

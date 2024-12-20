@@ -39,7 +39,7 @@ if (!$data) {
 
 $data = $data[0];
 
-$imagePath = 'https://dashboard.vangoo.mx/storage/img/posts/' . $typeText . '/' . $data['id'] . '/1.jpg';
+$imagePath = 'https://dashboard.vangoo.mx/storage/img/posts/' . $typeText . '/' . $data['id'] . '/1.webp';
 $backupImage = 'https://www.vangoo.mx/assets/img/img404.jpg';
 
 $imageHeaders = @get_headers($imagePath);
@@ -236,7 +236,7 @@ function moneyFormat($numero)
         <div class="card">
             <div class="card-header">
                 <div class="image-container">
-                    <img src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.jpg?height=250&width=400" alt="Property" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                    <img src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.webp?height=250&width=400" alt="Property" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
                 </div>
             </div>
 
