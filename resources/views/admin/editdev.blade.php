@@ -166,23 +166,17 @@
                             <input type="text" class="form-control" id="map_long" name="map_long" value="{{old('map_long', $dev->map_long)}}">
                         </div>
 
-                        <div class="mb-3 mt-3">
-                            <label for="area" class="form-label">Area:</label>
-                            <input type="number" step="0.01" class="form-control" id="area" placeholder="Ingresa el area del inmueble" name="area" value="{{old('area', $dev->area)}}">
-                            @error('area')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3 mt-3">
-                            <label for="amenities" class="form-label">Amenidades:</label>
-                            <input type="text" class="form-control" id="amenities" placeholder="Separe con comas y sin espacios" name="amenities" value="{{old('amenities', $dev->amenities)}}">
-                            @error('amenities')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
                         <div class="row mb-3 mt-3">
+                            <div class="col-md-6">
+                                <label for="area" class="form-label">Area:</label>
+                                <div class="d-flex align-items-center">
+                                    <input type="number" step="0.01" class="form-control" id="area" placeholder="Ingresa el area del inmueble" name="area" value="{{old('area', $dev->area)}}">
+                                    <span class="ms-2">m²</span>
+                                </div>
+                                @error('area')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                             <div class="col-md-6">
                                 <label for="commission_percentage" class="form-label">Porcentaje de comisión de venta:</label>
                                 <div class="d-flex align-items-center">
@@ -193,6 +187,14 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                        </div>
+
+                        <div class="mb-3 mt-3">
+                            <label for="amenities" class="form-label">Amenidades:</label>
+                            <input type="text" class="form-control" id="amenities" placeholder="Separe con comas y sin espacios" name="amenities" value="{{old('amenities', $dev->amenities)}}">
+                            @error('amenities')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <input type="hidden" name="num_images" value="{{old('images', $dev->images)}}">
                     </div>
