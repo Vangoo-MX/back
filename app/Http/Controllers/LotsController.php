@@ -221,10 +221,12 @@ class LotsController
         $colonia = Colonias::find($request->id_colonia)->nombre;
         $location = $colonia . ', ' . $municipio . ', ' . $estado;
 
+        $images = $lot->images;
+
         if ($request->hasFile('images')) {
-            $numImages = $lot->images + sizeof($request->file('images'));
+            $numImages = $images + sizeof($request->file('images'));
         } else {
-            $numImages = $lot->images;
+            $numImages = $images;
         }
 
         $lot->update([
@@ -262,7 +264,7 @@ class LotsController
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 $path = storage_path('app/public/img/posts/lots/' . $request->id . '/');
-                $imageName = Str::slug($lot->images + $index) . '.webp';
+                $imageName = Str::slug($images + $index + 1) . '.webp';
 
                 if ($image->getClientOriginalExtension() === 'webp') {
                     $image->move($path, $imageName);
