@@ -427,9 +427,7 @@ class DevelopmentsController extends Controller
         $key = 1;
 
         if ($request->optionapp) {
-            Log::info('Entrando al foreach en optionapp:', ['optionapp' => $request->optionapp]);
             foreach ($request->optionapp as $option) {
-                Log::info('Iteración en el foreach:', ['option' => $option]);
                 if (!isset($option['id'])) {
                     continue;
                 }
@@ -438,10 +436,7 @@ class DevelopmentsController extends Controller
                 $appartment->title = $option['title'] ?? $appartment->title;
                 $appartment->price = $option['price'] ?? $appartment->price;
                 $appartment->rooms = $option['rooms'] ?? $appartment->rooms;
-                Log::info('Valor de bathrooms en optionapp:', ['bathrooms' => $option['bathrooms']]);
-                $convertedValue = str_replace('.', ',', $option['bathrooms']);
-                Log::info('Valor de bathrooms convertido:', ['bathrooms' => $convertedValue]);
-                $appartment->bathrooms = str_replace('.', ',', $option['bathrooms']) ?? $appartment->bathrooms;
+                $appartment->bathrooms = str_replace(',', '.', $option['bathrooms']) ?? $appartment->bathrooms;
                 $appartment->parkings = $option['parkings'] ?? $appartment->parkings;
                 $appartment->area = $option['area'] ?? $appartment->area;
 
@@ -489,10 +484,7 @@ class DevelopmentsController extends Controller
                 $appartment->title = $option['title'];
                 $appartment->price = $option['price'];
                 $appartment->rooms = $option['rooms'];
-                Log::info('Valor de bathrooms en option:', ['bathrooms' => $option['bathrooms']]);
-                $convertedValue = str_replace('.', ',', $option['bathrooms']);
-                Log::info('Valor de bathrooms convertido:', ['bathrooms' => $convertedValue]);
-                $appartment->bathrooms = str_replace('.', ',', $option['bathrooms']);
+                $appartment->bathrooms = str_replace(',', '.', $option['bathrooms']);
                 $appartment->parkings = $option['parkings'];
                 $appartment->area = $option['area'];
                 if ($request->file('imageoption.' . $key) && is_array($request->file('imageoption.' . $key))) {
