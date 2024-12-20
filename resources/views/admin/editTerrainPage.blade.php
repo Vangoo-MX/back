@@ -251,9 +251,7 @@ Editar terreno
                     @for ($i = 1; $i <= $terrain->images; $i++)
                         <div class="d-flex flex-column align-items-center image-container">
                             @php
-                            $jpgExists = file_exists(public_path('storage/img/posts/terrains/' . $terrain->id . '/' . $i . '.jpg'));
-                            $jpegExists = file_exists(public_path('storage/img/posts/terrains/' . $terrain->id . '/' . $i . '.jpeg'));
-                            $imageUrl = $jpgExists ? asset('storage/img/posts/terrains/' . $terrain->id . '/' . $i . '.jpg') : ($jpegExists ? asset('storage/img/posts/terrains/' . $terrain->id . '/' . $i . '.jpeg') : null);
+                            $imageUrl = asset('storage/img/posts/terrains/' . $terrain->id . '/' . $i . '.webp');
                             @endphp
 
                             @if($imageUrl)
