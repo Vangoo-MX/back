@@ -261,7 +261,7 @@ Editar propiedad
                     @for ($i = 1; $i <= $propiedad->images; $i++)
                         <div class="d-flex flex-column align-items-center image-container">
                             @php
-                            $imageUrl = asset('storage/properties/' . $propiedad->id . '/' . $i . '.webp');
+                            $imageUrl = asset('storage/img/posts/properties/' . $propiedad->id . '/' . $i . '.webp');
                             @endphp
                             @if($imageUrl)
                             <a href="{{ $imageUrl }}" target="_blank">
