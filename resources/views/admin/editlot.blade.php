@@ -131,30 +131,32 @@ Editar
                             @enderror
                         </div>
 
-                        <div class="mb-3 mt-3">
-                            <label for="type_terrain" class="form-label">Tipo de terreno del lote:</label>
-                            <select class="form-select" name="type_terrain">
-                                <option value="regular" <?php if ($lot[0]->type_terrain == 'regular') {
-                                                            echo 'selected';
-                                                        } ?>>Regular</option>
-                                <option value="irregular" <?php if ($lot[0]->type_terrain == 'irregular') {
+                        <div class="row mb-3 mt-3">
+                            <div class="col-md-6">
+                                <label for="type_terrain" class="form-label">Tipo de terreno del lote:</label>
+                                <select class="form-select" name="type_terrain">
+                                    <option value="regular" <?php if ($lot[0]->type_terrain == 'regular') {
                                                                 echo 'selected';
-                                                            } ?>>Irregular</option>
-                            </select>
-                        </div>
+                                                            } ?>>Regular</option>
+                                    <option value="irregular" <?php if ($lot[0]->type_terrain == 'irregular') {
+                                                                    echo 'selected';
+                                                                } ?>>Irregular</option>
+                                </select>
+                            </div>
 
-                        <div class="mb-3 mt-3">
-                            <label for="slope" class="form-label">Se encuentra sobre una pendiente?:</label>
-                            <select class="form-select" name="slope">
-                                <option value="si" <?php if ($lot[0]->slope == 'si') {
-                                                        echo 'selected';
-                                                    } ?>>Si</option>
-                                <option value="no" <?php if ($lot[0]->slope == 'no') {
-                                                        echo 'selected';
-                                                    } ?>>No</option>
-                            </select>
-                        </div>
+                            <div class="col-md-6">
+                                <label for="slope" class="form-label">Se encuentra sobre una pendiente?:</label>
+                                <select class="form-select" name="slope">
+                                    <option value="si" <?php if ($lot[0]->slope == 'si') {
+                                                            echo 'selected';
+                                                        } ?>>Si</option>
+                                    <option value="no" <?php if ($lot[0]->slope == 'no') {
+                                                            echo 'selected';
+                                                        } ?>>No</option>
+                                </select>
+                            </div>
 
+                        </div>
                     </div>
                     <div class="w-100">
 
