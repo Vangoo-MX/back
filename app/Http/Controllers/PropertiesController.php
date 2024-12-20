@@ -738,7 +738,7 @@ class PropertiesController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 $path = storage_path('app/public/img/posts/properties/' . $request->id . '/');
-                $imageName = Str::slug($images + $index) . '.webp';
+                $imageName = Str::slug($images + $index + 1) . '.webp';
 
                 if ($image->getClientOriginalExtension() === 'webp') {
                     $image->move($path, $imageName);
