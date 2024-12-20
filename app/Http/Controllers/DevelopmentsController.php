@@ -425,7 +425,7 @@ class DevelopmentsController extends Controller
         $development->save();
 
         $key = 1;
-
+        Log::info('Datos recibidos en optionapp:', $request->optionapp);
         if ($request->optionapp) {
             Log::info('Entrando al foreach de optionapp.');
             foreach ($request->optionapp as $option) {
