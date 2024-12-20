@@ -436,6 +436,9 @@ class DevelopmentsController extends Controller
                 $appartment->title = $option['title'] ?? $appartment->title;
                 $appartment->price = $option['price'] ?? $appartment->price;
                 $appartment->rooms = $option['rooms'] ?? $appartment->rooms;
+                Log::info('Valor de bathrooms antes de conversión:', ['bathrooms' => $option['bathrooms']]);
+                $convertedValue = str_replace(',', '.', $option['bathrooms']);
+                Log::info('Valor de bathrooms después de conversión:', ['bathrooms' => $convertedValue]);
                 $appartment->bathrooms = str_replace(',', '.', $option['bathrooms']) ?? $appartment->bathrooms;
                 $appartment->parkings = $option['parkings'] ?? $appartment->parkings;
                 $appartment->area = $option['area'] ?? $appartment->area;
