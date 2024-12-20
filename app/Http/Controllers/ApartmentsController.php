@@ -312,7 +312,7 @@ class ApartmentsController extends Controller
 
     public function deleteImage(Request $request, $apartmentId, $imageId)
     {
-        $imagePath = 'public/img/posts/apartments/' . $apartmentId . '/' . $imageId . '.jpg';
+        $imagePath = 'public/img/posts/apartments/' . $apartmentId . '/' . $imageId . '.webp';
 
         if (Storage::exists($imagePath)) {
             Storage::delete($imagePath);
@@ -322,8 +322,8 @@ class ApartmentsController extends Controller
             $apartment->save();
 
             for ($i = $imageId + 1; $i <= $apartment->images + 1; $i++) {
-                $oldImagePath = 'public/img/posts/apartments/' . $apartmentId . '/' . $i . '.jpg';
-                $newImagePath = 'public/img/posts/apartments/' . $apartmentId . '/' . ($i - 1) . '.jpg';
+                $oldImagePath = 'public/img/posts/apartments/' . $apartmentId . '/' . $i . '.webp';
+                $newImagePath = 'public/img/posts/apartments/' . $apartmentId . '/' . ($i - 1) . '.webp';
 
                 if (Storage::exists($oldImagePath)) {
                     Storage::move($oldImagePath, $newImagePath);
@@ -654,10 +654,10 @@ class ApartmentsController extends Controller
 
             foreach ($orderArray as $index => $order) {
                 $path = storage_path('app/public/img/postsqueue/apartments/' . $request->id);
-                $tempFile = $path . "/{$order}.jpg";
+                $tempFile = $path . "/{$order}.webp";
 
                 if (file_exists($tempFile)) {
-                    rename($tempFile, $path . "/{$order}temp.jpg");
+                    rename($tempFile, $path . "/{$order}temp.webp");
                 } else {
                     Log::warning("File not found during temp rename: {$tempFile}");
                 }
@@ -665,8 +665,8 @@ class ApartmentsController extends Controller
 
             foreach ($orderArray as $index => $order) {
                 $path = storage_path('app/public/img/postsqueue/apartments/' . $request->id);
-                $tempFile = $path . "/{$order}temp.jpg";
-                $finalFile = $path . "/" . ($index + 1) . ".jpg";
+                $tempFile = $path . "/{$order}temp.webp";
+                $finalFile = $path . "/" . ($index + 1) . ".webp";
 
                 if (file_exists($tempFile)) {
                     rename($tempFile, $finalFile);
@@ -713,11 +713,15 @@ class ApartmentsController extends Controller
         $municipio = Municipios::find($request->id_municipio);
         $estado = Estados::find($apartments->id_estado);
         $location = $colonia->nombre . ', ' . $municipio->nombre . ', ' . $estado->nombre;
+
+        $images = $apartments->images;
+
         if ($request->hasFile('images')) {
-            $numImages = $apartments->images + sizeof($request->file('images'));
+            $numImages = $images + sizeof($request->file('images'));
         } else {
-            $numImages = $apartments->images;
+            $numImages = $images;
         }
+
         $apartments->update([
             'title' => $request->title,
             'operation_type' => $request->operation_type,
@@ -751,7 +755,7 @@ class ApartmentsController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 $path = storage_path('app/public/img/posts/apartments/' . $request->id . '/');
-                $imageName = Str::slug($apartments->images + $index) . '.webp';
+                $imageName = Str::slug($images + $index) . '.webp';
 
                 if ($image->getClientOriginalExtension() === 'webp') {
                     $image->move($path, $imageName);
@@ -768,16 +772,16 @@ class ApartmentsController extends Controller
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/posts/apartments/' . $apartments->id);
                 $key = $index;
-                if (file_exists($path . "/{$order}.jpg")) {
-                    rename($path . "/{$order}.jpg", $path . "/{$order}temp.jpg");
+                if (file_exists($path . "/{$order}.webp")) {
+                    rename($path . "/{$order}.webp", $path . "/{$order}temp.webp");
                 }
             }
 
             foreach ($request->orderimg as $index => $order) {
                 $path = storage_path('app/public/img/posts/apartments/' . $apartments->id);
                 $key = $index;
-                if (file_exists($path . "/{$key}temp.jpg")) {
-                    rename($path . "/{$key}temp.jpg", $path . "/{$order}.jpg");
+                if (file_exists($path . "/{$key}temp.webp")) {
+                    rename($path . "/{$key}temp.webp", $path . "/{$order}.webp");
                 }
             }
         }

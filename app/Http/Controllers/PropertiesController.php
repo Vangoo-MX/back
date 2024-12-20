@@ -312,7 +312,7 @@ class PropertiesController extends Controller
 
     public function deleteImage(Request $request, $propertieId, $imageId)
     {
-        $imagePath = 'public/img/posts/properties/' . $propertieId . '/' . $imageId . '.jpg';
+        $imagePath = 'public/img/posts/properties/' . $propertieId . '/' . $imageId . '.webp';
 
         if (Storage::exists($imagePath)) {
             Storage::delete($imagePath);
@@ -322,8 +322,8 @@ class PropertiesController extends Controller
             $propertie->save();
 
             for ($i = $imageId + 1; $i <= $propertie->images + 1; $i++) {
-                $oldImagePath = 'public/img/posts/properties/' . $propertieId . '/' . $i . '.jpg';
-                $newImagePath = 'public/img/posts/properties/' . $propertieId . '/' . ($i - 1) . '.jpg';
+                $oldImagePath = 'public/img/posts/properties/' . $propertieId . '/' . $i . '.webp';
+                $newImagePath = 'public/img/posts/properties/' . $propertieId . '/' . ($i - 1) . '.webp';
 
                 if (Storage::exists($oldImagePath)) {
                     Storage::move($oldImagePath, $newImagePath);

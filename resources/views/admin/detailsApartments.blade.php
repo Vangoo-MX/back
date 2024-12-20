@@ -217,9 +217,7 @@ Detalle
                     @for ($i = 1; $i <= $apartment->images; $i++)
                         <div class="d-flex flex-column align-items-center">
                             @php
-                            $jpgExists = file_exists(public_path('storage/img/posts/apartments/' . $apartment->id . '/' . $i . '.jpg'));
-                            $jpegExists = file_exists(public_path('storage/img/posts/apartments/' . $apartment->id . '/' . $i . '.jpeg'));
-                            $imageUrl = $jpgExists ? asset('storage/img/posts/apartments/' . $apartment->id . '/' . $i . '.jpg') : ($jpegExists ? asset('storage/img/posts/apartments/' . $apartment->id . '/' . $i . '.jpeg') : null);
+                            $imageUrl = asset ('storage/img/posts/apartments/' . $apartment->id . '/' . $i . '.webp');
                             @endphp
 
                             @if($imageUrl)
