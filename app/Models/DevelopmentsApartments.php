@@ -15,4 +15,7 @@ class DevelopmentsApartments extends Model
     public $timestamps = false;
     protected $table = 'post_developments_apartments';
 
+    protected $casts = [
+        'bathrooms' => 'decimal:1',
+    ];
 }

@@ -294,7 +294,7 @@ class DevelopmentsController extends Controller
             $apartment->title = $option['title'];
             $apartment->price = $option['price'];
             $apartment->rooms = $option['rooms'];
-            $apartment->bathrooms = str_replace('.', ',', $option['bathrooms']);
+            $apartment->bathrooms = $option['bathrooms'];
             $apartment->parkings = $option['parkings'];
             $apartment->area = $option['area'];
             if ($request->file('imageoption.' . $key) && is_array($request->file('imageoption.' . $key))) {
@@ -438,10 +438,7 @@ class DevelopmentsController extends Controller
                 $appartment->title = $option['title'] ?? $appartment->title;
                 $appartment->price = $option['price'] ?? $appartment->price;
                 $appartment->rooms = $option['rooms'] ?? $appartment->rooms;
-                Log::info('Valor de bathrooms antes de conversión:', ['bathrooms' => $option['bathrooms']]);
-                $convertedValue = str_replace(',', '.', $option['bathrooms']);
-                Log::info('Valor de bathrooms después de conversión:', ['bathrooms' => $convertedValue]);
-                $appartment->bathrooms = str_replace(',', '.', $option['bathrooms']) ?? $appartment->bathrooms;
+                $appartment->bathrooms = $option['bathrooms'] ?? $appartment->bathrooms;
                 $appartment->parkings = $option['parkings'] ?? $appartment->parkings;
                 $appartment->area = $option['area'] ?? $appartment->area;
 
@@ -489,7 +486,7 @@ class DevelopmentsController extends Controller
                 $appartment->title = $option['title'];
                 $appartment->price = $option['price'];
                 $appartment->rooms = $option['rooms'];
-                $appartment->bathrooms = str_replace(',', '.', $option['bathrooms']);
+                $appartment->bathrooms = $option['bathrooms'] ?? $appartment->bathrooms;
                 $appartment->parkings = $option['parkings'];
                 $appartment->area = $option['area'];
                 if ($request->file('imageoption.' . $key) && is_array($request->file('imageoption.' . $key))) {
