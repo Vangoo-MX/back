@@ -18,6 +18,7 @@ use Intervention\Image\Facades\Image;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
+use Illuminate\Support\Facades\Log;
 
 class DevelopmentsController extends Controller
 {
@@ -435,7 +436,9 @@ class DevelopmentsController extends Controller
                 $appartment->title = $option['title'] ?? $appartment->title;
                 $appartment->price = $option['price'] ?? $appartment->price;
                 $appartment->rooms = $option['rooms'] ?? $appartment->rooms;
-                dd($option['bathrooms']);
+                Log::info('Valor de bathrooms en optionapp:', ['bathrooms' => $option['bathrooms']]);
+                $convertedValue = str_replace('.', ',', $option['bathrooms']);
+                Log::info('Valor de bathrooms convertido:', ['bathrooms' => $convertedValue]);
                 $appartment->bathrooms = str_replace('.', ',', $option['bathrooms']) ?? $appartment->bathrooms;
                 $appartment->parkings = $option['parkings'] ?? $appartment->parkings;
                 $appartment->area = $option['area'] ?? $appartment->area;
@@ -484,6 +487,9 @@ class DevelopmentsController extends Controller
                 $appartment->title = $option['title'];
                 $appartment->price = $option['price'];
                 $appartment->rooms = $option['rooms'];
+                Log::info('Valor de bathrooms en option:', ['bathrooms' => $option['bathrooms']]);
+                $convertedValue = str_replace('.', ',', $option['bathrooms']);
+                Log::info('Valor de bathrooms convertido:', ['bathrooms' => $convertedValue]);
                 $appartment->bathrooms = str_replace('.', ',', $option['bathrooms']);
                 $appartment->parkings = $option['parkings'];
                 $appartment->area = $option['area'];
