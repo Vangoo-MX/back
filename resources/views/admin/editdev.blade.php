@@ -238,40 +238,39 @@
                 <div class="mt-3 mb-3">
                     <label class="form-label">Opciones de departamentos:</label>
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Título</th>
-                                <th>Precio</th>
-                                <th>Área</th>
-                                <th>Habitaciones</th>
-                                <th>Baños</th>
-                                <th>Estacionamientos</th>
-                                <th>Disponibles</th>
-                                <th>Imagen</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($app as $a)
-                            <tr>
-                                <td><input type="hidden" name="optionapp[{{$loop->index+1}}][id]" value="{{$a->id}}"></td>
-                                <td><input type="text" placeholder="Titulo" value="{{old('title', $a->title)}}" name="optionapp[{{$loop->index+1}}][title]" required></td>
-                                <td><input type="number" placeholder="Precio" value="{{old('price', $a->price)}}" name="optionapp[{{$loop->index+1}}][price]" required></td>
-                                <td><input type="number" step="0.01" placeholder="Area" value="{{old('area', $a->area)}}" name="optionapp[{{$loop->index+1}}][area]" required></td>
-                                <td><input type="number" placeholder="Habitaciones" value="{{old('rooms', $a->rooms)}}" name="optionapp[{{$loop->index+1}}][rooms]" required></td>
+                    <div class="d-flex mb-2 fw-bold text-center">
+                        <div class="flex-fill">Título</div>
+                        <div class="flex-fill">Precio</div>
+                        <div class="flex-fill">Área</div>
+                        <div class="flex-fill">Habitaciones</div>
+                        <div class="flex-fill">Baños</div>
+                        <div class="flex-fill">Estacionamientos</div>
+                        <div class="flex-fill">Disponibles</div>
+                        <div class="flex-fill">Imagen</div>
+                    </div>
+
+                    <div class="options-container">
+                        @foreach($app as $a)
+                        <div class="option-appartment" id="option-appartment-{{$loop->index+1}}">
+                            <div class="input-group mb-3 gap-2 flex-column flex-lg-row">
+                                <input type="hidden" name="optionapp[{{$loop->index+1}}][id]" value="{{$a->id}}">
+                                <input type="text" class="form-control app-input" placeholder="Titulo" value="{{old('title', $a->title)}}" name="optionapp[{{$loop->index+1}}][title]" required>
+                                <input type="number" class="form-control app-input" placeholder="Precio" value="{{old('price', $a->price)}}" name="optionapp[{{$loop->index+1}}][price]" required>
+                                <input type="number" step="0.01" class="form-control app-input" placeholder="Area" value="{{old('area', $a->area)}}" name="optionapp[{{$loop->index+1}}][area]" required>
+                                <input type="number" class="form-control app-input" placeholder="Habitaciones" value="{{old('rooms', $a->rooms)}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
                                 @php
                                 $bathroomsFormatted = (intval($a->bathrooms) == $a->bathrooms) ? intval($a->bathrooms) : $a->bathrooms;
                                 @endphp
-                                <td><input type="number" step="0.01" placeholder="Baños" value="{{old('bathrooms', $bathroomsFormatted)}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required></td>
-                                <td><input type="number" placeholder="Estacionamientos" value="{{old('parkings', $a->parkings)}}" name="optionapp[{{$loop->index+1}}][parkings]" required></td>
-                                <td><input type="number" placeholder="Num disponibles" value="{{old('num_available', $a->num_available)}}" name="optionapp[{{$loop->index+1}}][num_available]" required></td>
-                                <td>
-                                    <input type="file" name="imageoption[{{$loop->index+1}}]" accept="image/jpeg">
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                <input type="number" step="0.01" class="form-control app-input" placeholder="Baños" value="{{old('bathrooms', $bathroomsFormatted)}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
+                                <input type="number" class="form-control app-input" placeholder="Estacionamientos" value="{{old('parkings',$a->parkings)}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
+                                <input type="number" class="form-control app-input" placeholder="Num disponibles" value="{{old('num_available', $a->num_available)}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
+                            </div>
+                            <div class="input-group mb-3 app-file">
+                                <input type="file" class="form-control" value="{{old('imageoption', $a->imageoption)}}" name="imageoption[{{$loop->index+1}}]" accept="image/jpeg">
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
 
                     <!--nueva opción-->
 
@@ -380,23 +379,6 @@
         flex-wrap: wrap;
         align-items: stretch;
         width: 1%;
-    }
-
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .table th,
-    .table td {
-        padding: 10px;
-        text-align: center;
-        border: 1px solid #ddd;
-    }
-
-    .input {
-        width: 100%;
-        box-sizing: border-box;
     }
 
     /*-----------RESPONSIVE--------------*/
