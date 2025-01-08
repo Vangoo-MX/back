@@ -238,6 +238,17 @@
                 <div class="mt-3 mb-3">
                     <label class="form-label">Opciones de departamentos:</label>
 
+                    <div class="d-flex mb-2 fw-bold text-center">
+                        <div class="flex-fill">Título</div>
+                        <div class="flex-fill">Precio</div>
+                        <div class="flex-fill">Área</div>
+                        <div class="flex-fill">Habitaciones</div>
+                        <div class="flex-fill">Baños</div>
+                        <div class="flex-fill">Estacionamientos</div>
+                        <div class="flex-fill">Disponibles</div>
+                        <div class="flex-fill">Imagen</div>
+                    </div>
+
                     <div class="options-container">
                         @foreach($app as $a)
                         <div class="option-appartment" id="option-appartment-{{$loop->index+1}}">
