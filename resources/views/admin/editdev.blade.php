@@ -238,36 +238,32 @@
                 <div class="mt-3 mb-3">
                     <label class="form-label">Opciones de departamentos:</label>
 
-                    <div class="d-flex mb-2 fw-bold text-center">
-                        <div class="flex-fill">Título</div>
-                        <div class="flex-fill">Precio</div>
-                        <div class="flex-fill">Área</div>
-                        <div class="flex-fill">Habitaciones</div>
-                        <div class="flex-fill">Baños</div>
-                        <div class="flex-fill">Estacionamientos</div>
-                        <div class="flex-fill">Disponibles</div>
-                        <div class="flex-fill">Imagen</div>
+                    <div class="options-header">
+                        <div>Título</div>
+                        <div>Precio</div>
+                        <div>Área</div>
+                        <div>Habitaciones</div>
+                        <div>Baños</div>
+                        <div>Estacionamientos</div>
+                        <div>Disponibles</div>
+                        <div>Imagen</div>
                     </div>
 
                     <div class="options-container">
                         @foreach($app as $a)
-                        <div class="option-appartment" id="option-appartment-{{$loop->index+1}}">
-                            <div class="input-group mb-3 gap-2 flex-column flex-lg-row">
-                                <input type="hidden" name="optionapp[{{$loop->index+1}}][id]" value="{{$a->id}}">
-                                <input type="text" class="form-control app-input" placeholder="Titulo" value="{{old('title', $a->title)}}" name="optionapp[{{$loop->index+1}}][title]" required>
-                                <input type="number" class="form-control app-input" placeholder="Precio" value="{{old('price', $a->price)}}" name="optionapp[{{$loop->index+1}}][price]" required>
-                                <input type="number" step="0.01" class="form-control app-input" placeholder="Area" value="{{old('area', $a->area)}}" name="optionapp[{{$loop->index+1}}][area]" required>
-                                <input type="number" class="form-control app-input" placeholder="Habitaciones" value="{{old('rooms', $a->rooms)}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
-                                @php
-                                $bathroomsFormatted = (intval($a->bathrooms) == $a->bathrooms) ? intval($a->bathrooms) : $a->bathrooms;
-                                @endphp
-                                <input type="number" step="0.01" class="form-control app-input" placeholder="Baños" value="{{old('bathrooms', $bathroomsFormatted)}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
-                                <input type="number" class="form-control app-input" placeholder="Estacionamientos" value="{{old('parkings',$a->parkings)}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
-                                <input type="number" class="form-control app-input" placeholder="Num disponibles" value="{{old('num_available', $a->num_available)}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
-                            </div>
-                            <div class="input-group mb-3 app-file">
-                                <input type="file" class="form-control" value="{{old('imageoption', $a->imageoption)}}" name="imageoption[{{$loop->index+1}}]" accept="image/jpeg">
-                            </div>
+                        <div class="option-appartment">
+                            <input type="hidden" name="optionapp[{{$loop->index+1}}][id]" value="{{$a->id}}">
+                            <input type="text" class="form-control app-input" placeholder="Titulo" value="{{old('title', $a->title)}}" name="optionapp[{{$loop->index+1}}][title]" required>
+                            <input type="number" class="form-control app-input" placeholder="Precio" value="{{old('price', $a->price)}}" name="optionapp[{{$loop->index+1}}][price]" required>
+                            <input type="number" step="0.01" class="form-control app-input" placeholder="Area" value="{{old('area', $a->area)}}" name="optionapp[{{$loop->index+1}}][area]" required>
+                            <input type="number" class="form-control app-input" placeholder="Habitaciones" value="{{old('rooms', $a->rooms)}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
+                            @php
+                            $bathroomsFormatted = (intval($a->bathrooms) == $a->bathrooms) ? intval($a->bathrooms) : $a->bathrooms;
+                            @endphp
+                            <input type="number" step="0.01" class="form-control app-input" placeholder="Baños" value="{{old('bathrooms', $bathroomsFormatted)}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
+                            <input type="number" class="form-control app-input" placeholder="Estacionamientos" value="{{old('parkings',$a->parkings)}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
+                            <input type="number" class="form-control app-input" placeholder="Num disponibles" value="{{old('num_available', $a->num_available)}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
+                            <input type="file" class="form-control" value="{{old('imageoption', $a->imageoption)}}" name="imageoption[{{$loop->index+1}}]" accept="image">
                         </div>
                         @endforeach
                     </div>
@@ -334,9 +330,25 @@
         max-height: 200px;
     }
 
+    .options-header,
+    .options-container {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        /* 8 columnas, mismo ancho */
+        text-align: center;
+        font-weight: bold;
+    }
+
     .option-appartment {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
         gap: 10px;
+        align-items: center;
+    }
+
+    .app-input {
+        width: 100%;
+        /* Que el input ocupe el espacio completo */
     }
 
     .app-file {
@@ -379,16 +391,6 @@
         flex-wrap: wrap;
         align-items: stretch;
         width: 1%;
-    }
-
-    .app-input {
-        width: 100px;
-        /* Ajusta este valor según el diseño que quieras */
-    }
-
-    .app-file input[type="file"] {
-        width: 150px;
-        /* Ajusta el ancho del input file */
     }
 
     /*-----------RESPONSIVE--------------*/
