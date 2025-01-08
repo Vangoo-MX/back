@@ -381,6 +381,16 @@
         width: 1%;
     }
 
+    .app-input {
+        width: 100px;
+        /* Ajusta este valor según el diseño que quieras */
+    }
+
+    .app-file input[type="file"] {
+        width: 150px;
+        /* Ajusta el ancho del input file */
+    }
+
     /*-----------RESPONSIVE--------------*/
     @media only screen and (max-width: 600px) {
         .option-appartment {
