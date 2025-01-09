@@ -246,7 +246,7 @@
                         <div class="col">Baños</div>
                         <div class="col">Estacionamientos</div>
                         <div class="col">Disponibles</div>
-                        <div class="col">Imagen</div>
+                        <div class="col">Planos</div>
                     </div>
 
                     <div class="options-container">
@@ -348,17 +348,27 @@
         max-height: 200px;
     }
 
-    .option-appartment {
-        display: flex;
-        gap: 10px;
-    }
-
     .options-container .row {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
+        /* Ajusta el margen inferior entre filas */
     }
 
     .options-container .col {
-        text-align: center;
+        padding-left: 5px;
+        /* Reduce el espacio entre columnas */
+        padding-right: 5px;
+    }
+
+    .options-container .form-control {
+        height: 38px;
+        /* Incrementa la altura de los inputs */
+        font-size: 14px;
+        /* Ajusta el tamaño del texto */
+    }
+
+    .option-appartment {
+        display: flex;
+        gap: 10px;
     }
 
     .app-file {
