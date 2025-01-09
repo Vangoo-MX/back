@@ -523,9 +523,10 @@
 
     addOptionBtn.addEventListener('click', function() {
         optionCount++;
+        const uniqueId = `option-${Date.now()}`;
         const newOption = document.createElement('div');
         newOption.classList.add('option-appartment');
-        newOption.id = `option-appartment-${optionCount}`;
+        newOption.id = uniqueId;
 
         const inputs = `
             <input type="text" class="form-control app-input" placeholder="Titulo" name="option[${optionCount}][title]" required>
@@ -560,8 +561,10 @@
         newDeleteBtn.addEventListener('click', function(e) {
             e.preventDefault();
             const optionId = this.getAttribute('data-option-id');
-            const optionElement = document.getElementById(`option-appartment-${optionId}`);
-            optionElement.remove();
+            const optionElement = document.getElementById(optionId);
+            if (optionElement) {
+                optionElement.remove();
+            }
         });
     });
 </script>
