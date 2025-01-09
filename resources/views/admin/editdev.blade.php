@@ -523,7 +523,7 @@
 
     addOptionBtn.addEventListener('click', function() {
         optionCount++;
-        const uniqueId = `option-${Date.now()}`;
+        const uniqueId = `option-appartment-${optionCount}`;
         const newOption = document.createElement('div');
         newOption.classList.add('option-appartment');
         newOption.id = uniqueId;
