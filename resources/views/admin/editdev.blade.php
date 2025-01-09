@@ -238,7 +238,7 @@
                 <div class="mt-3 mb-3">
                     <label class="form-label">Opciones de departamentos:</label>
                     <?php
-                    var_dump($app);
+                    var_dump(sizeof($app));
                     ?>
 
                     <div class="row fw-bold text-center">
