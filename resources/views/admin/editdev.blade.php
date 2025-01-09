@@ -238,32 +238,36 @@
                 <div class="mt-3 mb-3">
                     <label class="form-label">Opciones de departamentos:</label>
 
-                    <div class="options-header">
-                        <div>Título</div>
-                        <div>Precio</div>
-                        <div>Área</div>
-                        <div>Habitaciones</div>
-                        <div>Baños</div>
-                        <div>Estacionamientos</div>
-                        <div>Disponibles</div>
-                        <div>Imagen</div>
+                    <div class="d-flex mb-2 fw-bold text-center">
+                        <div class="flex-fill">Título</div>
+                        <div class="flex-fill">Precio</div>
+                        <div class="flex-fill">Área</div>
+                        <div class="flex-fill">Habitaciones</div>
+                        <div class="flex-fill">Baños</div>
+                        <div class="flex-fill">Estacionamientos</div>
+                        <div class="flex-fill">Disponibles</div>
+                        <div class="flex-fill">Imagen</div>
                     </div>
 
                     <div class="options-container">
                         @foreach($app as $a)
                         <div class="option-appartment" id="option-appartment-{{$loop->index+1}}">
-                            <input type="hidden" name="optionapp[{{$loop->index+1}}][id]" value="{{$a->id}}">
-                            <input type="text" class="app-input" placeholder="Titulo" value="{{old('title', $a->title)}}" name="optionapp[{{$loop->index+1}}][title]" required>
-                            <input type="number" class="app-input" placeholder="Precio" value="{{old('price', $a->price)}}" name="optionapp[{{$loop->index+1}}][price]" required>
-                            <input type="number" step="0.01" class="app-input" placeholder="Area" value="{{old('area', $a->area)}}" name="optionapp[{{$loop->index+1}}][area]" required>
-                            <input type="number" class="app-input" placeholder="Habitaciones" value="{{old('rooms', $a->rooms)}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
-                            @php
-                            $bathroomsFormatted = (intval($a->bathrooms) == $a->bathrooms) ? intval($a->bathrooms) : $a->bathrooms;
-                            @endphp
-                            <input type="number" step="0.01" class="app-input" placeholder="Baños" value="{{old('bathrooms', $bathroomsFormatted)}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
-                            <input type="number" class="app-input" placeholder="Estacionamientos" value="{{old('parkings',$a->parkings)}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
-                            <input type="number" class="app-input" placeholder="Num disponibles" value="{{old('num_available', $a->num_available)}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
-                            <input type="file" class="form-control" value="{{old('imageoption', $a->imageoption)}}" name="imageoption[{{$loop->index+1}}]" accept="image/jpeg">
+                            <div class="input-group mb-3 gap-2 flex-column flex-lg-row">
+                                <input type="hidden" name="optionapp[{{$loop->index+1}}][id]" value="{{$a->id}}">
+                                <input type="text" class="form-control app-input" placeholder="Titulo" value="{{old('title', $a->title)}}" name="optionapp[{{$loop->index+1}}][title]" required>
+                                <input type="number" class="form-control app-input" placeholder="Precio" value="{{old('price', $a->price)}}" name="optionapp[{{$loop->index+1}}][price]" required>
+                                <input type="number" step="0.01" class="form-control app-input" placeholder="Area" value="{{old('area', $a->area)}}" name="optionapp[{{$loop->index+1}}][area]" required>
+                                <input type="number" class="form-control app-input" placeholder="Habitaciones" value="{{old('rooms', $a->rooms)}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
+                                @php
+                                $bathroomsFormatted = (intval($a->bathrooms) == $a->bathrooms) ? intval($a->bathrooms) : $a->bathrooms;
+                                @endphp
+                                <input type="number" step="0.01" class="form-control app-input" placeholder="Baños" value="{{old('bathrooms', $bathroomsFormatted)}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
+                                <input type="number" class="form-control app-input" placeholder="Estacionamientos" value="{{old('parkings',$a->parkings)}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
+                                <input type="number" class="form-control app-input" placeholder="Num disponibles" value="{{old('num_available', $a->num_available)}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
+                            </div>
+                            <div class="input-group mb-3 app-file">
+                                <input type="file" class="form-control" value="{{old('imageoption', $a->imageoption)}}" name="imageoption[{{$loop->index+1}}]" accept="image/jpeg">
+                            </div>
                         </div>
                         @endforeach
                     </div>
@@ -330,53 +334,9 @@
         max-height: 200px;
     }
 
-    .options-header,
-    .options-container {
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
-        gap: 10px;
-        text-align: center;
-        font-weight: bold;
-    }
-
     .option-appartment {
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
+        display: flex;
         gap: 10px;
-        align-items: center;
-    }
-
-    .options-header div,
-    .option-appartment input,
-    .option-appartment .form-control {
-        width: 100%;
-        box-sizing: border-box;
-        text-align: center;
-    }
-
-    .options-header div {
-        white-space: nowrap;
-    }
-
-    input[type="text"],
-    input[type="number"],
-    input[type="file"] {
-        padding: 8px;
-        font-size: 14px;
-    }
-
-    .options-container {
-        margin-top: 20px;
-    }
-
-    .form-control {
-        height: 35px;
-        /* Altura uniforme para todos los inputs */
-    }
-
-    .btn {
-        margin-top: 10px;
-        /* Espaciado superior para el botón */
     }
 
     .app-file {
@@ -540,13 +500,13 @@
         newOption.id = `option-appartment-${optionCount}`;
 
         const inputs = `
-            <input type="text" class="app-input" placeholder="Titulo" name="option[${optionCount}][title]" required>
-            <input type="number" class="app-input" placeholder="Precio" name="option[${optionCount}][price]" required>
-            <input type="number" class="app-input" placeholder="Area" name="option[${optionCount}][area]" required>
-            <input type="number" class="app-input" placeholder="Habitaciones" name="option[${optionCount}][rooms]" required>
-            <input type="number" class="app-input" placeholder="Baños" name="option[${optionCount}][bathrooms]" required>
-            <input type="number" class="app-input" placeholder="Estacionamientos" name="option[${optionCount}][parkings]" required>
-            <input type="number" class="app-input" placeholder="Num disponibles" name="option[${optionCount}][num_available]" required>
+            <input type="text" class="form-control app-input" placeholder="Titulo" name="option[${optionCount}][title]" required>
+            <input type="number" class="form-control app-input" placeholder="Precio" name="option[${optionCount}][price]" required>
+            <input type="number" class="form-control app-input" placeholder="Area" name="option[${optionCount}][area]" required>
+            <input type="number" class="form-control app-input" placeholder="Habitaciones" name="option[${optionCount}][rooms]" required>
+            <input type="number" class="form-control app-input" placeholder="Baños" name="option[${optionCount}][bathrooms]" required>
+            <input type="number" class="form-control app-input" placeholder="Estacionamientos" name="option[${optionCount}][parkings]" required>
+            <input type="number" class="form-control app-input" placeholder="Num disponibles" name="option[${optionCount}][num_available]" required>
         `;
 
         const fileInput = `
