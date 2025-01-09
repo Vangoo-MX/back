@@ -523,10 +523,9 @@
 
     addOptionBtn.addEventListener('click', function() {
         optionCount++;
-        const uniqueId = `option-appartment-${optionCount}`;
         const newOption = document.createElement('div');
         newOption.classList.add('option-appartment');
-        newOption.id = uniqueId;
+        newOption.id = `option-appartment-${optionCount}`;
 
         const inputs = `
             <input type="text" class="form-control app-input" placeholder="Titulo" name="option[${optionCount}][title]" required>
@@ -555,45 +554,16 @@
             <div class="input-group-icon mb-3">${button}</div>
         `;
 
-        console.log(document.getElementById(`option-appartment-${optionCount}`));
-
         optionsContainer.appendChild(newOption);
 
         const newDeleteBtn = newOption.querySelector('.delete-option-btn');
         newDeleteBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            optionDelete(uniqueId);
+            const optionId = this.getAttribute('data-option-id');
+            const optionElement = document.getElementById(`option-appartment-${optionId}`);
+            optionElement.remove();
         });
     });
-
-    function optionDelete(optionId) {
-        const optionElement = document.getElementById(optionId);
-        if (optionElement) {
-            optionElement.remove();
-
-            const options = document.querySelectorAll('.option-appartment');
-            options.forEach((option, index) => {
-                const newId = `option-appartment-${index+1}`;
-                option.id = newId;
-
-                const inputs = option.querySelectorAll('input');
-                inputs.forEach(input => {
-                    const nameAttr = input.getAttribute('name');
-                    if (nameAttr) {
-                        const updateName = nameAttr.replace(/\d+/, index + 1);
-                        input.setAttribute('name', updateName);
-                    }
-                });
-
-                const deleteBtn = option.querySelector('.delete-option-btn');
-                if (deleteBtn) {
-                    deleteBtn.setAttribute('data-option-id', newId);
-                }
-            });
-        } else {
-            console.error(`Elemento con ID "${optionId}" no encontrado.`);
-        }
-    }
 </script>
 
 @endsection()
