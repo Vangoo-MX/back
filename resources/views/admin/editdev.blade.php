@@ -353,6 +353,14 @@
         gap: 10px;
     }
 
+    .options-container .row {
+        margin-bottom: 10px;
+    }
+
+    .options-container .col {
+        text-align: center;
+    }
+
     .app-file {
         width: 25%;
     }
