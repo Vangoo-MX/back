@@ -237,6 +237,9 @@
 
                 <div class="mt-3 mb-3">
                     <label class="form-label">Opciones de departamentos:</label>
+                    <?php
+                    var_dump($app);
+                    ?>
 
                     <div class="row fw-bold text-center">
                         <div class="col">Título</div>
@@ -518,11 +521,13 @@
 
     //opciones de apartamentos
     let optionCount = <?php echo is_array($app) ? sizeof($app) : 0; ?>;
+    console.log("Initial optionCount:", optionCount);
     const addOptionBtn = document.getElementById('add-option-btn');
     const optionsContainer = document.querySelector('.options-container');
 
     addOptionBtn.addEventListener('click', function() {
         optionCount++;
+        console.log("After incrementing optionCount:", optionCount);
         const newOption = document.createElement('div');
         newOption.classList.add('option-appartment');
         newOption.id = `option-appartment-${optionCount}`;
