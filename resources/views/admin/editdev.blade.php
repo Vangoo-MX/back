@@ -350,20 +350,16 @@
 
     .options-container .row {
         margin-bottom: 8px;
-        /* Ajusta el margen inferior entre filas */
     }
 
     .options-container .col {
-        padding-left: 5px;
-        /* Reduce el espacio entre columnas */
-        padding-right: 5px;
+        padding-left: 0px;
+        padding-right: 0px;
     }
 
     .options-container .form-control {
         height: 38px;
-        /* Incrementa la altura de los inputs */
         font-size: 14px;
-        /* Ajusta el tamaño del texto */
     }
 
     .option-appartment {
