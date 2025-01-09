@@ -562,15 +562,38 @@
         const newDeleteBtn = newOption.querySelector('.delete-option-btn');
         newDeleteBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            const optionId = this.getAttribute('data-option-id');
-            const optionElement = document.getElementById(optionId);
-            if (optionElement) {
-                optionElement.remove();
-            } else {
-                console.error(`Elemento con ID "${optionId}" no encontrado.`);
-            }
+            optionDelete(uniqueId);
         });
     });
+
+    function optionDelete(optionId) {
+        const optionElement = document.getElementById(optionId);
+        if (optionElement) {
+            optionElement.remove();
+
+            const options = document.querySelectorAll('.option-appartment');
+            options.forEach((option, index) => {
+                const newId = `option-appartment-${index+1}`;
+                option.id = newId;
+
+                const inputs = option.querySelectorAll('input');
+                inputs.forEach(input => {
+                    const nameAttr = input.getAttribute('name');
+                    if (nameAttr) {
+                        const updateName = nameAttr.replace(/\d+/, index + 1);
+                        input.setAttribute('name', updateName);
+                    }
+                });
+
+                const deleteBtn = option.querySelector('.delete-option-btn');
+                if (deleteBtn) {
+                    deleteBtn.setAttribute('data-option-id', newId);
+                }
+            });
+        } else {
+            console.error(`Elemento con ID "${optionId}" no encontrado.`);
+        }
+    }
 </script>
 
 @endsection()
