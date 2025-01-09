@@ -555,6 +555,8 @@
             <div class="input-group-icon mb-3">${button}</div>
         `;
 
+        console.log(document.getElementById(`option-appartment-${optionCount}`));
+
         optionsContainer.appendChild(newOption);
 
         const newDeleteBtn = newOption.querySelector('.delete-option-btn');
