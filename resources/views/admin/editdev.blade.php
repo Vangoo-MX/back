@@ -238,34 +238,48 @@
                 <div class="mt-3 mb-3">
                     <label class="form-label">Opciones de departamentos:</label>
 
-                    <div class="d-flex mb-2 fw-bold text-center">
-                        <div class="flex-fill">Título</div>
-                        <div class="flex-fill">Precio</div>
-                        <div class="flex-fill">Área</div>
-                        <div class="flex-fill">Habitaciones</div>
-                        <div class="flex-fill">Baños</div>
-                        <div class="flex-fill">Estacionamientos</div>
-                        <div class="flex-fill">Disponibles</div>
-                        <div class="flex-fill">Imagen</div>
+                    <div class="row fw-bold text-center">
+                        <div class="col">Título</div>
+                        <div class="col">Precio</div>
+                        <div class="col">Área</div>
+                        <div class="col">Habitaciones</div>
+                        <div class="col">Baños</div>
+                        <div class="col">Estacionamientos</div>
+                        <div class="col">Disponibles</div>
+                        <div class="col">Imagen</div>
                     </div>
 
                     <div class="options-container">
                         @foreach($app as $a)
-                        <div class="option-appartment" id="option-appartment-{{$loop->index+1}}">
-                            <div class="input-group mb-3 gap-2 flex-column flex-lg-row">
-                                <input type="hidden" name="optionapp[{{$loop->index+1}}][id]" value="{{$a->id}}">
-                                <input type="text" class="form-control app-input" placeholder="Titulo" value="{{old('title', $a->title)}}" name="optionapp[{{$loop->index+1}}][title]" required>
-                                <input type="number" class="form-control app-input" placeholder="Precio" value="{{old('price', $a->price)}}" name="optionapp[{{$loop->index+1}}][price]" required>
-                                <input type="number" step="0.01" class="form-control app-input" placeholder="Area" value="{{old('area', $a->area)}}" name="optionapp[{{$loop->index+1}}][area]" required>
-                                <input type="number" class="form-control app-input" placeholder="Habitaciones" value="{{old('rooms', $a->rooms)}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
-                                @php
-                                $bathroomsFormatted = (intval($a->bathrooms) == $a->bathrooms) ? intval($a->bathrooms) : $a->bathrooms;
-                                @endphp
-                                <input type="number" step="0.01" class="form-control app-input" placeholder="Baños" value="{{old('bathrooms', $bathroomsFormatted)}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
-                                <input type="number" class="form-control app-input" placeholder="Estacionamientos" value="{{old('parkings',$a->parkings)}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
-                                <input type="number" class="form-control app-input" placeholder="Num disponibles" value="{{old('num_available', $a->num_available)}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
+                        <div class="row align-items-center mb-2 option-appartment" id="option-appartment-{{$loop->index+1}}">
+                            <input type="hidden" name="optionapp[{{$loop->index+1}}][id]" value="{{$a->id}}">
+
+                            <div class="col">
+                                <input type="text" class="form-control" placeholder="Titulo" value="{{old('title', $a->title)}}" name="optionapp[{{$loop->index+1}}][title]" required>
                             </div>
-                            <div class="input-group mb-3 app-file">
+                            <div class="col">
+                                <input type="number" class="form-control" placeholder="Precio" value="{{old('price', $a->price)}}" name="optionapp[{{$loop->index+1}}][price]" required>
+                            </div>
+                            <div class="col">
+                                <input type="number" step="0.01" class="form-control" placeholder="Area" value="{{old('area', $a->area)}}" name="optionapp[{{$loop->index+1}}][area]" required>
+                            </div>
+                            <div class="col">
+                                <input type="number" class="form-control" placeholder="Habitaciones" value="{{old('rooms', $a->rooms)}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
+                            </div>
+
+                            @php
+                            $bathroomsFormatted = (intval($a->bathrooms) == $a->bathrooms) ? intval($a->bathrooms) : $a->bathrooms;
+                            @endphp
+                            <div class="col">
+                                <input type="number" step="0.01" class="form-control" placeholder="Baños" value="{{old('bathrooms', $bathroomsFormatted)}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
+                            </div>
+                            <div class="col">
+                                <input type="number" class="form-control" placeholder="Estacionamientos" value="{{old('parkings',$a->parkings)}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
+                            </div>
+                            <div class="col">
+                                <input type="number" class="form-control" placeholder="Num disponibles" value="{{old('num_available', $a->num_available)}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
+                            </div>
+                            <div class="col">
                                 <input type="file" class="form-control" value="{{old('imageoption', $a->imageoption)}}" name="imageoption[{{$loop->index+1}}]" accept="image/jpeg">
                             </div>
                         </div>
