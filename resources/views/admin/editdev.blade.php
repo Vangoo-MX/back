@@ -524,50 +524,34 @@
     addOptionBtn.addEventListener('click', function() {
         optionCount++;
         const newOption = document.createElement('div');
-        newOption.classList.add('option-appartment', 'row', 'gap-2');
+        newOption.classList.add('option-appartment');
         newOption.id = `option-appartment-${optionCount}`;
 
         const inputs = `
-            <div class="col">
-                <input type="text" class="form-control app-input" placeholder="Título" name="option[${optionCount}][title]" required>
-            </div>
-            <div class="col">
-                <input type="number" class="form-control app-input" placeholder="Precio" name="option[${optionCount}][price]" required>
-            </div>
-            <div class="col">
-                <input type="number" class="form-control app-input" placeholder="Área" name="option[${optionCount}][area]" required>
-            </div>
-            <div class="col">
-                <input type="number" class="form-control app-input" placeholder="Habitaciones" name="option[${optionCount}][rooms]" required>
-            </div>
-            <div class="col">
-                <input type="number" class="form-control app-input" placeholder="Baños" name="option[${optionCount}][bathrooms]" required>
-            </div>
-            <div class="col">
-                <input type="number" class="form-control app-input" placeholder="Estacionamientos" name="option[${optionCount}][parkings]" required>
-            </div>
-            <div class="col">
-                <input type="number" class="form-control app-input" placeholder="Num disponibles" name="option[${optionCount}][num_available]" required>
-            </div>
+            <input type="text" class="form-control app-input" placeholder="Titulo" name="option[${optionCount}][title]" required>
+            <input type="number" class="form-control app-input" placeholder="Precio" name="option[${optionCount}][price]" required>
+            <input type="number" class="form-control app-input" placeholder="Area" name="option[${optionCount}][area]" required>
+            <input type="number" class="form-control app-input" placeholder="Habitaciones" name="option[${optionCount}][rooms]" required>
+            <input type="number" class="form-control app-input" placeholder="Baños" name="option[${optionCount}][bathrooms]" required>
+            <input type="number" class="form-control app-input" placeholder="Estacionamientos" name="option[${optionCount}][parkings]" required>
+            <input type="number" class="form-control app-input" placeholder="Num disponibles" name="option[${optionCount}][num_available]" required>
         `;
 
         const fileInput = `
-            <div class="col-12">
-                <input type="file" class="form-control app-file" name="imageoption[${optionCount}]" accept="image/jpeg">
-            </div>
+            <input type="file" class="form-control" name="imageoption[${optionCount}]" accept="image/jpeg">
         `;
 
         const button = `
-            <div class="col-12 text-end">
-                <a href="#" class="delete-icon-option delete-option-btn btn btn-danger btn-sm" data-option-id="${optionCount}">Eliminar ❌</a>
+            <div class="delete-option-btn-container">
+                <a href="#" class="delete-icon-option delete-option-btn" data-option-id="${optionCount}">❌</a>
             </div>
         `;
 
 
         newOption.innerHTML = `
-            <div class="row gap-2 mb-3">${inputs}</div>
-            <div class="row gap-2 mb-3">${fileInput}</div>
-            <div class="row gap-2">${button}</div>
+            <div class="input-group mb-3 gap-2">${inputs}</div>
+            <div class="input-group mb-3 app-file">${fileInput}</div>
+            <div class="input-group-icon mb-3">${button}</div>
         `;
 
         optionsContainer.appendChild(newOption);
