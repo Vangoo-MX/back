@@ -334,9 +334,11 @@
     .options-container {
         display: grid;
         grid-template-columns: repeat(8, 1fr);
-        /* 8 columnas, mismo ancho */
+        /* Asegura 8 columnas iguales */
         text-align: center;
         font-weight: bold;
+        gap: 10px;
+        /* Espaciado entre columnas */
     }
 
     .option-appartment {
@@ -346,9 +348,26 @@
         align-items: center;
     }
 
-    .app-input {
+    .options-header div,
+    .option-appartment input,
+    .option-appartment .form-control {
         width: 100%;
-        /* Que el input ocupe el espacio completo */
+        /* Que ocupen todo el espacio de su celda */
+        box-sizing: border-box;
+        /* Incluye padding y border dentro del ancho */
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"] {
+        padding: 5px;
+        /* Espaciado interno */
+        font-size: 14px;
+        /* Ajusta el tamaño del texto */
+    }
+
+    .options-container {
+        margin-top: 10px;
     }
 
     .app-file {
