@@ -564,6 +564,8 @@
             const optionElement = document.getElementById(optionId);
             if (optionElement) {
                 optionElement.remove();
+            } else {
+                console.error(`Elemento con ID "${optionId}" no encontrado.`);
             }
         });
     });
