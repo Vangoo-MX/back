@@ -520,7 +520,10 @@
     });
 
     //opciones de apartamentos
-    let optionCount = <?php echo json_encode(is_array($app) ? sizeof($app) : 0); ?>;
+    let optionCount = <?php
+                        $size = is_array($app) ? sizeof($app) : 0;
+                        var_dump($size); // Depuración forzada
+                        ?>;
     console.log("Initial optionCount:", optionCount);
     const addOptionBtn = document.getElementById('add-option-btn');
     const optionsContainer = document.querySelector('.options-container');
