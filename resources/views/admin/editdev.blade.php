@@ -237,6 +237,7 @@
 
                 <div class="mt-3 mb-3">
                     <label class="form-label">Opciones de departamentos:</label>
+                    <div id="options-data" data-option-count="<?php echo is_array($app) ? sizeof($app) : 0; ?>"></div>
                     <?php
                     var_dump(sizeof($app));
                     ?>
@@ -520,10 +521,7 @@
     });
 
     //opciones de apartamentos
-    let optionCount = <?php
-                        $size = is_array($app) ? sizeof($app) : 0;
-                        var_dump($size); // Depuración forzada
-                        ?>;
+    const optionCount = parseInt(document.getElementById('options-data').dataset.optionCount, 10);
     console.log("Initial optionCount:", optionCount);
     const addOptionBtn = document.getElementById('add-option-btn');
     const optionsContainer = document.querySelector('.options-container');
