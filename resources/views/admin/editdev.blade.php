@@ -521,7 +521,7 @@
     });
 
     //opciones de apartamentos
-    const optionCount = parseInt(document.getElementById('options-data').dataset.optionCount, 10);
+    let optionCount = parseInt(document.getElementById('options-data').dataset.optionCount, 10);
     console.log("Initial optionCount:", optionCount);
     const addOptionBtn = document.getElementById('add-option-btn');
     const optionsContainer = document.querySelector('.options-container');
