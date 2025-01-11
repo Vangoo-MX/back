@@ -22,162 +22,152 @@ class PropertiesController extends Controller
 {
     public function getAll()
     {
-        $properties = Properties::all();
-        return $properties;
+        return Properties::all();
     }
 
     public function getPropertiesHightlights()
     {
-        $highlights = PropertiesHighlights::orderBy('num_order', 'asc')->get();
+        $highlightIds = PropertiesHighlights::orderBy('num_order', 'asc')
+            ->pluck('id_property');
 
-        if (sizeof($highlights) > 0) {
-            $highlightIds = $highlights->pluck('id_property')->toArray();
-            $highlights = Properties::whereIn('id', $highlightIds)->get();
-        } else {
-            $highlights = [];
-        }
-
-        return $highlights;
+        return $highlightIds->isNotEmpty()
+            ? Properties::whereIn('id', $highlightIds)->get()
+            : collect();
     }
 
 
     public function getPropertiesHightlightFromMunicipio($id)
     {
-        $highlight = PropertiesHighlights::where('id_municipio', $id)
+        $highlightIds = PropertiesHighlights::where('id_municipio', $id)
             ->orderBy('num_order', 'asc')
-            ->get();
+            ->pluck('id_property');
 
-        if (sizeof($highlight) > 0) {
-            $properties = Properties::select();
-            foreach ($highlight as $value) {
-                $properties = $properties->orwhere('id', $value->id_property);
-            }
-            $properties = $properties->get();
-        } else {
-            $properties = [];
-        }
+        return $highlightIds->isNotEmpty()
+            ? Properties::whereIn('id', $highlightIds)->get()
+            : collect();
 
         return $properties;
     }
 
     public function deletePropertyHightlight($id)
     {
-        $h = PropertiesHighlights::find($id);
-
-        if ($h) {
-            $h->delete();
+        if (PropertiesHighlights::destroy($id)) {
             return redirect('overview/properties-highlights');
-        } else {
-            return json_encode('error: Agenda entry not found');
         }
+
+        return response()->json(['error' => 'Agenda entry not found'], 404);
     }
 
     public function addPropertyHightlight(Request $request)
     {
         try {
-            $h = new PropertiesHighlights();
-            $h->id_estado = 19;
-            $h->id_municipio = $request->id_municipio;
-            $h->id_property = $request->id_property;
-            $h->save();
-        } catch (Exception $e) {
-            return json_encode($e->getMessage());
-        }
+            PropertiesHighlights::create([
+                'id_estado' => 19,
+                'id_municipio' => $request->id_municipio,
+                'id_property' => $request->id_property,
+            ]);
 
-        return redirect('overview/properties-highlights');
+            return redirect('overview/properties-highlights');
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function orderPropertyHightlight(Request $request)
     {
-        $idProperty = $request->id;
+        $highlight = PropertiesHighlights::where('id_property', $request->id)->first();
 
-        $h = PropertiesHighlights::where('id_property', $idProperty)->first();
-
-        if ($h) {
-            $h->num_order = $request->num_order;
-            $h->save();
-
+        if ($highlight) {
+            $highlight->update(['num_order' => $request->num_order]);
             return redirect('overview/properties-highlights');
-        } else {
-            return json_encode('error: entry for property with id ' . $idProperty . ' not found');
         }
+
+        return response()->json(['error' => 'Entry for property with id ' . $request->id . ' not found'], 404);
     }
 
 
     public function getPropertyCard($id)
     {
-        $properties = Properties::selectRaw('id,title,price,location,id_pais,rooms,parkings,bathrooms,area,description,views,images')
-            ->where('id', $id)
-            ->get();
-
-        return $properties;
+        return Properties::select([
+            'id',
+            'title',
+            'price',
+            'location',
+            'id_pais',
+            'rooms',
+            'parkings',
+            'bathrooms',
+            'area',
+            'description',
+            'views',
+            'images'
+        ])->find($id);
     }
 
     public function getMultiPropertyCard($array)
     {
 
-        if (str_contains($array, '-')) {
-            $list = explode('-', $array);
-        } else {
-            $list[] = $array;
-        }
+        $ids = str_contains($array, '-') ? explode('-', $array) : [$array];
 
-        $properties = Properties::selectRaw('id,title,price,location,id_pais,rooms,parkings,bathrooms,area,description,views,images');
-
-        foreach ($list as $value) {
-            $properties = $properties->orWhere('id', $value);
-        }
-
-        $properties = $properties->get();
-
-        return $properties;
+        return Properties::select([
+            'id',
+            'title',
+            'price',
+            'location',
+            'id_pais',
+            'rooms',
+            'parkings',
+            'bathrooms',
+            'area',
+            'description',
+            'views',
+            'images'
+        ])->whereIn('id', $ids)->get();
     }
 
     public function getPropertiesImagesCards()
     {
-        $images = Images::where('type_property', 'property')
-            ->where('category', 'card')
-            ->get();
-
-        return $images;
+        return Images::where([
+            ['type_property', '=', 'property'],
+            ['category', '=', 'card']
+        ])->get();
     }
 
     public function getPropertiesImagesDetail($id)
     {
-        $images = Images::where('type_property', 'property')
-            ->where('category', 'card')
-            ->where('id_property', $id)
-            ->get();
-
-        return $images;
+        return Images::where([
+            ['type_property', '=', 'property'],
+            ['category', '=', 'card'],
+            ['id_property', '=', $id]
+        ])->get();
     }
 
     public function getProperty($id)
     {
-        $properties = Properties::where('id', $id)
+        return Properties::where('id', $id)
             ->get();
-
-        return $properties;
     }
 
     public function getPropertyQueueEP($id)
     {
-        $propertyQueue = PropertiesQueue::where('id', $id)->get();
-        return $propertyQueue;
+        return PropertiesQueue::where('id', $id)
+            ->get();
     }
 
     public function getPropertyRelated($id)
     {
-        $properties = Properties::where('id', $id)
-            ->get();
-        $propertiesRelated = Properties::where('id', '<>', $id)
-            ->where('bathrooms', $properties[0]->bathrooms)
-            ->where('rooms', $properties[0]->rooms)
-            ->where('id_municipio', $properties[0]->id_municipio)
+        $property = Properties::find($id);
+
+        if (!$property) {
+            return collect();
+        }
+
+        return Properties::where('id', '<>', $id)
+            ->where('bathrooms', $property->bathrooms)
+            ->where('rooms', $property->rooms)
+            ->where('id_municipio', $property->id_municipio)
             ->take(10)
             ->get();
-
-        return $propertiesRelated;
     }
 
     public function getPropertySearch($estado = "0", $municipio = "0", $colonia = "0", $type = "alltypes", $min = 0, $max = 0)
@@ -226,13 +216,13 @@ class PropertiesController extends Controller
 
     public function rejectPropertyQueue($id)
     {
-        PropertiesQueue::where('id', $id)->update(array('status_aproved' => 2));
+        PropertiesQueue::where('id', $id)->update(['status_aproved' => 2]);
         return redirect()->route('admin.queue');
     }
 
     public function revisionPropertyQueue($id)
     {
-        PropertiesQueue::where('id', $id)->update(array('status_aproved' => 3));
+        PropertiesQueue::where('id', $id)->update(['status_aproved' => 3]);
         return redirect()->route('admin.queue');
     }
 
@@ -248,29 +238,20 @@ class PropertiesController extends Controller
             File::makeDirectory($destinationPath, 0777, true);
         }
 
-        $files = File::allFiles($sourcePath);
-        foreach ($files as $file) {
-            $filename = $file->getFilename();
-            File::move($sourcePath . $filename, $destinationPath . $filename);
+        foreach (File::allFiles($sourcePath) as $file) {
+            File::move($file->getRealPath(), $destinationPath . $file->getFilename());
         }
 
-        if (is_dir($sourcePath)) {
-            File::deleteDirectory($sourcePath, true);
-            sleep(1);
-            rmdir($sourcePath);
-        }
+        File::deleteDirectory($sourcePath, true);
 
         $propertyQueue->delete();
 
         return redirect()->route('admin.queue');
     }
 
-
     public function deletePropertyQueue($id)
     {
-
-        $propertyQueue = PropertiesQueue::findOrFail($id);
-        $propertyQueue->delete();
+        PropertiesQueue::findOrFail($id)->delete();
         return redirect()->route('admin.queue');
     }
 
@@ -281,29 +262,23 @@ class PropertiesController extends Controller
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            sleep(1);
-            rmdir($directoryPath);
         }
 
         $propertyQueue->delete();
-        return json_encode("success");
+        return response()->json("success");
     }
 
     public function deleteProperty($id)
     {
-        $highlight = PropertiesHighlights::where('id_property', $id)->first();
-
-        if ($highlight) {
+        if ($highlight = PropertiesHighlights::where('id_property', $id)->first()) {
             $highlight->delete();
         }
-        $property = Properties::findOrFail($id);
 
+        $property = Properties::findOrFail($id);
         $directoryPath = public_path("storage/img/posts/properties/{$property->id}");
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            sleep(1);
-            rmdir($directoryPath);
         }
 
         $property->delete();
@@ -338,46 +313,31 @@ class PropertiesController extends Controller
 
     public function deactiveProperty($id)
     {
-
-        $property = Properties::findOrFail($id);
-
-        $property->status = 0;
-
-        $property->save();
+        Properties::findOrFail($id)->update(['status' => 0]);
         return redirect()->route('admin.properties');
     }
 
     public function activeProperty($id)
     {
-
-        $property = Properties::findOrFail($id);
-
-        $property->status = 1;
-
-        $property->save();
+        Properties::findOrFail($id)->update(['status' => 1]);
         return redirect()->route('admin.properties');
     }
 
     public function deletePropertyEP($id)
     {
-
         $property = Properties::findOrFail($id);
-
         $directoryPath = public_path("storage/img/posts/properties/{$property->id}");
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            sleep(1);
-            rmdir($directoryPath);
         }
 
         $property->delete();
-        return json_encode("success");
+        return response()->json("success");
     }
 
     public function getPropertyQueue($id)
     {
-
         $propertyQueue = PropertiesQueue::where('id', $id)->get();
         return view('admin.propertyqueue', compact('propertyQueue'));
     }
@@ -674,26 +634,21 @@ class PropertiesController extends Controller
 
     public function getUserProperties($iduser)
     {
-        $properties = Properties::selectRaw('id,title,price,location,views,images')
+        return Properties::select('id', 'title', 'price', 'location', 'views', 'images')
             ->where('id_user', $iduser)
             ->get();
-
-        return $properties;
     }
 
     public function getUserPropertiesQueue($iduser)
     {
-        $propertiesQueue = PropertiesQueue::selectRaw('id,title,price,location,views,images,status_aproved')
+        return PropertiesQueue::select('id', 'title', 'price', 'location', 'views', 'images', 'status_aproved')
             ->where('id_user', $iduser)
             ->get();
-
-        return $propertiesQueue;
     }
 
     public function getpropertiesbymunicipio($id)
     {
-        $properties = Properties::where('id_municipio', $id)->get();
-        return response()->json($properties);
+        return response()->json(Properties::where('id_municipio', $id)->get());
     }
 
     public function updateProperties(Request $request, Properties $propiedad)
