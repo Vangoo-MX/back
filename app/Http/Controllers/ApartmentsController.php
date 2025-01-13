@@ -22,162 +22,149 @@ class ApartmentsController extends Controller
 {
     public function getAll()
     {
-        $Apartments = Apartments::all();
-        return $Apartments;
+        return Apartments::all();
     }
 
     public function getApartmentsHightlights()
     {
-        $highlights = ApartmentsHighlights::orderBy('num_order', 'asc')->get();
+        $highlightIds = ApartmentsHighlights::orderBy('num_order', 'asc')
+            ->pluck('id_property');
 
-        if (sizeof($highlights) > 0) {
-            $highlightIds = $highlights->pluck('id_property')->toArray();
-            $highlights = Apartments::whereIn('id', $highlightIds)->get();
-        } else {
-            $highlights = [];
-        }
-
-        return $highlights;
+        return $highlightIds->isNotEmpty()
+            ? Apartments::whereIn('id', $highlightIds)->get()
+            : collect();
     }
 
 
     public function getApartmentsHightlightFromMunicipio($id)
     {
-        $highlight = ApartmentsHighlights::where('id_municipio', $id)
+        $highlightIds = ApartmentsHighlights::where('id_municipio', $id)
             ->orderBy('num_order', 'asc')
-            ->get();
+            ->pluck('id_property');
 
-        if (sizeof($highlight) > 0) {
-            $Apartments = Apartments::select();
-            foreach ($highlight as $value) {
-                $Apartments = $Apartments->orwhere('id', $value->id_property);
-            }
-            $Apartments = $Apartments->get();
-        } else {
-            $Apartments = [];
-        }
-
-        return $Apartments;
+        return $highlightIds->isNotEmpty()
+            ? Apartments::whereIn('id', $highlightIds)->get()
+            : collect();
     }
 
     public function deleteApartmentHightlight($id)
     {
-        $h = ApartmentsHighlights::find($id);
-
-        if ($h) {
-            $h->delete();
+        if (ApartmentsHighlights::destroy($id)) {
             return redirect('overview/apartments-highlights');
         } else {
-            return json_encode('error: Agenda entry not found');
+            return response()->json(['error' => 'No se pudo eliminar el registro'], 404);
         }
     }
 
     public function addApartmentHightlight(Request $request)
     {
         try {
-            $h = new ApartmentsHighlights();
-            $h->id_estado = 19;
-            $h->id_municipio = $request->id_municipio;
-            $h->id_property = $request->id_property;
-            $h->save();
-        } catch (Exception $e) {
-            return json_encode($e->getMessage());
-        }
+            ApartmentsHighlights::create([
+                'id_estado' => 19,
+                'id_municipio' => $request->id_municipio,
+                'id_property' => $request->id_property,
+            ]);
 
-        return redirect('overview/apartments-highlights');
+            return redirect('overview/apartments-highlights');
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function orderApartmentHightlight(Request $request)
     {
-        $apartmentID = $request->id;
+        $highlight = ApartmentsHighlights::where('id_property', $request->id)
+            ->first();
 
-        $h = ApartmentsHighlights::where('id_property', $apartmentID)->first();
-
-        if ($h) {
-            $h->num_order = $request->num_order;
-            $h->save();
-
+        if ($highlight) {
+            $highlight->update([
+                'num_order' => $request->num_order,
+            ]);
             return redirect('overview/apartments-highlights');
-        } else {
-            return json_encode('error: entry for property with id ' . $apartmentID . ' not found');
         }
+
+        return response()->json(['error' => 'No se encontró el registro'], 404);
     }
 
 
     public function getApartmentCard($id)
     {
-        $Apartments = Apartments::selectRaw('id,title,price,location,id_pais,rooms,dev_type,parkings,bathrooms,area,description,views,images')
-            ->where('id', $id)
-            ->get();
-
-        return $Apartments;
+        return Apartments::select([
+            'id',
+            'title',
+            'price',
+            'location',
+            'id_pais',
+            'rooms',
+            'parkings',
+            'bathrooms',
+            'area',
+            'description',
+            'views',
+            'images'
+        ])->find($id);
     }
 
     public function getMultiApartmentCard($array)
     {
-
-        if (str_contains($array, '-')) {
-            $list = explode('-', $array);
-        } else {
-            $list[] = $array;
-        }
-
-        $Apartments = Apartments::selectRaw('id,title,price,location,id_pais,rooms,dev_type,parkings,bathrooms,area,description,views,images');
-
-        foreach ($list as $value) {
-            $Apartments = $Apartments->orWhere('id', $value);
-        }
-
-        $Apartments = $Apartments->get();
-
-        return $Apartments;
+        return Apartments::select([
+            'id',
+            'title',
+            'price',
+            'location',
+            'id_pais',
+            'rooms',
+            'parkings',
+            'bathrooms',
+            'area',
+            'description',
+            'views',
+            'images'
+        ])->whereIn('id', $array)->get();
     }
 
     public function getApartmentsImagesCards()
     {
-        $images = Images::where('type_property', 'property')
-            ->where('category', 'card')
-            ->get();
-
-        return $images;
+        return Images::where([
+            ['type_property', '=', 'property'],
+            ['category', '=', 'card']
+        ])->get();
     }
 
     public function getApartmentsImagesDetail($id)
     {
-        $images = Images::where('type_property', 'property')
-            ->where('category', 'card')
-            ->where('id_property', $id)
-            ->get();
-
-        return $images;
+        return Images::where([
+            ['type_property', '=', 'property'],
+            ['category', '=', 'card'],
+            ['id_property', '=', $id]
+        ])->get();
     }
 
     public function getApartment($id)
     {
-        $Apartments = Apartments::where('id', $id)
-            ->get();
-
-        return $Apartments;
+        return Apartments::where('id', $id)->get();
     }
 
     public function getApartmentQueueEP($id)
     {
-        $apartmentQueue = ApartmentsQueue::where('id', $id)->get();
-        return $apartmentQueue;
+        return ApartmentsQueue::where('id', $id)->get();
     }
 
     public function getApartmentsRelated($id)
     {
         $apartments = Apartments::where('id', $id)
             ->get();
-        $apartmentsRelated = Apartments::where('id', '<>', $id)
-            ->where('bathrooms', $apartments[0]->bathrooms)
-            ->where('rooms', $apartments[0]->rooms)
-            ->where('id_municipio', $apartments[0]->id_municipio)
+
+        if (!$apartments) {
+            return collect();
+        }
+
+        return Apartments::where('id', '<>', $id)
+            ->where('bathrooms', $apartments->bathrooms)
+            ->where('rooms', $apartments->rooms)
+            ->where('id_municipio', $apartments->id_municipio)
             ->take(10)
             ->get();
-
-        return $apartmentsRelated;
     }
 
     public function getApartmentSearch($estado = "0", $municipio = "0", $colonia = "0", $type = "alltypes", $min = 0, $max = 0)
@@ -226,13 +213,13 @@ class ApartmentsController extends Controller
 
     public function rejectApartmentQueue($id)
     {
-        ApartmentsQueue::where('id', $id)->update(array('status_aproved' => 2));
+        ApartmentsQueue::where('id', $id)->update(['status_aproved' => 2]);
         return redirect()->route('admin.queueApartments');
     }
 
     public function revisionApartmentQueue($id)
     {
-        ApartmentsQueue::where('id', $id)->update(array('status_aproved' => 3));
+        ApartmentsQueue::where('id', $id)->update(['status_aproved' => 3]);
         return redirect()->route('admin.queueApartments');
     }
 
@@ -248,17 +235,11 @@ class ApartmentsController extends Controller
             File::makeDirectory($destinationPath, 0777, true);
         }
 
-        $files = File::allFiles($sourcePath);
-        foreach ($files as $file) {
-            $filename = $file->getFilename();
-            File::move($sourcePath . $filename, $destinationPath . $filename);
+        foreach (File::allFiles($sourcePath) as $file) {
+            File::move($file->getRealPath(), $destinationPath . $file->getFilename());
         }
 
-        if (is_dir($sourcePath)) {
-            File::deleteDirectory($sourcePath, true);
-            sleep(1);
-            rmdir($sourcePath);
-        }
+        File::deleteDirectory($sourcePath, true);
 
         $apartmentQueue->delete();
 
@@ -269,8 +250,7 @@ class ApartmentsController extends Controller
     public function deleteApartmentQueue($id)
     {
 
-        $propertyQueue = ApartmentsQueue::findOrFail($id);
-        $propertyQueue->delete();
+        ApartmentsQueue::findOrFail($id)->delete();
         return redirect()->route('admin.queue');
     }
 
@@ -281,8 +261,6 @@ class ApartmentsController extends Controller
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            sleep(1);
-            rmdir($directoryPath);
         }
 
         $apartmentQueue->delete();
@@ -291,19 +269,15 @@ class ApartmentsController extends Controller
 
     public function deleteApartment($id)
     {
-        $highlight = ApartmentsHighlights::where('id_property', $id)->first();
-
-        if ($highlight) {
+        if ($highlight = ApartmentsHighlights::where('id_property', $id)->first()) {
             $highlight->delete();
         }
-        $apartment = Apartments::findOrFail($id);
 
+        $apartment = Apartments::findOrFail($id);
         $directoryPath = public_path("storage/img/posts/apartments/{$apartment->id}");
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            sleep(1);
-            rmdir($directoryPath);
         }
 
         $apartment->delete();
@@ -338,23 +312,13 @@ class ApartmentsController extends Controller
 
     public function deactiveApartment($id)
     {
-
-        $apartment = Apartments::findOrFail($id);
-
-        $apartment->status = 0;
-
-        $apartment->save();
+        Apartments::findOrFail($id)->update(['status' => 0]);
         return redirect()->route('admin.apartments');
     }
 
     public function activeApartment($id)
     {
-
-        $aparment = Apartments::findOrFail($id);
-
-        $aparment->status = 1;
-
-        $aparment->save();
+        Apartments::findOrFail($id)->update(['status' => 1]);
         return redirect()->route('admin.apartments');
     }
 
@@ -367,8 +331,6 @@ class ApartmentsController extends Controller
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            sleep(1);
-            rmdir($directoryPath);
         }
 
         $apartment->delete();
@@ -685,26 +647,21 @@ class ApartmentsController extends Controller
 
     public function getUserApartments($iduser)
     {
-        $Apartments = Apartments::selectRaw('id,title,price,location,views,images')
+        return Apartments::select('id', 'title', 'price', 'location', 'views', 'images', 'status')
             ->where('id_user', $iduser)
             ->get();
-
-        return $Apartments;
     }
 
     public function getUserApartmentsQueue($iduser)
     {
-        $ApartmentsQueue = ApartmentsQueue::selectRaw('id,title,price,location,views,images,status_aproved')
+        return ApartmentsQueue::select('id', 'title', 'price', 'location', 'images', 'status_aproved')
             ->where('id_user', $iduser)
             ->get();
-
-        return $ApartmentsQueue;
     }
 
     public function getApartmentsByMunicipio($id)
     {
-        $Apartments = Apartments::where('id_municipio', $id)->get();
-        return response()->json($Apartments);
+        return response()->json(Apartments::where('id_municipio', $id)->get());
     }
 
     public function updateApartments(Request $request, Apartments $apartments)

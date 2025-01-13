@@ -14,6 +14,13 @@ class ApartmentsHighlights extends Model
     public $timestamps = false;
     protected $table = 'post_apartments_highlights';
 
+    protected $fillable = [
+        'id_estado',
+        'id_municipio',
+        'id_property',
+        'num_order',
+    ];
+
     public function apartment()
     {
         return $this->belongsTo(Apartments::class, 'id_property');

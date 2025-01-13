@@ -45,8 +45,6 @@ class PropertiesController extends Controller
         return $highlightIds->isNotEmpty()
             ? Properties::whereIn('id', $highlightIds)->get()
             : collect();
-
-        return $properties;
     }
 
     public function deletePropertyHightlight($id)
@@ -156,7 +154,7 @@ class PropertiesController extends Controller
 
     public function getPropertyRelated($id)
     {
-        $property = Properties::find($id);
+        $property = Properties::where('id', $id)->get();
 
         if (!$property) {
             return collect();
