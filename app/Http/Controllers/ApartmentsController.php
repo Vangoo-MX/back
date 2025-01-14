@@ -107,6 +107,7 @@ class ApartmentsController extends Controller
 
     public function getMultiApartmentCard($array)
     {
+        $ids = str_contains($array, ',') ? explode(',', $array) : [$array];
         return Apartments::select([
             'id',
             'title',
@@ -120,7 +121,7 @@ class ApartmentsController extends Controller
             'description',
             'views',
             'images'
-        ])->whereIn('id', $array)->get();
+        ])->whereIn('id', $ids)->get();
     }
 
     public function getApartmentsImagesCards()

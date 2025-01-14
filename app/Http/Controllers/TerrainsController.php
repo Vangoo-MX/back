@@ -22,160 +22,147 @@ class TerrainsController extends Controller
 {
     public function getAll()
     {
-        $terrains = Terrains::all();
-        return $terrains;
+        return Terrains::all();
     }
 
     public function getTerrainsHightlights()
     {
-        $highlights = TerrainsHighlights::orderBy('num_order', 'asc')->get();
+        $highlightIds = TerrainsHighlights::orderBy('num_order', 'asc')
+            ->pluck();
 
-        if (sizeof($highlights) > 0) {
-            $highlightIds = $highlights->pluck('id_property')->toArray();
-            $highlights = Terrains::whereIn('id', $highlightIds)->get();
-        } else {
-            $highlights = [];
-        }
-
-        return $highlights;
+        return $highlightIds->isNotEmpty()
+            ? Terrains::whereIn('id', $highlightIds)->get()
+            : collect();
     }
 
 
     public function getTerrainsHightlightFromMunicipio($id)
     {
-        $highlight = TerrainsHighlights::where('id_municipio', $id)
+        $highlightIds = TerrainsHighlights::where('id_municipio', $id)
             ->orderBy('num_order', 'asc')
-            ->get();
+            ->pluck();
 
-        if (sizeof($highlight) > 0) {
-            $terrains = Terrains::select();
-            foreach ($highlight as $value) {
-                $terrains = $terrains->orwhere('id', $value->id_property);
-            }
-            $terrains = $terrains->get();
-        } else {
-            $terrains = [];
-        }
-
-        return $terrains;
+        return $highlightIds->isNotEmpty()
+            ? Terrains::whereIn('id', $highlightIds)->get()
+            : collect();
     }
 
     public function deleteTerrainHightlight($id)
     {
-        $h = TerrainsHighlights::find($id);
-
-        if ($h) {
-            $h->delete();
+        if (TerrainsHighlights::destroy($id)) {
             return redirect('overview/terrains-highlights');
         } else {
-            return json_encode('error: Agenda entry not found');
+            return response()->json(['error' => 'Agenda entry not found'], 404);
         }
     }
 
     public function addTerrainHightlight(Request $request)
     {
         try {
-            $h = new TerrainsHighlights();
-            $h->id_estado = 19;
-            $h->id_municipio = $request->id_municipio;
-            $h->id_property = $request->id_property;
-            $h->save();
-        } catch (Exception $e) {
-            return json_encode($e->getMessage());
-        }
+            TerrainsHighlights::create([
+                'id_estado' => 19,
+                'id_municipio' => $request->id_municipio,
+                'id_property' => $request->id_property,
+            ]);
 
-        return redirect('overview/terrains-highlights');
+            return redirect('overview/properties-highlights');
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function orderTerrainHightlight(Request $request)
     {
-        $terrainID = $request->id;
+        $highlight = TerrainsHighlights::where('id_property', $request->id_property)->first();
 
-        $h = TerrainsHighlights::where('id_property', $terrainID)->first();
-
-        if ($h) {
-            $h->num_order = $request->num_order;
-            $h->save();
+        if ($highlight) {
+            $highlight->update([
+                'num_order' => $request->num_order,
+            ]);
 
             return redirect('overview/terrains-highlights');
-        } else {
-            return json_encode('error: entry for property with id ' . $terrainID . ' not found');
         }
+
+        return response()->json(['error' => 'Entry for property with id ' . $request->id . ' not found'], 404);
     }
 
 
     public function getTerrainCard($id)
     {
-        $terrains = Terrains::selectRaw('id,title,price,location,id_pais,parkings,area_terrain,description,services, views,images')
-            ->where('id', $id)
-            ->get();
-
-        return $terrains;
+        return Terrains::select([
+            'id',
+            'title',
+            'price',
+            'location',
+            'id_pais',
+            'parkings',
+            'area_terrain',
+            'description',
+            'services',
+            'views',
+            'images',
+        ])->find($id);
     }
 
     public function getMultiTerrainCard($array)
     {
+        $ids = str_contains($array, ',') ? explode(',', $array) : [$array];
 
-        if (str_contains($array, '-')) {
-            $list = explode('-', $array);
-        } else {
-            $list[] = $array;
-        }
-
-        $terrains = Terrains::selectRaw('id,title,price,location,id_pais,parkings,area_terrain,description,services, views,images');
-
-        foreach ($list as $value) {
-            $terrains = $terrains->orWhere('id', $value);
-        }
-
-        $terrains = $terrains->get();
-
-        return $terrains;
+        return Terrains::select([
+            'id',
+            'title',
+            'price',
+            'location',
+            'id_pais',
+            'parkings',
+            'area_terrain',
+            'description',
+            'services',
+            'views',
+            'images',
+        ])->whereIn('id', $ids)->get();
     }
 
     public function getTerrainsImagesCards()
     {
-        $images = Images::where('type_property', 'property')
-            ->where('category', 'card')
-            ->get();
-
-        return $images;
+        return Images::where([
+            ['type_property', '=', 'property'],
+            ['category', '=', 'card']
+        ])->get();
     }
 
     public function getTerrainsImagesDetail($id)
     {
-        $images = Images::where('type_property', 'property')
-            ->where('category', 'card')
-            ->where('id_property', $id)
-            ->get();
-
-        return $images;
+        return Images::where([
+            ['type_property', '=', 'property'],
+            ['category', '=', 'card'],
+            ['id_property', '=', $id]
+        ])->get();
     }
 
     public function getTerrain($id)
     {
-        $terrains = Terrains::where('id', $id)
-            ->get();
-
-        return $terrains;
+        return Terrains::where('id', $id)->get();
     }
 
     public function getTerrainQueueEP($id)
     {
-        $terrainQueue = TerrainsQueue::where('id', $id)->get();
-        return $terrainQueue;
+        return TerrainsQueue::where('id', $id)->get();
     }
 
     public function getTerrainsRelated($id)
     {
         $terrains = Terrains::where('id', $id)
             ->get();
-        $terrainsRelated = Terrains::where('id', '<>', $id)
-            ->where('id_municipio', $terrains[0]->id_municipio)
-            ->take(10)
-            ->get();
 
-        return $terrainsRelated;
+        if ($terrains->isEmpty()) {
+            return collect();
+        }
+
+        return Terrains::where('id', '<>', $id)
+            ->where('id_municipio', $terrains[0]->id_municipio)
+            ->limit(10)
+            ->get();
     }
 
     public function getTerrainSearch($estado = "0", $municipio = "0", $colonia = "0", $type = "alltypes", $min = 0, $max = 0)
@@ -224,13 +211,13 @@ class TerrainsController extends Controller
 
     public function rejectTerrainQueue($id)
     {
-        TerrainsQueue::where('id', $id)->update(array('status_aproved' => 2));
+        TerrainsQueue::where('id', $id)->update(['status_aproved' => 2]);
         return redirect()->route('admin.queueTerrains');
     }
 
     public function revisionTerrainQueue($id)
     {
-        TerrainsQueue::where('id', $id)->update(array('status_aproved' => 3));
+        TerrainsQueue::where('id', $id)->update(['status_aproved' => 3]);
         return redirect()->route('admin.queueTerrains');
     }
 
@@ -246,17 +233,11 @@ class TerrainsController extends Controller
             File::makeDirectory($destinationPath, 0777, true);
         }
 
-        $files = File::allFiles($sourcePath);
-        foreach ($files as $file) {
-            $filename = $file->getFilename();
-            File::move($sourcePath . $filename, $destinationPath . $filename);
+        foreach (File::allFiles($sourcePath) as $file) {
+            File::move($file->getRealPath(), $destinationPath . $file->getFilename());
         }
 
-        if (is_dir($sourcePath)) {
-            File::deleteDirectory($sourcePath, true);
-            sleep(1);
-            rmdir($sourcePath);
-        }
+        File::deleteDirectory($sourcePath, true);
 
         $terrainQueue->delete();
 
@@ -267,8 +248,7 @@ class TerrainsController extends Controller
     public function deleteTerrainQueue($id)
     {
 
-        $terrainQueue = TerrainsQueue::findOrFail($id);
-        $terrainQueue->delete();
+        TerrainsQueue::findOrFail($id)->delete();
         return redirect()->route('admin.queue');
     }
 
@@ -279,8 +259,6 @@ class TerrainsController extends Controller
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            sleep(1);
-            rmdir($directoryPath);
         }
 
         $terrainQueue->delete();
@@ -289,19 +267,15 @@ class TerrainsController extends Controller
 
     public function deleteTerrain($id)
     {
-        $highlight = TerrainsHighlights::where('id_property', $id)->first();
-
-        if ($highlight) {
+        if ($highlight = TerrainsHighlights::where('id_property', $id)->first()) {
             $highlight->delete();
         }
-        $terrain = Terrains::findOrFail($id);
 
+        $terrain = Terrains::findOrFail($id);
         $directoryPath = public_path("storage/img/posts/terrains/{$terrain->id}");
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            sleep(1);
-            rmdir($directoryPath);
         }
 
         $terrain->delete();
@@ -336,37 +310,23 @@ class TerrainsController extends Controller
 
     public function deactiveTerrain($id)
     {
-
-        $terrain = Terrains::findOrFail($id);
-
-        $terrain->status = 0;
-
-        $terrain->save();
+        Terrains::findOrFail($id)->update(['status' => 0]);
         return redirect()->route('admin.terrains');
     }
 
     public function activeTerrain($id)
     {
-
-        $aparment = Terrains::findOrFail($id);
-
-        $aparment->status = 1;
-
-        $aparment->save();
+        Terrains::findOrFail($id)->update(['status' => 1]);
         return redirect()->route('admin.terrains');
     }
 
     public function deleteTerrainEP($id)
     {
-
         $terrain = Terrains::findOrFail($id);
-
         $directoryPath = public_path("storage/img/posts/terrains/{$terrain->id}");
 
         if (is_dir($directoryPath)) {
             File::deleteDirectory($directoryPath, true);
-            sleep(1);
-            rmdir($directoryPath);
         }
 
         $terrain->delete();
@@ -652,26 +612,21 @@ class TerrainsController extends Controller
 
     public function getUserTerrains($iduser)
     {
-        $terrains = Terrains::selectRaw('id,title,price,location,views,images')
+        return Terrains::select('id', 'title', 'price', 'location', 'views', 'images')
             ->where('id_user', $iduser)
             ->get();
-
-        return $terrains;
     }
 
     public function getUserTerrainsQueue($iduser)
     {
-        $terrainsQueue = TerrainsQueue::selectRaw('id,title,price,location,views,images,status_aproved')
+        return TerrainsQueue::select('id', 'title', 'price', 'location', 'images', 'status_aproved')
             ->where('id_user', $iduser)
             ->get();
-
-        return $terrainsQueue;
     }
 
     public function getTerrainsByMunicipio($id)
     {
-        $terrains = Terrains::where('id_municipio', $id)->get();
-        return response()->json($terrains);
+        return response()->json(Terrains::where('id_municipio', $id)->get());
     }
 
     public function updateTerrains(Request $request, Terrains $terrains)
