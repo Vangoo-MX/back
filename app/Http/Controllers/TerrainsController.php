@@ -40,7 +40,7 @@ class TerrainsController extends Controller
     {
         $highlightIds = TerrainsHighlights::where('id_municipio', $id)
             ->orderBy('num_order', 'asc')
-            ->pluck();
+            ->pluck('id_property');
 
         return $highlightIds->isNotEmpty()
             ? Terrains::whereIn('id', $highlightIds)->get()
