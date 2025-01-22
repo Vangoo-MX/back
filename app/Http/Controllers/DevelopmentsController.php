@@ -193,20 +193,20 @@ class DevelopmentsController extends Controller
         $search = Developments::query();
 
         if ($estado != "0") {
-            $search = $search->where('id_estado', $estado);
+            $search->where('id_estado', $estado);
         }
         if ($municipio != "0") {
-            $search = $search->where('id_municipio', $municipio);
+            $search->where('id_municipio', $municipio);
         }
         if ($colonia != "0") {
-            $search = $search->where('id_colonia', $colonia);
+            $search->where('id_colonia', $colonia);
         }
 
         if ($min != 0 || $max != 0) {
             if ($max == 0) {
-                $search = $search->where('price_min', '<=', $min)->where('price_max', '>=', $min);
+                $search->where('price_min', '<=', $min)->where('price_max', '>=', $min);
             } else {
-                $search = $search->where(function ($query) use ($min, $max) {
+                $search->where(function ($query) use ($min, $max) {
                     $query->whereBetween('price_min', [$min, $max])
                         ->orWhereBetween('price_max', [$min, $max])
                         ->orWhere(function ($subQuery) use ($min, $max) {
@@ -218,14 +218,12 @@ class DevelopmentsController extends Controller
         }
 
         if ($status == "presale") {
-            $search = $search->where('status', 'presale');
+            $search->where('status', 'presale');
         } elseif ($status == "sale") {
             $search = $search->where('status', 'sale');
         }
 
-        $search = $search->paginate(50);
-
-        return $search;
+        return $search->paginate(50);
     }
 
     public function storeDev(DevelopmentRequest $request)

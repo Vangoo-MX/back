@@ -168,20 +168,20 @@ class TerrainsController extends Controller
     public function getTerrainSearch($estado = "0", $municipio = "0", $colonia = "0", $type = "alltypes", $min = 0, $max = 0)
     {
 
-        $search = Terrains::select();
+        $search = Terrains::query();
 
-        if ($estado != "0" && $estado != 0) {
-            $search = $search->where('id_estado', $estado);
+        if ($estado != "0") {
+            $search->where('id_estado', $estado);
         }
-        if ($municipio != "0" && $municipio != 0) {
-            $search = $search->where('id_municipio', $municipio);
+        if ($municipio != "0") {
+            $search->where('id_municipio', $municipio);
         }
-        if ($colonia != "0" && $colonia != 0) {
-            $search = $search->where('id_colonia', $colonia);
+        if ($colonia != "0") {
+            $search->where('id_colonia', $colonia);
         }
 
         if ($min != 0 || $max != 0) {
-            $search = $search->where(function ($query) use ($min, $max) {
+            $search->where(function ($query) use ($min, $max) {
                 if ($max == 0) {
                     $query->where('price', '>=', $min);
                 } else {
@@ -190,23 +190,21 @@ class TerrainsController extends Controller
             });
         }
 
-        if ($type == "casa&dpto") {
-            $search = $search->where('type', 'casa');
-            $search = $search->orWhere('type', 'departamento');
-        } elseif ($type == "casa&terreno") {
-            $search = $search->where('type', 'casa');
-            $search = $search->orWhere('type', 'terreno');
-        } elseif ($type == "dpto&terreno") {
-            $search = $search->where('type', 'terreno');
-            $search = $search->orWhere('type', 'departamento');
-        } elseif ($type == "alltypes") {
-        } else {
-            $search = $search->where('type', $type);
+        if ($type !== "alltypes") {
+            $typeMapping = [
+                "casa&dpto" => ['casa', 'departamento'],
+                "casa&terreno" => ['casa', 'terreno'],
+                "dpto&terreno" => ['departamento', 'terreno'],
+            ];
+
+            if (array_key_exists($type, $typeMapping)) {
+                $search->whereIn('type', $typeMapping[$type]);
+            } else {
+                $search->where('type', $type);
+            }
         }
 
-        $search = $search->paginate(50);
-
-        return $search;
+        return $search->paginate(50);
     }
 
     public function rejectTerrainQueue($id)

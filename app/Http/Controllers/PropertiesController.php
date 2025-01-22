@@ -184,7 +184,7 @@ class PropertiesController extends Controller
         }
 
         if ($min != 0 || $max != 0) {
-            $search = $search->where(function ($query) use ($min, $max) {
+            $search->where(function ($query) use ($min, $max) {
                 if ($max == 0) {
                     $query->where('price', '>=', $min);
                 } else {
@@ -207,9 +207,7 @@ class PropertiesController extends Controller
             }
         }
 
-        $search = $search->paginate(50);
-
-        return $search;
+        return $search->paginate(50);
     }
 
     public function rejectPropertyQueue($id)
