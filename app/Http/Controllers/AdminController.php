@@ -41,16 +41,14 @@ class AdminController extends Controller
             return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
         }
 
-        $activePropertiesCount = Properties::count();
-        $pendingPropertiesCount = PropertiesQueue::where('status_aproved', '!=', 2)->count();
-        $activeDevelopmentsCount = Developments::count();
-        $properties = Properties::all();
-        return view('admin.index', compact(
-            'properties',
-            'activePropertiesCount',
-            'pendingPropertiesCount',
-            'activeDevelopmentsCount'
-        ));
+        $data = [
+            'activePropertiesCount' => Properties::count(),
+            'pendingPropertiesCount' => PropertiesQueue::where('status_aproved', '!=', 2)->count(),
+            'activeDevelopmentsCount' => Developments::count(),
+            'properties' => Properties::all(),
+        ];
+
+        return view('admin.index', $data);
     }
 
     //users
