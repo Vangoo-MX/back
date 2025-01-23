@@ -103,40 +103,34 @@ class AdminController extends Controller
 
     public function destroy($id)
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
         }
 
         $user = User::find($id);
 
-        if ($user) {
-            $extensions = ['jpg', 'jpeg', 'png'];
-
-            foreach ($extensions as $extension) {
-                $profileImagePath = storage_path("app/public/img/users/{$user->id}.{$extension}");
-                if (file_exists($profileImagePath)) {
-                    unlink($profileImagePath);
-                    break;
-                }
-            }
-            $user->delete();
-            return redirect()->route('admin.users')->with('success', 'Usuario eliminado correctamente');
-        } else {
-            return redirect()->route('admin.users')->with('error', 'No se pudo encontrar el usuario');
+        if (!$user) {
+            return redirect()->route('admin.users')->with('error', 'No se pudo encontrar el usuario.');
         }
+
+        $extensions = ['jpg', 'jpeg', 'png'];
+        foreach ($extensions as $extension) {
+            $profileImagePath = storage_path("app/public/img/users/{$user->id}.{$extension}");
+            if (file_exists($profileImagePath)) {
+                unlink($profileImagePath);
+                break;
+            }
+        }
+
+        $user->delete();
+
+        return redirect()->route('admin.users')->with('success', 'Usuario eliminado correctamente.');
     }
 
     public function contacts(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
         }
 
         $selectedUserID = $request->input('user_id', Auth::id());
@@ -154,110 +148,51 @@ class AdminController extends Controller
     public function edit(User $user)
     {
 
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
         }
 
         return view('admin.edit', compact('user'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(CreateUserRequest $request, User $user)
     {
-        if (!Auth::check()) {
-            return redirect('/');
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
         }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-        $request->validate([
-            'name' => 'required',
-            'tel' => [
-                'numeric',
-                'required',
-                function ($attribute, $value, $fail) {
-                    if (strlen($value) !== 10) {
-                        $fail('El campo teléfono debe tener exactamente 10 dígitos.');
-                    }
-                }
-            ],
-            'biography' => 'max:250',
-            'contact_schedule' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    if (!empty($value)) {
-                        if (!preg_match('/^\d{1,2}:\d{2} (am|pm) - \d{1,2}:\d{2} (am|pm)$/', $value)) {
-                            $fail('El formato de la franja horaria debe ser como "8:00 am - 8:00 pm".');
-                        }
-                    }
-                },
-            ],
-            'profile_image' => 'image|mimes:jpeg,png,jpg|max:2048',
-        ], [
-            'name.required' => 'El campo nombre es obligatorio.',
-            'tel.numeric' => 'El campo teléfono debe ser numérico.',
-            'tel.required' => 'El campo teléfono es obligatorio.',
-            'biography.max' => 'Su biografia no debe de exceder los 250 caracteres',
-            'contact_schedule.required' => 'El campo horario de contacto es obligatorio.',
-            'profile_image.image' => 'El archivo debe ser una imagen.',
-            'profile_image.mimes' => 'El archivo debe ser una imagen jpeg, png o jpg.',
-            'profile_image.max' => 'El archivo no debe pesar más de 2MB.',
-        ]);
-        if ($request->hasFile('profile_image')) {
-            $userId = $user->id;
-            $filename = $userId . "." . $request->profile_image->extension();
-            $request->profile_image->storeAs('public/img/users', $filename);
-            $updateData = ['profile_image' => $filename];
-            if ($request->filled(['name', 'tel', 'biography', 'email', 'rol', 'contact_preference', 'contact_schedule'])) {
-                $updateData = array_merge($updateData, [
-                    'name' => $request->name,
-                    'tel' => $request->tel,
-                    'biography' => $request->biography,
-                    'email' => $request->email,
-                    'rol' => $request->rol,
-                    'contact_preference' => $request->contact_preference,
-                    'contact_schedule' => $request->contact_schedule,
-                ]);
-            }
 
-            $user->update($updateData);
-            return redirect()->route('admin.user', $user)->with('success', 'Perfil de usuario actualizado correctamente');
-        } else {
-            $user->update([
-                'name' => $request->name,
-                'tel' => $request->tel,
-                'biography' => $request->biography,
-                'email' => $request->email,
-                'rol' => $request->rol,
-                'contact_preference' => $request->contact_preference,
-                'contact_schedule' => $request->contact_schedule,
-            ]);
-            return redirect()->route('admin.user', $user)->with('success', 'Usuario actualizado correctamente');
+        $updateData = $request->only([
+            'name',
+            'tel',
+            'biography',
+            'email',
+            'rol',
+            'contact_preference',
+            'contact_schedule',
+        ]);
+
+        if ($request->hasFile('profile_image')) {
+            $filename = $user->id . '.' . $request->profile_image->extension();
+            $request->profile_image->storeAs('public/img/users', $filename);
+            $updateData['profile_image'] = $filename;
         }
+
+        $user->update($updateData);
+
+        return redirect()->route('admin.user', $user)->with('success', 'Usuario actualizado correctamente.');
     }
+
     public function password(User $user)
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
         }
 
         return view('admin.changepassword', compact('user'));
     }
-    public function updatePassword(Request $request, User $user)
+
+    public function updatePassword(CreateUserRequest $request, User $user)
     {
-        $request->validate([
-            'password' =>  ['required', 'min:8'],
-            'password_confirmation' => 'same:password',
-        ], [
-            'password.required' => 'El campo contraseña es obligatorio.',
-            'password_confirmation.same' => 'Las contraseñas no coinciden',
-            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
-        ]);
         $user->update(['password' => $request->password]);
         return redirect()->route('admin.user', $user)->with('success', 'Contraseña actualizada correctamente');
     }
