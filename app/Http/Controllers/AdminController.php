@@ -199,24 +199,25 @@ class AdminController extends Controller
 
     public function getColonias(Request $request)
     {
+        $municipioId = $request->input('municipio_id');
+
+        if (!$municipioId) {
+            return response()->json(['error' => 'El ID del municipio es requerido.'], 400);
+        }
+
         try {
-            $municipioId = $request->municipio_id;
             $colonias = Colonias::where('id_municipio', $municipioId)->get();
-            return response()->json($colonias);
+            return response()->json($colonias, 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['error' => 'Ocurrió un error al obtener las colonias.'], 500);
         }
     }
 
     //properties
     public function properties()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
         }
 
         $propiedades = Properties::get();
@@ -226,13 +227,10 @@ class AdminController extends Controller
 
     public function details($id)
     {
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
+        }
 
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
         $municipios = Municipios::where('id_estado', 19)->get();
         $propiedad = Properties::find($id);
 
@@ -241,14 +239,22 @@ class AdminController extends Controller
 
     public function showProperties($propiedad)
     {
-        if (!Auth::check()) {
-            return redirect('/');
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
         }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
+
         $propiedad = Properties::find($propiedad);
+
+        if (!$propiedad) {
+            return redirect()->route('admin.properties')->withErrors('La propiedad no existe.');
+        }
+
         $municipio_propiedad = Municipios::find($propiedad->id_municipio);
+
+        if (!$municipio_propiedad) {
+            return redirect()->route('admin.properties')->withErrors('El municipio de la propiedad no existe.');
+        }
+
         $estado_propiedad = $municipio_propiedad->id_estado;
         $municipios = Municipios::where('id_estado', $estado_propiedad)->get();
         $colonias = Colonias::where('id_municipio', $propiedad->id_municipio)->get();
