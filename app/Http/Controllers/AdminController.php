@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -34,11 +35,8 @@ class AdminController extends Controller
     public function index()
     {
 
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
         }
 
         $data = [
@@ -54,81 +52,47 @@ class AdminController extends Controller
     //users
     public function create()
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
         }
 
         return view('admin.create');
     }
 
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
 
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
         }
 
-        $request->validate([
-            'name' => 'required',
-            'password' =>  ['required', 'min:8'],
-            'tel' => 'numeric|required',
-            'password_confirmation' => 'same:password',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('app_users')->ignore($request->user()),
-            ]
-        ], [
-            'name.required' => 'El campo nombre es obligatorio.',
-            'password.required' => 'El campo contraseña es obligatorio.',
-            'password_confirmation.same' => 'Las contraseñas no coinciden',
-            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
-            'tel.numeric' => 'El campo teléfono debe ser numérico.',
-            'tel.required' => 'El campo teléfono es obligatorio.',
-            'email.required' => 'El campo correo electrónico es obligatorio.',
-            'email.email' => 'El correo electrónico no es válido.',
-            'email.unique' => 'El correo electrónico ya está en uso. Por favor, elige otro.',
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'rol' => $request->rol,
+            'tel' => $request->tel,
         ]);
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->rol = $request->rol;
-        $user->tel = $request->tel;
-        $user->save();
 
         return redirect()->route('admin.users');
     }
 
     public function show($id = 0)
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
         }
 
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $roles = Roles::all();
 
-        return view('admin.user', compact('user'), compact('roles'));
+        return view('admin.user', compact('user', 'roles'));
     }
 
     public function allusers()
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
+        if (!Auth::check() || Auth::user()->rol !== 1) {
+            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
         }
 
         $users = User::all();
