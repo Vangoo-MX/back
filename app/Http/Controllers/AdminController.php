@@ -367,28 +367,22 @@ class AdminController extends Controller
     {
         $municipios = Municipios::where('id_estado', 19)->get();
 
-        $dev = Developments::where('id', $id)->first();
+        $dev = Developments::findOrFail($id);
         $app = DevelopmentsApartments::where('id_development', $id)->get();
 
         return response()->view('admin.editdev', compact('municipios', 'dev', 'app'))
-            ->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')
-            ->header('Pragma', 'no-cache')
-            ->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+            ->withHeaders([
+                'Cache-Control' => 'no-cache, no-store, max-age=0, must-revalidate',
+                'Pragma' => 'no-cache',
+                'Expires' => 'Fri, 01 Jan 1990 00:00:00 GMT',
+            ]);
     }
 
     public function highlightsdev()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
-        $devshl = DevelopmentsHighlights::get();
-        $estados = Estados::get();
-        $municipios = Municipios::get();
+        $devshl = DevelopmentsHighlights::all();
+        $estados = Estados::all();
+        $municipios = Municipios::all();
         $municipiosh = Municipios::where('highlight', 1)->get();
 
         return view('admin.highlightsdev', compact('devshl', 'estados', 'municipios', 'municipiosh'));
@@ -439,9 +433,11 @@ class AdminController extends Controller
 
         return response()
             ->view('admin.editlot', compact('municipios', 'lot'))
-            ->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')
-            ->header('Pragma', 'no-cache')
-            ->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+            ->withHeaders([
+                'Cache-Control' => 'no-cache, no-store, max-age=0, must-revalidate',
+                'Pragma' => 'no-cache',
+                'Expires' => 'Fri, 01 Jan 1990 00:00:00 GMT',
+            ]);
     }
 
     public function highlightsLot()
