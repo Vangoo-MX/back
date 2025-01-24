@@ -347,32 +347,17 @@ class AdminController extends Controller
     //developments
     public function developments(Request $request)
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         $selectedMode = $request->input('mode', 'all');
 
-        $desarrollos = Developments::when($selectedMode !== 'all', function ($query) use ($selectedMode) {
-            return $query->where('mode', $selectedMode);
-        })->get();
+        $desarrollos = $selectedMode === 'all'
+            ? Developments::all()
+            : Developments::where('mode', $selectedMode)->get();
 
         return view('admin.developments', compact('desarrollos', 'selectedMode'));
     }
 
     public function createdev()
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         $municipios = Municipios::where('id_estado', 19)->get();
 
         return view('admin.createdev', compact('municipios'));
@@ -380,13 +365,6 @@ class AdminController extends Controller
 
     public function editdev($id)
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         $municipios = Municipios::where('id_estado', 19)->get();
 
         $dev = Developments::where('id', $id)->first();
