@@ -231,14 +231,6 @@ class AdminController extends Controller
     //apartments
     public function apartments()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         $apartments = Apartments::get();
 
         return view('admin.apartments', compact('apartments'));
@@ -246,13 +238,6 @@ class AdminController extends Controller
 
     public function detailsApartments($id)
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
         $municipios = Municipios::where('id_estado', 19)->get();
         $apartment = Apartments::find($id);
 
@@ -261,14 +246,18 @@ class AdminController extends Controller
 
     public function editApartmentPage($apartments)
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
         $apartment = Apartments::find($apartments);
+
+        if (!$apartment) {
+            return redirect()->route('admin.apartments')->withErrors('El apartamento no existe.');
+        }
+
         $municipio_propiedad = Municipios::find($apartment->id_municipio);
+
+        if (!$municipio_propiedad) {
+            return redirect()->route('admin.apartments')->withErrors('El municipio del apartamento no existe.');
+        }
+
         $estado_propiedad = $municipio_propiedad->id_estado;
         $municipios = Municipios::where('id_estado', $estado_propiedad)->get();
         $colonias = Colonias::where('id_municipio', $apartment->id_municipio)->get();
@@ -278,14 +267,6 @@ class AdminController extends Controller
 
     public function queueApartments()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         $apartmentsQueue = ApartmentsQueue::where('status_aproved', 0)->get();
 
         $apartmentsRejected = ApartmentsQueue::where('status_aproved', 2)->get();
@@ -297,17 +278,9 @@ class AdminController extends Controller
 
     public function highlightsApartments()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         $apartmentshl = ApartmentsHighlights::with(['estado', 'municipio', 'apartment'])->get();
-        $estados = Estados::get();
-        $municipios = Municipios::get();
+        $estados = Estados::all();
+        $municipios = Municipios::all();
         $municipiosh = Municipios::where('highlight', 1)->get();
 
         return view('admin.highlightsApartments', compact('apartmentshl', 'estados', 'municipios', 'municipiosh'));
@@ -316,14 +289,6 @@ class AdminController extends Controller
     //terrains
     public function terrains()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         $terrains = Terrains::get();
 
         return view('admin.terrains', compact('terrains'));
@@ -331,13 +296,6 @@ class AdminController extends Controller
 
     public function detailsTerrains($id)
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
         $municipios = Municipios::where('id_estado', 19)->get();
         $terrain = Terrains::find($id);
 
@@ -346,14 +304,18 @@ class AdminController extends Controller
 
     public function editTerrainPage($terrains)
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
         $terrain = Terrains::find($terrains);
+
+        if (!$terrain) {
+            return redirect()->route('admin.terrains')->withErrors('El terreno no existe.');
+        }
+
         $municipio_propiedad = Municipios::find($terrain->id_municipio);
+
+        if (!$municipio_propiedad) {
+            return redirect()->route('admin.terrains')->withErrors('El municipio del terreno no existe.');
+        }
+
         $estado_propiedad = $municipio_propiedad->id_estado;
         $municipios = Municipios::where('id_estado', $estado_propiedad)->get();
         $colonias = Colonias::where('id_municipio', $terrain->id_municipio)->get();
@@ -363,14 +325,6 @@ class AdminController extends Controller
 
     public function queueTerrains()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         $terrainsQueue = TerrainsQueue::where('status_aproved', 0)->get();
 
         $terrainsRejected = TerrainsQueue::where('status_aproved', 2)->get();
@@ -382,17 +336,9 @@ class AdminController extends Controller
 
     public function highlightsTerrains()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         $terrainshl = TerrainsHighlights::with(['estado', 'municipio', 'terrain'])->get();
-        $estados = Estados::get();
-        $municipios = Municipios::get();
+        $estados = Estados::all();
+        $municipios = Municipios::all();
         $municipiosh = Municipios::where('highlight', 1)->get();
 
         return view('admin.highlightsTerrains', compact('terrainshl', 'estados', 'municipios', 'municipiosh'));
