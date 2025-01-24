@@ -25,20 +25,17 @@ use App\Models\LotsHighlights;
 use App\Models\Terrains;
 use App\Models\TerrainsHighlights;
 use App\Models\TerrainsQueue;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('check.admin');
+    }
 
     //index
     public function index()
     {
-
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         $data = [
             'activePropertiesCount' => Properties::count(),
             'pendingPropertiesCount' => PropertiesQueue::where('status_aproved', '!=', 2)->count(),
@@ -52,20 +49,11 @@ class AdminController extends Controller
     //users
     public function create()
     {
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         return view('admin.create');
     }
 
     public function store(CreateUserRequest $request)
     {
-
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -79,10 +67,6 @@ class AdminController extends Controller
 
     public function show($id = 0)
     {
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         $user = User::findOrFail($id);
         $roles = Roles::all();
 
@@ -91,10 +75,6 @@ class AdminController extends Controller
 
     public function allusers()
     {
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         $users = User::all();
         $roles = Roles::all();
 
@@ -103,10 +83,6 @@ class AdminController extends Controller
 
     public function destroy($id)
     {
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         $user = User::find($id);
 
         if (!$user) {
@@ -129,10 +105,6 @@ class AdminController extends Controller
 
     public function contacts(Request $request)
     {
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         $selectedUserID = $request->input('user_id', Auth::id());
 
         $agenda = Agenda::join('app_users', 'list_agenda.id_user', '=', 'app_users.id')
@@ -147,20 +119,11 @@ class AdminController extends Controller
 
     public function edit(User $user)
     {
-
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         return view('admin.edit', compact('user'));
     }
 
     public function update(CreateUserRequest $request, User $user)
     {
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         $updateData = $request->only([
             'name',
             'tel',
@@ -184,10 +147,6 @@ class AdminController extends Controller
 
     public function password(User $user)
     {
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         return view('admin.changepassword', compact('user'));
     }
 
@@ -216,10 +175,6 @@ class AdminController extends Controller
     //properties
     public function properties()
     {
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         $propiedades = Properties::get();
 
         return view('admin.properties', compact('propiedades'));
@@ -227,10 +182,6 @@ class AdminController extends Controller
 
     public function details($id)
     {
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         $municipios = Municipios::where('id_estado', 19)->get();
         $propiedad = Properties::find($id);
 
@@ -239,10 +190,6 @@ class AdminController extends Controller
 
     public function showProperties($propiedad)
     {
-        if (!Auth::check() || Auth::user()->rol !== 1) {
-            return redirect('/')->withErrors('No tienes permiso para acceder a esta página.');
-        }
-
         $propiedad = Properties::find($propiedad);
 
         if (!$propiedad) {
@@ -264,18 +211,8 @@ class AdminController extends Controller
 
     public function queue()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         $propiedadesqueue = PropertiesQueue::where('status_aproved', 0)->get();
-
         $propiedadesrejected = PropertiesQueue::where('status_aproved', 2)->get();
-
         $propiedadesrevision = PropertiesQueue::where('status_aproved', 3)->get();
 
         return view('admin.queue', compact('propiedadesqueue', 'propiedadesrejected', 'propiedadesrevision'));
@@ -283,17 +220,9 @@ class AdminController extends Controller
 
     public function highlights()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
-        $propertieshl = PropertiesHighlights::get();
-        $estados = Estados::get();
-        $municipios = Municipios::get();
+        $propertieshl = PropertiesHighlights::all();
+        $estados = Estados::all();
+        $municipios = Municipios::all();
         $municipiosh = Municipios::where('highlight', 1)->get();
 
         return view('admin.highlights', compact('propertieshl', 'estados', 'municipios', 'municipiosh'));
