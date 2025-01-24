@@ -366,7 +366,6 @@ class AdminController extends Controller
     public function editdev($id)
     {
         $municipios = Municipios::where('id_estado', 19)->get();
-
         $dev = Developments::findOrFail($id);
         $app = DevelopmentsApartments::where('id_development', $id)->get();
 
@@ -391,28 +390,13 @@ class AdminController extends Controller
     //lots
     public function lots()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
-        $lots = Lots::get();
+        $lots = Lots::all();
 
         return view('admin.lots', compact('lots'));
     }
 
     public function createLot()
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         $municipios = Municipios::where('id_estado', 19)->get();
 
         return view('admin.createlot', compact('municipios'));
@@ -420,16 +404,8 @@ class AdminController extends Controller
 
     public function editLotPage($id)
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         $municipios = Municipios::where('id_estado', 19)->get();
-
-        $lot = Lots::where('id', $id)->get();
+        $lot = Lots::findOrFail($id);
 
         return response()
             ->view('admin.editlot', compact('municipios', 'lot'))
@@ -442,17 +418,9 @@ class AdminController extends Controller
 
     public function highlightsLot()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
-        $lotshl = LotsHighlights::get();
-        $estados = Estados::get();
-        $municipios = Municipios::get();
+        $lotshl = LotsHighlights::all();
+        $estados = Estados::all();
+        $municipios = Municipios::all();
         $municipiosh = Municipios::where('highlight', 1)->get();
 
         return view('admin.highlightslots', compact('lotshl', 'estados', 'municipios', 'municipiosh'));
@@ -461,40 +429,16 @@ class AdminController extends Controller
     //various
     public function files()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         return view('admin.files');
     }
 
     public function statistics()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         return view('admin.statistics');
     }
 
     public function settingsinfo()
     {
-
-        if (!Auth::check()) {
-            return redirect('/');
-        }
-        if (Auth::user()->rol != 1) {
-            return "Lo siento. No puedes ver esta página porque no eres un usuario administrador";
-        }
-
         return view('admin.settingsinfo');
     }
 
