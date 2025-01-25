@@ -19,22 +19,37 @@ class UserController extends Controller
 {
     public function getNameUser($id)
     {
-        $user = User::selectRaw('name')->where('id', $id)->get();
-        return json_encode($user);
+        $user = User::where('id', $id)->value('name');
+        return response()->json(['name' => $user]);
     }
 
     public function getAllInfoUser($id)
     {
-        $user = DB::table('app_users')->join('app_roles', 'app_users.rol', '=', 'app_roles.id')->where('app_users.id', $id)->select('app_users.id', 'app_users.name', 'app_users.email', 'app_users.tel', 'app_users.contact_preference', 'app_users.contact_schedule', 'app_users.biography', 'app_users.profile_image', 'app_users.created_at', 'app_roles.title')->get();
-        return $user;
+        $user = DB::table('app_users')
+            ->join('app_roles', 'app_users.rol', '=', 'app_roles.id')
+            ->where('app_users.id', $id)
+            ->select([
+                'app_users.id',
+                'app_users.name',
+                'app_users.email',
+                'app_users.tel',
+                'app_users.contact_preference',
+                'app_users.contact_schedule',
+                'app_users.biography',
+                'app_users.profile_image',
+                'app_users.created_at',
+                'app_roles.title',
+            ])
+            ->first();
+
+        return response()->json($user);
     }
 
 
     public function register(RegisterRequest $request)
     {
-
         $user = User::create($request->validated());
-        return redirect()->route('/', $user);
+        return redirect()->route('/', $user)->with('success', 'Usuario registrado correctamente.');
     }
 
 
@@ -48,15 +63,15 @@ class UserController extends Controller
 
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
 
-        if ($user && $user->status == 1) {
-            Auth::login($user);
-            if ($user->rol != 1) {
-                return redirect()->away('https://vangoo.mx');
-            }
-            return $this->authenticated($request, $user);
-        } else {
+        if (!$user || $user->status !== 1) {
             return redirect()->to('/')->withErrors('Usuario no activo');
         }
+
+        Auth::login($user);
+
+        return $user->rol != 1
+            ? redirect()->away('https://vangoo.mx')
+            : $this->authenticated($request, $user);
     }
 
 
