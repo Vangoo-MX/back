@@ -77,80 +77,74 @@ class UserController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-        if (Auth::user()->rol != 1 || Auth::user()->rol != 2) {
-            return redirect('https://vangoo.mx');
-        } else {
-            return redirect('https://vangoo.mx');
-        }
+        return redirect()->away('https://vangoo.mx');
     }
 
     public function logout()
     {
-        //Session::flush();
         Auth::logout();
 
-        return redirect('https://vangoo.mx');
+        return redirect()->away('https://vangoo.mx');
     }
 
     /* endpoints frontend */
 
     public function checkAuthEP()
     {
-        if (Auth::check()) {
-            return json_encode(Auth::user());
-        } else {
-            return json_encode('error');
-        }
+        return response()
+            ->json(Auth::check()
+                ? Auth::user()
+                : ['error' => 'Usuario no autenticado']);
     }
 
     public function loginEP(LoginRequest $request)
     {
         if (Auth::check()) {
-            return json_encode('alreadylogin');
+            return response()->json(['status' => 'already_logged_in']);
         }
+
         $credentials = $request->validated();
 
         if (!Auth::validate($credentials)) {
-            return json_encode('error');
+            return response()->json(['status' => 'invalid_credentials']);
         }
+
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
-        Auth::login($user);
 
         if ($user && $user->status == 1) {
             Auth::login($user);
-            return json_encode(Auth::user());
-        } else {
-            return json_encode('inactiveuser');
+            return response()->json(Auth::user());
         }
+
+        return response()->json(['status' => 'inactive_user']);
     }
 
 
     public function logoutEP()
     {
-        //Session::flush();
         Auth::logout();
 
-        return json_encode('success');
+        return response()->json(['status' => 'success']);
     }
 
     public function registerEP(RegisterRequest $request)
     {
-
         $user = User::create($request->validated());
-        return json_encode('success');
+        return response()->json(['status' => 'success']);
     }
 
     public function updateUserEP(Request $request)
     {
         $user = User::findOrFail($request->id);
-        $user->email = $request->email;
-        $user->tel = $request->tel;
-        $user->contact_preference = $request->contact_preference;
-        $user->contact_schedule = $request->contact_schedule;
-        $user->biography = $request->biography;
-        $user->save();
+        $user->update($request->only([
+            'email',
+            'tel',
+            'contact_preference',
+            'contact_schedule',
+            'biography'
+        ]));
 
-        return json_encode('success');
+        return response()->json(['status' => 'success']);
     }
 
     public function updateUserEPp2(Request $request)
@@ -159,18 +153,18 @@ class UserController extends Controller
             $user = User::findOrFail($request->id);
 
             if ($request->hasFile('profile_image')) {
-                $userId = $request->id;
-                $filename = $userId . "." . $request->profile_image->extension();
+                $filename = $request->id . '.' . $request->profile_image->extension();
                 $request->profile_image->storeAs('public/img/users', $filename);
                 $user->profile_image = $filename;
             }
 
-            $user->name = $request->name;
-            $user->save();
+            $user->update([
+                'name' => $request->name
+            ]);
 
-            return json_encode('success');
+            return response()->json(['status' => 'success']);
         } catch (Exception $e) {
-            return json_encode('error: ' . $e);
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
 
@@ -179,12 +173,11 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($userid);
 
-            $user->status = $status;
-            $user->save();
+            $user->update(['status' => $status]);
 
             return redirect()->back();
         } catch (Exception $e) {
-            return json_encode('error: ' . $e);
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
 }
