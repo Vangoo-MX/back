@@ -91,10 +91,11 @@ class UserController extends Controller
 
     public function checkAuthEP()
     {
-        return response()
-            ->json(Auth::check()
-                ? Auth::user()
-                : ['error' => 'Usuario no autenticado']);
+        if (Auth::check()) {
+            return json_encode(Auth::user());
+        } else {
+            return json_encode('error');
+        }
     }
 
     public function loginEP(LoginRequest $request)
