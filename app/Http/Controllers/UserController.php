@@ -93,9 +93,9 @@ class UserController extends Controller
     {
         if (Auth::check()) {
             return json_encode(Auth::user());
-        } else {
-            return json_encode('error');
         }
+
+        return json_encode('error');
     }
 
     public function loginEP(LoginRequest $request)
