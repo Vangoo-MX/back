@@ -93,9 +93,9 @@ class UserController extends Controller
     {
         if (Auth::check()) {
             return json_encode(Auth::user());
+        } else {
+            return json_encode('error');
         }
-
-        return response()->json(['status' => 'error', 'message' => 'Usuario no autenticado']);
     }
 
     public function loginEP(LoginRequest $request)
