@@ -153,7 +153,7 @@ class PropertiesController extends Controller
 
     public function getPropertyRelated($id)
     {
-        $property = Properties::where('id', $id)->get();
+        $property = Properties::where('id', $id)->first();
 
         if (!$property) {
             return collect();
