@@ -10,8 +10,6 @@ use App\Models\AgendaDocs;
 use App\Models\Tickets;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ContactAgentMail;
 use Exception;
 
 class ContactsController extends Controller

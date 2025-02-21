@@ -15,7 +15,6 @@ use App\Models\Municipios;
 use App\Models\Colonias;
 use App\Models\LotsHighlights;
 use Intervention\Image\Facades\Image;
-use PHPUnit\TextUI\XmlConfiguration\Loader;
 
 class LotsController
 {

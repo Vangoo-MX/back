@@ -6,14 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
-use Illuminate\support\Facades\Session;
 use Illuminate\support\Facades\Auth;
-use Illuminate\Support\Str;
 use Mockery\Exception;
 use Illuminate\Support\Facades\DB;
-
-use Illuminate\Support\Facades\Mail;
-use App\Mail\BePartnerContactMail;
 
 class UserController extends Controller
 {

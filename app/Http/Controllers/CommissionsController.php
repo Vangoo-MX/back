@@ -7,7 +7,6 @@ use App\Models\Developments;
 use App\Models\Lots;
 use App\Models\Properties;
 use App\Models\Terrains;
-use Illuminate\Http\Request;
 
 class CommissionsController extends Controller
 {
