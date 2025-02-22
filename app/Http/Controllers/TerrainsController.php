@@ -160,7 +160,7 @@ class TerrainsController extends Controller
         }
 
         return Terrains::where('id', '<>', $id)
-            ->where('id_municipio', $terrains[0]->id_municipio)
+            ->where('id_municipio', $terrains->id_municipio)
             ->limit(10)
             ->get();
     }
