@@ -155,7 +155,7 @@ class TerrainsController extends Controller
         $terrains = Terrains::where('id', $id)
             ->first();
 
-        if ($terrains->isEmpty()) {
+        if (!$terrains) {
             return collect();
         }
 
