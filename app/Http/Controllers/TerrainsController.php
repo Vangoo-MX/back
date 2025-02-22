@@ -153,7 +153,7 @@ class TerrainsController extends Controller
     public function getTerrainsRelated($id)
     {
         $terrains = Terrains::where('id', $id)
-            ->get();
+            ->first();
 
         if ($terrains->isEmpty()) {
             return collect();

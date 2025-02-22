@@ -154,7 +154,7 @@ class ApartmentsController extends Controller
     public function getApartmentsRelated($id)
     {
         $apartments = Apartments::where('id', $id)
-            ->get();
+            ->first();
 
         if (!$apartments) {
             return collect();
