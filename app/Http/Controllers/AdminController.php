@@ -398,7 +398,7 @@ class AdminController extends Controller
             ? DevelopmentsHorizontals::all()
             : DevelopmentsHorizontals::where('mode', $selectedMode)->get();
 
-        return view('admin.developmentsHorizontals', compact('desarrollos', 'selectedMode'));
+        return view('admin.developmentsHorizontal', compact('desarrollos', 'selectedMode'));
     }
 
     //lots
