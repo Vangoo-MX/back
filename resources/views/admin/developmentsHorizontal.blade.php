@@ -1,10 +1,10 @@
 @extends('layouts.adminLayout')
 
-@section('breadcrumb','Desarrollos')
+@section('breadcrumb','Desarrollos Horizontales')
 
-@section('title','Desarrollos')
+@section('title','Desarrollos Horizontales')
 
-@section('titleContent','Desarrollos')
+@section('titleContent','Desarrollos Horizontales')
 
 @section('content')
 
