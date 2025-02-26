@@ -88,7 +88,7 @@ Route::get('overview/terrains-queue', [AdminController::class, 'queueTerrains'])
 
 Route::get('overview/terrains-highlights', [AdminController::class, 'highlightsTerrains'])->name('admin.highlights.terrains');
 
-//admin developments
+//admin developments verticals
 Route::get('overview/developments', [AdminController::class, 'developments'])->name('admin.developments');
 
 Route::get('overview/developments-highlights', [AdminController::class, 'highlightsdev'])->name('admin.highlights.developments');
@@ -96,6 +96,9 @@ Route::get('overview/developments-highlights', [AdminController::class, 'highlig
 Route::get('overview/createdev', [AdminController::class, 'createdev'])->name('admin.createdev');
 
 Route::get('overview/editdev/{id}', [AdminController::class, 'editdev'])->name('admin.editdev');
+
+//admin developments horizontals
+Route::get('overview/developments-horizontal', [AdminController::class, 'developmentsHorizontal'])->name('admin.developmentsHorizontal');
 
 //admin lots
 Route::get('overview/lots', [AdminController::class, 'lots'])->name('admin.lots');

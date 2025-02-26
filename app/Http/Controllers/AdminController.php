@@ -20,6 +20,7 @@ use App\Models\ApartmentsQueue;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
+use App\Models\DevelopmentsHorizontals;
 use App\Models\Lots;
 use App\Models\LotsHighlights;
 use App\Models\Terrains;
@@ -385,6 +386,19 @@ class AdminController extends Controller
         $municipiosh = Municipios::where('highlight', 1)->get();
 
         return view('admin.highlightsdev', compact('devshl', 'estados', 'municipios', 'municipiosh'));
+    }
+
+    //development horizontals
+
+    public function developmentsHorizontal(Request $request)
+    {
+        $selectedMode = $request->input('mode', 'all');
+
+        $desarrollos = $selectedMode === 'all'
+            ? DevelopmentsHorizontals::all()
+            : DevelopmentsHorizontals::where('mode', $selectedMode)->get();
+
+        return view('admin.developmentsHorizontals', compact('desarrollos', 'selectedMode'));
     }
 
     //lots

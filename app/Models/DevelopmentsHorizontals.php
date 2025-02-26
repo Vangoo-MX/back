@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Developments extends Model
+class DevelopmentsHorizontals extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'post_developments';
+    protected $table = 'post_developments_horizontal';
 }
