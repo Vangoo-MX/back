@@ -401,6 +401,13 @@ class AdminController extends Controller
         return view('admin.developmentsHorizontal', compact('desarrollos', 'selectedMode'));
     }
 
+    public function createdevHorizontal()
+    {
+        $municipios = Municipios::where('id_estado', 19)->get();
+
+        return view('admin.createdevHorizontal', compact('municipios'));
+    }
+
     //lots
     public function lots()
     {

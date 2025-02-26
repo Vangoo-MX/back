@@ -1,10 +1,10 @@
 @extends('layouts.adminLayout')
 
-@section('breadcrumb','Crear desarrollo')
+@section('breadcrumb','Crear desarrollo horizontal')
 
-@section('title','Crear desarrollo')
+@section('title','Crear desarrollo horizontal')
 
-@section('titleContent','Crear desarrollo')
+@section('titleContent','Crear desarrollo horizontal')
 
 @section('content')
 
@@ -12,10 +12,10 @@
 <div class="row d-flex justify-content-center w-100">
     <div class="col-12 col-lg-4 px-2 px-lg-5 d-flex flex-column align-items-center justify-content-center w-100">
 
-        <h3>Crear nuevo desarrollo</h3>
+        <h3>Crear nuevo desarrollo horizontal</h3>
 
         <div class="w-100">
-            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('epDev.store') }}">
+            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('epDevHorizontal.store') }}">
 
                 @csrf
 
@@ -74,7 +74,7 @@
                             <label for="financing" class="form-label">Financiación:</label>
                             <input type="text" class="form-control" id="financing" placeholder="Financiado" name="financing" value="{{old('financing')}}">
                         </div>
-                        <input type="hidden" id="mode" name="mode" value="vertical">
+                        <input type="hidden" id="mode" name="mode" value="horizontal">
                     </div>
                     <div class="w-100">
 
