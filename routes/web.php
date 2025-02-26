@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\DevelopmentsController;
 use App\Http\Controllers\DevelopmentsApartmentsController;
+use App\Http\Controllers\DevelopmentsHorizontalController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\LotsController;
@@ -381,6 +382,9 @@ Route::delete('ep/dev/{developmentId}/{imageId}', [DevelopmentsController::class
 Route::get('ep/getApartmentsFromDev/{id}', [DevelopmentsApartmentsController::class, 'getApartmentsFromDev'])->name('epApartmentsFromDev.get');
 
 Route::get('ep/getApartmentsImages/{id}', [DevelopmentsApartmentsController::class, 'getApartmentsImages'])->name('epApartmentsImages.get');
+
+/* DESARROLLOS HORIZONTALES */
+Route::post('ep/storedevhorizontal', [DevelopmentsHorizontalController::class, 'storeDevHorizontal'])->name('epDevHorizontal.store');
 
 /* LOTES */
 
