@@ -348,11 +348,7 @@ Route::get('ep/getAllDevelopments', [DevelopmentsController::class, 'getAll'])->
 
 Route::get('ep/getDevelopmentsVerticalHightlights', [DevelopmentsController::class, 'getDevelopmentsVerticalHightlights'])->name('epDevelopmentsVerticalHightlights.get');
 
-Route::get('ep/getDevelopmentsHorizontalHightlights', [DevelopmentsController::class, 'getDevelopmentsHorizontalHightlights'])->name('epDevelopmentsHorizontalHightlights.get');
-
 Route::get('ep/getDevelopmentsVerticalHightlightFromMunicipio/{id}', [DevelopmentsController::class, 'getDevelopmentsVerticalHightlightFromMunicipio'])->name('epDevelopmentsVerticalHightlightFromMunicipio.get');
-
-Route::get('ep/getDevelopmentsHorizontalHightlightFromMunicipio/{id}', [DevelopmentsController::class, 'getDevelopmentsHorizontalHightlightFromMunicipio'])->name('epDevelopmentsHorizontalHightlightFromMunicipio.get');
 
 Route::get('ep/get-devs-by-municipio/{id}', [DevelopmentsController::class, 'getDevsByMunicipio']);
 
@@ -384,7 +380,15 @@ Route::get('ep/getApartmentsFromDev/{id}', [DevelopmentsApartmentsController::cl
 Route::get('ep/getApartmentsImages/{id}', [DevelopmentsApartmentsController::class, 'getApartmentsImages'])->name('epApartmentsImages.get');
 
 /* DESARROLLOS HORIZONTALES */
+Route::get('ep/getDevelopmentsHorizontalHightlights', [DevelopmentsHorizontalController::class, 'getDevelopmentsHorizontalHightlights'])->name('epDevelopmentsHorizontalHightlights.get');
+
+Route::get('ep/getDevelopmentsHorizontalHightlightFromMunicipio/{id}', [DevelopmentsHorizontalController::class, 'getDevelopmentsHorizontalHightlightFromMunicipio'])->name('epDevelopmentsHorizontalHightlightFromMunicipio.get');
+
 Route::post('ep/storedevhorizontal', [DevelopmentsHorizontalController::class, 'storeDevHorizontal'])->name('epDevHorizontal.store');
+
+Route::get('ep/deletedevhorizontal/{id}', [DevelopmentsHorizontalController::class, 'deleteDevHorizontal'])->name('epDevHorizontal.delete');
+
+Route::post('ep/editdevhorizontal', [DevelopmentsHorizontalController::class, 'editDevHorizontal'])->name('epDevHorizontal.edit');
 
 /* LOTES */
 

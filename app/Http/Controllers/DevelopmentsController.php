@@ -39,20 +39,6 @@ class DevelopmentsController extends Controller
             : collect();
     }
 
-
-    public function getDevelopmentsHorizontalHightlights()
-    {
-        $highlightIds = DevelopmentsHighlights::orderBy('num_order', 'asc')
-            ->pluck('id_development')
-            ->toArray();
-
-        return !empty($highlightIds)
-            ? Developments::whereIn('id', $highlightIds)
-            ->where('mode', 'horizontal')
-            ->get()
-            : collect();
-    }
-
     public function getDevelopmentsVerticalHightlightFromMunicipio($id)
     {
         $highlightIds = DevelopmentsHighlights::where('id_municipio', $id)
@@ -423,11 +409,8 @@ class DevelopmentsController extends Controller
         $development->save();
 
         $key = 1;
-        Log::info('Datos recibidos en optionapp:', $request->optionapp);
         if ($request->optionapp) {
-            Log::info('Entrando al foreach de optionapp.');
             foreach ($request->optionapp as $option) {
-                Log::info('Iteración en foreach:', ['option' => $option]);
                 if (!isset($option['id'])) {
                     continue;
                 }

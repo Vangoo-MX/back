@@ -20,6 +20,7 @@ use App\Models\ApartmentsQueue;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
+use App\Models\DevelopmentsHorizontalApartments;
 use App\Models\DevelopmentsHorizontals;
 use App\Models\Lots;
 use App\Models\LotsHighlights;
@@ -406,6 +407,20 @@ class AdminController extends Controller
         $municipios = Municipios::where('id_estado', 19)->get();
 
         return view('admin.createdevHorizontal', compact('municipios'));
+    }
+
+    public function editdevHorizontal($id)
+    {
+        $municipios = Municipios::where('id_estado', 19)->get();
+        $dev = DevelopmentsHorizontals::findOrFail($id);
+        $app = DevelopmentsHorizontalApartments::where('id_development', $id)->get();
+
+        return response()->view('admin.editdevHorizontal', compact('municipios', 'dev', 'app'))
+            ->withHeaders([
+                'Cache-Control' => 'no-cache, no-store, max-age=0, must-revalidate',
+                'Pragma' => 'no-cache',
+                'Expires' => 'Fri, 01 Jan 1990 00:00:00 GMT',
+            ]);
     }
 
     //lots
