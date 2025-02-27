@@ -300,7 +300,7 @@
                 </div>
 
             </form>
-            <form id="delete-form" action="{{ route('development.images.delete', ['developmentId' => $dev->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+            <form id="delete-form" action="{{ route('developmentHorizontal.images.delete', ['developmentId' => $dev->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>

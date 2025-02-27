@@ -17,7 +17,6 @@ use Intervention\Image\Facades\Image;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
-use Illuminate\Support\Facades\Log;
 
 class DevelopmentsController extends Controller
 {

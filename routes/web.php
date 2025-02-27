@@ -390,6 +390,8 @@ Route::get('ep/deletedevhorizontal/{id}', [DevelopmentsHorizontalController::cla
 
 Route::post('ep/editdevhorizontal', [DevelopmentsHorizontalController::class, 'editDevHorizontal'])->name('epDevHorizontal.edit');
 
+Route::delete('ep/dev/{developmentId}/{imageId}', [DevelopmentsHorizontalController::class, 'deleteImage'])->name('developmentHorizontal.images.delete');
+
 /* LOTES */
 
 Route::get('ep/getAllLots', [LotsController::class, 'getAll'])->name('epAllLots.get');

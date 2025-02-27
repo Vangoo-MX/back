@@ -11,7 +11,9 @@ use App\Models\DevelopmentsHorizontalHighlights;
 use App\Models\DevelopmentsHorizontals;
 use App\Models\Estados;
 use App\Models\Municipios;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DevelopmentsHorizontalController extends Controller
 {
@@ -340,5 +342,41 @@ class DevelopmentsHorizontalController extends Controller
         }
 
         return redirect()->route('admin.developmentsHorizontal');
+    }
+
+    public function deleteImage(Request $request, $developmentId, $imageId)
+    {
+        $extensions = ['jpg', 'jpeg', 'png', 'webp'];
+        $imageDeleted = false;
+
+        $development = DevelopmentsHorizontals::findOrFail($developmentId);
+
+        foreach ($extensions as $extension) {
+            $imagePath = 'public/img/posts/developmentsHorizontal/' . $developmentId . '/' . $imageId . '.' . $extension;
+
+            if (Storage::exists($imagePath)) {
+                Storage::delete($imagePath);
+                $imageDeleted = true;
+                $development->decrement('images');
+                break;
+            }
+        }
+
+        if (!$imageDeleted) {
+            return response()->json(['error' => 'Imagen no encontrada.'], 404);
+        }
+
+        for ($i = $imageId + 1; $i <= $development->images + 1; $i++) {
+            foreach ($extensions as $extension) {
+                $oldImagePath = 'public/img/posts/developmentsHorizontal/' . $developmentId . '/' . $i . '.' . $extension;
+                $newImagePath = 'public/img/posts/developmentsHorizontal/' . $developmentId . '/' . ($i - 1) . '.' . $extension;
+
+                if (Storage::exists($oldImagePath)) {
+                    Storage::move($oldImagePath, $newImagePath);
+                    break;
+                }
+            }
+        }
+        return redirect()->back()->with('success', 'La imagen se eliminó correctamente.');
     }
 }
