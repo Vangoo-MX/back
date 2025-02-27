@@ -1,10 +1,10 @@
 @extends('layouts.adminLayout')
 
-@section('breadcrumb','Editar desarrollo')
+@section('breadcrumb','Editar desarrollo horizontal')
 
-@section('title','Editar desarrollo')
+@section('title','Editar desarrollo horizontal')
 
-@section('titleContent','Editar desarrollo')
+@section('titleContent','Editar desarrollo horizontal')
 
 @section('content')
 
@@ -15,7 +15,7 @@
         <h3>{{$dev->title}}</h3>
 
         <div class="w-100">
-            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('epDev.edit') }}">
+            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('epDevHorizontal.edit') }}">
 
                 @csrf
                 <input type="hidden" name="id" value="{{$dev->id}}">

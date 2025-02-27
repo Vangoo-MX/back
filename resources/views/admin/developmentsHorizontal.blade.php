@@ -67,7 +67,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{route('admin.editdev',$p->id)}}">
+                                    <a class="dropdown-item" href="{{route('admin.editdevHorizontal',$p->id)}}">
                                         <img src="{{url('./img/icon/update.png')}}" />
                                         Editar
                                     </a>
