@@ -193,7 +193,7 @@
                     @for ($i = 1; $i <= $dev->images; $i++)
                         <div class="d-flex flex-column align-items-center image-container">
                             @php
-                            $imageUrl = asset('storage/img/posts/developments/' . $dev->id . '/' . $i . '.webp');
+                            $imageUrl = asset('storage/img/posts/developmentsHorizontal/' . $dev->id . '/' . $i . '.webp');
                             @endphp
 
                             @if($imageUrl)
