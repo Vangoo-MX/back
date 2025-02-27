@@ -83,7 +83,7 @@ class DevelopmentsHorizontalController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
-                $path = storage_path('app/public/developmentsHorizontal/' . $development->id . '/');
+                $path = storage_path('app/public/img/posts/developmentsHorizontal/' . $development->id . '/');
 
                 if (!file_exists($path)) {
                     mkdir($path, 0755, true);
