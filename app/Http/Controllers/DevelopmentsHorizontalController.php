@@ -60,7 +60,7 @@ class DevelopmentsHorizontalController extends Controller
 
         $highlight->delete();
 
-        return redirect()->route('admin.highlightsdevHorizontal');
+        return redirect()->route('admin.highlights.developmentsHorizontal');
     }
 
     public function addDevHorizontalHightlight(Request $request)
@@ -75,7 +75,7 @@ class DevelopmentsHorizontalController extends Controller
             return response()->json(['error' => 'Error al agregar el desarrollo destacado.'], 500);
         }
 
-        return redirect()->route('admin.highlightsdevHorizontal');
+        return redirect()->route('admin.highlights.developmentsHorizontal');
     }
 
     public function orderDevHorizontalHightlights(Request $request)
@@ -92,7 +92,7 @@ class DevelopmentsHorizontalController extends Controller
             'num_order' => $request->num_order
         ]);
 
-        return redirect()->route('admin.highlightsdevHorizontal');
+        return redirect()->route('admin.highlights.developmentsHorizontal');
     }
 
     public function getDevsHorizontalByMunicipio($id)
