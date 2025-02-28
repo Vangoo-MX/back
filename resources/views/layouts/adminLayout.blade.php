@@ -89,7 +89,7 @@
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">
-                        <a class="cursor-pointer {{ (request()->is('overview/developments*')) ? 'active' : '' }} {{ (request()->is('overview/createdev*')) ? 'active' : '' }} {{ (request()->is('overview/highlightsdev*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
+                        <a class="cursor-pointer {{ (request()->is('overview/horizontal*')) ? 'active' : '' }} {{ (request()->is('overview/createdevhorizontal*')) ? 'active' : '' }} {{ (request()->is('overview/horizontal-highlights*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
                             <img src="{{url('./img/icon/horizontal.png')}}" title="Desarrollos" alt="Developments" />
                         </a>
                         <ul class="dropdown-menu menu-primary-dropdown">

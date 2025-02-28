@@ -99,9 +99,9 @@ Route::get('overview/createdev', [AdminController::class, 'createdev'])->name('a
 Route::get('overview/editdev/{id}', [AdminController::class, 'editdev'])->name('admin.editdev');
 
 //admin developments horizontals
-Route::get('overview/developments-horizontal', [AdminController::class, 'developmentsHorizontal'])->name('admin.developmentsHorizontal');
+Route::get('overview/horizontal', [AdminController::class, 'developmentsHorizontal'])->name('admin.developmentsHorizontal');
 
-Route::get('overview/developments-horizontal-highlights', [AdminController::class, 'highlightsdevHorizontal'])->name('admin.highlights.developmentsHorizontal');
+Route::get('overview/horizontal-highlights', [AdminController::class, 'highlightsdevHorizontal'])->name('admin.highlights.developmentsHorizontal');
 
 Route::get('overview/createdevhorizontal', [AdminController::class, 'createdevHorizontal'])->name('admin.createdevHorizontal');
 
