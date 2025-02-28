@@ -103,9 +103,9 @@ Route::get('overview/horizontal', [AdminController::class, 'developmentsHorizont
 
 Route::get('overview/horizontal-highlights', [AdminController::class, 'highlightsdevHorizontal'])->name('admin.highlights.developmentsHorizontal');
 
-Route::get('overview/createdevhorizontal', [AdminController::class, 'createdevHorizontal'])->name('admin.createdevHorizontal');
+Route::get('overview/createhorizontal', [AdminController::class, 'createdevHorizontal'])->name('admin.createdevHorizontal');
 
-Route::get('overview/editdevhorizontal/{id}', [AdminController::class, 'editdevHorizontal'])->name('admin.editdevHorizontal');
+Route::get('overview/edithorizontal/{id}', [AdminController::class, 'editdevHorizontal'])->name('admin.editdevHorizontal');
 
 //admin lots
 Route::get('overview/lots', [AdminController::class, 'lots'])->name('admin.lots');
