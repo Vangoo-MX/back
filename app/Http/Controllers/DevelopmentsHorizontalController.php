@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Storage;
 
 class DevelopmentsHorizontalController extends Controller
 {
+    public function getAll()
+    {
+        return DevelopmentsHorizontals::all();
+    }
+
     public function getDevelopmentsHorizontalHightlights()
     {
         $highlightIds = DevelopmentsHorizontalHighlights::orderBy('num_order', 'asc')
@@ -43,6 +48,57 @@ class DevelopmentsHorizontalController extends Controller
             ->where('mode', 'horizontal')
             ->get()
             : collect();
+    }
+
+    public function deleteDevHorizontalHightlight($id)
+    {
+        $highlight = DevelopmentsHorizontalHighlights::find($id);
+
+        if (!$highlight) {
+            return response()->json(['error' => 'No se encontró el desarrollo destacado.'], 404);
+        }
+
+        $highlight->delete();
+
+        return redirect()->route('admin.highlightsdevHorizontal');
+    }
+
+    public function addDevHorizontalHightlight(Request $request)
+    {
+        try {
+            DevelopmentsHorizontalHighlights::create([
+                'id_estado' => 19,
+                'id_municipio' => $request->id_municipio,
+                'id_development' => $request->id_development,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al agregar el desarrollo destacado.'], 500);
+        }
+
+        return redirect()->route('admin.highlightsdevHorizontal');
+    }
+
+    public function orderDevHorizontalHightlights(Request $request)
+    {
+        $highlight = DevelopmentsHorizontalHighlights::where('id_development', $request->id)->first();
+
+        if (!$highlight) {
+            return response()->json([
+                'error' => 'No se encontró el desarrollo destacado.'
+            ], 404);
+        }
+
+        $highlight->update([
+            'num_order' => $request->num_order
+        ]);
+
+        return redirect()->route('admin.highlightsdevHorizontal');
+    }
+
+    public function getDevsHorizontalByMunicipio($id)
+    {
+        $developments = DevelopmentsHorizontals::where('id_municipio', $id)->get();
+        return response()->json($developments);
     }
 
     public function storeDevHorizontal(DevelopmentRequest $request)

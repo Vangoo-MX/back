@@ -21,6 +21,7 @@ use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
 use App\Models\DevelopmentsHorizontalApartments;
+use App\Models\DevelopmentsHorizontalHighlights;
 use App\Models\DevelopmentsHorizontals;
 use App\Models\Lots;
 use App\Models\LotsHighlights;
@@ -421,6 +422,16 @@ class AdminController extends Controller
                 'Pragma' => 'no-cache',
                 'Expires' => 'Fri, 01 Jan 1990 00:00:00 GMT',
             ]);
+    }
+
+    public function highlightsdevHorizontal()
+    {
+        $devshl = DevelopmentsHorizontalHighlights::all();
+        $estados = Estados::all();
+        $municipios = Municipios::all();
+        $municipiosh = Municipios::where('highlight', 1)->get();
+
+        return view('admin.highlightsdevHorizontal', compact('devshl', 'estados', 'municipios', 'municipiosh'));
     }
 
     //lots

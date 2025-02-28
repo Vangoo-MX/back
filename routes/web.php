@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\DevelopmentsController;
 use App\Http\Controllers\DevelopmentsApartmentsController;
+use App\Http\Controllers\DevelopmentsHorizontalApartmentsController;
 use App\Http\Controllers\DevelopmentsHorizontalController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\FavoritesController;
@@ -380,9 +381,27 @@ Route::get('ep/getApartmentsFromDev/{id}', [DevelopmentsApartmentsController::cl
 Route::get('ep/getApartmentsImages/{id}', [DevelopmentsApartmentsController::class, 'getApartmentsImages'])->name('epApartmentsImages.get');
 
 /* DESARROLLOS HORIZONTALES */
+Route::get('ep/getAllDevelopmentsHorizontal', [DevelopmentsHorizontalController::class, 'getAll'])->name('epAllDevelopmentsHorizontal.get');
+
 Route::get('ep/getDevelopmentsHorizontalHightlights', [DevelopmentsHorizontalController::class, 'getDevelopmentsHorizontalHightlights'])->name('epDevelopmentsHorizontalHightlights.get');
 
 Route::get('ep/getDevelopmentsHorizontalHightlightFromMunicipio/{id}', [DevelopmentsHorizontalController::class, 'getDevelopmentsHorizontalHightlightFromMunicipio'])->name('epDevelopmentsHorizontalHightlightFromMunicipio.get');
+
+Route::get('ep/get-devs-horizontal-by-municipio/{id}', [DevelopmentsHorizontalController::class, 'getDevsHorizontalByMunicipio']);
+
+Route::get('ep/getDevelopmentsHorizontalImagesCards', [DevelopmentsHorizontalController::class, 'getDevelopmentsHorizontalImagesCards'])->name('epDevelopmentsHorizontalImagesCards.get');
+
+Route::get('ep/getDevelopmentsHorizontalImagesDetail/{id}', [DevelopmentsHorizontalController::class, 'getDevelopmentsHorizontalImagesDetail'])->name('epDevelopmentsHorizontalImagesDetail.get');
+
+Route::get('ep/getDevelopmentHorizontal/{id}', [DevelopmentsHorizontalController::class, 'getDevelopmentHorizontal'])->name('epDevelopmentHorizontal.get');
+
+Route::get('ep/getDevelopmentsHorizontalRelated/{id}', [DevelopmentsHorizontalController::class, 'getDevelopmentsHorizontalRelated'])->name('epDevelopmentsHorizontalRelated.get');
+
+Route::get('ep/getDevHorizontalCard/{id}', [DevelopmentsHorizontalController::class, 'getDevHorizontalCard'])->name('epDevHorizontalCard.get');
+
+Route::get('ep/getMultiDevHorizontalCard/{id}', [DevelopmentsHorizontalController::class, 'getMultiDevHorizontalCard'])->name('epMultiDevHorizontalCard.get');
+
+Route::get('ep/getDevHorizontalSearch/{estado?}/{municipio?}/{colonia?}/{status?}/{min?}/{max?}', [DevelopmentsHorizontalController::class, 'getDevHorizontalSearch'])->name('epDevHorizontalSearch.get');
 
 Route::post('ep/storedevhorizontal', [DevelopmentsHorizontalController::class, 'storeDevHorizontal'])->name('epDevHorizontal.store');
 
@@ -391,6 +410,11 @@ Route::get('ep/deletedevhorizontal/{id}', [DevelopmentsHorizontalController::cla
 Route::post('ep/editdevhorizontal', [DevelopmentsHorizontalController::class, 'editDevHorizontal'])->name('epDevHorizontal.edit');
 
 Route::delete('ep/dev/{developmentId}/{imageId}', [DevelopmentsHorizontalController::class, 'deleteImage'])->name('developmentHorizontal.images.delete');
+
+/* OPCIONES DESARROLLOS HORIZONTALES */
+Route::get('ep/getApartmentsFromDevHorizontal/{id}', [DevelopmentsHorizontalApartmentsController::class, 'getApartmentsFromDevHorizontal'])->name('epApartmentsFromDevHorizontal.get');
+
+Route::get('ep/getApartmentsImagesHorizontal/{id}', [DevelopmentsHorizontalApartmentsController::class, 'getApartmentsImagesHorizontal'])->name('epApartmentsImagesHorizontal.get');
 
 /* LOTES */
 
@@ -527,6 +551,13 @@ Route::post('ep/addHighlightdev', [DevelopmentsController::class, 'addDevHightli
 
 Route::post('ep/orderHighlightdev', [DevelopmentsController::class, 'orderDevHightlight'])->name('Highlightdev.order');
 
+/*---------*/
+
+Route::get('ep/deleteHighlightdevHorizontal/{id}', [DevelopmentsHorizontalController::class, 'deleteDevHorizontalHightlight'])->name('HighlightdevHorizontal.delete');
+
+Route::post('ep/addHighlightdevHorizontal', [DevelopmentsHorizontalController::class, 'addDevHorizontalHightlight'])->name('HighlightdevHorizontal.add');
+
+Route::post('ep/orderHighlightdevHorizontal', [DevelopmentsHorizontalController::class, 'orderDevHorizontalHightlight'])->name('HighlightdevHorizontal.order');
 /*---------*/
 
 Route::get('ep/deleteHighlightlot/{id}', [LotsController::class, 'deleteLotHightlight'])->name('highlightLot.delete');

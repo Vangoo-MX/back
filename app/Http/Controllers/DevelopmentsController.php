@@ -53,21 +53,6 @@ class DevelopmentsController extends Controller
             : collect();
     }
 
-    public function getDevelopmentsHorizontalHightlightFromMunicipio($id)
-    {
-        $highlightIds = DevelopmentsHighlights::where('id_municipio', $id)
-            ->orderBy('num_order', 'asc')
-            ->pluck('id_development')
-            ->toArray();
-
-        return !empty($highlightIds)
-            ? Developments::whereIn('id', $highlightIds)
-            ->where('id_municipio', $id)
-            ->where('mode', 'horizontal')
-            ->get()
-            : collect();
-    }
-
     public function deleteDevHightlight($id)
     {
         $highlight = DevelopmentsHighlights::find($id);
