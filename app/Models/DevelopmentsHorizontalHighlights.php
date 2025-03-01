@@ -16,4 +16,9 @@ class DevelopmentsHorizontalHighlights extends Model
     ];
 
     protected $table = 'post_developments_horizontal_highlights';
+
+    public function horizontal()
+    {
+        return $this->belongsTo(DevelopmentsHorizontals::class, 'id_development');
+    }
 }
