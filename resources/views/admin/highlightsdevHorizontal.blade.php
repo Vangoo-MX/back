@@ -46,7 +46,7 @@
                 @foreach($devshl as $p)
                 <tr class="municipio-{{$p->id_municipio}}">
                     <td>{{$p->id_development}}</td>
-                    <td>{{$p->horizontal->title]}}</td>
+                    <td>{{$p->horizontal->title}}</td>
                     <td>{{estado($p->id_estado)}}</td>
                     <td>{{$p->id_municipio}}</td>
                     <td>{{municipio($p->id_municipio)}}</td>
