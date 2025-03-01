@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use App\Http\Requests\DevelopmentRequest;
 use App\Models\Colonias;
+use App\Models\Developments;
 use App\Models\DevelopmentsHorizontalApartments;
 use App\Models\DevelopmentsHorizontalHighlights;
 use App\Models\DevelopmentsHorizontals;
@@ -14,6 +15,7 @@ use App\Models\Municipios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class DevelopmentsHorizontalController extends Controller
 {
@@ -434,5 +436,25 @@ class DevelopmentsHorizontalController extends Controller
             }
         }
         return redirect()->back()->with('success', 'La imagen se eliminó correctamente.');
+    }
+
+    public function deleteDevHorizontal($id)
+    {
+        DevelopmentsHorizontalHighlights::where('id_development', $id)->delete();
+
+        $development = DevelopmentsHorizontals::findOrFail($id);
+
+        $path = public_path("storage/img/posts/developmentsHorizontal/ {$development->id}");
+
+        if (is_dir($path)) {
+            File::deleteDirectory($path, true);
+            sleep(1);
+            rmdir($path);
+        }
+
+        DevelopmentsHorizontalApartments::where('id_development', $id)->delete();
+        $development->delete();
+
+        return redirect()->back();
     }
 }
