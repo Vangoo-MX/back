@@ -13,6 +13,8 @@ use App\Models\Lots;
 use App\Models\LotsFavorites;
 use App\Models\Apartments;
 use App\Models\ApartmentsFavorites;
+use App\Models\DevelopmentsHorizontalFavorites;
+use App\Models\DevelopmentsHorizontals;
 use App\Models\Terrains;
 use App\Models\TerrainsFavorites;
 use App\Models\ListsUser;
@@ -34,6 +36,12 @@ class FavoritesController extends Controller
                 'mainModel' => Developments::class,
                 'key' => 'id_development',
                 'select' => 'id,status,title,price_min,price_max,location,description,views,images',
+            ],
+            'developmentsHorizontal' => [
+                'favoritesModel' => DevelopmentsHorizontalFavorites::class,
+                'mainModel' => DevelopmentsHorizontals::class,
+                'key' => 'id_development',
+                'select' => 'id,title,price_min,price_max,location,description,views,images',
             ],
             'lots' => [
                 'favoritesModel' => LotsFavorites::class,
@@ -81,6 +89,10 @@ class FavoritesController extends Controller
                 $model = DevelopmentsFavorites::class;
                 $id_type = 'id_development';
                 break;
+            case 'developmentHorizontal':
+                $model = DevelopmentsHorizontalFavorites::class;
+                $id_type = 'id_development';
+                break;
             case 'lot':
                 $model = LotsFavorites::class;
                 $id_type = 'id_lot';
@@ -125,6 +137,12 @@ class FavoritesController extends Controller
                 'mainModel' => Developments::class,
                 'key' => 'id_development',
                 'select' => 'id,status,title,price_min,price_max,location,description,views,images',
+            ],
+            'developmentsHorizontal' => [
+                'favoritesModel' => DevelopmentsHorizontalFavorites::class,
+                'mainModel' => DevelopmentsHorizontals::class,
+                'key' => 'id_development',
+                'select' => 'id,title,price_min,price_max,location,description,views,images',
             ],
             'lots' => [
                 'favoritesModel' => LotsFavorites::class,
@@ -188,6 +206,18 @@ class FavoritesController extends Controller
         return response()->json(['message' => 'success']);
     }
 
+    public function postDevHorizontalFavUser(Request $request)
+    {
+
+        $fav = new DevelopmentsHorizontalFavorites();
+        $fav->id_user = $request->id_user;
+        $fav->id_development = $request->id_dev;
+
+        $fav->save();
+
+        return response()->json(['message' => 'success']);
+    }
+
     public function postLotFavUser(Request $request)
     {
         $fav = new LotsFavorites();
@@ -228,6 +258,10 @@ class FavoritesController extends Controller
                 break;
             case 'development':
                 $model = DevelopmentsFavorites::class;
+                $id_type = 'id_development';
+                break;
+            case 'developmentHorizontal':
+                $model = DevelopmentsHorizontalFavorites::class;
                 $id_type = 'id_development';
                 break;
             case 'lot':
@@ -278,6 +312,7 @@ class FavoritesController extends Controller
         $models = [
             PropertiesFavorites::class,
             DevelopmentsFavorites::class,
+            DevelopmentsHorizontalFavorites::class,
             LotsFavorites::class,
             ApartmentsFavorites::class,
             TerrainsFavorites::class,
@@ -328,6 +363,12 @@ class FavoritesController extends Controller
                 'relation' => DevelopmentsFavorites::class,
                 'column' => 'id_development',
                 'select' => 'id, status, title, price_min, price_max, location, description, commission_percentage, mode, views, images'
+            ],
+            'developmentsHorizontal' => [
+                'model' => DevelopmentsHorizontals::class,
+                'relation' => DevelopmentsHorizontalFavorites::class,
+                'column' => 'id_development',
+                'select' => 'id, title, price_min, price_max, location, description, commission_percentage, mode, views, images'
             ],
             'lots' => [
                 'model' => Lots::class,
@@ -387,6 +428,10 @@ class FavoritesController extends Controller
                     break;
                 case 'development':
                     $model = DevelopmentsFavorites::class;
+                    $id_type = 'id_development';
+                    break;
+                case 'developmentHorizontal':
+                    $model = DevelopmentsHorizontalFavorites::class;
                     $id_type = 'id_development';
                     break;
                 case 'lot':

@@ -475,6 +475,8 @@ Route::post('ep/postPropertiesFavUser', [FavoritesController::class, 'postProper
 
 Route::post('ep/postDevFavUser', [FavoritesController::class, 'postDevFavUser']);
 
+Route::post('ep/postDevHorizontalFavUser', [FavoritesController::class, 'postDevHorizontalFavUser']);
+
 Route::post('ep/postLotFavUser', [FavoritesController::class, 'postLotFavUser']);
 
 Route::post('ep/postApartmentFavUser', [FavoritesController::class, 'postApartmentFavUser']);
