@@ -11,6 +11,7 @@ use App\Models\DevelopmentsHorizontalApartments;
 use App\Models\DevelopmentsHorizontalHighlights;
 use App\Models\DevelopmentsHorizontals;
 use App\Models\Estados;
+use App\Models\Images;
 use App\Models\Municipios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -101,6 +102,93 @@ class DevelopmentsHorizontalController extends Controller
     {
         $developments = DevelopmentsHorizontals::where('id_municipio', $id)->get();
         return response()->json($developments);
+    }
+
+    public function getDevelopmentsHorizontalImagesCards()
+    {
+        return Images::where('type_property', 'development')
+            ->where('category', 'card')
+            ->get();
+    }
+
+    public function getDevelopmentsHorizontalImagesDetail($id)
+    {
+        return Images::where('type_property', 'development')
+            ->where('category', 'detail')
+            ->where('id_property', $id)
+            ->get();
+    }
+
+    public function getDevelopmentHorizontal($id)
+    {
+        return DevelopmentsHorizontals::where('id', $id)->get();
+    }
+
+    public function getDevHorizontalCard($id)
+    {
+        return DevelopmentsHorizontals::select('id', 'status', 'title', 'price_min', 'price_max', 'location', 'description', 'views', 'images')
+            ->find($id);
+    }
+
+    public function getMultiDevHorizontalCard($array)
+    {
+        $list = str_contains($array, '-') ? explode('-', $array) : [$array];
+
+        return DevelopmentsHorizontals::select('id', 'status', 'title', 'price_min', 'price_max', 'location', 'description', 'views', 'images')
+            ->whereIn('id', $list)
+            ->get();
+    }
+
+    public function getDevelopmentsHorizontalRelated($id)
+    {
+        $development = DevelopmentsHorizontals::find($id);
+
+        if (!$development) {
+            return collect();
+        }
+
+        return DevelopmentsHorizontals::where('status', $development->status)
+            ->where('id_municipio', $development->id_municipio)
+            ->take(10)
+            ->get();
+    }
+
+    public function getDevHorizontalSearch($estado = "0", $municipio = "0", $colonia = "0", $status = "0", $min = 0, $max = 0)
+    {
+        $search = DevelopmentsHorizontals::query();
+
+        if ($estado != "0") {
+            $search->where('id_estado', $estado);
+        }
+        if ($municipio != "0") {
+            $search->where('id_municipio', $municipio);
+        }
+        if ($colonia != "0") {
+            $search->where('id_colonia', $colonia);
+        }
+
+        if ($min != 0 || $max != 0) {
+            if ($max == 0) {
+                $search->where('price_min', '<=', $min)->where('price_max', '>=', $min);
+            } else {
+                $search->where(function ($query) use ($min, $max) {
+                    $query->whereBetween('price_min', [$min, $max])
+                        ->orWhereBetween('price_max', [$min, $max])
+                        ->orWhere(function ($subQuery) use ($min, $max) {
+                            $subQuery->where('price_min', '<=', $min)
+                                ->where('price_max', '>=', $max);
+                        });
+                });
+            }
+        }
+
+        if ($status == "presale") {
+            $search->where('status', 'presale');
+        } elseif ($status == "sale") {
+            $search = $search->where('status', 'sale');
+        }
+
+        return $search->paginate(50);
     }
 
     public function storeDevHorizontal(DevelopmentRequest $request)
