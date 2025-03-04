@@ -1,12 +1,15 @@
 <?php
 
 
-if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['lot'], $_GET['apartment'], $_GET['terrain'])) {
+if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GET['developmentHorizontal'], $_GET['lot'], $_GET['apartment'], $_GET['terrain'])) {
     $title = $_GET['title'];
     $propertyIds = array_filter(explode('-', $_GET['property']), function ($id) {
         return $id !== '0';
     });
     $developmentIds = array_filter(explode('-', $_GET['development']), function ($id) {
+        return $id !== '0';
+    });
+    $developmentHorizontalIds = array_filter(explode('-', $_GET['developmentHorizontal']), function ($id) {
         return $id !== '0';
     });
     $lotIds = array_filter(explode('-', $_GET['lot']), function ($id) {
@@ -26,14 +29,16 @@ if ($_GET && isset($_GET['title'], $_GET['property'], $_GET['development'], $_GE
 $title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 $property = htmlspecialchars($_GET['property'], ENT_QUOTES, 'UTF-8');
 $development = htmlspecialchars($_GET['development'], ENT_QUOTES, 'UTF-8');
+$developmentHorizontal = htmlspecialchars($_GET['developmentHorizontal'], ENT_QUOTES, 'UTF-8');
 $lot = htmlspecialchars($_GET['lot'], ENT_QUOTES, 'UTF-8');
 $apartment = htmlspecialchars($_GET['apartment'], ENT_QUOTES, 'UTF-8');
 $terrain = htmlspecialchars($_GET['terrain'], ENT_QUOTES, 'UTF-8');
 
-$urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title . '&property=' . $property . '&development=' . $development . '&lot=' . $lot . '&apartment=' . $apartment . '&terrain=' . $terrain;
+$urlShare = 'https://dashboard.vangoo.mx/share/local/view.php?title=' . $title . '&property=' . $property . '&development=' . $development . '&developmentHorizontal=' . $developmentHorizontal . '&lot=' . $lot . '&apartment=' . $apartment . '&terrain=' . $terrain;
 
 $propertyData = [];
 $developmentData = [];
+$developmentHorizontalData = [];
 $lotData = [];
 $apartmentData = [];
 $terrainData = [];
@@ -81,6 +86,29 @@ if (!empty($developmentIds)) {
 
         if (!empty($development) && isset($development[0])) {
             $developmentData[] = $development[0];
+        }
+    }
+}
+
+if (!empty($developmentHorizontalIds)) {
+    foreach ($developmentHorizontalIds as $developmentHorizontalId) {
+        $urlApi = 'https://dashboard.vangoo.mx/ep/getDevelopmentHorizontal/' . $developmentHorizontalId;
+        $curl = curl_init($urlApi);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl);
+        if ($response === false) {
+            echo 'Error fetching development horizontal data';
+            exit;
+        }
+        curl_close($curl);
+        $developmentHorizontal = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo 'Error decoding development horizontal data';
+            exit;
+        }
+
+        if (!empty($developmentHorizontal) && isset($developmentHorizontal[0])) {
+            $developmentHorizontalData[] = $developmentHorizontal[0];
         }
     }
 }
@@ -154,7 +182,7 @@ if (!empty($terrainIds)) {
     }
 }
 
-if (empty($propertyData) && empty($developmentData) && empty($lotData) && empty($apartmentData) && empty($terrainData)) {
+if (empty($propertyData) && empty($developmentData) && empty($developmentHorizontalData) && empty($lotData) && empty($apartmentData) && empty($terrainData)) {
     echo 'No se encontraron propiedades, desarrollos o terrenos';
     exit;
 }
@@ -362,6 +390,23 @@ function moneyFormat($numero)
                                 <h3 class="property-title"><?php echo $development['title']; ?></h3>
                                 <p class="property-price"><?php echo moneyFormat($development['price_min']); ?> - <?php echo moneyFormat($development['price_max']); ?></p>
                                 <p class="property-address"><?php echo $development['location']; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+                <?php if (!empty($developmentHorizontalData)) : ?>
+                    <?php foreach ($developmentHorizontalData as $developmentHorizontal) : ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="image-container">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/developmentsHorizontal/<?php echo $developmentHorizontal['id']; ?>/1.webp?height=250&width=400" alt="Development" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="property-title"><?php echo $developmentHorizontal['title']; ?></h3>
+                                <p class="property-price"><?php echo moneyFormat($developmentHorizontal['price_min']); ?> - <?php echo moneyFormat($developmentHorizontal['price_max']); ?></p>
+                                <p class="property-address"><?php echo $developmentHorizontal['location']; ?></p>
                             </div>
                         </div>
                     <?php endforeach; ?>
