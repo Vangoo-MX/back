@@ -159,9 +159,15 @@ class PropertiesController extends Controller
             return collect();
         }
 
+        $priceRange = [
+            $property->price * 0.9,
+            $property->price * 1.1
+        ];
+
         return Properties::where('id', '<>', $id)
-            ->where('bathrooms', $property->bathrooms)
-            ->where('rooms', $property->rooms)
+            ->whereBetween('price', $priceRange)
+            ->whereBetween('bathrooms', [$property->bathrooms - 1, $property->bathrooms + 1])
+            ->whereBetween('rooms', [$property->rooms - 1, $property->rooms + 1])
             ->where('id_municipio', $property->id_municipio)
             ->take(10)
             ->get();
