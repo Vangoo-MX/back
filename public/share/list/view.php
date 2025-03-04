@@ -226,6 +226,23 @@ function moneyFormat($numero)
                     <?php endforeach; ?>
                 <?php endif; ?>
 
+                <?php if (!empty($data['developmentsHorizontal'])) : ?>
+                    <?php foreach ($data['developmentsHorizontal'] as $developmentHorizontal) : ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="image-container">
+                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/developmentsHorizontal/<?php echo $developmentHorizontal['id']; ?>/1.webp?height=250&width=400" alt="Development" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="property-title"><?php echo $developmentHorizontal['title']; ?></h3>
+                                <p class="property-price"><?php echo moneyFormat($developmentHorizontal['price_min']); ?> - <?php echo moneyFormat($developmentHorizontal['price_max']); ?></p>
+                                <p class="property-address"><?php echo $developmentHorizontal['location']; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
                 <?php if (!empty($data['lots'])) : ?>
                     <?php foreach ($data['lots'] as $lot) : ?>
                         <div class="card">
