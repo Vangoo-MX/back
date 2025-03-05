@@ -1,24 +1,26 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ApartmentsController;
-use App\Http\Controllers\TerrainsController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\CommissionsController;
-use App\Http\Controllers\ContactsController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\PropertiesController;
-use App\Http\Controllers\DevelopmentsController;
-use App\Http\Controllers\DevelopmentsApartmentsController;
-use App\Http\Controllers\DevelopmentsHorizontalApartmentsController;
-use App\Http\Controllers\DevelopmentsHorizontalController;
-use App\Http\Controllers\InfoController;
-use App\Http\Controllers\FavoritesController;
-use App\Http\Controllers\LotsController;
-use App\Http\Controllers\MailsController;
+use App\Http\Controllers\{
+    HomeController,
+    AdminController,
+    ApartmentsController,
+    TerrainsController,
+    Auth\ForgotPasswordController,
+    Auth\ResetPasswordController,
+    CommissionsController,
+    ContactsController,
+    UserController,
+    PropertiesController,
+    DevelopmentsController,
+    DevelopmentsApartmentsController,
+    DevelopmentsHorizontalApartmentsController,
+    DevelopmentsHorizontalController,
+    InfoController,
+    FavoritesController,
+    LotsController,
+    MailsController
+};
 
 
 Route::get('/', HomeController::class)->name('home');
