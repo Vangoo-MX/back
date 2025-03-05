@@ -77,13 +77,26 @@ class LotsController
 
     public function getLotsRelated($id)
     {
-        $lot = Lots::find($id);
+        $lot = Lots::where('id', $id)
+            ->first();
 
         if (!$lot) {
             return collect();
         }
 
+        $minPrice = floor($lot->price_min * 0.8);
+        $maxPrice = ceil($lot->price_max * 1.2);
+
         return Lots::where('status', $lot->status)
+            ->where('id', '!=', $id)
+            ->where(function ($query) use ($minPrice, $maxPrice) {
+                $query->whereBetween('price_min', [$minPrice, $maxPrice])
+                    ->orWhereBetween('price_max', [$minPrice, $maxPrice])
+                    ->orWhere(function ($q) use ($minPrice, $maxPrice) {
+                        $q->where('price_min', '<=', $minPrice)
+                            ->where('price_max', '>=', $maxPrice);
+                    });
+            })
             ->where('id_municipio', $lot->id_municipio)
             ->take(10)
             ->get();
