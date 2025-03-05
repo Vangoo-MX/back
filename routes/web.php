@@ -105,7 +105,7 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('list', [AdminController::class, 'lots'])->name('lots');
         Route::get('highlights', [AdminController::class, 'highlightsLot'])->name('highlights.lots');
         Route::get('create', [AdminController::class, 'createLot'])->name('createLot');
-        Route::get('edit/{id}', [AdminController::class, 'editLotPage'])->name('lot.edit');
+        Route::get('edit/{id}', [AdminController::class, 'editLotPage'])->name('editLot');
     });
 
     // Varios

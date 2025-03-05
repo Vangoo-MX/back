@@ -57,7 +57,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{route('lot.edit',$p->id)}}">
+                                    <a class="dropdown-item" href="{{route('admin.editLot',$p->id)}}">
                                         <img src="{{url('./img/icon/update.png')}}" />
                                         Editar
                                     </a>
