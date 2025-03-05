@@ -159,9 +159,15 @@ class TerrainsController extends Controller
             return collect();
         }
 
+        $priceRange = [
+            $terrains->price * 0.8,
+            $terrains->price * 1.2
+        ];
+
         return Terrains::where('id', '<>', $id)
+            ->whereBetween('price', $priceRange)
             ->where('id_municipio', $terrains->id_municipio)
-            ->limit(10)
+            ->take(10)
             ->get();
     }
 

@@ -140,13 +140,25 @@ class DevelopmentsHorizontalController extends Controller
 
     public function getDevelopmentsHorizontalRelated($id)
     {
-        $development = DevelopmentsHorizontals::find($id);
+        $development = DevelopmentsHorizontals::where('id', $id)->first();
 
         if (!$development) {
             return collect();
         }
 
+        $minPrice = floor($development->price_min * 0.8);
+        $maxPrice = ceil($development->price_max * 1.2);
+
         return DevelopmentsHorizontals::where('status', $development->status)
+            ->where('id', '!=', $id)
+            ->where(function ($query) use ($minPrice, $maxPrice) {
+                $query->whereBetween('price_min', [$minPrice, $maxPrice])
+                    ->orWhereBetween('price_max', [$minPrice, $maxPrice])
+                    ->orWhere(function ($q) use ($minPrice, $maxPrice) {
+                        $q->where('price_min', '<=', $minPrice)
+                            ->where('price_max', '>=', $maxPrice);
+                    });
+            })
             ->where('id_municipio', $development->id_municipio)
             ->take(10)
             ->get();
