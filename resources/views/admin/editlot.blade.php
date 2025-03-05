@@ -16,7 +16,7 @@ Editar
 <div class="row d-flex justify-content-center w-100">
     <div class="col-12 col-lg-4 px-2 px-lg-5 d-flex flex-column align-items-center justify-content-center w-100">
 
-        <h3>{{$lot[0]->title}}</h3>
+        <h3>{{$lot->title}}</h3>
 
         <div class="w-100">
             <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('epLot.edit') }}">
