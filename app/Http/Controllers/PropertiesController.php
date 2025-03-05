@@ -166,8 +166,6 @@ class PropertiesController extends Controller
 
         return Properties::where('id', '<>', $id)
             ->whereBetween('price', $priceRange)
-            ->whereBetween('bathrooms', [$property->bathrooms - 2, $property->bathrooms + 2])
-            ->whereBetween('rooms', [$property->rooms - 2, $property->rooms + 2])
             ->where('id_municipio', $property->id_municipio)
             ->take(10)
             ->get();
