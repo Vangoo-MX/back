@@ -335,14 +335,9 @@ class DevelopmentsController extends Controller
         $development->street = $request->street;
         $development->num_ext = $request->num_ext;
 
-        $estado = Estados::where('id', $request->id_estado)->get();
-        $estado = $estado[0]['nombre'];
-
-        $municipio = Municipios::where('id', $request->id_municipio)->get();
-        $municipio = $municipio[0]['nombre'];
-
-        $colonia = Colonias::where('id', $request->id_colonia)->get();
-        $colonia = $colonia[0]['nombre'];
+        $estado = Estados::find($request->id_estado)->nombre;
+        $municipio = Municipios::find($request->id_municipio)->nombre;
+        $colonia = Colonias::find($request->id_colonia)->nombre;
 
         $development->location = $colonia . ', ' . $municipio . ', ' . $estado;
 
