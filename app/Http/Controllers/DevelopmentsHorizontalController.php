@@ -6,7 +6,6 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use App\Http\Requests\DevelopmentRequest;
 use App\Models\Colonias;
-use App\Models\Developments;
 use App\Models\DevelopmentsHorizontalApartments;
 use App\Models\DevelopmentsHorizontalHighlights;
 use App\Models\DevelopmentsHorizontals;

@@ -409,7 +409,7 @@ Route::get('ep/deletedevhorizontal/{id}', [DevelopmentsHorizontalController::cla
 
 Route::post('ep/editdevhorizontal', [DevelopmentsHorizontalController::class, 'editDevHorizontal'])->name('epDevHorizontal.edit');
 
-Route::delete('ep/dev/{developmentId}/{imageId}', [DevelopmentsHorizontalController::class, 'deleteImage'])->name('developmentHorizontal.images.delete');
+Route::delete('ep/devHorizontal/{developmentId}/{imageId}', [DevelopmentsHorizontalController::class, 'deleteImage'])->name('developmentHorizontal.images.delete');
 
 /* OPCIONES DESARROLLOS HORIZONTALES */
 Route::get('ep/getApartmentsFromDevHorizontal/{id}', [DevelopmentsHorizontalApartmentsController::class, 'getApartmentsFromDevHorizontal'])->name('epApartmentsFromDevHorizontal.get');
