@@ -349,7 +349,7 @@
     document.getElementById('id_municipio').addEventListener('change', function() {
 
         var municipioId = this.options[this.selectedIndex].getAttribute('data-id');
-        var url = '../ep/getColoniasFromMunicipio/' + municipioId;
+        var url = '/ep/getColoniasFromMunicipio/' + municipioId;
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');

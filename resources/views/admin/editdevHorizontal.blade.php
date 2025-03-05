@@ -455,7 +455,7 @@
 
     function changeMuninicio() {
         var municipioId = document.getElementById('id_municipio').options[document.getElementById('id_municipio').selectedIndex].getAttribute('data-id');
-        var url = '../../ep/getColoniasFromMunicipio/' + municipioId;
+        var url = '/ep/getColoniasFromMunicipio/' + municipioId;
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
