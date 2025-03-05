@@ -36,103 +36,86 @@ Route::prefix('auth')->name('password.')->group(function () {
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('update');
 });
 
-//admin user
-Route::get('overview/home', [AdminController::class, 'index'])->name('admin.index');
+// Panel de administración
+Route::prefix('overview')->name('admin.')->group(function () {
+    // Dashboard
+    Route::get('home', [AdminController::class, 'index'])->name('index');
 
-Route::get('overview/create', [AdminController::class, 'create'])->name('admin.create');
+    // Gestión de usuarios
+    Route::prefix('users')->group(function () {
+        Route::get('create', [AdminController::class, 'create'])->name('create');
+        Route::post('store', [AdminController::class, 'store'])->name('storeuser');
+        Route::get('list', [AdminController::class, 'allusers'])->name('users');
+        Route::get('{id}', [AdminController::class, 'show'])->name('user');
+        Route::get('edit/{user}', [AdminController::class, 'edit'])->name('edit');
+        Route::post('update/{user}', [AdminController::class, 'update'])->name('update');
+        Route::get('password/{user}', [AdminController::class, 'password'])->name('passChange');
+        Route::post('passwordUpdate/{user}', [AdminController::class, 'passwordUpdate'])->name('passUpdate');
+        Route::delete('delete/{id}', [AdminController::class, 'destroy'])->name('destroy');
+    });
 
-Route::post('admin/store', [AdminController::class, 'store'])->name('admin.storeuser');
+    // Propiedades
+    Route::prefix('properties')->group(function () {
+        Route::get('list', [AdminController::class, 'properties'])->name('properties');
+        Route::get('details/{id}', [AdminController::class, 'details'])->name('details');
+        Route::get('edit/{propiedad}', [AdminController::class, 'showProperties'])->name('showProperties');
+        Route::post('update/{propiedad}', [PropertiesController::class, 'updateProperties'])->name('propertiesUpdate');
+        Route::get('queue', [AdminController::class, 'queue'])->name('queue');
+        Route::get('highlights', [AdminController::class, 'highlights'])->name('highlights.properties');
+    });
 
-Route::get('overview/user/{id?}', [AdminController::class, 'show'])->name('admin.user');
+    // Apartamentos
+    Route::prefix('apartments')->group(function () {
+        Route::get('list', [AdminController::class, 'apartments'])->name('apartments');
+        Route::get('details/{id}', [AdminController::class, 'detailsApartments'])->name('detailsApartments');
+        Route::get('edit/{apartments}', [AdminController::class, 'editApartmentPage'])->name('editApartmentPage');
+        Route::post('update/{apartments}', [ApartmentsController::class, 'updateApartments'])->name('apartmentsUpdate');
+        Route::get('queue', [AdminController::class, 'queueApartments'])->name('queueApartments');
+        Route::get('highlights', [AdminController::class, 'highlightsApartments'])->name('highlights.apartments');
+    });
 
-Route::get('overview/edit/{user}', [AdminController::class, 'edit'])->name('admin.edit');
+    // Terrenos
+    Route::prefix('terrains')->group(function () {
+        Route::get('list', [AdminController::class, 'terrains'])->name('terrains');
+        Route::get('details/{id}', [AdminController::class, 'detailsTerrains'])->name('detailsTerrains');
+        Route::get('edit/{terrains}', [AdminController::class, 'editTerrainPage'])->name('editTerrainPage');
+        Route::post('update/{terrains}', [TerrainsController::class, 'updateTerrains'])->name('terrainsUpdate');
+        Route::get('queue', [AdminController::class, 'queueTerrains'])->name('queueTerrains');
+        Route::get('highlights', [AdminController::class, 'highlightsTerrains'])->name('highlights.terrains');
+    });
 
-Route::post('admin/edit/{user}', [AdminController::class, 'update'])->name('admin.update');
+    // Desarrollo vertical
+    Route::prefix('developments')->group(function () {
+        Route::get('list', [AdminController::class, 'developments'])->name('developments');
+        Route::get('highlights', [AdminController::class, 'highlightsdev'])->name('highlights.developments');
+        Route::get('create', [AdminController::class, 'createdev'])->name('createdev');
+        Route::get('edit/{id}', [AdminController::class, 'editdev'])->name('editdev');
+    });
 
-Route::get('overview/password/{user}', [AdminController::class, 'password'])->name('admin.passChange');
+    // Desarrollo horizontal
+    Route::prefix('horizontal')->group(function () {
+        Route::get('list', [AdminController::class, 'developmentsHorizontal'])->name('developmentsHorizontal');
+        Route::get('highlights', [AdminController::class, 'highlightsdevHorizontal'])->name('highlights.developmentsHorizontal');
+        Route::get('create', [AdminController::class, 'createdevHorizontal'])->name('createdevHorizontal');
+        Route::get('edit/{id}', [AdminController::class, 'editdevHorizontal'])->name('editdevHorizontal');
+    });
 
-Route::post('admin/password/{user}', [AdminController::class, 'updatePassword'])->name('admin.passUpdate');
+    // Lotes
+    Route::prefix('lots')->group(function () {
+        Route::get('list', [AdminController::class, 'lots'])->name('lots');
+        Route::get('highlights', [AdminController::class, 'highlightsLot'])->name('highlights.lots');
+        Route::get('create', [AdminController::class, 'createLot'])->name('createLot');
+        Route::get('edit/{id}', [AdminController::class, 'editLotPage'])->name('lot.edit');
+    });
 
-Route::get('overview/users', [AdminController::class, 'allusers'])->name('admin.users');
-
-Route::delete('overview/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
-
-Route::get('overview/contacts', [AdminController::class, 'contacts'])->name('admin.contacts');
+    // Varios
+    Route::get('contacts', [AdminController::class, 'contacts'])->name('contacts');
+    Route::get('files', [AdminController::class, 'files'])->name('files');
+    Route::get('statistics', [AdminController::class, 'statistics'])->name('statistics');
+    Route::get('settings', [AdminController::class, 'settingsinfo'])->name('settings');
+});
 
 Route::get('/getColonias', [AdminController::class, 'getColonias'])->name('getColonias');
-
-//admin properties
-Route::get('overview/properties', [AdminController::class, 'properties'])->name('admin.properties');
-
-Route::get('overview/details/{id}', [AdminController::class, 'details'])->name('admin.details');
-
-Route::get('overview/details/edit/{propiedad}', [AdminController::class, 'showProperties'])->name('admin.showProperties');
-
-Route::post('admin/details/edit/{propiedad}', [PropertiesController::class, 'updateProperties'])->name('admin.propertiesUpdate');
-
-Route::get('overview/queue', [AdminController::class, 'queue'])->name('admin.queue');
-
-Route::get('overview/properties-highlights', [AdminController::class, 'highlights'])->name('admin.highlights.properties');
-
-//admin apartments
-Route::get('overview/apartments', [AdminController::class, 'apartments'])->name('admin.apartments');
-
-Route::get('overview/details-apartments/{id}', [AdminController::class, 'detailsApartments'])->name('admin.detailsApartments');
-
-Route::get('overview/details-apartments/edit/{apartments}', [AdminController::class, 'editApartmentPage'])->name('admin.editApartmentPage');
-
-Route::post('admin/details-apartments/edit/{apartments}', [ApartmentsController::class, 'updateApartments'])->name('admin.apartmentsUpdate');
-
-Route::get('overview/apartments-queue', [AdminController::class, 'queueApartments'])->name('admin.queueApartments');
-
-Route::get('overview/apartments-highlights', [AdminController::class, 'highlightsApartments'])->name('admin.highlights.apartments');
-
-//admin terrains
-Route::get('overview/terrains', [AdminController::class, 'terrains'])->name('admin.terrains');
-
-Route::get('overview/details-terrains/{id}', [AdminController::class, 'detailsTerrains'])->name('admin.detailsTerrains');
-
-Route::get('overview/details-terrains/edit/{terrains}', [AdminController::class, 'editTerrainPage'])->name('admin.editTerrainPage');
-
-Route::post('admin/details-Terrains/edit/{terrains}', [TerrainsController::class, 'updateTerrains'])->name('admin.terrainsUpdate');
-
-Route::get('overview/terrains-queue', [AdminController::class, 'queueTerrains'])->name('admin.queueTerrains');
-
-Route::get('overview/terrains-highlights', [AdminController::class, 'highlightsTerrains'])->name('admin.highlights.terrains');
-
-//admin developments verticals
-Route::get('overview/developments', [AdminController::class, 'developments'])->name('admin.developments');
-
-Route::get('overview/developments-highlights', [AdminController::class, 'highlightsdev'])->name('admin.highlights.developments');
-
-Route::get('overview/createdev', [AdminController::class, 'createdev'])->name('admin.createdev');
-
-Route::get('overview/editdev/{id}', [AdminController::class, 'editdev'])->name('admin.editdev');
-
-//admin developments horizontals
-Route::get('overview/horizontal', [AdminController::class, 'developmentsHorizontal'])->name('admin.developmentsHorizontal');
-
-Route::get('overview/horizontal-highlights', [AdminController::class, 'highlightsdevHorizontal'])->name('admin.highlights.developmentsHorizontal');
-
-Route::get('overview/createhorizontal', [AdminController::class, 'createdevHorizontal'])->name('admin.createdevHorizontal');
-
-Route::get('overview/edithorizontal/{id}', [AdminController::class, 'editdevHorizontal'])->name('admin.editdevHorizontal');
-
-//admin lots
-Route::get('overview/lots', [AdminController::class, 'lots'])->name('admin.lots');
-
-Route::get('overview/lots-highlights', [AdminController::class, 'highlightsLot'])->name('admin.highlights.lots');
-
-Route::get('overview/createlot', [AdminController::class, 'createLot'])->name('admin.createLot');
-
-Route::get('ep/editlots/{id}', [AdminController::class, 'editLotPage'])->name('lot.edit');
-
-//admin various
-Route::get('overview/files', [AdminController::class, 'files'])->name('admin.files');
-
-Route::get('overview/statistics', [AdminController::class, 'statistics'])->name('admin.statistics');
-
-Route::get('overview/settingsinfo', [AdminController::class, 'settingsinfo'])->name('admin.settingsinfo');
 
 Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('emails.confirm');
 
