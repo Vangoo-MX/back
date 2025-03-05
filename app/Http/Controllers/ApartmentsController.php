@@ -160,9 +160,14 @@ class ApartmentsController extends Controller
             return collect();
         }
 
+        $priceRange = [
+            $apartments->price * 0.8,
+            $apartments->price * 1.2
+        ];
+
+
         return Apartments::where('id', '<>', $id)
-            ->where('bathrooms', $apartments->bathrooms)
-            ->where('rooms', $apartments->rooms)
+            ->whereBetween('price', $priceRange)
             ->where('id_municipio', $apartments->id_municipio)
             ->take(10)
             ->get();
