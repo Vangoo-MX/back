@@ -28,6 +28,14 @@ Route::get('/', HomeController::class)->name('home');
 /*---------------------------------------------------------------------*/
 /* PAGES */
 
+// recuperacion de contraseña
+Route::prefix('auth')->name('password.')->group(function () {
+    Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('request');
+    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('email');
+    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('reset');
+    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('update');
+});
+
 //admin user
 Route::get('overview/home', [AdminController::class, 'index'])->name('admin.index');
 
@@ -575,12 +583,6 @@ Route::post('ep/orderHighlightlot', [LotsController::class, 'orderLotHightlight'
 Route::post('ep/bepartnerEP', [MailsController::class, 'bepartnerEP'])->name('bepartner.post');
 Route::post('ep/contactAgentMail', [MailsController::class, 'contactAgent'])->name('contactAgent.post');
 Route::post('ep/salesAdvisor', [MailsController::class, 'salesAdvisor'])->name('salesAdvisor.post');
-
-// Password Reset Routes
-Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 //Comissions
 Route::get('ep/commissions/{type}', [CommissionsController::class, 'getCommissionsEP'])->name('ep.commissions');
