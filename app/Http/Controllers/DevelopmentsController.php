@@ -545,18 +545,24 @@ class DevelopmentsController extends Controller
 
     public function deleteDev($id)
     {
-        DevelopmentsHighlights::where('id_development', $id)->delete();
+        if (DevelopmentsHighlights::where('id_development', $id)->exists()) {
+            DevelopmentsHighlights::where('id_development', $id)->delete();
+        }
 
         $dev = Developments::findOrFail($id);
+        if (!$dev) {
+            return redirect()->back()->with('error', 'El desarrollo no existe.');
+        }
 
         $directoryPath = public_path("storage/img/posts/developments/{$dev->id}");
-
         if (is_dir($directoryPath)) {
-            File::deleteDirectory($directoryPath, true);
-            sleep(1);
-            rmdir($directoryPath);
+            File::deleteDirectory($directoryPath);
         }
-        DevelopmentsApartments::where('id_development', $id)->delete();
+
+        if (DevelopmentsApartments::where('id_development', $id)->exists()) {
+            DevelopmentsApartments::where('id_development', $id)->delete();
+        }
+
         $dev->delete();
 
         return redirect()->back();
