@@ -137,10 +137,10 @@ Route::prefix('ep')->group(function () {
         Route::post('loginep', [UserController::class, 'loginEP']);
         Route::get('logoutep', [UserController::class, 'logoutEP']);
         Route::get('checkauth', [UserController::class, 'checkAuthEP'])->middleware("cors");
-        Route::post('updateUserEP', [UserController::class, 'updateUserEP']);
-        Route::post('updateUserEPp2', [UserController::class, 'updateUserEPp2']);
-        Route::get('status/{userid}/{status}', [UserController::class, 'statusUser']);
+        Route::get('status/{userid}/{status}', [UserController::class, 'statusUser'])->name('changestatus');
     });
+    Route::post('updateUserEP', [UserController::class, 'updateUserEP']);
+    Route::post('updateUserEPp2', [UserController::class, 'updateUserEPp2']);
 });
 
 /*endpoints*/
