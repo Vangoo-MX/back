@@ -72,6 +72,13 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::post('update/{apartments}', [ApartmentsController::class, 'updateApartments'])->name('apartmentsUpdate');
         Route::get('queue', [AdminController::class, 'queueApartments'])->name('queueApartments');
         Route::get('highlights', [AdminController::class, 'highlightsApartments'])->name('highlights.apartments');
+        Route::get('rejectQueue/{id}', [ApartmentsController::class, 'rejectApartmentQueue'])->name('rejectApartmentQueue');
+        Route::get('revisionQueue/{id}', [ApartmentsController::class, 'revisionApartmentQueue'])->name('revisionApartmentQueue');
+        Route::post('aprovedQueue', [ApartmentsController::class, 'aprovedApartmentsQueue'])->name('aprovedApartmentQueue');
+        Route::delete('delete/{id}', [ApartmentsController::class, 'deleteApartment'])->name('deleteApartment');
+        Route::delete('deleteImage/{apartmentId}/{imageId}', [ApartmentsController::class, 'deleteImage'])->name('deleteImageApartment');
+        Route::get('deactiveApartment/{id}', [ApartmentsController::class, 'deactiveApartment'])->name('deactiveApartment');
+        Route::get('activeApartment/{id}', [ApartmentsController::class, 'activeApartment'])->name('activeApartment');
     });
 
     // Terrenos
@@ -229,14 +236,6 @@ Route::get('ep/getApartmentSearch/{estado?}/{municipio?}/{colonia?}/{type?}/{min
 
 Route::get('ep/get-apartment-by-municipio/{id}', [ApartmentsController::class, 'getApartmentsByMunicipio']);
 
-Route::get('ep/deleteApartment/{id}', [ApartmentsController::class, 'deleteApartment'])->name('epApartment.delete');
-
-Route::get('ep/deactiveApartment/{id}', [ApartmentsController::class, 'deactiveApartment'])->name('epApartment.deactive');
-
-Route::get('ep/activeApartment/{id}', [ApartmentsController::class, 'activeApartment'])->name('epApartment.activate');
-
-Route::delete('ep/edit-apartment/{apartmentId}/{imageId}', [ApartmentsController::class, 'deleteImage'])->name('apartment.images.delete');
-
 Route::get('ep/deleteApartmentEP/{id}', [ApartmentsController::class, 'deleteApartmentEP']);
 
 /* Apartamentos user */
@@ -247,14 +246,6 @@ Route::get('ep/getUserApartmentsQueue/{id}', [ApartmentsController::class, 'getU
 
 /* apartments queue */
 Route::post('ep/postApartmentsQueue', [ApartmentsController::class, 'postApartmentsQueue'])->name('epApartmentsQueue.post');
-
-Route::get('ep/rejectApartmentQueue/{id}', [ApartmentsController::class, 'rejectApartmentQueue'])->name('epApartmentQueue.reject');
-
-Route::get('ep/revisionApartmentQueue/{id}', [ApartmentsController::class, 'revisionApartmentQueue'])->name('epApartmentQueue.revision');
-
-Route::post('ep/aprovedApartmentQueue', [ApartmentsController::class, 'aprovedApartmentsQueue'])->name('epApartmentsQueue.aproved');
-
-Route::get('ep/deleteApartmentQueue/{id}', [ApartmentsController::class, 'deleteApartmentQueue'])->name('epApartmentQueue.delete');
 
 Route::get('ep/deleteApartmentQueueEP/{id}', [ApartmentsController::class, 'deleteApartmentQueueEP']);
 

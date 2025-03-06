@@ -62,19 +62,19 @@
                                 </li>
                                 <li>
                                     @if ($apartment->status == 1)
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$apartment->id}})" id="propertyDeactiveConfirmBtn{{$apartment->id}}" data-url="{{route('epApartment.deactive',$apartment->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$apartment->id}})" id="propertyDeactiveConfirmBtn{{$apartment->id}}" data-url="{{route('admin.deactiveApartment',$apartment->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Desactivar
                                     </a>
                                     @else
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$apartment->id}})" id="propertyActivateConfirmBtn{{$apartment->id}}" data-url="{{route('epApartment.activate',$apartment->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$apartment->id}})" id="propertyActivateConfirmBtn{{$apartment->id}}" data-url="{{route('admin.activeApartment',$apartment->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Activar
                                     </a>
                                     @endif
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeleteModal" onclick="propertyDeleteModalData({{$apartment->id}})" id="propertyDeleteConfirmBtn{{$apartment->id}}" data-url="{{route('epApartment.delete',$apartment->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeleteModal" onclick="propertyDeleteModalData({{$apartment->id}})" id="propertyDeleteConfirmBtn{{$apartment->id}}" data-url="{{route('admin.deleteApartment',$apartment->id)}}">
                                         <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>

@@ -250,14 +250,6 @@ class ApartmentsController extends Controller
         return redirect()->route('admin.queueApartments');
     }
 
-
-    public function deleteApartmentQueue($id)
-    {
-
-        ApartmentsQueue::findOrFail($id)->delete();
-        return redirect()->route('admin.queue');
-    }
-
     public function deleteApartmentQueueEP($id)
     {
         $apartmentQueue = ApartmentsQueue::findOrFail($id);

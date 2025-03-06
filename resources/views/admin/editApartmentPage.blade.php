@@ -313,7 +313,7 @@ Editar apartamento
                     <button type="submit" class="btn1">Editar apartamento</button>
                 </div>
             </form>
-            <form id="delete-form" action="{{ route('apartment.images.delete', ['apartmentId' => $apartment->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+            <form id="delete-form" action="{{ route('admin.deleteImageApartment', ['apartmentId' => $apartment->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>
