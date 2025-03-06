@@ -127,12 +127,12 @@ Route::prefix('ep')->group(function () {
         return json_encode(csrf_token());
     });
     // Usuarios
-    Route::prefix('user')->group(function () {
-        Route::get('getNameUser/{id}', [UserController::class, 'getNameUser']);
-        Route::post('register', [UserController::class, 'register']);
-        Route::post('login', [UserController::class, 'login']);
-        Route::get('logout', [UserController::class, 'logout']);
-        Route::get('getAllInfoUser/{id}', [UserController::class, 'getAllInfoUser']);
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('getNameUser/{id}', [UserController::class, 'getNameUser'])->name('getUsername');
+        Route::post('register', [UserController::class, 'register'])->name('register');
+        Route::post('login', [UserController::class, 'login'])->name('login');
+        Route::get('logout', [UserController::class, 'logout'])->name('logout');
+        Route::get('getAllInfoUser/{id}', [UserController::class, 'getAllInfoUser'])->name('getAllInfoUser');
         Route::post('registerep', [UserController::class, 'registerEP']);
         Route::post('loginep', [UserController::class, 'loginEP']);
         Route::get('logoutep', [UserController::class, 'logoutEP']);
