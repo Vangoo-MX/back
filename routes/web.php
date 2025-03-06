@@ -122,38 +122,26 @@ Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('ema
 Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('emails.template');
 
 /* USER ENDPOINTS*/
-
-Route::get('ep/user/getNameUser/{id}', [UserController::class, 'getNameUser'])->name('username.get');
-
-Route::post('ep/user/register', [UserController::class, 'register'])->name('user.register');
-
-Route::post('ep/user/login', [UserController::class, 'login'])->name('user.login');
-
-Route::get('ep/user/logout', [UserController::class, 'logout'])->name('user.logout');
-
-Route::get('ep/user/getAllInfoUser/{id}', [UserController::class, 'getAllInfoUser'])->name('getAllInfoUser.get');
-
-/* USER ENDPOINTS FRONTEND */
-
-Route::get('ep/csrf-token', function () {
-    return json_encode(csrf_token());
+Route::prefix('ep')->group(function () {
+    Route::get('csrf-token', function () {
+        return json_encode(csrf_token());
+    });
+    // Usuarios
+    Route::prefix('user')->group(function () {
+        Route::get('getNameUser/{id}', [UserController::class, 'getNameUser']);
+        Route::post('register', [UserController::class, 'register']);
+        Route::post('login', [UserController::class, 'login']);
+        Route::get('logout', [UserController::class, 'logout']);
+        Route::get('getAllInfoUser/{id}', [UserController::class, 'getAllInfoUser']);
+        Route::post('registerep', [UserController::class, 'registerEP']);
+        Route::post('loginep', [UserController::class, 'loginEP']);
+        Route::get('logoutep', [UserController::class, 'logoutEP']);
+        Route::get('checkauth', [UserController::class, 'checkAuthEP'])->middleware("cors");
+        Route::post('updateUserEP', [UserController::class, 'updateUserEP']);
+        Route::post('updateUserEPp2', [UserController::class, 'updateUserEPp2']);
+        Route::get('status/{userid}/{status}', [UserController::class, 'statusUser']);
+    });
 });
-
-Route::post('ep/user/registerep', [UserController::class, 'registerEP']);
-
-Route::post('ep/user/loginep', [UserController::class, 'loginEP']);
-
-Route::get('ep/user/logoutep', [UserController::class, 'logoutEP']);
-
-Route::get('ep/user/checkauth', [UserController::class, 'checkAuthEP'])->middleware("cors");
-
-/*update user*/
-
-Route::post('ep/updateUserEP', [UserController::class, 'updateUserEP']);
-
-Route::post('ep/updateUserEPp2', [UserController::class, 'updateUserEPp2']);
-
-Route::get('ep/statusUser/{userid}/{status}', [UserController::class, 'statusUser'])->name('user.changestatus');
 
 /*endpoints*/
 
