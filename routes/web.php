@@ -72,7 +72,7 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::post('update/{apartments}', [ApartmentsController::class, 'updateApartments'])->name('apartmentsUpdate');
         Route::get('queue', [AdminController::class, 'queueApartments'])->name('queueApartments');
         Route::get('highlights', [AdminController::class, 'highlightsApartments'])->name('highlights.apartments');
-        Route::delete('deleteHighlight/{id}', [ApartmentsController::class, 'deleteApartmentHightlight'])->name('deleteHighlightApartment');
+        Route::get('deleteHighlight/{id}', [ApartmentsController::class, 'deleteApartmentHightlight'])->name('deleteHighlightApartment');
         Route::post('addHighlight', [ApartmentsController::class, 'addApartmentHightlight'])->name('addHighlightApartment');
         Route::post('orderHighlight', [ApartmentsController::class, 'orderApartmentHightlight'])->name('orderHighlightApartment');
         Route::get('rejectQueue/{id}', [ApartmentsController::class, 'rejectApartmentQueue'])->name('rejectApartmentQueue');
