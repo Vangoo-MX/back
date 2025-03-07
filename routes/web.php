@@ -72,6 +72,9 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::post('update/{apartments}', [ApartmentsController::class, 'updateApartments'])->name('apartmentsUpdate');
         Route::get('queue', [AdminController::class, 'queueApartments'])->name('queueApartments');
         Route::get('highlights', [AdminController::class, 'highlightsApartments'])->name('highlights.apartments');
+        Route::delete('deleteHighlight/{id}', [ApartmentsController::class, 'deleteApartmentHightlight'])->name('deleteHighlightApartment');
+        Route::post('addHighlight', [ApartmentsController::class, 'addApartmentHightlight'])->name('addHighlightApartment');
+        Route::post('orderHighlight', [ApartmentsController::class, 'orderApartmentHightlight'])->name('orderHighlightApartment');
         Route::get('rejectQueue/{id}', [ApartmentsController::class, 'rejectApartmentQueue'])->name('rejectApartmentQueue');
         Route::get('revisionQueue/{id}', [ApartmentsController::class, 'revisionApartmentQueue'])->name('revisionApartmentQueue');
         Route::post('aprovedQueue', [ApartmentsController::class, 'aprovedApartmentsQueue'])->name('aprovedApartmentQueue');
@@ -97,6 +100,13 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('highlights', [AdminController::class, 'highlightsdev'])->name('highlights.developments');
         Route::get('create', [AdminController::class, 'createdev'])->name('createdev');
         Route::get('edit/{id}', [AdminController::class, 'editdev'])->name('editdev');
+        Route::delete('deleteHighlight/{id}', [DevelopmentsController::class, 'deleteDevHightlight'])->name('deleteHighlightDev');
+        Route::post('addHighlight', [DevelopmentsController::class, 'addDevHightlight'])->name('addHighlightDev');
+        Route::post('orderHighlight', [DevelopmentsController::class, 'orderDevHightlight'])->name('orderHighlightDev');
+        Route::post('store', [DevelopmentsController::class, 'storeDev'])->name('storeDev');
+        Route::post('edit', [DevelopmentsController::class, 'editdev'])->name('editDev');
+        Route::delete('deleteImage/{developmentId}/{imageId}', [DevelopmentsController::class, 'deleteImage'])->name('deleteImageDev');
+        Route::get('delete/{id}', [DevelopmentsController::class, 'deleteDev'])->name('deleteDev');
     });
 
     // Desarrollo horizontal
@@ -339,14 +349,6 @@ Route::get('ep/getMultiDevCard/{id}', [DevelopmentsController::class, 'getMultiD
 
 Route::get('ep/getDevSearch/{estado?}/{municipio?}/{colonia?}/{status?}/{min?}/{max?}', [DevelopmentsController::class, 'getDevSearch'])->name('epDevSearch.get');
 
-Route::post('ep/storedev', [DevelopmentsController::class, 'storeDev'])->name('epDev.store');
-
-Route::get('ep/deletedev/{id}', [DevelopmentsController::class, 'deleteDev'])->name('epDev.delete');
-
-Route::post('ep/editdev', [DevelopmentsController::class, 'editdev'])->name('epDev.edit');
-
-Route::delete('ep/dev/{developmentId}/{imageId}', [DevelopmentsController::class, 'deleteImage'])->name('development.images.delete');
-
 /* OPCIONES DESARROLLOS */
 Route::get('ep/getApartmentsFromDev/{id}', [DevelopmentsApartmentsController::class, 'getApartmentsFromDev'])->name('epApartmentsFromDev.get');
 
@@ -503,27 +505,11 @@ Route::post('ep/addHighlight', [PropertiesController::class, 'addPropertyHightli
 Route::post('ep/orderHighlight', [PropertiesController::class, 'orderPropertyHightlight'])->name('Highlight.order');
 
 /*---------*/
-
-Route::get('ep/deleteHighlightApartment/{id}', [ApartmentsController::class, 'deleteApartmentHightlight'])->name('HighlightApartment.delete');
-
-Route::post('ep/addHighlightApartment', [ApartmentsController::class, 'addApartmentHightlight'])->name('HighlightApartment.add');
-
-Route::post('ep/orderHighlightApartment', [ApartmentsController::class, 'orderApartmentHightlight'])->name('HighlightApartment.order');
-
-/*---------*/
 Route::get('ep/deleteHighlightTerrain/{id}', [TerrainsController::class, 'deleteTerrainHightlight'])->name('HighlightTerrain.delete');
 
 Route::post('ep/addHighlightTerrain', [TerrainsController::class, 'addTerrainHightlight'])->name('HighlightTerrain.add');
 
 Route::post('ep/orderHighlightTerrain', [TerrainsController::class, 'orderTerrainHightlight'])->name('HighlightTerrain.order');
-
-/*---------*/
-
-Route::get('ep/deleteHighlightdev/{id}', [DevelopmentsController::class, 'deleteDevHightlight'])->name('Highlightdev.delete');
-
-Route::post('ep/addHighlightdev', [DevelopmentsController::class, 'addDevHightlight'])->name('Highlightdev.add');
-
-Route::post('ep/orderHighlightdev', [DevelopmentsController::class, 'orderDevHightlight'])->name('Highlightdev.order');
 
 /*---------*/
 

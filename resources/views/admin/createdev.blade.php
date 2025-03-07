@@ -15,7 +15,7 @@
         <h3>Crear nuevo desarrollo</h3>
 
         <div class="w-100">
-            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('epDev.store') }}">
+            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('admin.storeDev') }}">
 
                 @csrf
 

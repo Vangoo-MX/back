@@ -10,7 +10,7 @@
 
 <h3>Nuevo apartamento destacado</h3>
 <br>
-<form method="post" action="{{ route('HighlightApartment.add') }}">
+<form method="post" action="{{ route('admin.addHighlightApartment') }}">
     @csrf
     <div class="d-flex gap-2">
         <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">
@@ -52,13 +52,13 @@
                     <td>{{ $apartment->municipio->nombre ?? 'Sin municipio' }}</td>
                     <td>{{$apartment->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('HighlightApartment.delete', $apartment->id) }}" class="btn btn-danger">
+                        <a href="{{ route('admin.deleteHighlightApartment', $apartment->id) }}" class="btn btn-danger">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </a>
                         <a href="https://www.vangoo.mx/detailsDepa/apartments/{{$apartment->id_property}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$apartment->id_property}}" action="{{ route('HighlightApartment.order') }}" method="POST">
+                        <form id="orden-form{{$apartment->id_property}}" action="{{ route('admin.orderHighlightApartment') }}" method="POST">
                             @csrf
                             <span class="d-flex gap-1">
                                 <input type="hidden" name="id" value="{{$apartment->id_property}}">
