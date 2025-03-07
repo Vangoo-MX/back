@@ -11,16 +11,6 @@
 <!-- Content Row -->
 <div class="row">
     <div class="container mt-3 px-4">
-        <!-- <form method="GET" action="{{ route('admin.developmentsHorizontal') }}" class="mb-4">
-            <div class="form-group">
-                <label for="modeSelect">Filtrar por tipo de desarrollo:</label>
-                <select name="mode" id="modeSelect" class="form-control" onchange="this.form.submit()">
-                    <option value="all" {{ $selectedMode == 'all' ? 'selected' : '' }}>Todos</option>
-                    <option value="horizontal" {{ $selectedMode == 'horizontal' ? 'selected' : '' }}>Horizontal</option>
-                    <option value="vertical" {{ $selectedMode == 'vertical' ? 'selected' : '' }}>Vertical</option>
-                </select>
-            </div>
-        </form> -->
         <table class="table table-striped table-bordered" id="propertiesTable">
             <thead>
                 <tr>
@@ -55,13 +45,13 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" target="_blank" href="https://vangoo.mx/details/desarrollo/{{$p->id}}">
+                                    <a class="dropdown-item" target="_blank" href="https://vangoo.mx/details-horiz-dev/horizontalDev/{{$p->id}}">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/desarrollo/{{$p->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details-horiz-dev/horizontalDev/{{$p->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>

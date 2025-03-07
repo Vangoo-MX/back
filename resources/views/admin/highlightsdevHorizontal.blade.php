@@ -55,7 +55,7 @@
                         <a href="{{ route('HighlightdevHorizontal.delete', $p->id) }}" class="btn btn-danger">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </a>
-                        <a href="https://vangoo.mx/details/propiedad/{{$p->id}}" target="_blank">
+                        <a href="https://vangoo.mx/details-horiz-dev/horizontalDev/{{$p->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
                         <form id="orden-form{{$p->id_development}}" action="{{ route('HighlightdevHorizontal.order') }}" method="POST">

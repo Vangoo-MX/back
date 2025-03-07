@@ -230,7 +230,7 @@ function moneyFormat($numero)
             <a href="https://vangoo.mx">
                 <img src="https://www.vangoo.mx/assets/img/system/new_logo.png" alt="Vangoo Logo" class="logo">
             </a>
-            <a href="https://vangoo.mx/details/desarrollo/<?php echo $id; ?>"><button class="btn">Ver detalles del desarrollo</button></a>
+            <a href="https://vangoo.mx/details-horiz-dev/horizontalDev/<?php echo $id; ?>"><button class="btn">Ver detalles del desarrollo</button></a>
         </div>
 
         <div class="card">
