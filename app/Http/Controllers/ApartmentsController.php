@@ -50,7 +50,7 @@ class ApartmentsController extends Controller
     public function deleteApartmentHightlight($id)
     {
         if (ApartmentsHighlights::destroy($id)) {
-            return redirect('overview/apartments-highlights');
+            return redirect()->route('highlights.apartments');
         } else {
             return response()->json(['error' => 'No se pudo eliminar el registro'], 404);
         }
@@ -65,7 +65,7 @@ class ApartmentsController extends Controller
                 'id_property' => $request->id_property,
             ]);
 
-            return redirect('overview/apartments-highlights');
+            return redirect()->route('highlights.apartments');
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -80,7 +80,7 @@ class ApartmentsController extends Controller
             $highlight->update([
                 'num_order' => $request->num_order,
             ]);
-            return redirect('overview/apartments-highlights');
+            return redirect()->route('highlights.apartments');
         }
 
         return response()->json(['error' => 'No se encontró el registro'], 404);
