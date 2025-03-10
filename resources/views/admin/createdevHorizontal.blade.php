@@ -15,7 +15,7 @@
         <h3>Crear nuevo desarrollo horizontal</h3>
 
         <div class="w-100">
-            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('epDevHorizontal.store') }}">
+            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('admin.storeDevHorizontal') }}">
 
                 @csrf
 
