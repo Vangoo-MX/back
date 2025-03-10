@@ -29,7 +29,6 @@ return [
     */
 
     'disks' => [
-
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
@@ -39,7 +38,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -55,18 +54,20 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
-        'jpg' => ['jpg'],
+
         'public_images' => [
             'driver' => 'local',
             'root' => storage_path('app/public/images'),
-            'url' => env('APP_URL').'/storage/public/images',
+            'url' => env('APP_URL') . '/storage/public/images',
             'visibility' => 'public',
-        ],
-        'profileimg' => [
-            'driver' => 'local',
-            'root' => public_path().'resources/img/users/',
+            'throw' => false,
         ],
 
+        'profileimg' => [
+            'driver' => 'local',
+            'root' => public_path() . '/resources/img/users/',
+            'throw' => false,
+        ],
     ],
 
     /*
