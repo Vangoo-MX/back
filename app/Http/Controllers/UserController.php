@@ -66,6 +66,7 @@ class UserController extends Controller
 
         return $user->rol != 1
             ? redirect()->away('https://vangoo.mx')
+            //? redirect()->route('admin.index')
             : $this->authenticated($request, $user);
     }
 
@@ -73,6 +74,7 @@ class UserController extends Controller
     public function authenticated(Request $request, $user)
     {
         return redirect()->away('https://vangoo.mx');
+        //return redirect()->route('admin.index');
     }
 
     public function logout()

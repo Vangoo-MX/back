@@ -156,6 +156,7 @@ return [
     */
 
     'domain' => env('SESSION_DOMAIN', '.vangoo.mx'),
+    //'domain' => env('SESSION_DOMAIN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -169,6 +170,7 @@ return [
     */
 
     'secure' => env('SESSION_SECURE_COOKIE', true),
+    //'secure' => env('SESSION_SECURE_COOKIE', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -197,5 +199,6 @@ return [
     */
 
     'same_site' => 'none',
+    //'same_site' => 'lax',
 
 ];
