@@ -115,6 +115,9 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('highlights', [AdminController::class, 'highlightsdevHorizontal'])->name('highlights.developmentsHorizontal');
         Route::get('create', [AdminController::class, 'createdevHorizontal'])->name('createdevHorizontal');
         Route::get('edit/{id}', [AdminController::class, 'editdevHorizontal'])->name('editdevHorizontal');
+        Route::get('deleteHighlight/{id}', [DevelopmentsHorizontalController::class, 'deleteDevHorizontalHightlight'])->name('deleteHighlightDevHorizontal');
+        Route::post('addHighlight', [DevelopmentsHorizontalController::class, 'addDevHorizontalHightlight'])->name('addHighlightDevHorizontal');
+        Route::post('orderHighlight', [DevelopmentsHorizontalController::class, 'orderDevHorizontalHightlight'])->name('orderHighlightDevHorizontal');
     });
 
     // Lotes
@@ -511,13 +514,6 @@ Route::post('ep/addHighlightTerrain', [TerrainsController::class, 'addTerrainHig
 
 Route::post('ep/orderHighlightTerrain', [TerrainsController::class, 'orderTerrainHightlight'])->name('HighlightTerrain.order');
 
-/*---------*/
-
-Route::get('ep/deleteHighlightdevHorizontal/{id}', [DevelopmentsHorizontalController::class, 'deleteDevHorizontalHightlight'])->name('HighlightdevHorizontal.delete');
-
-Route::post('ep/addHighlightdevHorizontal', [DevelopmentsHorizontalController::class, 'addDevHorizontalHightlight'])->name('HighlightdevHorizontal.add');
-
-Route::post('ep/orderHighlightdevHorizontal', [DevelopmentsHorizontalController::class, 'orderDevHorizontalHightlight'])->name('HighlightdevHorizontal.order');
 /*---------*/
 
 Route::get('ep/deleteHighlightlot/{id}', [LotsController::class, 'deleteLotHightlight'])->name('highlightLot.delete');
