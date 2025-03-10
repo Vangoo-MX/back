@@ -62,6 +62,9 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::post('update/{propiedad}', [PropertiesController::class, 'updateProperties'])->name('propertiesUpdate');
         Route::get('queue', [AdminController::class, 'queue'])->name('queue');
         Route::get('highlights', [AdminController::class, 'highlights'])->name('highlights.properties');
+        Route::get('deleteHighlight/{id}', [PropertiesController::class, 'deletePropertyHightlight'])->name('deleteHighlightProperties');
+        Route::post('addHighlight', [PropertiesController::class, 'addPropertyHightlight'])->name('addHighlightProperties');
+        Route::post('orderHighlight', [PropertiesController::class, 'orderPropertyHightlight'])->name('orderHighlightProperties');
     });
 
     // Apartamentos
@@ -496,14 +499,6 @@ Route::get('ep/deleteTicket/{id}', [ContactsController::class, 'deleteTicket'])-
 Route::post('ep/editStatusTicket', [ContactsController::class, 'editStatusTicket'])->name('editStatusTicket.post');
 
 /* highlights edit */
-
-Route::get('ep/deleteHighlight/{id}', [PropertiesController::class, 'deletePropertyHightlight'])->name('Highlight.delete');
-
-Route::post('ep/addHighlight', [PropertiesController::class, 'addPropertyHightlight'])->name('Highlight.add');
-
-Route::post('ep/orderHighlight', [PropertiesController::class, 'orderPropertyHightlight'])->name('Highlight.order');
-
-/*---------*/
 Route::get('ep/deleteHighlightTerrain/{id}', [TerrainsController::class, 'deleteTerrainHightlight'])->name('HighlightTerrain.delete');
 
 Route::post('ep/addHighlightTerrain', [TerrainsController::class, 'addTerrainHightlight'])->name('HighlightTerrain.add');

@@ -10,7 +10,7 @@
 
 <h3>Nueva propiedad destacada</h3>
 <br>
-<form method="post" action="{{ route('Highlight.add') }}">
+<form method="post" action="{{ route('admin.addHighlightProperties') }}">
     @csrf
     <div class="d-flex gap-2">
         <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">
@@ -52,13 +52,13 @@
                     <td>{{municipio($p->id_municipio)}}</td>
                     <td>{{$p->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('Highlight.delete', $p->id) }}" class="btn btn-danger">
+                        <a href="{{ route('admin.deleteHighlightProperties', $p->id) }}" class="btn btn-danger">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </a>
                         <a href="https://vangoo.mx/details/propiedad/{{$p->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$p->id_property}}" action="{{ route('Highlight.order') }}" method="POST">
+                        <form id="orden-form{{$p->id_property}}" action="{{ route('admin.orderHighlightProperties') }}" method="POST">
                             @csrf
                             <span class="d-flex gap-1">
                                 <input type="hidden" name="id" value="{{$p->id_property}}">
