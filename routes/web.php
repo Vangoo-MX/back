@@ -70,6 +70,8 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::post('aprovedQueue', [PropertiesController::class, 'aprovedPropertyQueue'])->name('aprovedPropertyQueue');
         Route::delete('delete/{id}', [PropertiesController::class, 'deleteProperty'])->name('deleteProperty');
         Route::delete('deleteImage/{propertyId}/{imageId}', [PropertiesController::class, 'deleteImage'])->name('deleteImageProperty');
+        Route::get('deactiveProperty/{id}', [PropertiesController::class, 'deactiveProperty'])->name('deactiveProperty');
+        Route::get('activeProperty/{id}', [PropertiesController::class, 'activeProperty'])->name('activeProperty');
     });
 
     // Apartamentos
@@ -197,10 +199,6 @@ Route::get('ep/getPropertySearch/{estado?}/{municipio?}/{colonia?}/{type?}/{min?
 Route::get('ep/getPropertyCard/{id}', [PropertiesController::class, 'getPropertyCard'])->name('epPropertyCard.get');
 
 Route::get('ep/getMultiPropertyCard/{array}', [PropertiesController::class, 'getMultiPropertyCard'])->name('epMultiPropertyCard.get');
-
-Route::get('ep/deactiveProperty/{id}', [PropertiesController::class, 'deactiveProperty'])->name('epProperty.deactive');
-
-Route::get('ep/activeProperty/{id}', [PropertiesController::class, 'activeProperty'])->name('epProperty.activate');
 
 Route::get('ep/deletePropertyEP/{id}', [PropertiesController::class, 'deletePropertyEP']);
 

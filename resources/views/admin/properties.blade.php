@@ -62,12 +62,12 @@
                                 </li>
                                 <li>
                                     @if ($p->status == 1)
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$p->id}})" id="propertyDeactiveConfirmBtn{{$p->id}}" data-url="{{route('epProperty.deactive',$p->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$p->id}})" id="propertyDeactiveConfirmBtn{{$p->id}}" data-url="{{route('admin.deactiveProperty',$p->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Desactivar
                                     </a>
                                     @else
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$p->id}})" id="propertyActivateConfirmBtn{{$p->id}}" data-url="{{route('epProperty.activate',$p->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$p->id}})" id="propertyActivateConfirmBtn{{$p->id}}" data-url="{{route('admin.activeProperty',$p->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Activar
                                     </a>
