@@ -15,7 +15,7 @@
         <h3>{{$dev->title}}</h3>
 
         <div class="w-100">
-            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('epDevHorizontal.edit') }}">
+            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('admin.editDevHorizontal') }}">
 
                 @csrf
                 <input type="hidden" name="id" value="{{$dev->id}}">
@@ -300,7 +300,7 @@
                 </div>
 
             </form>
-            <form id="delete-form" action="{{ route('developmentHorizontal.images.delete', ['developmentId' => $dev->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+            <form id="delete-form" action="{{ route('admin.deleteImageDevHorizontal', ['developmentId' => $dev->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>

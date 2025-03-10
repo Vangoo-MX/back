@@ -119,6 +119,8 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::post('addHighlight', [DevelopmentsHorizontalController::class, 'addDevHorizontalHightlight'])->name('addHighlightDevHorizontal');
         Route::post('orderHighlight', [DevelopmentsHorizontalController::class, 'orderDevHorizontalHightlight'])->name('orderHighlightDevHorizontal');
         Route::post('store', [DevelopmentsHorizontalController::class, 'storeDevHorizontal'])->name('storeDevHorizontal');
+        Route::post('editDevhorizontal', [DevelopmentsHorizontalController::class, 'editDevHorizontal'])->name('editDevHorizontal');
+        Route::delete('deleteImage/{developmentId}/{imageId}', [DevelopmentsHorizontalController::class, 'deleteImage'])->name('deleteImageDevHorizontal');
     });
 
     // Lotes
@@ -382,10 +384,6 @@ Route::get('ep/getMultiDevHorizontalCard/{id}', [DevelopmentsHorizontalControlle
 Route::get('ep/getDevHorizontalSearch/{estado?}/{municipio?}/{colonia?}/{status?}/{min?}/{max?}', [DevelopmentsHorizontalController::class, 'getDevHorizontalSearch'])->name('epDevHorizontalSearch.get');
 
 Route::get('ep/deletedevhorizontal/{id}', [DevelopmentsHorizontalController::class, 'deleteDevHorizontal'])->name('epDevHorizontal.delete');
-
-Route::post('ep/editdevhorizontal', [DevelopmentsHorizontalController::class, 'editDevHorizontal'])->name('epDevHorizontal.edit');
-
-Route::delete('ep/devHorizontal/{developmentId}/{imageId}', [DevelopmentsHorizontalController::class, 'deleteImage'])->name('developmentHorizontal.images.delete');
 
 /* OPCIONES DESARROLLOS HORIZONTALES */
 Route::get('ep/getApartmentsFromDevHorizontal/{id}', [DevelopmentsHorizontalApartmentsController::class, 'getApartmentsFromDevHorizontal'])->name('epApartmentsFromDevHorizontal.get');
