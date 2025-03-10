@@ -10,7 +10,7 @@
 
 <h3>Nuevo desarrollo horizontal destacado</h3>
 <br>
-<form method="post" action="{{ route('HighlightdevHorizontal.add') }}">
+<form method="post" action="{{ route('admin.addHighlightDevHorizontal') }}">
     @csrf
     <div class="d-flex gap-2">
         <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">
@@ -52,13 +52,13 @@
                     <td>{{municipio($p->id_municipio)}}</td>
                     <td>{{$p->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('HighlightdevHorizontal.delete', $p->id) }}" class="btn btn-danger">
+                        <a href="{{ route('admin.deleteHighlightDevHorizontal', $p->id) }}" class="btn btn-danger">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </a>
                         <a href="https://vangoo.mx/details-horiz-dev/horizontalDev/{{$p->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$p->id_development}}" action="{{ route('HighlightdevHorizontal.order') }}" method="POST">
+                        <form id="orden-form{{$p->id_development}}" action="{{ route('admin.orderHighlightDevHorizontal') }}" method="POST">
                             @csrf
                             <span class="d-flex gap-1">
                                 <input type="hidden" name="id" value="{{$p->id_development}}">
