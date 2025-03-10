@@ -49,7 +49,7 @@ class PropertiesController extends Controller
     public function deletePropertyHightlight($id)
     {
         if (PropertiesHighlights::destroy($id)) {
-            return redirect('overview/properties-highlights');
+            return redirect()->route('admin.highlights.properties');
         }
 
         return response()->json(['error' => 'Agenda entry not found'], 404);
@@ -64,7 +64,7 @@ class PropertiesController extends Controller
                 'id_property' => $request->id_property,
             ]);
 
-            return redirect('overview/properties-highlights');
+            return redirect()->route('admin.highlights.properties');
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -76,7 +76,7 @@ class PropertiesController extends Controller
 
         if ($highlight) {
             $highlight->update(['num_order' => $request->num_order]);
-            return redirect('overview/properties-highlights');
+            return redirect()->route('admin.highlights.properties');
         }
 
         return response()->json(['error' => 'Entry for property with id ' . $request->id . ' not found'], 404);
