@@ -47,15 +47,15 @@
                     <td>{{$p->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
-                            <form method="post" action="{{route('epPropertyQueue.aproved')}}">
+                            <form method="post" action="{{route('admin.aprovePropertyQueue')}}">
                                 @csrf
                                 <input type="hidden" id="id" name="id" value="{{$p->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <a href="{{route('epPropertyQueue.reject', $p->id)}}">
+                            <a href="{{route('admin.rejectPropertyQueue', $p->id)}}">
                                 <button class="btnDanger">Rechazar</button>
                             </a>
-                            <a href="{{route('epPropertyQueue.revision', $p->id)}}">
+                            <a href="{{route('admin.revisionPropertyQueue', $p->id)}}">
                                 <button class="btnWarning">Revisar</button>
                             </a>
                         </div>
@@ -215,12 +215,12 @@
                     <td>{{$p->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
-                            <form method="post" action="{{route('epPropertyQueue.aproved')}}">
+                            <form method="post" action="{{route('admin.aprovePropertyQueue')}}">
                                 @csrf
                                 <input type="hidden" id="id" name="id" value="{{$p->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <a href="{{route('epPropertyQueue.reject', $p->id)}}">
+                            <a href="{{route('admin.rejectPropertyQueue', $p->id)}}">
                                 <button class="btnDanger">Rechazar</button>
                             </a>
                         </div>

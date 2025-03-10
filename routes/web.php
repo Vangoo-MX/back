@@ -65,6 +65,9 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('deleteHighlight/{id}', [PropertiesController::class, 'deletePropertyHightlight'])->name('deleteHighlightProperties');
         Route::post('addHighlight', [PropertiesController::class, 'addPropertyHightlight'])->name('addHighlightProperties');
         Route::post('orderHighlight', [PropertiesController::class, 'orderPropertyHightlight'])->name('orderHighlightProperties');
+        Route::get('rejectQueue/{id}', [PropertiesController::class, 'rejectPropertyQueue'])->name('rejectPropertyQueue');
+        Route::get('revisionQueue/{id}', [PropertiesController::class, 'revisionPropertyQueue'])->name('revisionPropertyQueue');
+        Route::post('aprovedQueue', [PropertiesController::class, 'aprovedPropertyQueue'])->name('aprovedPropertyQueue');
     });
 
     // Apartamentos
@@ -211,12 +214,6 @@ Route::get('ep/getUserPropertiesQueue/{id}', [PropertiesController::class, 'getU
 
 /* property queue */
 Route::post('ep/postPropertyQueue', [PropertiesController::class, 'postPropertiesQueue'])->name('epPropertyQueue.post');
-
-Route::get('ep/rejectPropertyQueue/{id}', [PropertiesController::class, 'rejectPropertyQueue'])->name('epPropertyQueue.reject');
-
-Route::get('ep/revisionPropertyQueue/{id}', [PropertiesController::class, 'revisionPropertyQueue'])->name('epPropertyQueue.revision');
-
-Route::post('ep/aprovedPropertyQueue', [PropertiesController::class, 'aprovedPropertyQueue'])->name('epPropertyQueue.aproved');
 
 Route::get('ep/deletePropertyQueue/{id}', [PropertiesController::class, 'deletePropertyQueue'])->name('epPropertyQueue.delete');
 
