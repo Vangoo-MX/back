@@ -10,7 +10,7 @@
 
 <h3>Nuevo lote destacado</h3>
 <br>
-<form method="post" action="{{ route('highlightLot.add') }}">
+<form method="post" action="{{ route('admin.addHighlightLot') }}">
     @csrf
     <div class="d-flex gap-2">
         <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">
@@ -52,13 +52,13 @@
                     <td>{{municipio($p->id_municipio)}}</td>
                     <td>{{$p->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('highlightLot.delete', $p->id) }}" class="btn btn-danger">
+                        <a href="{{ route('admin.deleteHighlightLot', $p->id) }}" class="btn btn-danger">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </a>
                         <a href="https://vangoo.mx/detailslots/lots/{{$p->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$p->id_lot}}" action="{{ route('highlightLot.order') }}" method="POST">
+                        <form id="orden-form{{$p->id_lot}}" action="{{ route('admin.orderHighlightLot') }}" method="POST">
                             @csrf
                             <span class="d-flex gap-1">
                                 <input type="hidden" name="id" value="{{$p->id_lot}}">
@@ -128,7 +128,7 @@
 
     document.getElementById('municipiosh-select').addEventListener('change', function() {
         var municipioId = this.options[this.selectedIndex].getAttribute('data-municipio-id');
-        var url = '../ep/get-lots-by-municipio/' + municipioId;
+        var url = '/ep/get-lots-by-municipio/' + municipioId;
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');

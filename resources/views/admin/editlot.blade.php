@@ -19,7 +19,7 @@ Editar
         <h3>{{$lot->title}}</h3>
 
         <div class="w-100">
-            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('epLot.edit') }}">
+            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('admin.updateLot') }}">
 
                 @csrf
                 <input type="hidden" name="id" value="{{$lot->id}}">
@@ -341,7 +341,7 @@ Editar
                 </div>
 
             </form>
-            <form id="delete-form" action="{{ route('lot.images.delete', ['lotId' => $lot->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+            <form id="delete-form" action="{{ route('admin.deleteImageLot', ['lotId' => $lot->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>

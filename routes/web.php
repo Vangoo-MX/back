@@ -140,6 +140,13 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('highlights', [AdminController::class, 'highlightsLot'])->name('highlights.lots');
         Route::get('create', [AdminController::class, 'createLot'])->name('createLot');
         Route::get('edit/{id}', [AdminController::class, 'editLotPage'])->name('editLot');
+        Route::post('store', [LotsController::class, 'storeLot'])->name('storeLot');
+        Route::post('update', [LotsController::class, 'editLot'])->name('updateLot');
+        Route::delete('deleteImage/{lotId}/{imageId}', [LotsController::class, 'deleteImage'])->name('deleteImageLot');
+        Route::get('delete/{id}', [LotsController::class, 'deleteLot'])->name('deleteLot');
+        Route::get('deleteHighlight/{id}', [LotsController::class, 'deleteLotHightlight'])->name('deleteHighlightLot');
+        Route::post('addHighlight', [LotsController::class, 'addLotHightlight'])->name('addHighlightLot');
+        Route::post('orderHighlight', [LotsController::class, 'orderLotHightlight'])->name('orderHighlightLot');
     });
 
     // Varios
@@ -389,14 +396,6 @@ Route::get('ep/getApartmentsImagesHorizontal/{id}', [DevelopmentsHorizontalApart
 
 Route::get('ep/getAllLots', [LotsController::class, 'getAll'])->name('epAllLots.get');
 
-Route::post('ep/storelot', [LotsController::class, 'storeLot'])->name('epLot.store');
-
-Route::get('ep/deletelot/{id}', [LotsController::class, 'deleteLot'])->name('epLot.delete');
-
-Route::post('ep/editlot', [LotsController::class, 'editLot'])->name('epLot.edit');
-
-Route::delete('ep/editlot/{lotId}/{imageId}', [LotsController::class, 'deleteImage'])->name('lot.images.delete');
-
 Route::get('ep/get-lots-by-municipio/{id}', [LotsController::class, 'getLotsByMunicipio']);
 
 Route::get('ep/getLotsHightlights', [LotsController::class, 'getLotsHightlights'])->name('epLotsHightlights.get');
@@ -497,14 +496,6 @@ Route::get('ep/deleteHighlightTerrain/{id}', [TerrainsController::class, 'delete
 Route::post('ep/addHighlightTerrain', [TerrainsController::class, 'addTerrainHightlight'])->name('HighlightTerrain.add');
 
 Route::post('ep/orderHighlightTerrain', [TerrainsController::class, 'orderTerrainHightlight'])->name('HighlightTerrain.order');
-
-/*---------*/
-
-Route::get('ep/deleteHighlightlot/{id}', [LotsController::class, 'deleteLotHightlight'])->name('highlightLot.delete');
-
-Route::post('ep/addHighlightlot', [LotsController::class, 'addLotHightlight'])->name('highlightLot.add');
-
-Route::post('ep/orderHighlightlot', [LotsController::class, 'orderLotHightlight'])->name('highlightLot.order');
 
 /*----EMAIL---*/
 

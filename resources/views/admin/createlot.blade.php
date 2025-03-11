@@ -15,7 +15,7 @@
         <h3>Crear nuevo lote</h3>
 
         <div class="w-100">
-            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('epLot.store') }}">
+            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('admin.storeLot') }}">
 
                 @csrf
 

@@ -69,7 +69,7 @@
                                     </a>
                                 </li> -->
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#devDeleteModal" onclick="devDeleteModalData({{$p->id}})" id="devDeleteConfirmBtn{{$p->id}}" data-url="{{route('epLot.delete',$p->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#devDeleteModal" onclick="devDeleteModalData({{$p->id}})" id="devDeleteConfirmBtn{{$p->id}}" data-url="{{route('admin.deleteLot',$p->id)}}">
                                         <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>
