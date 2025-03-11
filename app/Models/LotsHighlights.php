@@ -16,7 +16,7 @@ class LotsHighlights extends Model
     protected $fillable = [
         'id_estado',
         'id_municipio',
-        'id_development',
+        'id_lot',
         'num_order',
     ];
     protected $table = 'post_lots_highlights';
