@@ -21,6 +21,8 @@ class Kernel extends ConsoleKernel
                 ->where('created_at', '<', now()->subMinutes(config('auth.passwords.users.expire')))
                 ->delete();
         })->hourly();
+
+        $schedule->command('apartments:cleanup')->daily();
     }
 
     /**
