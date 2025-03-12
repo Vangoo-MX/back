@@ -23,6 +23,10 @@ class Kernel extends ConsoleKernel
         })->hourly();
 
         $schedule->command('apartments:cleanup')->daily();
+
+        $schedule->command('properties:cleanup')->daily();
+
+        $schedule->command('terrains:cleanup')->daily();
     }
 
     /**
