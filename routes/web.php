@@ -102,6 +102,9 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::post('update/{terrains}', [TerrainsController::class, 'updateTerrains'])->name('terrainsUpdate');
         Route::get('queue', [AdminController::class, 'queueTerrains'])->name('queueTerrains');
         Route::get('highlights', [AdminController::class, 'highlightsTerrains'])->name('highlights.terrains');
+        Route::get('deleteHighlight/{id}', [TerrainsController::class, 'deleteTerrainHightlight'])->name('deleteHighlightTerrain');
+        Route::post('addHighlight', [TerrainsController::class, 'addTerrainHightlight'])->name('addHighlightTerrain');
+        Route::post('orderHighlight', [TerrainsController::class, 'orderTerrainHightlight'])->name('orderHighlightTerrain');
     });
 
     // Desarrollo vertical
@@ -489,13 +492,6 @@ Route::get('ep/getTicketsUser/{id}', [ContactsController::class, 'getTicketsUser
 Route::get('ep/getTicketsSendUser/{id}', [ContactsController::class, 'getTicketsSendUser'])->name('ticketsSendUser.get');
 Route::get('ep/deleteTicket/{id}', [ContactsController::class, 'deleteTicket'])->name('ticket.delete');
 Route::post('ep/editStatusTicket', [ContactsController::class, 'editStatusTicket'])->name('editStatusTicket.post');
-
-/* highlights edit */
-Route::get('ep/deleteHighlightTerrain/{id}', [TerrainsController::class, 'deleteTerrainHightlight'])->name('HighlightTerrain.delete');
-
-Route::post('ep/addHighlightTerrain', [TerrainsController::class, 'addTerrainHightlight'])->name('HighlightTerrain.add');
-
-Route::post('ep/orderHighlightTerrain', [TerrainsController::class, 'orderTerrainHightlight'])->name('HighlightTerrain.order');
 
 /*----EMAIL---*/
 

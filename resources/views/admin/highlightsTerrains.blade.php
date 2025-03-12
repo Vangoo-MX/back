@@ -10,7 +10,7 @@
 
 <h3>Nuevo terreno destacado</h3>
 <br>
-<form method="post" action="{{ route('HighlightTerrain.add') }}">
+<form method="post" action="{{ route('admin.addHighlightTerrain') }}">
     @csrf
     <div class="d-flex gap-2">
         <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">
@@ -51,13 +51,13 @@
                     <td>{{ $terrain->municipio->nombre ?? 'Sin municipio' }}</td>
                     <td>{{$terrain->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('HighlightTerrain.delete', $terrain->id) }}" class="btn btn-danger">
+                        <a href="{{ route('admin.deleteHighlightTerrain', $terrain->id) }}" class="btn btn-danger">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </a>
                         <a href="https://www.vangoo.mx/detailsTerrain/terrains/{{$terrain->id_property}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$terrain->id_property}}" action="{{ route('HighlightTerrain.order') }}" method="POST">
+                        <form id="orden-form{{$terrain->id_property}}" action="{{ route('admin.orderHighlightTerrain') }}" method="POST">
                             @csrf
                             <span class="d-flex gap-1">
                                 <input type="hidden" name="id" value="{{$terrain->id_property}}">
@@ -127,7 +127,7 @@
 
     document.getElementById('municipiosh-select').addEventListener('change', function() {
         var municipioId = this.options[this.selectedIndex].getAttribute('data-municipio-id');
-        var url = '../ep/get-terrain-by-municipio/' + municipioId;
+        var url = '/ep/get-terrain-by-municipio/' + municipioId;
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
