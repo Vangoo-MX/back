@@ -50,7 +50,7 @@ class TerrainsController extends Controller
     public function deleteTerrainHightlight($id)
     {
         if (TerrainsHighlights::destroy($id)) {
-            return redirect('overview/terrains-highlights');
+            return redirect()->route('admin.highlights.terrains');
         } else {
             return response()->json(['error' => 'Agenda entry not found'], 404);
         }
@@ -65,7 +65,7 @@ class TerrainsController extends Controller
                 'id_property' => $request->id_property,
             ]);
 
-            return redirect('overview/properties-highlights');
+            return redirect()->route('admin.highlights.terrains');
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -80,7 +80,7 @@ class TerrainsController extends Controller
                 'num_order' => $request->num_order,
             ]);
 
-            return redirect('overview/terrains-highlights');
+            return redirect()->route('admin.highlights.terrains');
         }
 
         return response()->json(['error' => 'Entry for property with id ' . $request->id . ' not found'], 404);
