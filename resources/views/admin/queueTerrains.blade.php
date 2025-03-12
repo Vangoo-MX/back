@@ -47,15 +47,15 @@
                     <td>{{$terrains->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
-                            <form method="post" action="{{route('epTerrainsQueue.aproved')}}">
+                            <form method="post" action="{{route('admin.aprovedTerrainQueue')}}">
                                 @csrf
                                 <input type="hidden" id="id" name="id" value="{{$terrains->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <a href="{{route('epTerrainQueue.reject', $terrains->id)}}">
+                            <a href="{{route('admin.rejectTerrainQueue', $terrains->id)}}">
                                 <button class="btnDanger">Rechazar</button>
                             </a>
-                            <a href="{{route('epTerrainQueue.revision', $terrains->id)}}">
+                            <a href="{{route('admin.revisionTerrainQueue', $terrains->id)}}">
                                 <button class="btnWarning">Revisar</button>
                             </a>
                         </div>
@@ -215,12 +215,12 @@
                     <td>{{$terrains->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
-                            <form method="post" action="{{route('epTerrainsQueue.aproved')}}">
+                            <form method="post" action="{{route('admin.aprovedTerrainQueue')}}">
                                 @csrf
                                 <input type="hidden" id="id" name="id" value="{{$terrains->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <a href="{{route('epTerrainQueue.reject', $terrains->id)}}">
+                            <a href="{{route('admin.rejectTerrainQueue', $terrains->id)}}">
                                 <button class="btnDanger">Rechazar</button>
                             </a>
                         </div>

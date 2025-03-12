@@ -105,6 +105,9 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('deleteHighlight/{id}', [TerrainsController::class, 'deleteTerrainHightlight'])->name('deleteHighlightTerrain');
         Route::post('addHighlight', [TerrainsController::class, 'addTerrainHightlight'])->name('addHighlightTerrain');
         Route::post('orderHighlight', [TerrainsController::class, 'orderTerrainHightlight'])->name('orderHighlightTerrain');
+        Route::get('rejectQueue/{id}', [TerrainsController::class, 'rejectTerrainQueue'])->name('rejectTerrainQueue');
+        Route::get('revisionQueue/{id}', [TerrainsController::class, 'revisionTerrainQueue'])->name('revisionTerrainQueue');
+        Route::post('aprovedQueue', [TerrainsController::class, 'aprovedTerrainsQueue'])->name('aprovedTerrainQueue');
     });
 
     // Desarrollo vertical
@@ -320,12 +323,6 @@ Route::get('ep/getUserTerrainsQueue/{id}', [TerrainsController::class, 'getUserT
 
 /* terrains queue */
 Route::post('ep/postTerrainsQueue', [TerrainsController::class, 'postTerrainsQueue'])->name('epTerrainsQueue.post');
-
-Route::get('ep/rejectTerrainQueue/{id}', [TerrainsController::class, 'rejectTerrainQueue'])->name('epTerrainQueue.reject');
-
-Route::get('ep/revisionTerrainQueue/{id}', [TerrainsController::class, 'revisionTerrainQueue'])->name('epTerrainQueue.revision');
-
-Route::post('ep/aprovedTerrainQueue', [TerrainsController::class, 'aprovedTerrainsQueue'])->name('epTerrainsQueue.aproved');
 
 Route::get('ep/deleteTerrainQueue/{id}', [TerrainsController::class, 'deleteTerrainQueue'])->name('epTerrainQueue.delete');
 
