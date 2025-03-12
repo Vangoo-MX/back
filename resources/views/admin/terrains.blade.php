@@ -62,12 +62,12 @@
                                 </li>
                                 <li>
                                     @if ($terrain->status == 1)
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$terrain->id}})" id="propertyDeactiveConfirmBtn{{$terrain->id}}" data-url="{{route('epTerrain.deactive',$terrain->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$terrain->id}})" id="propertyDeactiveConfirmBtn{{$terrain->id}}" data-url="{{route('admin.deactiveTerrain',$terrain->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Desactivar
                                     </a>
                                     @else
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$terrain->id}})" id="propertyActivateConfirmBtn{{$terrain->id}}" data-url="{{route('epTerrain.activate',$terrain->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$terrain->id}})" id="propertyActivateConfirmBtn{{$terrain->id}}" data-url="{{route('admin.activeTerrain',$terrain->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Activar
                                     </a>

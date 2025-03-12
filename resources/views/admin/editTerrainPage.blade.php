@@ -283,7 +283,7 @@ Editar terreno
                     <button type="submit" class="btn1">Editar terreno</button>
                 </div>
             </form>
-            <form id="delete-form" action="{{ route('terrain.images.delete', ['terrainId' => $terrain->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+            <form id="delete-form" action="{{ route('admin.deleteImageTerrain', ['terrainId' => $terrain->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>
