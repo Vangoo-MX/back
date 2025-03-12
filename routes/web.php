@@ -108,6 +108,7 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('rejectQueue/{id}', [TerrainsController::class, 'rejectTerrainQueue'])->name('rejectTerrainQueue');
         Route::get('revisionQueue/{id}', [TerrainsController::class, 'revisionTerrainQueue'])->name('revisionTerrainQueue');
         Route::post('aprovedQueue', [TerrainsController::class, 'aprovedTerrainsQueue'])->name('aprovedTerrainQueue');
+        Route::delete('delete/{id}', [TerrainsController::class, 'deleteTerrain'])->name('deleteTerrain');
     });
 
     // Desarrollo vertical
@@ -305,8 +306,6 @@ Route::get('ep/getTerrainsRelated/{id}', [TerrainsController::class, 'getTerrain
 Route::get('ep/getTerrainSearch/{estado?}/{municipio?}/{colonia?}/{type?}/{min?}/{max?}', [TerrainsController::class, 'getTerrainSearch'])->name('epTerrainSearch.get');
 
 Route::get('ep/get-terrain-by-municipio/{id}', [TerrainsController::class, 'getTerrainsByMunicipio']);
-
-Route::get('ep/deleteTerrain/{id}', [TerrainsController::class, 'deleteTerrain'])->name('epTerrain.delete');
 
 Route::get('ep/deactiveTerrain/{id}', [TerrainsController::class, 'deactiveTerrain'])->name('epTerrain.deactive');
 

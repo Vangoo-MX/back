@@ -74,7 +74,7 @@
                                     @endif
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeleteModal" onclick="propertyDeleteModalData({{$terrain->id}})" id="propertyDeleteConfirmBtn{{$terrain->id}}" data-url="{{route('epTerrain.delete',$terrain->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeleteModal" onclick="propertyDeleteModalData({{$terrain->id}})" id="propertyDeleteConfirmBtn{{$terrain->id}}" data-url="{{route('admin.deleteTerrain',$terrain->id)}}">
                                         <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>
