@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartments;
 use App\Models\Developments;
+use App\Models\DevelopmentsHorizontals;
 use App\Models\Lots;
 use App\Models\Properties;
 use App\Models\Terrains;
@@ -15,6 +16,9 @@ class CommissionsController extends Controller
         switch ($type) {
             case 'dev':
                 $model = Developments::class;
+                break;
+            case 'devHorizontal':
+                $model = DevelopmentsHorizontals::class;
                 break;
             case 'property':
                 $model = Properties::class;
