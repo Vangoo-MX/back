@@ -77,9 +77,12 @@ class UserController extends Controller
         //return redirect()->route('admin.index');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect()->away('https://vangoo.mx');
     }
@@ -118,9 +121,12 @@ class UserController extends Controller
     }
 
 
-    public function logoutEP()
+    public function logoutEP(Request $request)
     {
         Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return response()->json(['status' => 'success']);
     }
