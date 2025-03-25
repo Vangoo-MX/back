@@ -34,6 +34,7 @@ class ContactAgentMail extends Mailable
         $propertyTypes = [
             'propiedad' => 'propiedad',
             'desarrollo' => 'desarrollo',
+            'horizontalDev' => 'desarrollo horizontal',
             'lots' => 'lote',
             'apartment' => 'apartamento',
             'terrains' => 'terreno',
