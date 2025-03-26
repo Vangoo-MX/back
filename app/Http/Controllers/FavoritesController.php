@@ -420,6 +420,7 @@ class FavoritesController extends Controller
 
     public function savePropertyInList(Request $request)
     {
+        Log::info('Entrando en la función savePropertyInList', ['request' => $request->all()]);
 
         try {
             switch ($request->type) {
