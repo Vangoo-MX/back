@@ -19,6 +19,7 @@ use App\Models\Terrains;
 use App\Models\TerrainsFavorites;
 use App\Models\ListsUser;
 use App\Models\User;
+use Illuminate\Container\Attributes\Log;
 
 class FavoritesController extends Controller
 {
@@ -433,6 +434,8 @@ class FavoritesController extends Controller
                 case 'developmentHorizontal':
                     $model = DevelopmentsHorizontalFavorites::class;
                     $id_type = 'id_development';
+                    Log::info('model: ' . $model);
+                    Log::info('id_type: ' . $id_type);
                     break;
                 case 'lot':
                     $model = LotsFavorites::class;
@@ -454,6 +457,8 @@ class FavoritesController extends Controller
                 ->where($id_type, $request->id_property)
                 ->where('id_list', $request->id_list)
                 ->first();
+
+            Log::info('favu: ' . $favu);
 
             if (!$favu) {
                 $fav = new $model();
