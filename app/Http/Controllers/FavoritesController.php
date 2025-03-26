@@ -462,6 +462,12 @@ class FavoritesController extends Controller
             Log::info('favu: ' . $favu);
 
             if (!$favu) {
+                Log::info('No existe en la lista');
+                Log::info('Model: ' . $model);
+                Log::info('id_type: ' . $id_type);
+                Log::info('id_user: ' . $request->id_user);
+                Log::info('id_property: ' . $request->id_property);
+                Log::info('id_list: ' . $request->id_list);
                 $fav = new $model();
                 $fav->id_user = $request->id_user;
                 $fav->$id_type = $request->id_property;
