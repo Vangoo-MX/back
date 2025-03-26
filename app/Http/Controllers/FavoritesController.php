@@ -19,7 +19,7 @@ use App\Models\Terrains;
 use App\Models\TerrainsFavorites;
 use App\Models\ListsUser;
 use App\Models\User;
-use Illuminate\Container\Attributes\Log;
+use Illuminate\Support\Facades\Log;
 
 class FavoritesController extends Controller
 {
