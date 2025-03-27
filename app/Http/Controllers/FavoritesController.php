@@ -369,7 +369,7 @@ class FavoritesController extends Controller
                 'model' => DevelopmentsHorizontals::class,
                 'relation' => DevelopmentsHorizontalFavorites::class,
                 'column' => 'id_development',
-                'select' => 'id, title, price_min, price_max, location, description, commission_percentage, mode, views, images'
+                'select' => 'id, status, title, price_min, price_max, location, description, commission_percentage, mode, views, images'
             ],
             'lots' => [
                 'model' => Lots::class,
