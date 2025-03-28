@@ -108,7 +108,7 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('rejectQueue/{id}', [TerrainsController::class, 'rejectTerrainQueue'])->name('rejectTerrainQueue');
         Route::get('revisionQueue/{id}', [TerrainsController::class, 'revisionTerrainQueue'])->name('revisionTerrainQueue');
         Route::post('aprovedQueue', [TerrainsController::class, 'aprovedTerrainsQueue'])->name('aprovedTerrainQueue');
-        Route::delete('delete/{id}', [TerrainsController::class, 'deleteTerrain'])->name('deleteTerrain');
+        Route::get('delete/{id}', [TerrainsController::class, 'deleteTerrain'])->name('deleteTerrain');
         Route::delete('deleteImage/{terrainId}/{imageId}', [TerrainsController::class, 'deleteImage'])->name('deleteImageTerrain');
         Route::get('deactiveTerrain/{id}', [TerrainsController::class, 'deactiveTerrain'])->name('deactiveTerrain');
         Route::get('activeTerrain/{id}', [TerrainsController::class, 'activeTerrain'])->name('activeTerrain');
