@@ -68,7 +68,7 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('rejectQueue/{id}', [PropertiesController::class, 'rejectPropertyQueue'])->name('rejectPropertyQueue');
         Route::get('revisionQueue/{id}', [PropertiesController::class, 'revisionPropertyQueue'])->name('revisionPropertyQueue');
         Route::post('aprovedQueue', [PropertiesController::class, 'aprovedPropertyQueue'])->name('aprovedPropertyQueue');
-        Route::delete('delete/{id}', [PropertiesController::class, 'deleteProperty'])->name('deleteProperty');
+        Route::get('delete/{id}', [PropertiesController::class, 'deleteProperty'])->name('deleteProperty');
         Route::delete('deleteImage/{propertyId}/{imageId}', [PropertiesController::class, 'deleteImage'])->name('deleteImageProperty');
         Route::get('deactiveProperty/{id}', [PropertiesController::class, 'deactiveProperty'])->name('deactiveProperty');
         Route::get('activeProperty/{id}', [PropertiesController::class, 'activeProperty'])->name('activeProperty');
@@ -88,7 +88,7 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('rejectQueue/{id}', [ApartmentsController::class, 'rejectApartmentQueue'])->name('rejectApartmentQueue');
         Route::get('revisionQueue/{id}', [ApartmentsController::class, 'revisionApartmentQueue'])->name('revisionApartmentQueue');
         Route::post('aprovedQueue', [ApartmentsController::class, 'aprovedApartmentsQueue'])->name('aprovedApartmentQueue');
-        Route::delete('delete/{id}', [ApartmentsController::class, 'deleteApartment'])->name('deleteApartment');
+        Route::get('delete/{id}', [ApartmentsController::class, 'deleteApartment'])->name('deleteApartment');
         Route::delete('deleteImage/{apartmentId}/{imageId}', [ApartmentsController::class, 'deleteImage'])->name('deleteImageApartment');
         Route::get('deactiveApartment/{id}', [ApartmentsController::class, 'deactiveApartment'])->name('deactiveApartment');
         Route::get('activeApartment/{id}', [ApartmentsController::class, 'activeApartment'])->name('activeApartment');
