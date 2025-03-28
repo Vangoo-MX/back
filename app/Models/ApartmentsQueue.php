@@ -13,4 +13,8 @@ class ApartmentsQueue extends Model
      * @var string
      */
     protected $table = 'list_apartments_queue';
+
+    protected $casts = [
+        'bathrooms' => 'decimal:1',
+    ];
 }

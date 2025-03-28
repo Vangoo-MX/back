@@ -14,4 +14,7 @@ class PropertiesQueue extends Model
      */
     protected $table = 'list_properties_queue';
 
+    protected $casts = [
+        'bathrooms' => 'decimal:1',
+    ];
 }

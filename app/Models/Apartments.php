@@ -52,4 +52,8 @@ class Apartments extends Model
      * @var string
      */
     protected $table = 'post_apartments';
+
+    protected $casts = [
+        'bathrooms' => 'decimal:1',
+    ];
 }

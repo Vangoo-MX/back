@@ -49,4 +49,8 @@ class Properties extends Model
      * @var string
      */
     protected $table = 'post_properties';
+
+    protected $casts = [
+        'bathrooms' => 'decimal:1',
+    ];
 }
