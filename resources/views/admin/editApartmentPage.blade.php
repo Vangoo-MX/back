@@ -86,9 +86,12 @@ Editar apartamento
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                @php
+                                $bathroomsFormatted = (intval($apartment->bathrooms) == $apartment->bathrooms) ? intval($apartment->bathrooms) : $apartment->bathrooms;
+                                @endphp
                                 <div>
                                     <label for="bathrooms" class="form-label">Baños:</label>
-                                    <input type="number" class="form-control" step="1" id="bathrooms" value="{{old('bathrooms', $apartment->bathrooms)}}" placeholder="Cuartos" name="bathrooms">
+                                    <input type="number" class="form-control" step="0.01" id="bathrooms" value="{{old('bathrooms', $bathroomsFormatted)}}" placeholder="Cuartos" name="bathrooms">
                                     @error('bathrooms')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror

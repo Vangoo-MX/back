@@ -90,9 +90,12 @@ Editar propiedad
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                @php
+                                $bathroomsFormatted = (intval($propiedad->bathrooms) == $propiedad->bathrooms) ? intval($propiedad->bathrooms) : $propiedad->bathrooms;
+                                @endphp
                                 <div>
                                     <label for="bathrooms" class="form-label">Baños:</label>
-                                    <input type="number" class="form-control" step="1" id="bathrooms" value="{{old('bathrooms', $propiedad->bathrooms)}}" placeholder="Cuartos" name="bathrooms">
+                                    <input type="number" class="form-control" step="0.01" id="bathrooms" value="{{old('bathrooms', $bathroomsFormatted)}}" placeholder="Cuartos" name="bathrooms">
                                     @error('bathrooms')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
