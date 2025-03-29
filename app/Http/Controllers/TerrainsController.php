@@ -676,6 +676,12 @@ class TerrainsController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 $path = storage_path('app/public/img/posts/terrains/' . $request->id . '/');
+
+                if (!file_exists($path)) {
+                    mkdir($path, 0755, true);
+                }
+                chmod($path, 0755);
+
                 $imageName = Str::slug($images + $index + 1) . '.webp';
 
                 if ($image->getClientOriginalExtension() === 'webp') {
