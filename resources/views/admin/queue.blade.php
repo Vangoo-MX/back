@@ -47,7 +47,7 @@
                     <td>{{$p->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
-                            <form method="post" action="{{route('admin.aprovePropertyQueue')}}">
+                            <form method="post" action="{{route('admin.aprovedPropertyQueue')}}">
                                 @csrf
                                 <input type="hidden" id="id" name="id" value="{{$p->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
@@ -215,7 +215,7 @@
                     <td>{{$p->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
-                            <form method="post" action="{{route('admin.aprovePropertyQueue')}}">
+                            <form method="post" action="{{route('admin.aprovedPropertyQueue')}}">
                                 @csrf
                                 <input type="hidden" id="id" name="id" value="{{$p->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
