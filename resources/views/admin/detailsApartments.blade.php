@@ -217,15 +217,19 @@ Detalle
                     @for ($i = 1; $i <= $apartment->images; $i++)
                         <div class="d-flex flex-column align-items-center">
                             @php
-                            $imageUrl = asset ('storage/img/posts/apartments/' . $apartment->id . '/' . $i . '.webp');
+                            $imagePath = 'public/img/posts/apartments/' . $apartment->id . '/' . $i . '.webp';
                             @endphp
 
-                            @if($imageUrl)
-                            <a href="{{ $imageUrl }}" target="_blank">
-                                <img class="pe-2" src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px">
-                            </a>
+                            @if(Storage::exists($imagePath))
+                            @php
+                            $imageUrl = asset('storage/img/posts/apartments/' . $apartment->id . '/' . $i . '.webp');
+                            @endphp
+                            <div class="d-flex flex-column align-items-center image-container">
+                                <a href="{{ $imageUrl }}" target="_blank">
+                                    <img class="pe-2" src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px">
+                                </a>
+                            </div>
                             @endif
-
                         </div>
                         @endfor
                 </div>
