@@ -306,7 +306,7 @@ class PropertiesController extends Controller
 
             return redirect()->back()->with('success', 'La imagen se eliminó correctamente.');
         } else {
-            return response()->json(['error' => 'Imagen no encontrada.'], 404);
+            return redirect()->back()->with('error', 'La imagen no fue encontrada.');
         }
     }
 

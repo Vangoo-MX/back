@@ -299,6 +299,11 @@ Editar propiedad
                 @csrf
                 @method('DELETE')
             </form>
+            @if(session('error'))
+            <script>
+                alert("{{ session('error') }}");
+            </script>
+            @endif
         </div>
     </div>
 </div>
