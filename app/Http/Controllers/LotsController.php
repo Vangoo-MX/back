@@ -334,7 +334,7 @@ class LotsController
         }
 
         if (!$imageDeleted) {
-            return response()->json(['error' => 'No se encontró la imagen a eliminar.'], 404);
+            return redirect()->back()->with('error', 'La imagen no fue encontrada.');
         }
 
         for ($i = $imageId + 1; $i <= $lot->images + 1; $i++) {

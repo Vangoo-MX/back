@@ -526,7 +526,7 @@ class DevelopmentsController extends Controller
         }
 
         if (!$imageDeleted) {
-            return response()->json(['error' => 'Imagen no encontrada.'], 404);
+            return redirect()->back()->with('error', 'La imagen no fue encontrada.');
         }
 
         for ($i = $imageId + 1; $i <= $development->images + 1; $i++) {
