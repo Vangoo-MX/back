@@ -251,25 +251,30 @@ Editar terreno
                     @for ($i = 1; $i <= $terrain->images; $i++)
                         <div class="d-flex flex-column align-items-center image-container">
                             @php
-                            $imageUrl = asset('storage/img/posts/terrains/' . $terrain->id . '/' . $i . '.webp');
+                            $imagePath = 'public/img/posts/terrains/' . $terrain->id . '/' . $i . '.webp';
                             @endphp
 
-                            @if($imageUrl)
-                            <a href="{{ $imageUrl }}" target="_blank">
-                                <img class="pe-2" src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px">
-                            </a>
-                            @endif
+                            @if(Storage::exists($imagePath))
+                            @php
+                            $imageUrl = asset('storage/img/posts/terrains/' . $terrain->id . '/' . $i . '.webp');
+                            @endphp
+                            <div class="d-flex flex-column align-items-center image-container">
+                                <a href="{{ $imageUrl }}" target="_blank">
+                                    <img class="pe-2" src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px">
+                                </a>
 
-                            <div class="mt-1">
-                                <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%" required>
-                                    @for($j = 1; $j <= $terrain->images; $j++)
-                                        <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
-                                            {{ $j }}
-                                        </option>
-                                        @endfor
-                                </select>
+                                <div class="mt-1">
+                                    <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%" required>
+                                        @for($j = 1; $j <= $terrain->images; $j++)
+                                            <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
+                                                {{ $j }}
+                                            </option>
+                                            @endfor
+                                    </select>
+                                </div>
+                                <span class="delete-icon" onclick="confirmDelete(event, {{$i}})">❌</span>
                             </div>
-                            <span class="delete-icon" onclick="confirmDelete(event, {{$i}})">❌</span>
+                            @endif
                         </div>
                         @endfor
                 </div>
@@ -287,6 +292,11 @@ Editar terreno
                 @csrf
                 @method('DELETE')
             </form>
+            @if(session('error'))
+            <script>
+                alert("{{ session('error') }}");
+            </script>
+            @endif
         </div>
     </div>
 </div>
