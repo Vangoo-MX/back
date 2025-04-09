@@ -183,7 +183,7 @@ Route::prefix('ep')->group(function () {
         Route::post('register', [UserController::class, 'register'])->name('register');
         Route::post('login', [UserController::class, 'login'])->name('login');
         Route::get('logout', [UserController::class, 'logout'])->name('logout');
-        Route::get('getAllInfoUser/{id}', [UserController::class, 'getAllInfoUser'])->name('getAllInfoUser');
+        Route::get('getAllInfoUser/{id}', [UserController::class, 'getAllInfoUser'])->middleware('auth')->name('getAllInfoUser');
         Route::post('registerep', [UserController::class, 'registerEP']);
         Route::post('loginep', [UserController::class, 'loginEP']);
         Route::get('logoutep', [UserController::class, 'logoutEP']);

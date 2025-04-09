@@ -20,10 +20,6 @@ class UserController extends Controller
 
     public function getAllInfoUser($id)
     {
-        if (!Auth::check()) {
-            return response()->json(['error' => 'No autorizado.'], 403);
-        }
-
         $user = DB::table('app_users')
             ->join('app_roles', 'app_users.rol', '=', 'app_roles.id')
             ->where('app_users.id', $id)
