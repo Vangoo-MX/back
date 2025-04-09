@@ -179,16 +179,24 @@ Route::prefix('ep')->group(function () {
     });
     // Usuarios
     Route::prefix('user')->name('user.')->group(function () {
-        Route::get('getNameUser/{id}', [UserController::class, 'getNameUser'])->name('getUsername');
-        Route::post('register', [UserController::class, 'register'])->name('register');
-        Route::post('login', [UserController::class, 'login'])->name('login');
-        Route::get('logout', [UserController::class, 'logout'])->name('logout');
-        Route::get('getAllInfoUser/{id}', [UserController::class, 'getAllInfoUser'])->middleware('auth')->name('getAllInfoUser');
+        Route::get('getNameUser/{id}', [UserController::class, 'getNameUser'])
+            ->name('getUsername');
+        Route::post('register', [UserController::class, 'register'])
+            ->name('register');
+        Route::post('login', [UserController::class, 'login'])
+            ->name('login');
+        Route::get('logout', [UserController::class, 'logout'])
+            ->name('logout');
+        Route::get('getAllInfoUser/{id}', [UserController::class, 'getAllInfoUser'])
+            ->middleware('auth')
+            ->name('getAllInfoUser');
         Route::post('registerep', [UserController::class, 'registerEP']);
         Route::post('loginep', [UserController::class, 'loginEP']);
         Route::get('logoutep', [UserController::class, 'logoutEP']);
-        Route::get('checkauth', [UserController::class, 'checkAuthEP'])->middleware("cors");
-        Route::get('status/{userid}/{status}', [UserController::class, 'statusUser'])->name('changestatus');
+        Route::get('checkauth', [UserController::class, 'checkAuthEP'])
+            ->middleware("cors");
+        Route::get('status/{userid}/{status}', [UserController::class, 'statusUser'])
+            ->name('changestatus');
     });
     Route::post('updateUserEP', [UserController::class, 'updateUserEP']);
     Route::post('updateUserEPp2', [UserController::class, 'updateUserEPp2']);
