@@ -37,6 +37,10 @@ class UserController extends Controller
             ])
             ->first();
 
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no encontrado.'], 404);
+        }
+
         return response()->json($user);
     }
 
