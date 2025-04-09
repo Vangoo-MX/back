@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function getAllInfoUser($id)
     {
-        if (!Auth::check() || Auth::user()->id !== $id) {
+        if (Auth::user()->id !== $id) {
             return response()->json(['error' => 'No autorizado.'], 403);
         }
 
