@@ -35,9 +35,6 @@ class DevelopmentsHorizontalController extends Controller
 
         $highlightIds = $query->pluck('id_development')->toArray();
 
-        dd(
-            DevelopmentsHorizontalHighlights::orderBy('num_order', 'asc')->pluck('id_development')->toArray()
-        );
 
         dd(
             DevelopmentsHorizontals::whereIn('id', $highlightIds)->get()
