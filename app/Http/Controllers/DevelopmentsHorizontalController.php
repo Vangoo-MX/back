@@ -33,20 +33,12 @@ class DevelopmentsHorizontalController extends Controller
             $query->where('id_municipio', $municipioId);
         }
 
-        // $highlightIds = $query->pluck('id_development')->toArray();
-
-        $highlightIds = DevelopmentsHorizontalHighlights::pluck('id_development');
-
-        $devs = DevelopmentsHorizontals::whereIn('id', $highlightIds)->get();
-
-        foreach ($devs as $dev) {
-            echo "ID: {$dev->id} - Mode: {$dev->mode}<br>";
-        }
+        $highlightIds = $query->pluck('id_development')->toArray();
 
         return !empty($highlightIds)
             ? DevelopmentsHorizontals::whereIn('id', $highlightIds)
             ->when(!is_null($municipioId), fn($q) => $q->where('id_municipio', $municipioId))
-            ->where('mode', 'vertical')
+            ->where('mode', 'horizontal')
             ->get()
             : collect();
     }
