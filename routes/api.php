@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('refactoredTest/{?id}', [DevelopmentsHorizontalController::class, 'refactoredTest']);
+Route::get('refactoredTest/{municipioId?}', [DevelopmentsHorizontalController::class, 'refactoredTest']);
