@@ -35,11 +35,6 @@ class DevelopmentsHorizontalController extends Controller
 
         $highlightIds = $query->pluck('id_development')->toArray();
 
-
-        dd(
-            DevelopmentsHorizontals::whereIn('id', $highlightIds)->get()
-        );
-
         dd([
             'highlight_ids' => $highlightIds,
             'developments' => $developmentsQuery->toSql(), // Ver la query generada
