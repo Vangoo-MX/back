@@ -24,6 +24,25 @@ class DevelopmentsHorizontalController extends Controller
         return DevelopmentsHorizontals::all();
     }
 
+    public function test(?int $municipioId = null)
+    {
+        $query = DevelopmentsHorizontalHighlights::query()
+            ->orderBy('num_order', 'asc');
+
+        if (!is_null($municipioId)) {
+            $query->where('id_municipio', $municipioId);
+        }
+
+        $highlightIds = $query->pluck('id_development')->toArray();
+
+        return !empty($highlightIds)
+            ? DevelopmentsHorizontals::whereIn('id', $highlightIds)
+            ->when(!is_null($municipioId), fn($q) => $q->where('id_municipio', $municipioId))
+            ->where('mode', 'vertical')
+            ->get()
+            : collect();
+    }
+
     public function getDevelopmentsHorizontalHightlights()
     {
         $highlightIds = DevelopmentsHorizontalHighlights::orderBy('num_order', 'asc')
