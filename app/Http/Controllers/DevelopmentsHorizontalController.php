@@ -35,6 +35,19 @@ class DevelopmentsHorizontalController extends Controller
 
         $highlightIds = $query->pluck('id_development')->toArray();
 
+        dd(
+            DevelopmentsHorizontalHighlights::orderBy('num_order', 'asc')->pluck('id_development')->toArray()
+        );
+
+        dd(
+            DevelopmentsHorizontals::whereIn('id', $highlightIds)->get()
+        );
+
+        dd([
+            'highlight_ids' => $highlightIds,
+            'developments' => $developmentsQuery->toSql(), // Ver la query generada
+        ]);
+
         return !empty($highlightIds)
             ? DevelopmentsHorizontals::whereIn('id', $highlightIds)
             ->when(!is_null($municipioId), fn($q) => $q->where('id_municipio', $municipioId))
