@@ -502,5 +502,3 @@ Route::post('ep/salesAdvisor', [MailsController::class, 'salesAdvisor'])->name('
 
 //Comissions
 Route::get('ep/commissions/{type}', [CommissionsController::class, 'getCommissionsEP'])->name('ep.commissions');
-
-Route::get('test/{?id}', [DevelopmentsHorizontalController::class, 'test']);

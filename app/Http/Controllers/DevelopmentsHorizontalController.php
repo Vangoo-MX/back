@@ -24,7 +24,7 @@ class DevelopmentsHorizontalController extends Controller
         return DevelopmentsHorizontals::all();
     }
 
-    public function test(?int $municipioId = null)
+    public function refactoredTest(?int $municipioId = null)
     {
         $query = DevelopmentsHorizontalHighlights::query()
             ->orderBy('num_order', 'asc');
