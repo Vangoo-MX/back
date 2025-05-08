@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DevelopmentsHorizontalApartments extends Model
 {
@@ -28,4 +29,9 @@ class DevelopmentsHorizontalApartments extends Model
     protected $casts = [
         'bathrooms' => 'decimal:1',
     ];
+
+    public function developmentHorizontal(): BelongsTo
+    {
+        return $this->belongsTo(Developments::class, 'id_developments_horizontal');
+    }
 }

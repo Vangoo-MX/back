@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -13,63 +12,38 @@ class BePartnerContactMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public $formData;
+    public function __construct(
+        protected array $formData
+    ) {}
 
-    public function __construct($formData)
-    {
-        $this->formData = $formData;
-    }
-
-    public function build()
-    {
-        $content = "Nuevo mensaje: \n";
-        //$content .= "User: " . ($this->formData['id_user'] ? $this->formData['id_user'] : 'No') . "\n";
-        $content .= "Nombre: " . $this->formData['name'] . "\n";
-        $content .= "Email: " . $this->formData['email'] . "\n";
-        $content .= "Tel: " . $this->formData['tel'] . "\n";
-        $content .= "Asunto: " . $this->formData['asunto'] . "\n";
-        $content .= "Mensaje: " . $this->formData['mensaje'] . "\n";
-
-        return $this->subject('Nuevo formulario de contacto Vangoo')
-            ->view('emails.template')
-            ->with('content', $content);
-    }
-
-    /**
-     * Get the message envelope.
-     *
-     * @return \Illuminate\Mail\Mailables\Envelope
-     */
-    public function envelope()
+    public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Be Partner Contact Mail',
+            subject: 'Nuevo formulario de contacto Vangoo'
         );
     }
 
-    // /**
-    //  * Get the message content definition.
-    //  *
-    //  * @return \Illuminate\Mail\Mailables\Content
-    //  */
-    // public function content()
-    // {
-    //     return new Content(
-    //         view: 'emails.confirm',
-    //     );
-    // }
+    public function content(): Content
+    {
+        return new Content(
+            view: 'emails.template',
+            with: ['content' => $this->prepareEmailContent()]
+        );
+    }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array
-     */
-    public function attachments()
+    protected function prepareEmailContent(): string
+    {
+        return implode("\n", [
+            'Nuevo mensaje:',
+            "Nombre: {$this->formData['name']}",
+            "Email: {$this->formData['email']}",
+            "Tel: {$this->formData['tel']}",
+            "Asunto: {$this->formData['asunto']}",
+            "Mensaje: {$this->formData['mensaje']}"
+        ]);
+    }
+
+    public function attachments(): array
     {
         return [];
     }

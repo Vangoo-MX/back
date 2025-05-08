@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 
 class MailsController extends Controller
 {
-    public function bepartnerEP(Request $request)
+    public function bePartner(Request $request)
     {
         Mail::to('bepartner@vangoo.mx')->send(new BePartnerContactMail($request->all()));
         return response()->json(['message' => 'Correo enviado con éxito'], 200);

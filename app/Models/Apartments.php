@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Apartments extends Model
 {
@@ -56,4 +58,29 @@ class Apartments extends Model
     protected $casts = [
         'bathrooms' => 'decimal:1',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function estado(): BelongsTo
+    {
+        return $this->belongsTo(Estados::class);
+    }
+
+    public function municipio(): BelongsTo
+    {
+        return $this->belongsTo(Municipios::class);
+    }
+
+    public function colonia(): BelongsTo
+    {
+        return $this->belongsTo(Colonias::class);
+    }
+
+    public function apartmentHighlights(): HasMany
+    {
+        return $this->hasMany(ApartmentsHighlights::class);
+    }
 }

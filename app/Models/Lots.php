@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Lots extends Model
 {
@@ -46,4 +47,29 @@ class Lots extends Model
      * @var string
      */
     protected $table = 'post_lots';
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function estado(): BelongsTo
+    {
+        return $this->belongsTo(Estados::class);
+    }
+
+    public function municipio(): BelongsTo
+    {
+        return $this->belongsTo(Municipios::class);
+    }
+
+    public function colonia(): BelongsTo
+    {
+        return $this->belongsTo(Colonias::class);
+    }
+
+    public function lotHighlight(): HasMany
+    {
+        return $this->hasMany(LotsHighlights::class);
+    }
 }

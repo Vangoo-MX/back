@@ -19,58 +19,6 @@ use Illuminate\Support\Facades\File;
 
 class DevelopmentsHorizontalController extends Controller
 {
-    public function getAll()
-    {
-        return DevelopmentsHorizontals::all();
-    }
-
-    public function refactoredTest(?int $municipioId = null)
-    {
-        $query = DevelopmentsHorizontalHighlights::query()
-            ->orderBy('num_order', 'asc');
-
-        if (!is_null($municipioId)) {
-            $query->where('id_municipio', $municipioId);
-        }
-
-        $highlightIds = $query->pluck('id_development')->toArray();
-
-        return !empty($highlightIds)
-            ? DevelopmentsHorizontals::whereIn('id', $highlightIds)
-            ->when(!is_null($municipioId), fn($q) => $q->where('id_municipio', $municipioId))
-            ->where('mode', 'horizontal')
-            ->get()
-            : collect();
-    }
-
-    public function getDevelopmentsHorizontalHightlights()
-    {
-        $highlightIds = DevelopmentsHorizontalHighlights::orderBy('num_order', 'asc')
-            ->pluck('id_development')
-            ->toArray();
-
-        return !empty($highlightIds)
-            ? DevelopmentsHorizontals::whereIn('id', $highlightIds)
-            ->where('mode', 'horizontal')
-            ->get()
-            : collect();
-    }
-
-    public function getDevelopmentsHorizontalHightlightFromMunicipio($id)
-    {
-        $highlightIds = DevelopmentsHorizontalHighlights::where('id_municipio', $id)
-            ->orderBy('num_order', 'asc')
-            ->pluck('id_development')
-            ->toArray();
-
-        return !empty($highlightIds)
-            ? DevelopmentsHorizontals::whereIn('id', $highlightIds)
-            ->where('id_municipio', $id)
-            ->where('mode', 'horizontal')
-            ->get()
-            : collect();
-    }
-
     public function deleteDevHorizontalHightlight($id)
     {
         $highlight = DevelopmentsHorizontalHighlights::find($id);
@@ -120,67 +68,6 @@ class DevelopmentsHorizontalController extends Controller
     {
         $developments = DevelopmentsHorizontals::where('id_municipio', $id)->get();
         return response()->json($developments);
-    }
-
-    public function getDevelopmentsHorizontalImagesCards()
-    {
-        return Images::where('type_property', 'development')
-            ->where('category', 'card')
-            ->get();
-    }
-
-    public function getDevelopmentsHorizontalImagesDetail($id)
-    {
-        return Images::where('type_property', 'development')
-            ->where('category', 'detail')
-            ->where('id_property', $id)
-            ->get();
-    }
-
-    public function getDevelopmentHorizontal($id)
-    {
-        return DevelopmentsHorizontals::where('id', $id)->get();
-    }
-
-    public function getDevHorizontalCard($id)
-    {
-        return DevelopmentsHorizontals::select('id', 'status', 'title', 'price_min', 'price_max', 'location', 'description', 'views', 'images')
-            ->find($id);
-    }
-
-    public function getMultiDevHorizontalCard($array)
-    {
-        $list = str_contains($array, '-') ? explode('-', $array) : [$array];
-
-        return DevelopmentsHorizontals::select('id', 'status', 'title', 'price_min', 'price_max', 'location', 'description', 'views', 'images')
-            ->whereIn('id', $list)
-            ->get();
-    }
-
-    public function getDevelopmentsHorizontalRelated($id)
-    {
-        $development = DevelopmentsHorizontals::where('id', $id)->first();
-
-        if (!$development) {
-            return collect();
-        }
-
-        $minPrice = floor($development->price_min * 0.8);
-        $maxPrice = ceil($development->price_max * 1.2);
-
-        return DevelopmentsHorizontals::where('status', $development->status)
-            ->where('id', '!=', $id)
-            ->where(function ($query) use ($minPrice, $maxPrice) {
-                $query->whereBetween('price_min', [$minPrice, $maxPrice])
-                    ->orWhereBetween('price_max', [$minPrice, $maxPrice])
-                    ->orWhere(function ($q) use ($minPrice, $maxPrice) {
-                        $q->where('price_min', '<=', $minPrice)
-                            ->where('price_max', '>=', $maxPrice);
-                    });
-            })
-            ->where('id_municipio', $development->id_municipio)
-            ->take(10)
-            ->get();
     }
 
     public function getDevHorizontalSearch($estado = "0", $municipio = "0", $colonia = "0", $status = "0", $min = 0, $max = 0)

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DevelopmentsHorizontalHighlights extends Model
 {
@@ -17,8 +18,18 @@ class DevelopmentsHorizontalHighlights extends Model
 
     protected $table = 'post_developments_horizontal_highlights';
 
-    public function horizontal()
+    public function estado(): BelongsTo
     {
-        return $this->belongsTo(DevelopmentsHorizontals::class, 'id_development');
+        return $this->belongsTo(Estados::class);
+    }
+
+    public function municipio(): BelongsTo
+    {
+        return $this->belongsTo(Municipios::class);
+    }
+
+    public function horizontal(): BelongsTo
+    {
+        return $this->belongsTo(DevelopmentsHorizontals::class, 'id_development', 'id');
     }
 }

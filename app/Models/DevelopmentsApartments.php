@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DevelopmentsApartments extends Model
 {
@@ -29,4 +30,9 @@ class DevelopmentsApartments extends Model
     protected $casts = [
         'bathrooms' => 'decimal:1',
     ];
+
+    public function developmentVertical(): BelongsTo
+    {
+        return $this->belongsTo(Developments::class);
+    }
 }

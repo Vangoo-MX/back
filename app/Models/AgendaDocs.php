@@ -4,14 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AgendaDocs extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     public $timestamps = false;
     protected $table = 'listac_agenda_docs';
 
@@ -44,7 +40,7 @@ class AgendaDocs extends Model
         'nota_vendedor',
     ];
 
-    public function agendaRelation()
+    public function agendaRelation(): BelongsTo
     {
         return $this->belongsTo(Agenda::class, 'id_agenda', 'id');
     }

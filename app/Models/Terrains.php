@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Terrains extends Model
 {
@@ -47,4 +49,29 @@ class Terrains extends Model
      * @var string
      */
     protected $table = 'post_terrains';
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function estado(): BelongsTo
+    {
+        return $this->belongsTo(Estados::class);
+    }
+
+    public function municipio(): BelongsTo
+    {
+        return $this->belongsTo(Municipios::class);
+    }
+
+    public function colonia(): BelongsTo
+    {
+        return $this->belongsTo(Colonias::class);
+    }
+
+    public function terrainsHighlights(): HasMany
+    {
+        return $this->hasMany(TerrainsHighlights::class, 'id_terrain', 'id');
+    }
 }

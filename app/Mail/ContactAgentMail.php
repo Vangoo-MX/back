@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -13,68 +12,62 @@ class ContactAgentMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public $formData;
+    protected const PROPERTY_TYPES = [
+        'propiedad' => 'propiedad',
+        'desarrollo' => 'desarrollo',
+        'horizontalDev' => 'desarrollo horizontal',
+        'lots' => 'lote',
+        'apartment' => 'apartamento',
+        'terrains' => 'terreno',
+    ];
 
-    public function __construct($formData)
+    public function __construct(
+        protected array $formData
+    ) {}
+
+    public function envelope(): Envelope
     {
-        $this->formData = $formData;
+        return new Envelope(
+            subject: 'Nuevo formulario de contactar agente Vangoo'
+        );
     }
 
-    public function build()
+    public function content(): Content
+    {
+        return new Content(
+            view: 'emails.template',
+            with: ['content' => $this->prepareEmailContent()]
+        );
+    }
+
+    protected function prepareEmailContent(): string
     {
         $content = "Una persona está interesada: \n";
         $content .= "Id propiedad: {$this->formData['id_property']}\n";
         $content .= "Tipo: {$this->formData['type_property']}\n";
 
-        $propertyTypes = [
-            'propiedad' => 'propiedad',
-            'desarrollo' => 'desarrollo',
-            'horizontalDev' => 'desarrollo horizontal',
-            'lots' => 'lote',
-            'apartment' => 'apartamento',
-            'terrains' => 'terreno',
-        ];
-
-        if (isset($propertyTypes[$this->formData['type_property']])) {
-            $type = $propertyTypes[$this->formData['type_property']];
-            $content .= "Nombre del {$type}: {$this->formData['title_property']}\n";
-            $content .= "Ubicacion del {$type}: {$this->formData['location_property']}\n";
+        if ($propertyType = $this->getTranslatedPropertyType()) {
+            $content .= "Nombre del {$propertyType}: {$this->formData['title_property']}\n";
+            $content .= "Ubicación del {$propertyType}: {$this->formData['location_property']}\n";
         }
 
-        $content .= "Nombre: {$this->formData['name']}\n";
-        $content .= "Email: {$this->formData['email']}\n";
-        $content .= "Tel: {$this->formData['tel']}\n";
-        $content .= "Mensaje: {$this->formData['msg']}\n";
-        $content .= "Horario para contactar: {$this->formData['horario']}\n";
-        $content .= "Preferencia de contacto: {$this->formData['pref_contact']}\n";
+        $content .= implode("\n", [
+            "Nombre: {$this->formData['name']}",
+            "Email: {$this->formData['email']}",
+            "Tel: {$this->formData['tel']}",
+            "Mensaje: {$this->formData['msg']}",
+            "Horario para contactar: {$this->formData['horario']}",
+            "Preferencia de contacto: {$this->formData['pref_contact']}"
+        ]);
 
-        return $this->subject('Nuevo formulario de contactar agente Vangoo')
-            ->view('emails.template')
-            ->with('content', $content);
+        return $content;
     }
 
-    /**
-     * Get the message envelope.
-     *
-     * @return \Illuminate\Mail\Mailables\Envelope
-     */
-    public function envelope()
+    protected function getTranslatedPropertyType(): ?string
     {
-        return new Envelope(
-            subject: 'Contact Agent Mail',
-        );
+        return self::PROPERTY_TYPES[$this->formData['type_property']] ?? null;
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array
-     */
     public function attachments()
     {
         return [];

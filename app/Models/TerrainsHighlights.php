@@ -23,16 +23,16 @@ class TerrainsHighlights extends Model
 
     public function terrain()
     {
-        return $this->belongsTo(Terrains::class, 'id_property');
+        return $this->belongsTo(Terrains::class, 'id_property', 'id');
     }
 
     public function estado()
     {
-        return $this->belongsTo(Estados::class, 'id_estado');
+        return $this->belongsTo(Estados::class);
     }
 
     public function municipio()
     {
-        return $this->belongsTo(Municipios::class, 'id_municipio');
+        return $this->belongsTo(Municipios::class);
     }
 }
