@@ -171,17 +171,15 @@ Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('ema
 Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('emails.template');
 
 /* USER ENDPOINTS*/
-Route::prefix('ep')->group(function () {
-    Route::prefix('user')->name('user.')->group(function () {
-        Route::post('register', [UserController::class, 'register'])
-            ->name('register');
-        Route::post('login', [UserController::class, 'login'])
-            ->name('login');
-        Route::get('logout', [UserController::class, 'logout'])
-            ->name('logout');
-        Route::get('status/{userid}/{status}', [UserController::class, 'statusUser'])
-            ->name('changestatus');
-    });
+Route::prefix('user')->name('user.')->group(function () {
+    Route::post('register', [UserController::class, 'register'])
+        ->name('register');
+    Route::post('login', [UserController::class, 'login'])
+        ->name('login');
+    Route::get('logout', [UserController::class, 'logout'])
+        ->name('logout');
+    Route::get('status/{userid}/{status}', [UserController::class, 'statusUser'])
+        ->name('changestatus');
 });
 
 /*endpoints*/
