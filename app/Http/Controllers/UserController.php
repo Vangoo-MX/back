@@ -23,13 +23,15 @@ class UserController extends Controller
         $credentials = $request->validated();
 
         if (!Auth::validate($credentials)) {
-            return redirect()->to('/')->withErrors('Datos incorrectos');
+            return redirect()->route('user.login')
+                ->withErrors('Datos incorrectos');
         }
 
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
 
         if (!$user || $user->status !== 1) {
-            return redirect()->to('/')->withErrors('Usuario no activo');
+            return redirect()->route('user.login')
+                ->withErrors('Usuario no activo');
         }
 
         Auth::login($user);
