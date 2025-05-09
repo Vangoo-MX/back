@@ -66,7 +66,7 @@
                                     <option selected hidden>Orden</option>
                                     @foreach($propertieshl as $key => $q)
                                     @if($key == $p->num_order)
-                                    <option value="{{$key+1}}" selected>{{$key+1}}</option>
+                                    <option value="{{$key}}" selected>{{$key}}</option>
                                     @else
                                     <option value="{{$key+1}}">{{$key+1}}</option>
                                     @endif
