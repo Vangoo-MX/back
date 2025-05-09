@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Mockery\Exception;
+use Illuminate\Support\Facades\Log;
 
 class UserApiController extends Controller
 {
@@ -39,6 +40,7 @@ class UserApiController extends Controller
 
     public function checkAuth()
     {
+        Log::info('Auth check:', ['check' => Auth::check(), 'user' => Auth::user()]);
         if (Auth::check()) {
             return json_encode(Auth::user());
         }
