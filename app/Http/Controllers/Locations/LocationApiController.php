@@ -97,7 +97,7 @@ class LocationApiController extends Controller
             return response()->json(['error' => 'Tipo de highlight no válido'], 400);
         }
 
-        return Municipios::where('id', $municipioId)
+        return Municipios::where('id_estado', $municipioId)
             ->whereHas($relacionesPermitidas[$tipoHighlight])
             ->select('id', 'nombre')
             ->orderBy('nombre', 'asc')
