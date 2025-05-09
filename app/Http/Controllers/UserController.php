@@ -18,19 +18,24 @@ class UserController extends Controller
         return redirect()->route('/', $user)->with('success', 'Usuario registrado correctamente.');
     }
 
+    public function showLoginForm()
+    {
+        return view('home');
+    }
+
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
 
         if (!Auth::validate($credentials)) {
-            return redirect()->route('home')
+            return redirect()->route('user.login.view')
                 ->withErrors('Datos incorrectos');
         }
 
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
 
         if (!$user || $user->status !== 1) {
-            return redirect()->route('home')
+            return redirect()->route('user.login.view')
                 ->withErrors('Usuario no activo');
         }
 

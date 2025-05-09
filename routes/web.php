@@ -174,6 +174,7 @@ Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('e
 Route::prefix('user')->name('user.')->group(function () {
     Route::post('register', [UserController::class, 'register'])
         ->name('register');
+    Route::get('login', [UserController::class, 'showLoginForm'])->name('login.view');
     Route::post('login', [UserController::class, 'login'])
         ->name('login');
     Route::get('logout', [UserController::class, 'logout'])

@@ -10,10 +10,9 @@ class HomeController extends Controller
     {
 
         if (Auth::check()) {
-            return redirect('overview/home');
+            return redirect()->route('admin.index');
         }
 
-
-        return view('home');
+        return redirect()->away('https://vangoo.mx');
     }
 }
