@@ -129,7 +129,7 @@ Route::prefix('user')->group(function () {
     Route::get('logout', [UserApiController::class, 'logout']);
     Route::post('update', [UserApiController::class, 'updateUser']);
     route::get('info/{id}', [UserApiController::class, 'getInfoUser'])
-        ->middleware('auth');
+        ->middleware(['web', 'auth']);
 });
 
 Route::prefix('favorite')->group(function () {
