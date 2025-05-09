@@ -13,6 +13,6 @@ class HomeController extends Controller
             return redirect()->route('admin.index');
         }
 
-        return redirect()->away('https://vangoo.mx');
+        return redirect()->route('user.login.view');
     }
 }
