@@ -109,6 +109,10 @@ trait HandlesEstate
 
     private function applyPriceFilter($query): void
     {
+        if (!request()->has('min') && !request()->has('max')) {
+            return;
+        }
+
         $min = (float)request('min', 0);
         $max = (float)request('max', 0);
 
