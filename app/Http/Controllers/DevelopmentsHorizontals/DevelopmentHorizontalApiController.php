@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\DevelopmentsHorizontalHighlights;
 use App\Models\DevelopmentsHorizontals;
 use App\Traits\Api\HandlesHighlights;
+use App\Traits\Api\HandlesEstate;
 
 class DevelopmentHorizontalApiController extends Controller
 {
-    use HandlesHighlights;
+    use HandlesHighlights, HandlesEstate;
 
     protected $model = DevelopmentsHorizontals::class;
     protected $highlightModel = DevelopmentsHorizontalHighlights::class;
