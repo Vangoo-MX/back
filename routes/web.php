@@ -21,7 +21,7 @@ use App\Http\Controllers\{
 };
 
 
-Route::get('/', HomeController::class)->name('home');
+Route::redirect('/', '/user/login');
 
 /*---------------------------------------------------------------------*/
 /* PAGES */

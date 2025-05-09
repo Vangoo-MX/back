@@ -20,6 +20,10 @@ class UserController extends Controller
 
     public function showLoginForm()
     {
+        if (Auth::check()) {
+            return redirect()->route('admin.index');
+        }
+
         return view('home');
     }
 
