@@ -21,10 +21,8 @@
                         <img src="{{asset('storage/img/users').'/'.$user->profile_image}}" alt="avatar" class="img-fluid rounded-circle" style="width:100%;height: 100%;object-fit:cover;border-radius:50%;" onerror="{this.src='{{url('./img/img404.jpg')}}'}">
                     </div>
                     <h5 class="my-3">{{$user->name}}</h5>
-                    <p class="mb-1 {{ ($user->rol == 1) ? 'text-danger' : 'text-primary' }}">
-                        @foreach($roles as $r)
-                        {{($r->id == $user->rol) ? ucfirst($r->title) : ''}}
-                        @endforeach
+                    <p class="mb-1 {{ $user->rol->value === 1 ? 'text-danger' : 'text-primary' }}">
+                        {{ ucfirst($user->rol->title()) }}
                     </p>
                     <p class="text-muted mb-4">Id de usuario: {{$user->id}}</p>
                 </div>
