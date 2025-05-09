@@ -18,6 +18,7 @@ use App\Http\Controllers\{
     Users\UserApiController,
     CommissionsController,
 };
+use App\Http\Controllers\DevelopmentsVerticals\ApartmentApiController as DevelopmentsVerticalsApartmentApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +63,7 @@ Route::prefix('development-vertical')->group(function () {
     Route::get('search', [DevelopmentVerticalApiController::class, 'getDevelopmentsVerticalSearch']);
     Route::get('detail/{id}', [DevelopmentVerticalApiController::class, 'getDevelopmentVertical']);
     Route::get('related/{id}', [DevelopmentVerticalApiController::class, 'getDevelopmentVerticalRelated']);
-    Route::get('apartments/{id}', [ApartmentApiController::class, 'getApartments']);
+    Route::get('apartments/{id}', [DevelopmentsVerticalsApartmentApiController::class, 'getApartments']);
 });
 
 Route::prefix('lot')->group(function () {
