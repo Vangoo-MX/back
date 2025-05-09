@@ -71,17 +71,15 @@ class AdminController extends Controller
     public function show($id = 0)
     {
         $user = User::findOrFail($id);
-        $roles = Roles::all();
 
-        return view('admin.user', compact('user', 'roles'));
+        return view('admin.user', compact('user'));
     }
 
     public function allusers()
     {
         $users = User::all();
-        $roles = Roles::all();
 
-        return view('admin.allusers', compact('users', 'roles'));
+        return view('admin.allusers', compact('users'));
     }
 
     public function destroy($id)
