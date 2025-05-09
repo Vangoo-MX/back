@@ -6,7 +6,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://vangoo.mx'],
+    'allowed_origins' => [
+        'https://vangoo.mx',
+        'https://www.vangoo.mx',
+    ],
 
     'allowed_origins_patterns' => [],
 
