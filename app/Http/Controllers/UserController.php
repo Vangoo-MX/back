@@ -9,6 +9,7 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\support\Facades\Auth;
 use Mockery\Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -29,14 +30,17 @@ class UserController extends Controller
 
     public function login(LoginRequest $request)
     {
+        Log::debug('intento de login', ['email' => $request->email]);
         $credentials = $request->validated();
 
         if (!Auth::validate($credentials)) {
+            Log::warning('credenciales incorrectas', ['email' => $request->email]);
             return redirect()->route('user.login.view')
                 ->withErrors('Datos incorrectos');
         }
 
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
+        Log::debug('usuario encontrado', ['id' => $user->id]);
 
         if (!$user || $user->status !== 1) {
             return redirect()->route('user.login.view')
@@ -44,6 +48,8 @@ class UserController extends Controller
         }
 
         Auth::login($user);
+        Log::info('usuario logueado', ['id' => $user->id]);
+
 
         return $user->rol->value != 1
             ? redirect()->away('https://vangoo.mx')
