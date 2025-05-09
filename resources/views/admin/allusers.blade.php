@@ -35,11 +35,7 @@
                     <td><a href="{{route('admin.user',$u->id)}}">{{$u->name}}</a></td>
                     <td>{{$u->email}}</td>
                     <td>{{$u->tel}}</td>
-                    <td>
-                        @foreach($roles as $r)
-                        {{($r->id == $u->rol) ? $r->title : ''}}
-                        @endforeach
-                    </td>
+                    <td>{{ $u->rol->title() }}</td>
                     <td>
                         <div class="dropdown">
                             <span type="button" class="{{$u->status == 1 ? 'card-status-green' : 'card-status-grey'}} dropdown-toggle" data-bs-toggle="dropdown">{{$u->status == 1 ? 'Aprobado' : 'En proceso'}}</span>
