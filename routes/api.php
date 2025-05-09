@@ -62,7 +62,7 @@ Route::prefix('development-vertical')->group(function () {
     Route::get('search', [DevelopmentVerticalApiController::class, 'getDevelopmentsVerticalSearch']);
     Route::get('detail/{id}', [DevelopmentVerticalApiController::class, 'getDevelopmentVertical']);
     Route::get('related/{id}', [DevelopmentVerticalApiController::class, 'getDevelopmentVerticalRelated']);
-    Route::get('apartments/{id}', [DevelopmentVerticalApiController::class, 'getApartments']);
+    Route::get('apartments/{id}', [ApartmentApiController::class, 'getApartments']);
 });
 
 Route::prefix('lot')->group(function () {
