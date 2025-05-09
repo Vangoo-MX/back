@@ -7,6 +7,7 @@ use App\Models\DevelopmentsHorizontalHighlights;
 use App\Models\DevelopmentsHorizontals;
 use App\Traits\Api\HandlesHighlights;
 use App\Traits\Api\HandlesEstate;
+use Illuminate\Http\Request;
 
 class DevelopmentHorizontalApiController extends Controller
 {
@@ -36,7 +37,7 @@ class DevelopmentHorizontalApiController extends Controller
         return $this->getEstateRelated($id);
     }
 
-    public function getDevelopmentsHorizontalSearch($request)
+    public function getDevelopmentsHorizontalSearch(Request $request)
     {
         return $this->getEstateSearch($request);
     }
