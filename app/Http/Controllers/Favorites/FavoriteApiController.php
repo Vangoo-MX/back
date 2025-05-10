@@ -187,7 +187,7 @@ class FavoriteApiController extends Controller
                 'type' => 'required|string|in:property,development,developmentHorizontal,lot,apartment,terrain',
                 'id_user' => 'required|integer|exists:app_users,id',
                 'id_property' => 'required|integer',
-                'id_list' => 'required|integer|exists:lists_users,id'
+                'id_list' => 'required|integer|exists:list_favorites_list,id'
             ]);
 
             $modelConfig = $this->getFavoriteModelConfig($validated['type']);
