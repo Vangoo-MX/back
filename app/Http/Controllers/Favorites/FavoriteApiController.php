@@ -36,7 +36,7 @@ class FavoriteApiController extends Controller
     {
         try {
             $validated = $request->validate([
-                'id_user' => 'required|integer|exists:users,id',
+                'id_user' => 'required|integer|exists:app_users,id',
                 'title' => 'required|string|max:255'
             ]);
 
