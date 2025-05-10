@@ -185,7 +185,7 @@ class FavoriteApiController extends Controller
         try {
             $validated = $request->validate([
                 'type' => 'required|string|in:property,development,developmentHorizontal,lot,apartment,terrain',
-                'id_user' => 'required|integer|exists:users,id',
+                'id_user' => 'required|integer|exists:app_users,id',
                 'id_property' => 'required|integer',
                 'id_list' => 'required|integer|exists:lists_users,id'
             ]);
