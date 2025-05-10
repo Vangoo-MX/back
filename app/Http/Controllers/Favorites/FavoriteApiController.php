@@ -221,6 +221,15 @@ class FavoriteApiController extends Controller
         }
     }
 
+    protected function validateRelatedResourceExists(string $modelClass, int $id): void
+    {
+        throw_unless(
+            $modelClass::where('id', $id)->exists(),
+            ModelNotFoundException::class,
+            'El recurso especificado no existe'
+        );
+    }
+
     protected function getFavoriteModelConfig(string $type): array
     {
         return match ($type) {
