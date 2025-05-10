@@ -22,4 +22,9 @@ class LotsFavorites extends Model
     {
         return $this->belongsToMany(ListsUser::class, 'id_list', 'id');
     }
+
+    public static function getRelatedModelClass(): string
+    {
+        return Lots::class;
+    }
 }
