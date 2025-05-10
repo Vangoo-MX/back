@@ -124,7 +124,7 @@ Route::prefix('info')->group(function () {
 
 Route::prefix('user')->group(function () {
     Route::get('checkauth', [UserApiController::class, 'checkAuth'])
-        ->middleware(['web', 'auth']);;
+        ->middleware(['web']);;
     Route::get('check-refresh', [UserApiController::class, 'forceCheck']);
     Route::get('logout', [UserApiController::class, 'logout']);
     Route::post('update', [UserApiController::class, 'updateUser']);
