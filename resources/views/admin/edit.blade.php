@@ -98,12 +98,12 @@
                         <div>
                             <label for="roluser" class="form-label">Rol de usuario:</label>
                             <select class="form-select" name="rol" id="rol">
-                                <option value="1" {{ $user->rol == 1 ? 'selected' : '' }}>Administrador</option>
-                                <option value="2" {{ $user->rol == 2 ? 'selected' : '' }}>Moderador</option>
-                                <option value="3" {{ $user->rol == 3 ? 'selected' : '' }}>Asesor</option>
-                                <option value="4" {{ $user->rol == 4 ? 'selected' : '' }}>Vendedor</option>
-                                <option value="5" {{ $user->rol == 5 ? 'selected' : '' }}>Propietario</option>
-                                <option value="6" {{ $user->rol == 6 ? 'selected' : '' }}>Usuario</option>
+                                <option value="1" {{ $user->rol->value == 1 ? 'selected' : '' }}>Administrador</option>
+                                <option value="2" {{ $user->rol->value == 2 ? 'selected' : '' }}>Moderador</option>
+                                <option value="3" {{ $user->rol->value == 3 ? 'selected' : '' }}>Asesor</option>
+                                <option value="4" {{ $user->rol->value == 4 ? 'selected' : '' }}>Vendedor</option>
+                                <option value="5" {{ $user->rol->value == 5 ? 'selected' : '' }}>Propietario</option>
+                                <option value="6" {{ $user->rol->value == 6 ? 'selected' : '' }}>Usuario</option>
                             </select>
                         </div>
                     </div>
