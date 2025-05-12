@@ -13,11 +13,11 @@ enum UserRole: int
     public function title(): string
     {
         return match ($this) {
-            self::ADMINISTRADOR => 'administrador',
-            self::MODERADOR => 'moderador',
-            self::VENDEDOR_ASOCIADO => 'vendedor asociado',
-            self::VENDEDOR_AFILIADO => 'vendedor afiliado',
-            self::USUARIO => 'usuario',
+            self::ADMINISTRADOR => 'Administrador',
+            self::MODERADOR => 'Moderador',
+            self::VENDEDOR_ASOCIADO => 'Vendedor asociado',
+            self::VENDEDOR_AFILIADO => 'Vendedor afiliado',
+            self::USUARIO => 'Usuario',
         };
     }
 }
