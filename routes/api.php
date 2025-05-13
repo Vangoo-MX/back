@@ -159,11 +159,11 @@ Route::prefix('agenda')->group(function () {
 
 Route::prefix('mails')->group(function () {
     Route::post('contact-agent', [MailsController::class, 'contactAgent'])
-        ->middleware('throttle:10,1');
+        ->middleware('throttle:100,1');
     Route::post('be-partner', [MailsController::class, 'bePartner'])
-        ->middleware('throttle:10,1');
+        ->middleware('throttle:100,1');
     Route::post('sales-advisor', [MailsController::class, 'salesAdvisor'])
-        ->middleware('throttle:10,1');
+        ->middleware('throttle:100,1');
 });
 
 Route::get('commissions/{type}', [CommissionsController::class, 'getCommissions'])
