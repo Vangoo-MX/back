@@ -84,8 +84,8 @@ if (!empty($developmentIds)) {
             exit;
         }
 
-        if (!empty($development) && isset($development[0])) {
-            $developmentData[] = $development[0];
+        if (!empty($development) && isset($development)) {
+            $developmentData[] = $development;
         }
     }
 }
@@ -107,8 +107,8 @@ if (!empty($developmentHorizontalIds)) {
             exit;
         }
 
-        if (!empty($developmentHorizontal) && isset($developmentHorizontal[0])) {
-            $developmentHorizontalData[] = $developmentHorizontal[0];
+        if (!empty($developmentHorizontal) && isset($developmentHorizontal)) {
+            $developmentHorizontalData[] = $developmentHorizontal;
         }
     }
 }
@@ -130,8 +130,8 @@ if (!empty($lotIds)) {
             exit;
         }
 
-        if (!empty($lot) && isset($lot[0])) {
-            $lotData[] = $lot[0];
+        if (!empty($lot) && isset($lot)) {
+            $lotData[] = $lot;
         }
     }
 }
@@ -153,8 +153,8 @@ if (!empty($apartmentIds)) {
             exit;
         }
 
-        if (!empty($apartment) && isset($apartment[0])) {
-            $apartmentData[] = $apartment[0];
+        if (!empty($apartment) && isset($apartment)) {
+            $apartmentData[] = $apartment;
         }
     }
 }
@@ -176,8 +176,8 @@ if (!empty($terrainIds)) {
             exit;
         }
 
-        if (!empty($terrain) && isset($terrain[0])) {
-            $terrainData[] = $terrain[0];
+        if (!empty($terrain) && isset($terrain)) {
+            $terrainData[] = $terrain;
         }
     }
 }
