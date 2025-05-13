@@ -195,8 +195,8 @@ function moneyFormat($numero)
 
         <div class="slider-container">
             <div class="slider">
-                <?php if (!empty($data['properties'])) : ?>
-                    <?php foreach ($data['properties'] as $property) : ?>
+                <?php if (!empty($data['entities']['properties'])) : ?>
+                    <?php foreach ($data['entities']['properties'] as $property) : ?>
                         <div class="card">
                             <div class="image-container">
                                 <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $property['id']; ?>/1.webp?height=250&width=400" alt="Property" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
