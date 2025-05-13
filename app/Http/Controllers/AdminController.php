@@ -123,7 +123,7 @@ class AdminController extends Controller
         return view('admin.edit', compact('user'));
     }
 
-    public function update(CreateUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
         $updateData = $request->only([
             'name',
