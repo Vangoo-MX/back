@@ -20,6 +20,7 @@ if (!$data) {
     echo "No se ha encontrado la lista";
     exit;
 }
+$data = $data[0];
 
 function moneyFormat($numero)
 {
