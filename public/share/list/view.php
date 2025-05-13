@@ -8,7 +8,7 @@ if ($_GET && isset($_GET['id'])) {
 
 $urlShare = 'https://dashboard.vangoo.mx/share/list/view.php?id=' . $id;
 
-$urlApi = 'https://dashboard.vangoo.mx/ep/propertiesFromList/' . $id;
+$urlApi = 'https://dashboard.vangoo.mx/api/favorite/data/' . $id;
 $curl = curl_init($urlApi);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($curl);
@@ -20,7 +20,6 @@ if (!$data) {
     echo "No se ha encontrado la lista";
     exit;
 }
-$data = $data[0];
 
 function moneyFormat($numero)
 {
