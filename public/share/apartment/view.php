@@ -13,7 +13,7 @@ if ($_GET && isset($_GET['id'])) {
 $typeText = 'apartments';
 $urlShare = 'https://dashboard.vangoo.mx/share/apartment/view.php?id=' . $id;
 
-$urlApi = 'https://dashboard.vangoo.mx/ep/getApartment/' . $id;
+$urlApi = 'https://dashboard.vangoo.mx/api/apartment/detail/' . $id;
 $curl = curl_init($urlApi);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($curl);
@@ -36,8 +36,6 @@ if (!$data) {
     echo "No se ha encontrado el apartamento";
     exit;
 }
-
-$data = $data[0];
 
 $imagePath = 'https://dashboard.vangoo.mx/storage/img/posts/' . $typeText . '/' . $data['id'] . '/1.webp';
 $backupImage = 'https://www.vangoo.mx/assets/img/img404.jpg';
