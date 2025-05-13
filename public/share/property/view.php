@@ -37,7 +37,7 @@ if (!$data) {
     exit;
 }
 
-$data = $data[0];
+//$data = $data[0];
 
 $imagePath = 'https://dashboard.vangoo.mx/storage/img/posts/' . $typeText . '/' . $data['id'] . '/1.webp';
 $backupImage = 'https://www.vangoo.mx/assets/img/img404.jpg';
