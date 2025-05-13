@@ -182,13 +182,6 @@ if (!empty($terrainIds)) {
     }
 }
 
-var_dump($propertyData);
-var_dump($developmentData);
-var_dump($developmentHorizontalData);
-var_dump($lotData);
-var_dump($apartmentData);
-var_dump($terrainData);
-
 if (empty($propertyData) && empty($developmentData) && empty($developmentHorizontalData) && empty($lotData) && empty($apartmentData) && empty($terrainData)) {
     echo 'No se encontraron propiedades, desarrollos o terrenos';
     exit;
