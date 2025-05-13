@@ -13,7 +13,7 @@ if ($_GET && isset($_GET['id'])) {
 $typeText = 'properties';
 $urlShare = 'https://dashboard.vangoo.mx/share/property/view.php?id=' . $id;
 
-$urlApi = 'https://dashboard.vangoo.mx/ep/getProperty/' . $id;
+$urlApi = 'https://dashboard.vangoo.mx/api/property/detail/' . $id;
 $curl = curl_init($urlApi);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($curl);
