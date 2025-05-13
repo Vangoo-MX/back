@@ -21,8 +21,6 @@ if (!$data) {
     exit;
 }
 
-var_dump($data);
-
 function moneyFormat($numero)
 {
     $formatted = number_format($numero, 2, '.', ',');
@@ -210,8 +208,8 @@ function moneyFormat($numero)
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <?php if (!empty($data['developments'])) : ?>
-                    <?php foreach ($data['developments'] as $development) : ?>
+                <?php if (!empty($data['entities']['developments'])) : ?>
+                    <?php foreach ($data['entities']['developments'] as $development) : ?>
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
@@ -227,8 +225,8 @@ function moneyFormat($numero)
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <?php if (!empty($data['developmentsHorizontal'])) : ?>
-                    <?php foreach ($data['developmentsHorizontal'] as $developmentHorizontal) : ?>
+                <?php if (!empty($data['entities']['developmentsHorizontal'])) : ?>
+                    <?php foreach ($data['entities']['developmentsHorizontal'] as $developmentHorizontal) : ?>
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
@@ -244,8 +242,8 @@ function moneyFormat($numero)
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <?php if (!empty($data['lots'])) : ?>
-                    <?php foreach ($data['lots'] as $lot) : ?>
+                <?php if (!empty($data['entities']['lots'])) : ?>
+                    <?php foreach ($data['entities']['lots'] as $lot) : ?>
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
@@ -261,8 +259,8 @@ function moneyFormat($numero)
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <?php if (!empty($data['apartments'])) : ?>
-                    <?php foreach ($data['apartments'] as $apartment) : ?>
+                <?php if (!empty($data['entities']['apartments'])) : ?>
+                    <?php foreach ($data['entities']['apartments'] as $apartment) : ?>
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
@@ -277,8 +275,8 @@ function moneyFormat($numero)
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
-                <?php if (!empty($data['terrains'])) : ?>
-                    <?php foreach ($data['terrains'] as $terrain) : ?>
+                <?php if (!empty($data['entities']['terrains'])) : ?>
+                    <?php foreach ($data['entities']['terrains'] as $terrain) : ?>
                         <div class="card">
                             <div class="card-header">
                                 <div class="image-container">
