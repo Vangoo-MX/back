@@ -46,7 +46,7 @@ $titleFormatted = str_replace('-', ' ', $title);
 
 if (!empty($propertyIds)) {
     foreach ($propertyIds as $propertyId) {
-        $urlApi = 'https://dashboard.vangoo.mx/ep/getProperty/' . $propertyId;
+        $urlApi = 'https://dashboard.vangoo.mx/api/property/detail/' . $propertyId;
         $curl = curl_init($urlApi);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
@@ -69,7 +69,7 @@ if (!empty($propertyIds)) {
 
 if (!empty($developmentIds)) {
     foreach ($developmentIds as $developmentId) {
-        $urlApi = 'https://dashboard.vangoo.mx/ep/getDevelopment/' . $developmentId;
+        $urlApi = 'https://dashboard.vangoo.mx/api/development-vertical/detail/' . $developmentId;
         $curl = curl_init($urlApi);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
@@ -92,7 +92,7 @@ if (!empty($developmentIds)) {
 
 if (!empty($developmentHorizontalIds)) {
     foreach ($developmentHorizontalIds as $developmentHorizontalId) {
-        $urlApi = 'https://dashboard.vangoo.mx/ep/getDevelopmentHorizontal/' . $developmentHorizontalId;
+        $urlApi = 'https://dashboard.vangoo.mx/api/development-horizontal/detail/' . $developmentHorizontalId;
         $curl = curl_init($urlApi);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
@@ -115,7 +115,7 @@ if (!empty($developmentHorizontalIds)) {
 
 if (!empty($lotIds)) {
     foreach ($lotIds as $lotId) {
-        $urlApi = 'https://dashboard.vangoo.mx/ep/getLot/' . $lotId;
+        $urlApi = 'https://dashboard.vangoo.mx/api/lot/detail/' . $lotId;
         $curl = curl_init($urlApi);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
@@ -138,7 +138,7 @@ if (!empty($lotIds)) {
 
 if (!empty($apartmentIds)) {
     foreach ($apartmentIds as $apartmentId) {
-        $urlApi = 'https://dashboard.vangoo.mx/ep/getApartment/' . $apartmentId;
+        $urlApi = 'https://dashboard.vangoo.mx/api/apartment/detail/' . $apartmentId;
         $curl = curl_init($urlApi);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
@@ -161,7 +161,7 @@ if (!empty($apartmentIds)) {
 
 if (!empty($terrainIds)) {
     foreach ($terrainIds as $terrainId) {
-        $urlApi = 'https://dashboard.vangoo.mx/ep/getTerrain/' . $terrainId;
+        $urlApi = 'https://dashboard.vangoo.mx/api/terrain/detail/' . $terrainId;
         $curl = curl_init($urlApi);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
