@@ -61,8 +61,8 @@ if (!empty($propertyIds)) {
             exit;
         }
 
-        if (!empty($property) && isset($property[0])) {
-            $propertyData[] = $property[0];
+        if (!empty($property) && isset($property)) {
+            $propertyData[] = $property;
         }
     }
 }
