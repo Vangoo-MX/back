@@ -36,7 +36,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('csrf-token', [CsrfController::class, 'show'])
-    ->middleware(['web', 'throttle:10,1']);
+    ->middleware(['web', 'throttle:100,1']);
 
 Route::prefix('apartment')->group(function () {
     Route::get('search', [ApartmentApiController::class, 'getApartmentsSearch']);
