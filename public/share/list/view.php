@@ -16,11 +16,12 @@ curl_close($curl);
 $data = json_decode($response);
 $data = json_decode(json_encode($data), true);
 
+var_dump($data);
+
 if (!$data) {
     echo "No se ha encontrado la lista";
     exit;
 }
-$data = $data[0];
 
 function moneyFormat($numero)
 {
