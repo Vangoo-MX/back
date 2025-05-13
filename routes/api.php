@@ -51,12 +51,14 @@ Route::prefix('apartment')->group(function () {
     Route::delete('delete/{id}', [ApartmentApiController::class, 'deleteApartment']);
     Route::get('user/{id}', [ApartmentApiController::class, 'getUserApartments']);
     Route::get('user/queue/{id}', [ApartmentApiController::class, 'getUserApartmentsQueue']);
+    Route::get('favorites/{id}', [ApartmentApiController::class, 'getApartmentFavorites']);
 });
 
 Route::prefix('development-horizontal')->group(function () {
     Route::get('search', [DevelopmentHorizontalApiController::class, 'getDevelopmentsHorizontalSearch']);
     Route::get('detail/{id}', [DevelopmentHorizontalApiController::class, 'getDevelopmentHorizontal']);
     Route::get('related/{id}', [DevelopmentHorizontalApiController::class, 'getDevelopmentHorizontalRelated']);
+    Route::get('favorites/{id}', [DevelopmentHorizontalApiController::class, 'getDevelopmentHorizontalFavorites']);
 });
 
 Route::prefix('development-vertical')->group(function () {
@@ -64,12 +66,14 @@ Route::prefix('development-vertical')->group(function () {
     Route::get('detail/{id}', [DevelopmentVerticalApiController::class, 'getDevelopmentVertical']);
     Route::get('related/{id}', [DevelopmentVerticalApiController::class, 'getDevelopmentVerticalRelated']);
     Route::get('apartments/{id}', [DevelopmentsVerticalsApartmentApiController::class, 'getApartments']);
+    Route::get('favorites/{id}', [DevelopmentVerticalApiController::class, 'getDevelopmentVerticalFavorites']);
 });
 
 Route::prefix('lot')->group(function () {
     Route::get('search', [LotApiController::class, 'getLotsSearch']);
     Route::get('detail/{id}', [LotApiController::class, 'getLot']);
     Route::get('related/{id}', [LotApiController::class, 'getLotRelated']);
+    Route::get('favorites/{id}', [LotApiController::class, 'getLotFavorites']);
 });
 
 Route::prefix('property')->group(function () {
@@ -101,6 +105,7 @@ Route::prefix('terrain')->group(function () {
     Route::delete('delete/{id}', [TerrainApiController::class, 'deleteTerrain']);
     Route::get('user/{id}', [TerrainApiController::class, 'getUserTerrains']);
     Route::get('user/queue/{id}', [TerrainApiController::class, 'getUserTerrainsQueue']);
+    Route::get('favorites/{id}', [TerrainApiController::class, 'getTerrainFavorites']);
 });
 
 Route::prefix('highlight')->group(function () {

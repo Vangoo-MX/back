@@ -32,6 +32,11 @@ class LotApiController extends Controller
         return $this->getEstate($id);
     }
 
+    public function getLotFavorites($id)
+    {
+        return $this->getEstateFavorites($id);
+    }
+
     public function getLotRelated(int $id)
     {
         return $this->getEstateRelated($id);

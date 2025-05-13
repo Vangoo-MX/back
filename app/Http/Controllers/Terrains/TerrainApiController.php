@@ -30,6 +30,11 @@ class TerrainApiController extends Controller
         return $this->getEstate($id);
     }
 
+    public function getTerrainFavorites($id)
+    {
+        return $this->getEstateFavorites($id);
+    }
+
     public function getTerrainQueue(int $id)
     {
         return $this->getEstateQueue($id);

@@ -30,6 +30,11 @@ class ApartmentApiController extends Controller
         return $this->getEstate($id);
     }
 
+    public function getApartmentFavorites($id)
+    {
+        return $this->getEstateFavorites($id);
+    }
+
     public function getApartmentQueue(int $id)
     {
         return $this->getEstateQueue($id);

@@ -32,6 +32,11 @@ class DevelopmentVerticalApiController extends Controller
         return $this->getEstate($id);
     }
 
+    public function getDevelopmentVerticalFavorites($id)
+    {
+        return $this->getEstateFavorites($id);
+    }
+
     public function getDevelopmentVerticalRelated(int $id)
     {
         return $this->getEstateRelated($id);

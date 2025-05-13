@@ -32,6 +32,11 @@ class DevelopmentHorizontalApiController extends Controller
         return $this->getEstate($id);
     }
 
+    public function getDevelopmentHorizontalFavorites($id)
+    {
+        return $this->getEstateFavorites($id);
+    }
+
     public function getDevelopmentHorizontalRelated(int $id)
     {
         return $this->getEstateRelated($id);
