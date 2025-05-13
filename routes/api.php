@@ -85,6 +85,7 @@ Route::prefix('property')->group(function () {
     Route::delete('delete/{id}', [PropertyApiController::class, 'deleteProperty']);
     Route::get('user/{id}', [PropertyApiController::class, 'getUserProperties']);
     Route::get('user/queue/{id}', [PropertyApiController::class, 'getUserPropertiesQueue']);
+    Route::get('favorites/{id}', [PropertyApiController::class, 'getPropertyFavorites']);
 });
 
 Route::prefix('terrain')->group(function () {

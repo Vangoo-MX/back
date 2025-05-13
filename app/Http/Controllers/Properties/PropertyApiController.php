@@ -31,6 +31,11 @@ class PropertyApiController extends Controller
         return $this->getEstate($id);
     }
 
+    public function getPropertyFavorites($id)
+    {
+        return $this->getEstateFavorites($id);
+    }
+
     public function getPropertyQueue(int $id)
     {
         return $this->getEstateQueue($id);

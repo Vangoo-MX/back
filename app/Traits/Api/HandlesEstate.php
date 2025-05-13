@@ -17,6 +17,11 @@ trait HandlesEstate
 {
     public function getEstate($id)
     {
+        return $this->model::find($id);
+    }
+
+    public function getEstateFavorites($id)
+    {
         return $this->model::where('id', $id)
             ->get();
     }
