@@ -17,7 +17,8 @@ trait HandlesEstate
 {
     public function getEstate($id)
     {
-        return $this->model::find($id);
+        return $this->model::where($id)
+            ->get();
     }
 
     public function getEstateQueue(int $id)
