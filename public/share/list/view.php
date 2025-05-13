@@ -16,7 +16,7 @@ curl_close($curl);
 $data = json_decode($response);
 $data = json_decode(json_encode($data), true);
 
-var_dump($data);
+dd($data);
 
 if (!$data) {
     echo "No se ha encontrado la lista";
