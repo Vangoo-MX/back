@@ -13,7 +13,7 @@ if ($_GET && isset($_GET['id'])) {
 $typeText = 'developments';
 $urlShare = 'https://dashboard.vangoo.mx/share/development/view.php?id=' . $id;
 
-$urlApi = 'https://dashboard.vangoo.mx/ep/getDevelopment/' . $id;
+$urlApi = 'https://dashboard.vangoo.mx/api/development-vertical/detail/' . $id;
 $curl = curl_init($urlApi);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($curl);
@@ -36,8 +36,6 @@ if (!$data) {
     echo "No se ha encontrado el desarrollo";
     exit;
 }
-
-$data = $data[0];
 
 $imagePath = 'https://dashboard.vangoo.mx/storage/img/posts/' . $typeText . '/' . $data['id'] . '/1.webp';
 $backupImage = 'https://www.vangoo.mx/assets/img/img404.jpg';
