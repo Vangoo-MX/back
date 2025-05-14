@@ -318,7 +318,7 @@ trait HandlesEstate
 
             return response()->json(null, Response::HTTP_NO_CONTENT);
         } catch (Exception $e) {
-            Log::error("Error deleting terrain queue: {$e->getMessage()}");
+            Log::error("Error deleting resource queue: {$e->getMessage()}");
             return response()->json(
                 ['error' => 'Failed to delete resource'],
                 Response::HTTP_INTERNAL_SERVER_ERROR
