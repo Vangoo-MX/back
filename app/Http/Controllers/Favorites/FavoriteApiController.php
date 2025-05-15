@@ -266,7 +266,7 @@ class FavoriteApiController extends Controller
      * DeleteFavoriteItem
      * */
 
-    public function deleteFavoriteItem(Request $request, string $type_property, int $id_list, int $id_property): JsonResponse
+    public function deleteItemFromList(Request $request, string $type_property, int $id_list, int $id_property): JsonResponse
     {
         try {
             $request->validate([

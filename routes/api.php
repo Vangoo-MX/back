@@ -143,7 +143,7 @@ Route::prefix('favorite')->group(function () {
     Route::post('create', [FavoriteApiController::class, 'createList']);
     Route::delete('delete/{id_user}/{id_list}', [FavoriteApiController::class, 'deleteList']);
     Route::get('data/{id}', [FavoriteApiController::class, 'dataFromList']);
-    Route::delete('delete-item/{type_property}/{id_list}/{id_property}')
+    Route::delete('delete-item/{type_property}/{id_list}/{id_property}', [FavoriteApiController::class, 'deleteItemFromList'])
         ->where('type_property', 'property|development|developmentHorizontal|lot|apartment|terrain');
     Route::post('save', [FavoriteApiController::class, 'saveFavoriteItem']);
 });
