@@ -141,14 +141,7 @@ Editar propiedad
                         </div>
                         <div class="mb-3 mt-3">
                             <label for="id_colonia" class="form-label">Colonia:</label>
-                            <select class="form-select" name="id_colonia" id="id_colonia">
-                                <option hidden>Selecciona una colonia</option>
-                                @foreach($colonias as $colonia)
-                                <option value="{{$colonia->id}}" data-id="{{$colonia->id}}" <?php if ($propiedad->id_colonia == $colonia->id) {
-                                                                                                echo 'selected';
-                                                                                            } ?>>{{$colonia->nombre}}</option>
-                                @endforeach
-                            </select>
+                            <span id="coloniashtml"></span>
                         </div>
 
                         <div class="mb-3 mt-3">
