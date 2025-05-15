@@ -170,7 +170,8 @@ class FavoriteApiController extends Controller
 
             $data = $config['model']::select($config['columns'])
                 ->whereIntegerInRaw('id', $ids)
-                ->get();
+                ->get()
+                ->toArray();
 
             return [$key => $data];
         })->all();
