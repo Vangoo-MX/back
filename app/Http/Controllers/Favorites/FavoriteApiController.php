@@ -269,9 +269,14 @@ class FavoriteApiController extends Controller
     public function deleteItemFromList(Request $request, string $type_property, int $id_list, int $id_property): JsonResponse
     {
         try {
-            $request->validate([
-                'type_property' => 'required|in:property,development,developmentHorizontal,lot,apartment,terrain'
-            ]);
+            $validTypes = ['property', 'development', 'developmentHorizontal', 'lot', 'apartment', 'terrain'];
+
+            if (!in_array($type_property, $validTypes)) {
+                return response()->json([
+                    'error' => 'Invalid parameters',
+                    'details' => ['type_property' => ['Tipo de propiedad inválido']]
+                ], 400);
+            }
 
             $modelConfig = $this->getFavoriteModelConfig($type_property);
 
