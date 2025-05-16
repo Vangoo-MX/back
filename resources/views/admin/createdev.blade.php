@@ -358,7 +358,7 @@
                 var colonias = JSON.parse(xhr.responseText);
                 var coloniasHtml = '';
                 for (var i = 0; i < colonias.length; i++) {
-                    coloniasHtml += '<option value="' + colonias[i].id + ' data-codigo-postal="' + colonias[i].codigo_postal + '">' +
+                    coloniasHtml += '<option value="' + colonias[i].id + '" data-codigo-postal="' + colonias[i].codigo_postal + '">' +
                         colonias[i].nombre + '</option>';
                 }
                 var selectHtml = '';
@@ -367,16 +367,20 @@
                 }
                 document.getElementById('coloniashtml').innerHTML = selectHtml;
 
-                var coloniaSelect = document.getElementById('id_colonia');
-                if (coloniaSelect) {
-                    coloniaSelect.addEventListener('change', function() {
-                        var codigoPostal = this.options[this.selectedIndex].getAttribute('data-codigo-postal');
-                        document.getElementById('cp').value = codigoPostal;
-                    });
+                setTimeout(function() {
+                    var coloniaSelect = document.getElementById('id_colonia');
+                    if (coloniaSelect) {
+                        // Actualizar código postal al cambiar selección
+                        coloniaSelect.addEventListener('change', function() {
+                            var codigoPostal = this.options[this.selectedIndex].getAttribute('data-codigo-postal');
+                            document.getElementById('cp').value = codigoPostal || '';
+                        });
 
-                    var initialCp = coloniaSelect.options[coloniaSelect.selectedIndex].getAttribute('data-codigo-postal');
-                    document.getElementById('cp').value = initialCp;
-                }
+                        // Establecer valor inicial
+                        var initialCp = coloniaSelect.options[coloniaSelect.selectedIndex]?.getAttribute('data-codigo-postal');
+                        document.getElementById('cp').value = initialCp || '';
+                    }
+                }, 0);
             } else {
                 console.log('Error');
             }
