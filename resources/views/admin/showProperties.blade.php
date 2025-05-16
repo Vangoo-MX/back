@@ -141,18 +141,7 @@ Editar propiedad
                         </div>
                         <div class="mb-3 mt-3">
                             <label for="id_colonia" class="form-label">Colonia:</label>
-                            <span id="coloniashtml">
-                                <select class="form-select" name="id_colonia" id="id_colonia" required>
-                                    <option value="">Seleccionar colonia</option>
-                                    @foreach ($colonias as $colonia)
-                                    <option
-                                        value="{{ $colonia->id }}"
-                                        {{ $propiedad->id_colonia == $colonia->id ? 'selected' : '' }}>
-                                        {{ $colonia->nombre }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </span>
+                            <span id="coloniashtml"></span>
                         </div>
 
                         <div class="mb-3 mt-3">
@@ -449,32 +438,23 @@ Editar propiedad
     }
 
     document.getElementById('id_municipio').addEventListener('change', function() {
+
         var municipioId = this.options[this.selectedIndex].getAttribute('data-id');
         var url = '/api/info/colonias/municipio/' + municipioId;
         var xhr = new XMLHttpRequest();
-
         xhr.open('GET', url);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhr.onload = function() {
             if (xhr.status === 200) {
                 var colonias = JSON.parse(xhr.responseText);
-                var coloniasHtml = '<option value="">Seleccionar colonia</option>'; // Opción por defecto
-
+                var coloniasHtml = '';
                 for (var i = 0; i < colonias.length; i++) {
-                    // Verifica si es la colonia actual del registro
-                    var selected = colonias[i].id == {
-                        {
-                            $propiedad - > id_colonia ?? 'null'
-                        }
-                    } ? 'selected' : '';
-                    coloniasHtml += `<option value="${colonias[i].id}" ${selected}>${colonias[i].nombre}</option>`;
+                    coloniasHtml += '<option value="' + colonias[i].id + '">' + colonias[i].nombre + '</option>';
                 }
-
                 var selectHtml = '';
                 if (municipioId != 0) {
-                    selectHtml = `<select class="form-select" name="id_colonia" id="id_colonia" required>${coloniasHtml}</select>`;
+                    selectHtml = '<select class="form-select" name="id_colonia" id="id_colonia" required>' + coloniasHtml + '</select>';
                 }
-
                 document.getElementById('coloniashtml').innerHTML = selectHtml;
             } else {
                 console.log('Error');
