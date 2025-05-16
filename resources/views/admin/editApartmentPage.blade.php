@@ -161,14 +161,7 @@ Editar apartamento
                         </div>
                         <div class="mb-3 mt-3">
                             <label for="id_colonia" class="form-label">Colonia:</label>
-                            <select class="form-select" name="id_colonia" id="id_colonia">
-                                <option hidden>Selecciona una colonia</option>
-                                @foreach($colonias as $colonia)
-                                <option value="{{$colonia->id}}" data-id="{{$colonia->id}}" <?php if ($apartment->id_colonia == $colonia->id) {
-                                                                                                echo 'selected';
-                                                                                            } ?>>{{$colonia->nombre}}</option>
-                                @endforeach
-                            </select>
+                            <span id="coloniashtml"></span>
                         </div>
 
                         <div class="mb-3 mt-3">
@@ -464,24 +457,30 @@ Editar apartamento
         }
     }
 
-    $(document).ready(function() {
-        $('#id_municipio').change(function() {
-            var municipioId = $(this).val();
-            $.ajax({
-                url: '{{ route("getColonias") }}',
-                method: 'GET',
-                data: {
-                    municipio_id: municipioId
-                },
-                success: function(response) {
-                    $('#id_colonia').empty();
-                    $('#id_colonia').append('<option hidden>Selecciona una colonia</option>');
-                    $.each(response, function(index, colonia) {
-                        $('#id_colonia').append('<option value="' + colonia.id + '">' + colonia.nombre + '</option>');
-                    });
+    document.getElementById('id_municipio').addEventListener('change', function() {
+
+        var municipioId = this.options[this.selectedIndex].getAttribute('data-id');
+        var url = '/api/info/colonias/municipio/' + municipioId;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var colonias = JSON.parse(xhr.responseText);
+                var coloniasHtml = '';
+                for (var i = 0; i < colonias.length; i++) {
+                    coloniasHtml += '<option value="' + colonias[i].id + '">' + colonias[i].nombre + '</option>';
                 }
-            });
-        });
+                var selectHtml = '';
+                if (municipioId != 0) {
+                    selectHtml = '<select class="form-select" name="id_colonia" id="id_colonia" required>' + coloniasHtml + '</select>';
+                }
+                document.getElementById('coloniashtml').innerHTML = selectHtml;
+            } else {
+                console.log('Error');
+            }
+        };
+        xhr.send();
     });
 
     document.querySelectorAll('.reorder-select').forEach(select => {
