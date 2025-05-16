@@ -437,9 +437,8 @@ Editar propiedad
         }
     }
 
-    document.getElementById('id_municipio').addEventListener('change', function() {
-
-        var municipioId = this.options[this.selectedIndex].getAttribute('data-id');
+    function changeMuninicio() {
+        var municipioId = document.getElementById('id_municipio').options[document.getElementById('id_municipio').selectedIndex].getAttribute('data-id');
         var url = '/api/info/colonias/municipio/' + municipioId;
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
@@ -448,8 +447,20 @@ Editar propiedad
             if (xhr.status === 200) {
                 var colonias = JSON.parse(xhr.responseText);
                 var coloniasHtml = '';
+                var hasSelected = false;
                 for (var i = 0; i < colonias.length; i++) {
-                    coloniasHtml += '<option value="' + colonias[i].id + '">' + colonias[i].nombre + '</option>';
+                    var selected = '';
+                    if (colonias[i].id == <?php echo $propiedad->id_colonia; ?>) {
+                        selected = 'selected';
+                        hasSelected = true;
+                    }
+                    coloniasHtml += '<option value="' + colonias[i].id + '" ' + selected + '>' + colonias[i].nombre + '</option>';
+                }
+                if (!hasSelected && colonias.length > 0) {
+                    coloniasHtml = '<option value="" selected disabled>Seleccionar colonia</option>' + coloniasHtml;
+                }
+                if (colonias.length === 0) {
+                    coloniasHtml = '<option value="" disabled>No hay colonias disponibles</option>';
                 }
                 var selectHtml = '';
                 if (municipioId != 0) {
@@ -461,6 +472,14 @@ Editar propiedad
             }
         };
         xhr.send();
+    }
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        changeMuninicio();
+    });
+
+    document.getElementById('id_municipio').addEventListener('change', function() {
+        changeMuninicio();
     });
 
     document.querySelectorAll('.reorder-select').forEach(select => {
