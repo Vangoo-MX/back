@@ -39,7 +39,7 @@ class AgendaApiController extends Controller
                 'email' => 'email',
                 'address' => 'address',
                 'credit_score' => 'credit_score',
-                'notas' => 'notes'
+                'notes' => 'notes'
             ];
 
             foreach ($optionalFields as $requestKey => $modelField) {
@@ -71,7 +71,7 @@ class AgendaApiController extends Controller
                 'email' => ['field' => 'email', 'check_null' => true],
                 'address' => ['field' => 'address', 'check_null' => true],
                 'credit_score' => ['field' => 'credit_score', 'check_null' => true],
-                'notas' => ['field' => 'notes', 'check_null' => true],
+                'notes' => ['field' => 'notes', 'check_null' => true],
             ];
 
             $updateData = [];
