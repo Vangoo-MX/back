@@ -494,7 +494,7 @@ Editar
 
     function changeMuninicio() {
         var municipioId = document.getElementById('id_municipio').options[document.getElementById('id_municipio').selectedIndex].getAttribute('data-id');
-        var url = '/ep/getColoniasFromMunicipio/' + municipioId;
+        var url = '/api/info/colonias/municipio/' + municipioId;
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -502,14 +502,20 @@ Editar
             if (xhr.status === 200) {
                 var colonias = JSON.parse(xhr.responseText);
                 var coloniasHtml = '';
-                var selected = '';
+                var hasSelected = false;
                 for (var i = 0; i < colonias.length; i++) {
+                    var selected = '';
                     if (colonias[i].id == <?php echo $lot->id_colonia; ?>) {
                         selected = 'selected';
-                    } else {
-                        selected = '';
+                        hasSelected = true;
                     }
                     coloniasHtml += '<option value="' + colonias[i].id + '" ' + selected + '>' + colonias[i].nombre + '</option>';
+                }
+                if (!hasSelected && colonias.length > 0) {
+                    coloniasHtml = '<option value="" selected disabled>Seleccionar colonia</option>' + coloniasHtml;
+                }
+                if (colonias.length === 0) {
+                    coloniasHtml = '<option value="" disabled>No hay colonias disponibles</option>';
                 }
                 var selectHtml = '';
                 if (municipioId != 0) {
