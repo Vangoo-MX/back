@@ -77,7 +77,7 @@ class LocationApiController extends Controller
     public function getColoniasFromMunicipio(int $municipioId): Collection
     {
         return Colonias::where('id_municipio', $municipioId)
-            ->select('id', 'nombre')
+            ->select('id', 'nombre', 'codigo_postal')
             ->orderBy('nombre', 'asc')
             ->get();
     }
