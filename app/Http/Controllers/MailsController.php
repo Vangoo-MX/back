@@ -24,7 +24,7 @@ class MailsController extends Controller
 
     public function salesAdvisor(Request $request)
     {
-        Mail::to('AsesoresdeVentas@Vangoo.mx')->send(new SalesAdvisorMail($request->all()));
+        Mail::to('asesor@vangoo.mx')->send(new SalesAdvisorMail($request->all()));
         return response()->json(['message' => 'Correo enviado con éxito'], 200);
     }
 }
