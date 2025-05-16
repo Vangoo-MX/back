@@ -188,7 +188,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="cp" class="form-label">Codigo Postal:</label>
-                            <input type="number" class="form-control" id="cp" placeholder="Ingresa el código postal" name="cp" value="{{old('cp')}}">
+                            <input type="number" class="form-control" id="cp" placeholder="Ingresa el código postal" name="cp" value="{{old('cp')}}" disabled>
                             @error('cp')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -282,47 +282,6 @@
                 </div>
 
                 <hr>
-
-                <!-- <div class="mt-3 mb-3">
-                    <label class="form-label">Opciones de departamentos:</label>
-
-                    <div class="options-container">
-                        <div class="option-appartment" id="option-appartment-1">
-                            <div class="input-group mb-3 gap-2 flex-column flex-lg-row">
-                                <input type="text" class="form-control app-input" placeholder="Titulo" name="option[1][title]" required>
-                                <input type="number" class="form-control app-input" placeholder="Precio" name="option[1][price]" required>
-                                <input type="number" step="0.01" class="form-control app-input" placeholder="Area" name="option[1][area]" required>
-                                <input type="number" class="form-control app-input" placeholder="Habitaciones" name="option[1][rooms]" required>
-                                <input type="number" class="form-control app-input" placeholder="Baños" name="option[1][bathrooms]" required>
-                                <input type="number" class="form-control app-input" placeholder="Estacionamientos" name="option[1][parkings]" required>
-                                <input type="number" class="form-control app-input" placeholder="Num disponibles" name="option[1][num_available]" required>
-                            </div>
-                            <div class="input-group mb-3 app-file">
-                                <input type="file" class="form-control" name="imageoption[1]" accept="image/jpeg">
-                            </div>
-                        </div>
-                    </div>
-
-                    nueva opción
-
-                    <span class="btn btn-secondary" id="add-option-btn">Agregar opción</span>
-                </div> -->
-
-                <!-- @if ($errors->any())
-                <div class="alert alert-danger mt-3">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-
-                @if(session('success'))
-                <div class="alert alert-success mt-3">
-                    {{ session('success') }}
-                </div>
-                @endif -->
 
                 <div class="d-flex justify-content-center mt-4">
                     <button type="submit" class="btn bg-gradient-info btn-lg">Crear</button>
@@ -453,13 +412,27 @@
                 var colonias = JSON.parse(xhr.responseText);
                 var coloniasHtml = '';
                 for (var i = 0; i < colonias.length; i++) {
-                    coloniasHtml += '<option value="' + colonias[i].id + '">' + colonias[i].nombre + '</option>';
+                    coloniasHtml += '<option value="' + colonias[i].id + '" data-codigo-postal="' + colonias[i].codigo_postal + '">' +
+                        colonias[i].nombre + '</option>';
                 }
                 var selectHtml = '';
                 if (municipioId != 0) {
                     selectHtml = '<select class="form-select" name="id_colonia" id="id_colonia" required>' + coloniasHtml + '</select>';
                 }
                 document.getElementById('coloniashtml').innerHTML = selectHtml;
+
+                setTimeout(function() {
+                    var coloniaSelect = document.getElementById('id_colonia');
+                    if (coloniaSelect) {
+                        coloniaSelect.addEventListener('change', function() {
+                            var codigoPostal = this.options[this.selectedIndex].getAttribute('data-codigo-postal');
+                            document.getElementById('cp').value = codigoPostal || '';
+                        });
+
+                        var initialCp = coloniaSelect.options[coloniaSelect.selectedIndex]?.getAttribute('data-codigo-postal');
+                        document.getElementById('cp').value = initialCp || '';
+                    }
+                }, 0);
             } else {
                 console.log('Error');
             }
