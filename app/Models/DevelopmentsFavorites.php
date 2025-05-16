@@ -17,7 +17,7 @@ class DevelopmentsFavorites extends Model
 
     protected $fillable = [
         'id_user',
-        'id_property',
+        'id_development',
         'id_list'
     ];
 
