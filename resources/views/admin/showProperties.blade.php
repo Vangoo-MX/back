@@ -477,7 +477,6 @@ Editar propiedad
                         document.getElementById('cp').value = codigoPostal;
                     });
 
-                    // Actualizar al cargar la página
                     var initialCp = coloniaSelect.options[coloniaSelect.selectedIndex].getAttribute('data-codigo-postal');
                     document.getElementById('cp').value = initialCp;
                 }

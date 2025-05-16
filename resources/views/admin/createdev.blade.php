@@ -129,7 +129,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="cp" class="form-label">Codigo Postal:</label>
-                            <input type="number" class="form-control" id="cp" placeholder="Ingresa el código postal" name="cp" value="{{old('cp')}}">
+                            <input type="number" class="form-control" id="cp" placeholder="Ingresa el código postal" name="cp" value="{{old('cp')}}" disabled>
                             @error('cp')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -358,13 +358,25 @@
                 var colonias = JSON.parse(xhr.responseText);
                 var coloniasHtml = '';
                 for (var i = 0; i < colonias.length; i++) {
-                    coloniasHtml += '<option value="' + colonias[i].id + '">' + colonias[i].nombre + '</option>';
+                    coloniasHtml += '<option value="' + colonias[i].id + ' data-codigo-postal="' + colonias[i].codigo_postal + '">' +
+                        colonias[i].nombre + '</option>';
                 }
                 var selectHtml = '';
                 if (municipioId != 0) {
                     selectHtml = '<select class="form-select" name="id_colonia" id="id_colonia" required>' + coloniasHtml + '</select>';
                 }
                 document.getElementById('coloniashtml').innerHTML = selectHtml;
+
+                var coloniaSelect = document.getElementById('id_colonia');
+                if (coloniaSelect) {
+                    coloniaSelect.addEventListener('change', function() {
+                        var codigoPostal = this.options[this.selectedIndex].getAttribute('data-codigo-postal');
+                        document.getElementById('cp').value = codigoPostal;
+                    });
+
+                    var initialCp = coloniaSelect.options[coloniaSelect.selectedIndex].getAttribute('data-codigo-postal');
+                    document.getElementById('cp').value = initialCp;
+                }
             } else {
                 console.log('Error');
             }
