@@ -254,6 +254,8 @@ Route::get('ep/get-lots-by-municipio/{id}', [LotsController::class, 'getLotsByMu
 
 /* Agenda */
 
+Route::get('ep/getDocsAgenda/{id}', [ContactsController::class, 'getDocsAgenda'])->name('contactDocs.get');
+
 Route::post('ep/saveContactDocs', [ContactsController::class, 'saveContactDocs'])->middleware('web')->name('contactDocs.post');
 
 Route::get('ep/statusContact/{id_agenda}/{etapa}', [ContactsController::class, 'statusContact'])->name('contactStatus.get');
