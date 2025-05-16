@@ -37,7 +37,7 @@ class DocumentApiController extends Controller
 
                 $agendaDoc->agendaRelation()->update([
                     'mensaje_leido' => false,
-                    'updated_at' => now()
+                    'timestamp_update' => now()
                 ]);
 
                 event(new NotaVendedorActualizada($agendaDoc));

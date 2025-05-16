@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AgendaDocs extends Model
 {
-    public $timestamps = false;
     protected $table = 'listac_agenda_docs';
 
     protected $fillable = [
@@ -39,6 +38,9 @@ class AgendaDocs extends Model
         'nota_admin',
         'nota_vendedor',
     ];
+
+    const CREATED_AT = 'timestamp_create';
+    const UPDATED_AT = 'timestamp_update';
 
     public function agendaRelation(): BelongsTo
     {
