@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -50,59 +50,6 @@ class AdminController extends Controller
     }
 
     //users
-    public function create()
-    {
-        return view('admin.create');
-    }
-
-    public function store(CreateUserRequest $request)
-    {
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'rol' => $request->rol,
-            'tel' => $request->tel,
-        ]);
-
-        return redirect()->route('admin.users');
-    }
-
-    public function show($id = 0)
-    {
-        $user = User::findOrFail($id);
-
-        return view('admin.user', compact('user'));
-    }
-
-    public function allusers()
-    {
-        $users = User::all();
-
-        return view('admin.allusers', compact('users'));
-    }
-
-    public function destroy($id)
-    {
-        $user = User::find($id);
-
-        if (!$user) {
-            return redirect()->route('admin.users')->with('error', 'No se pudo encontrar el usuario.');
-        }
-
-        $extensions = ['jpg', 'jpeg', 'png'];
-        foreach ($extensions as $extension) {
-            $profileImagePath = storage_path("app/public/img/users/{$user->id}.{$extension}");
-            if (file_exists($profileImagePath)) {
-                unlink($profileImagePath);
-                break;
-            }
-        }
-
-        $user->delete();
-
-        return redirect()->route('admin.users')->with('success', 'Usuario eliminado correctamente.');
-    }
 
     public function contacts(Request $request)
     {
@@ -123,35 +70,12 @@ class AdminController extends Controller
         return view('admin.edit', compact('user'));
     }
 
-    public function update(Request $request, User $user)
-    {
-        $updateData = $request->only([
-            'name',
-            'tel',
-            'biography',
-            'email',
-            'rol',
-            'contact_preference',
-            'contact_schedule',
-        ]);
-
-        if ($request->hasFile('profile_image')) {
-            $filename = $user->id . '.' . $request->profile_image->extension();
-            $request->profile_image->storeAs('public/img/users', $filename);
-            $updateData['profile_image'] = $filename;
-        }
-
-        $user->update($updateData);
-
-        return redirect()->route('admin.user', $user)->with('success', 'Usuario actualizado correctamente.');
-    }
-
     public function password(User $user)
     {
         return view('admin.changepassword', compact('user'));
     }
 
-    public function updatePassword(CreateUserRequest $request, User $user)
+    public function updatePassword(UserRequest $request, User $user)
     {
         $user->update(['password' => $request->password]);
         return redirect()->route('admin.user', $user)->with('success', 'Contraseña actualizada correctamente');

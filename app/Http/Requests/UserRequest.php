@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateUserRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -43,7 +43,6 @@ class CreateUserRequest extends FormRequest
             ],
             'biography' => 'max:250',
             'contact_schedule' => [
-                'required',
                 function ($attribute, $value, $fail) {
                     if (!empty($value)) {
                         if (!preg_match('/^\d{1,2}:\d{2} (am|pm) - \d{1,2}:\d{2} (am|pm)$/', $value)) {

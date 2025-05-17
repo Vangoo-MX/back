@@ -9,16 +9,15 @@ use App\Http\Controllers\{
     Auth\ResetPasswordController,
     CommissionsController,
     ContactsController,
-    UserController,
     PropertiesController,
     DevelopmentsController,
     DevelopmentsApartmentsController,
     DevelopmentsHorizontalApartmentsController,
     DevelopmentsHorizontalController,
     LotsController,
-    MailsController
 };
-
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Users\UserController;
 
 Route::redirect('/', '/user/login');
 
@@ -26,30 +25,40 @@ Route::redirect('/', '/user/login');
 /* PAGES */
 
 // recuperacion de contraseña
-Route::prefix('auth')->name('password.')->group(function () {
-    Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('request');
-    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('email');
-    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('reset');
-    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('update');
+Route::prefix('auth')->group(function () {
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('login', [AuthController::class, 'showLoginForm'])->name('login.view');
+        Route::post('login', [AuthController::class, 'login'])->name('login');
+        Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+    });
+    Route::prefix('password')->name('password.')->group(function () {
+        Route::get('reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('request');
+        Route::post('email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('email');
+        Route::get('reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('reset');
+        Route::post('reset', [ResetPasswordController::class, 'reset'])->name('update');
+    });
 });
 
-// Gestión de usuarios
-Route::prefix('users')->name('admin.')->group(function () {
-    Route::get('create', [AdminController::class, 'create'])->name('create');
-    Route::post('store', [AdminController::class, 'store'])->name('storeuser');
-    Route::get('list', [AdminController::class, 'allusers'])->name('users');
-    Route::get('{id}', [AdminController::class, 'show'])->name('user');
-    Route::get('edit/{user}', [AdminController::class, 'edit'])->name('edit');
-    Route::post('update/{user}', [AdminController::class, 'update'])->name('update');
-    Route::get('password/{user}', [AdminController::class, 'password'])->name('passChange');
-    Route::post('passwordUpdate/{user}', [AdminController::class, 'passwordUpdate'])->name('passUpdate');
-    Route::delete('delete/{id}', [AdminController::class, 'destroy'])->name('destroy');
-});
+
+Route::resource('users', UserController::class);
 
 // Panel de administración
 Route::prefix('overview')->name('admin.')->group(function () {
     // Dashboard
     Route::get('home', [AdminController::class, 'index'])->name('index');
+
+    // Gestión de usuarios
+    Route::prefix('users')->group(function () {
+        Route::get('create', [AdminController::class, 'create'])->name('create');
+        Route::post('store', [AdminController::class, 'store'])->name('storeuser');
+        Route::get('list', [AdminController::class, 'allusers'])->name('users');
+        Route::get('{id}', [AdminController::class, 'show'])->name('user');
+        Route::get('edit/{user}', [AdminController::class, 'edit'])->name('edit');
+        Route::post('update/{user}', [AdminController::class, 'update'])->name('update');
+        Route::get('password/{user}', [AdminController::class, 'password'])->name('passChange');
+        Route::post('passwordUpdate/{user}', [AdminController::class, 'passwordUpdate'])->name('passUpdate');
+        Route::delete('delete/{id}', [AdminController::class, 'destroy'])->name('destroy');
+    });
 
     // Propiedades
     Route::prefix('properties')->group(function () {
@@ -168,21 +177,6 @@ Route::get('/getColonias', [AdminController::class, 'getColonias'])->name('getCo
 Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('emails.confirm');
 
 Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('emails.template');
-
-/* USER ENDPOINTS*/
-Route::prefix('user')->name('user.')->group(function () {
-    Route::post('register', [UserController::class, 'register'])
-        ->name('register');
-    Route::get('login', [UserController::class, 'showLoginForm'])->name('login.view');
-    Route::post('login', [UserController::class, 'login'])
-        ->name('login');
-    Route::get('logout', [UserController::class, 'logout'])
-        ->name('logout');
-    Route::get('status/{userid}/{status}', [UserController::class, 'statusUser'])
-        ->name('changestatus');
-});
-
-/*endpoints*/
 
 /* PROPIEDADES */
 
