@@ -15,7 +15,7 @@
         <h3>Crear nuevo usuario</h3>
 
         <div class="w-100">
-            <form method="post" action="{{route('admin.storeuser')}}" class="w-100">
+            <form method="post" action="{{route('users.store')}}" class="w-100">
 
                 @csrf
 
@@ -77,9 +77,9 @@
                             <select class="form-select" name="rol" id="rol">
                                 <option value="1">Administrador</option>
                                 <option value="2">Moderador</option>
-                                <option value="3">Asesor</option>
-                                <option value="4">Vendedor</option>
-                                <option value="5">Propietario</option>
+                                <option value="3">Desarrollador</option>
+                                <option value="4">Vendedor asociado</option>
+                                <option value="5">Vendedor afiliado</option>
                                 <option value="6">Usuario</option>
                             </select>
                         </div>

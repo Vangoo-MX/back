@@ -15,7 +15,7 @@
         <h3>Editar usuario</h3>
 
         <div class="w-100">
-            <form method="post" action="{{route('admin.update', $user->id)}}" class="w-100" enctype="multipart/form-data">
+            <form method="post" action="{{route('users.update', $user->id)}}" class="w-100" enctype="multipart/form-data">
 
                 @csrf
 
