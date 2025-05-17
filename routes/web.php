@@ -38,7 +38,7 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-
+//Gestion de usuarios
 Route::resource('users', UserController::class);
 
 Route::put('users/{user}/status', [UserController::class, 'statusUser'])
