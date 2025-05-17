@@ -156,6 +156,8 @@ trait HandlesEstate
     public function uploadImages(Request $request)
     {
         try {
+
+            dd($request->all());
             $request->validate([
                 'image' => 'required|file|image',
                 'id' => 'required|numeric',
