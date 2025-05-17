@@ -8,7 +8,7 @@
 
 @section('content')
 
-<a href="{{ route('admin.edit', $user->id) }}">
+<a href="{{ route('users.edit', $user->id) }}">
     <button class="btn1">Editar usuario</button>
 </a>
 <div class="container py-5">
