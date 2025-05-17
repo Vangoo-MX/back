@@ -51,7 +51,7 @@ class UserRequest extends FormRequest
                     }
                 },
             ],
-            'profile_image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            // 'profile_image' => 'image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 
