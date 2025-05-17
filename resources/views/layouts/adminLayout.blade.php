@@ -137,7 +137,7 @@
                     </a>
                     <ul class="dropdown-menu menu-primary-dropdown">
                         <li>
-                            <a class="dropdown-item" href="{{route('admin.user',auth()->user()->id)}}">
+                            <a class="dropdown-item" href="{{route('users.show',auth()->user()->id)}}">
                                 <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
                                 Perfil
                             </a>
