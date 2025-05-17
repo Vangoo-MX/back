@@ -109,7 +109,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{route('admin.users')}}" class="{{ (request()->is('overview/user*')) ? 'active' : '' }} {{ (request()->is('overview/users*')) ? 'active' : '' }}">
+                        <a href="{{route('users.index')}}" class="{{ (request()->is('users*')) ? 'active' : '' }}">
                             <img src="{{url('./img/icon/users.png')}}" title="Usuarios" alt="Users" />
                         </a>
                     </li>
