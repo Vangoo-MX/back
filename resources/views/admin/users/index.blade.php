@@ -8,7 +8,7 @@
 
 @section('content')
 
-<a href="{{route('admin.users.create')}}">
+<a href="{{route('users.create')}}">
     <button class="btn1"> Crear nuevo usuario </button>
 </a>
 
@@ -32,7 +32,7 @@
                 @foreach($users as $u)
                 <tr>
                     <td>{{$u->id}}</td>
-                    <td><a href="{{route('admin.users.show',$u->id)}}">{{$u->name}}</a></td>
+                    <td><a href="{{route('users.show',$u->id)}}">{{$u->name}}</a></td>
                     <td>{{$u->email}}</td>
                     <td>{{$u->tel}}</td>
                     <td>{{ $u->rol->title() }}</td>
@@ -63,7 +63,7 @@
                                 @csrf
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" href="{{route('admin.user',$u->id)}}" target="_blank">
+                                        <a class="dropdown-item" href="{{route('users.index',$u->id)}}" target="_blank">
                                             <img src="{{url('./img/icon/info.png')}}" />
                                             Detalles
                                         </a>
@@ -112,7 +112,7 @@
         $('.dropdown-item.delete').click(function(event) {
             event.preventDefault();
             var userId = $(this).data('user-id');
-            var formAction = "{{ route('admin.destroy', ':userId') }}".replace(':userId', userId);
+            var formAction = "{{ route('users.destroy', ':userId') }}".replace(':userId', userId);
             $('#deleteForm').attr('action', formAction);
             $('#deleteConfirmationModal').modal('show');
         });

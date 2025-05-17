@@ -42,6 +42,9 @@ Route::prefix('auth')->group(function () {
 
 Route::resource('users', UserController::class);
 
+Route::get('status/{userid}/{status}', [UserController::class, 'statusUser'])
+    ->name('user.changeStatus');
+
 // Panel de administración
 Route::prefix('overview')->name('admin.')->group(function () {
     // Dashboard

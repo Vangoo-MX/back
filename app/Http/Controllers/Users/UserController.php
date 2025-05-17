@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Http\UploadedFile;
+use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -86,5 +85,18 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.index')
             ->with('success', 'Usuario eliminado correctamente');
+    }
+
+    public function statusUser($userid, $status)
+    {
+        try {
+            $user = User::findOrFail($userid);
+
+            $user->update(['status' => $status]);
+
+            return redirect()->back();
+        } catch (Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
     }
 }

@@ -18,17 +18,4 @@ class UserController extends Controller
         $user = User::create($request->validated());
         return redirect()->route('/', $user)->with('success', 'Usuario registrado correctamente.');
     }
-
-    public function statusUser($userid, $status)
-    {
-        try {
-            $user = User::findOrFail($userid);
-
-            $user->update(['status' => $status]);
-
-            return redirect()->back();
-        } catch (Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
-        }
-    }
 }
