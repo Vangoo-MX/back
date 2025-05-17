@@ -19,7 +19,7 @@ use App\Http\Controllers\{
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Users\UserController;
 
-Route::redirect('/', '/user/login');
+Route::redirect('/', '/auth/user/login');
 
 /*---------------------------------------------------------------------*/
 /* PAGES */
