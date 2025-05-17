@@ -52,11 +52,17 @@ class UserController extends Controller
             ]);
     }
 
-    public function update(UserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $validatedData = $request->validated();
-
-        $updateData = Arr::except($validatedData, ['profile_image']);
+        $updateData = $request->only([
+            'name',
+            'tel',
+            'biography',
+            'email',
+            'rol',
+            'contact_preference',
+            'contact_schedule',
+        ]);
 
         if ($request->hasFile('profile_image')) {
             if ($user->profile_image) {
