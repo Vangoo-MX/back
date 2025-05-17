@@ -77,9 +77,6 @@
                     </div>
                 </div>
             </div>
-            <a href="{{ route('admin.passChange', $user->id) }}">
-                <button class="btn1">Cambiar contraseña</button>
-            </a>
             <div class="card mb-4 mb-lg-0 d-none">
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush rounded-3">

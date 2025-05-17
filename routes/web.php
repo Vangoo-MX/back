@@ -49,13 +49,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
     // Dashboard
     Route::get('home', [AdminController::class, 'index'])->name('index');
 
-    // Gestión de usuarios
-    Route::prefix('users')->group(function () {
-        Route::get('password/{user}', [AdminController::class, 'password'])->name('passChange');
-        Route::post('passwordUpdate/{user}', [AdminController::class, 'passwordUpdate'])->name('passUpdate');
-        Route::delete('delete/{id}', [AdminController::class, 'destroy'])->name('destroy');
-    });
-
     // Propiedades
     Route::prefix('properties')->group(function () {
         Route::get('list', [AdminController::class, 'properties'])->name('properties');

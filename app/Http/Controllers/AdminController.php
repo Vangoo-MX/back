@@ -65,17 +65,6 @@ class AdminController extends Controller
         return view('admin.contacts', compact('agenda', 'users', 'selectedUserID'));
     }
 
-    public function password(User $user)
-    {
-        return view('admin.changepassword', compact('user'));
-    }
-
-    public function updatePassword(UserRequest $request, User $user)
-    {
-        $user->update(['password' => $request->password]);
-        return redirect()->route('admin.user', $user)->with('success', 'Contraseña actualizada correctamente');
-    }
-
     public function getColonias(Request $request)
     {
         $municipioId = $request->input('municipio_id');
