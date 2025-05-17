@@ -30,7 +30,8 @@ class User extends Authenticatable
         'contact_schedule',
         'biography',
         'rol',
-        'profile_image'
+        'profile_image',
+        'status',
     ];
 
     protected $hidden = [
