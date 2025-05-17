@@ -41,7 +41,7 @@
                             <span type="button" class="{{$u->status == 1 ? 'card-status-green' : 'card-status-grey'}} dropdown-toggle" data-bs-toggle="dropdown">{{$u->status == 1 ? 'Aprobado' : 'En proceso'}}</span>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('user.changestatus', ['userid' => $u->id,'status' => '1']) }}">
+                                    <a class="dropdown-item" href="{{ route('user.changeStatus', ['userid' => $u->id,'status' => '1']) }}">
                                         Aprobado
                                     </a>
                                 </li>
