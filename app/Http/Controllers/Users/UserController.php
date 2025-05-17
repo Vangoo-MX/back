@@ -54,6 +54,11 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $request->validate([
+            'password' => 'nullable|min:8|confirmed',
+            'password_confirmation' => 'sometimes|required_with:password'
+        ]);
+
         $updateData = $request->only([
             'name',
             'tel',
@@ -77,7 +82,7 @@ class UserController extends Controller
         }
 
         if ($request->filled('password')) {
-            $updateData['password'];
+            $updateData['password'] = $request->password;
         }
 
         $user->update($updateData);

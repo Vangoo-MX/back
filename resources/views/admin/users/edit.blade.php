@@ -112,7 +112,11 @@
                         <div class="col-12 col-lg-6 mb-3">
                             <div>
                                 <label for="password" class="form-label">Contraseña:</label>
-                                <input type="password" class="form-control" id="password" placeholder="Debe de ser minimo 8 caracteres" name="password">
+                                <input type="password" class="form-control"
+                                    id="password"
+                                    placeholder="Mínimo 8 caracteres"
+                                    name="password"
+                                    autocomplete="new-password">
                                 @error('password')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -121,7 +125,11 @@
                         <div class="col-12 col-lg-6 mb-3">
                             <div>
                                 <label for="password_confirmation" class="form-label">Confirmar contraseña:</label>
-                                <input type="password" class="form-control" id="password_confirmation" placeholder="Vuelve a ingresar la contraseña" name="password_confirmation">
+                                <input type="password" class="form-control"
+                                    id="password_confirmation"
+                                    placeholder="Repite la contraseña"
+                                    name="password_confirmation"
+                                    autocomplete="new-password">
                                 @error('password_confirmation')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
