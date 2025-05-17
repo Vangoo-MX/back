@@ -76,6 +76,10 @@ class UserController extends Controller
             $updateData['profile_image'] = $filename;
         }
 
+        if ($request->filled('password')) {
+            $updateData['password'];
+        }
+
         $user->update($updateData);
 
         return redirect()->route('users.show', $user)

@@ -108,6 +108,26 @@
                             </select>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-6 mb-3">
+                            <div>
+                                <label for="password" class="form-label">Contraseña:</label>
+                                <input type="password" class="form-control" id="password" placeholder="Debe de ser minimo 8 caracteres" name="password">
+                                @error('password')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mb-3">
+                            <div>
+                                <label for="password_confirmation" class="form-label">Confirmar contraseña:</label>
+                                <input type="password" class="form-control" id="password_confirmation" placeholder="Vuelve a ingresar la contraseña" name="password_confirmation">
+                                @error('password_confirmation')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-center">
                     <button type="submit" class="btn1">Actualizar usuario</button>
