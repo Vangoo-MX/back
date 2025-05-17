@@ -65,11 +65,6 @@ class AdminController extends Controller
         return view('admin.contacts', compact('agenda', 'users', 'selectedUserID'));
     }
 
-    public function edit(User $user)
-    {
-        return view('admin.edit', compact('user'));
-    }
-
     public function password(User $user)
     {
         return view('admin.changepassword', compact('user'));
