@@ -33,23 +33,23 @@ Route::prefix('auth')->name('password.')->group(function () {
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('update');
 });
 
+// Gestión de usuarios
+Route::prefix('users')->group(function () {
+    Route::get('create', [AdminController::class, 'create'])->name('create');
+    Route::post('store', [AdminController::class, 'store'])->name('storeuser');
+    Route::get('list', [AdminController::class, 'allusers'])->name('users');
+    Route::get('{id}', [AdminController::class, 'show'])->name('user');
+    Route::get('edit/{user}', [AdminController::class, 'edit'])->name('edit');
+    Route::post('update/{user}', [AdminController::class, 'update'])->name('update');
+    Route::get('password/{user}', [AdminController::class, 'password'])->name('passChange');
+    Route::post('passwordUpdate/{user}', [AdminController::class, 'passwordUpdate'])->name('passUpdate');
+    Route::delete('delete/{id}', [AdminController::class, 'destroy'])->name('destroy');
+});
+
 // Panel de administración
 Route::prefix('overview')->name('admin.')->group(function () {
     // Dashboard
     Route::get('home', [AdminController::class, 'index'])->name('index');
-
-    // Gestión de usuarios
-    Route::prefix('users')->group(function () {
-        Route::get('create', [AdminController::class, 'create'])->name('create');
-        Route::post('store', [AdminController::class, 'store'])->name('storeuser');
-        Route::get('list', [AdminController::class, 'allusers'])->name('users');
-        Route::get('{id}', [AdminController::class, 'show'])->name('user');
-        Route::get('edit/{user}', [AdminController::class, 'edit'])->name('edit');
-        Route::post('update/{user}', [AdminController::class, 'update'])->name('update');
-        Route::get('password/{user}', [AdminController::class, 'password'])->name('passChange');
-        Route::post('passwordUpdate/{user}', [AdminController::class, 'passwordUpdate'])->name('passUpdate');
-        Route::delete('delete/{id}', [AdminController::class, 'destroy'])->name('destroy');
-    });
 
     // Propiedades
     Route::prefix('properties')->group(function () {
