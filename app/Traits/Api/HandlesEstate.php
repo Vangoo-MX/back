@@ -157,7 +157,10 @@ trait HandlesEstate
     {
         try {
 
-            dd($request->all());
+            Log::info('Uploading images', [
+                'request' => $request->all(),
+                'directory' => $this->directory
+            ]);
             $request->validate([
                 'image' => 'required|file|image',
                 'id' => 'required|numeric',
