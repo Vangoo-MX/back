@@ -38,17 +38,30 @@
                     <td>{{ $u->rol->title() }}</td>
                     <td>
                         <div class="dropdown">
-                            <span type="button" class="{{$u->status == 1 ? 'card-status-green' : 'card-status-grey'}} dropdown-toggle" data-bs-toggle="dropdown">{{$u->status == 1 ? 'Aprobado' : 'En proceso'}}</span>
+                            <span class="{{ $u->status ? 'card-status-green' : 'card-status-grey' }} dropdown-toggle"
+                                data-bs-toggle="dropdown">
+                                {{ $u->status ? 'Aprobado' : 'En proceso' }}
+                            </span>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('user.changeStatus', ['userid' => $u->id,'status' => '1']) }}">
-                                        Aprobado
-                                    </a>
+                                    <form action="{{ route('users.status.update', $u) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="status" value="1">
+                                        <button type="submit" class="dropdown-item">
+                                            Aprobado
+                                        </button>
+                                    </form>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('user.changeStatus', ['userid' => $u->id,'status' => '0']) }}">
-                                        En proceso
-                                    </a>
+                                    <form action="{{ route('users.status.update', $u) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="status" value="0">
+                                        <button type="submit" class="dropdown-item">
+                                            En proceso
+                                        </button>
+                                    </form>
                                 </li>
                             </ul>
                         </div>

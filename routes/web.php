@@ -7,7 +7,7 @@ use App\Http\Controllers\{
     TerrainsController,
     Auth\ForgotPasswordController,
     Auth\ResetPasswordController,
-    CommissionsController,
+    Auth\AuthController,
     ContactsController,
     PropertiesController,
     DevelopmentsController,
@@ -15,9 +15,8 @@ use App\Http\Controllers\{
     DevelopmentsHorizontalApartmentsController,
     DevelopmentsHorizontalController,
     LotsController,
+    Users\UserController,
 };
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Users\UserController;
 
 Route::redirect('/', '/auth/user/login');
 
@@ -42,8 +41,8 @@ Route::prefix('auth')->group(function () {
 
 Route::resource('users', UserController::class);
 
-Route::get('status/{userid}/{status}', [UserController::class, 'statusUser'])
-    ->name('user.changeStatus');
+Route::put('users/{user}/status', [UserController::class, 'statusUser'])
+    ->name('users.status.update');
 
 // Panel de administración
 Route::prefix('overview')->name('admin.')->group(function () {

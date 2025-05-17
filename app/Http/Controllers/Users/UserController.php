@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -34,7 +35,7 @@ class UserController extends Controller
             'tel'
         ]));
 
-        return redirect()->route('admin.users')
+        return redirect()->route('users.index')
             ->with('success', __('Usuario creado exitosamente'));
     }
 
@@ -71,7 +72,7 @@ class UserController extends Controller
 
         $user->update($updateData);
 
-        return redirect()->route('admin.users.show', $user)
+        return redirect()->route('users.show', $user)
             ->with('success', 'Usuario actualizado correctamente');
     }
 
@@ -83,20 +84,20 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect()->route('admin.users.index')
+        return redirect()->route('users.index')
             ->with('success', 'Usuario eliminado correctamente');
     }
 
-    public function statusUser($userid, $status)
+    public function statusUser(User $user, Request $request)
     {
         try {
-            $user = User::findOrFail($userid);
+            $user->update(['status' => $request->status]);
 
-            $user->update(['status' => $status]);
-
-            return redirect()->back();
-        } catch (Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+            return redirect()->back()
+                ->with('success', 'Estado del usuario actualizado correctamente');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Error al actualizar el estado: ' . $e->getMessage());
         }
     }
 }
