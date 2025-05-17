@@ -34,7 +34,7 @@ Route::prefix('auth')->name('password.')->group(function () {
 });
 
 // Gestión de usuarios
-Route::prefix('users')->group(function () {
+Route::prefix('users')->name('admin.')->group(function () {
     Route::get('create', [AdminController::class, 'create'])->name('create');
     Route::post('store', [AdminController::class, 'store'])->name('storeuser');
     Route::get('list', [AdminController::class, 'allusers'])->name('users');
