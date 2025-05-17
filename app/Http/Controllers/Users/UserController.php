@@ -15,13 +15,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::select([
-            'id',
-            'name',
-            'email',
-            'tel',
-            'rol',
-        ])->latest();
+        $users = User::all();
 
         return view('admin.users.index')->with('users', $users);
     }

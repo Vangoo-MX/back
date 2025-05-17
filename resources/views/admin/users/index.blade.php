@@ -8,7 +8,7 @@
 
 @section('content')
 
-<a href="{{route('admin.create')}}">
+<a href="{{route('admin.users.create')}}">
     <button class="btn1"> Crear nuevo usuario </button>
 </a>
 
@@ -32,7 +32,7 @@
                 @foreach($users as $u)
                 <tr>
                     <td>{{$u->id}}</td>
-                    <td><a href="{{route('admin.user',$u->id)}}">{{$u->name}}</a></td>
+                    <td><a href="{{route('admin.users.show',$u->id)}}">{{$u->name}}</a></td>
                     <td>{{$u->email}}</td>
                     <td>{{$u->tel}}</td>
                     <td>{{ $u->rol->title() }}</td>
