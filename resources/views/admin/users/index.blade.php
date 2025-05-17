@@ -46,7 +46,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('user.changestatus', ['userid' => $u->id,'status' => '0']) }}">
+                                    <a class="dropdown-item" href="{{ route('user.changeStatus', ['userid' => $u->id,'status' => '0']) }}">
                                         En proceso
                                     </a>
                                 </li>
