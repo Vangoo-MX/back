@@ -158,7 +158,7 @@ trait HandlesEstate
         try {
             $request->validate([
                 'image' => 'required|file|image',
-                'id' => 'required|integer',
+                'id' => 'required|numeric',
                 'index' => 'required|string'
             ]);
 
