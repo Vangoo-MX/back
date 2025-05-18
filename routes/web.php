@@ -17,6 +17,7 @@ use App\Http\Controllers\{
     LotsController,
     Users\UserController,
 };
+use App\Http\Controllers\Properties\PropertieController;
 
 Route::redirect('/', '/auth/user/login');
 
@@ -37,6 +38,9 @@ Route::prefix('auth')->group(function () {
         Route::post('reset', [ResetPasswordController::class, 'reset'])->name('update');
     });
 });
+
+// Propiedades
+Route::resource('properties', PropertieController::class)->except(['create', 'store']);
 
 //Gestion de usuarios
 Route::resource('users', UserController::class);

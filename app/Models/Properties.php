@@ -8,11 +8,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Properties extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'title',
         'price',
@@ -45,11 +40,7 @@ class Properties extends Model
         'id_user',
         'status',
     ];
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
+
     protected $table = 'post_properties';
 
     protected $casts = [
