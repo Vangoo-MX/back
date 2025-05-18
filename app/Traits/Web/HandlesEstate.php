@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 trait HandlesEstate
 {
@@ -101,5 +102,41 @@ trait HandlesEstate
             $estate->municipio->nombre ?? null,
             $estate->estado->nombre ?? null
         ])->filter()->join(', ');
+    }
+
+    protected function deleteImage(Model $estate, int $imageId): bool
+    {
+        $imagePath = "public/img/posts/{$this->directory}/{$estate->id}/{$imageId}.webp";
+
+        if (!Storage::exists($imagePath)) {
+            return false;
+        }
+
+        Storage::delete($imagePath);
+
+        $this->decrementImageCount($estate);
+        $this->reorderRemainingImages($estate, $imageId);
+
+        return true;
+    }
+
+    private function decrementImageCount(Model $estate): void
+    {
+        $estate->images = max(0, $estate->images - 1);
+        $estate->save();
+    }
+
+    private function reorderRemainingImages(Model $estate, int $deletedImageId): void
+    {
+        $directory = "public/img/posts/{$this->directory}/{$estate->id}";
+
+        for ($i = $deletedImageId + 1; $i <= $estate->images + 1; $i++) {
+            $oldPath = "{$directory}/{$i}.webp";
+            $newPath = "{$directory}/" . ($i - 1) . ".webp";
+
+            if (Storage::exists($oldPath)) {
+                Storage::move($oldPath, $newPath);
+            }
+        }
     }
 }

@@ -71,4 +71,15 @@ class PropertieController extends Controller
     {
         //
     }
+
+    public function destroyImage($propertyId, $imageId)
+    {
+        $property = Properties::findOrFail($propertyId);
+
+        if ($this->deleteImage($property, $imageId)) {
+            return redirect()->back()->with('success', 'Imagen eliminada correctamente');
+        }
+
+        return redirect()->back()->with('error', 'Imagen no encontrada');
+    }
 }
