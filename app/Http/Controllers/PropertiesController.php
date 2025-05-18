@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Properties;
 use App\Models\PropertiesQueue;
 use App\Models\PropertiesHighlights;
-use App\Models\Images;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
@@ -14,7 +13,6 @@ use Intervention\Image\Facades\Image;
 use App\Models\Estados;
 use App\Models\Municipios;
 use App\Models\Colonias;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class PropertiesController extends Controller

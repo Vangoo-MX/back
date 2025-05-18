@@ -65,58 +65,7 @@ class AdminController extends Controller
         return view('admin.contacts', compact('agenda', 'users', 'selectedUserID'));
     }
 
-    public function getColonias(Request $request)
-    {
-        $municipioId = $request->input('municipio_id');
-
-        if (!$municipioId) {
-            return response()->json(['error' => 'El ID del municipio es requerido.'], 400);
-        }
-
-        try {
-            $colonias = Colonias::where('id_municipio', $municipioId)->get();
-            return response()->json($colonias, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Ocurrió un error al obtener las colonias.'], 500);
-        }
-    }
-
     //properties
-    public function properties()
-    {
-        $propiedades = Properties::get();
-
-        return view('admin.properties', compact('propiedades'));
-    }
-
-    public function details($id)
-    {
-        $municipios = Municipios::where('id_estado', 19)->get();
-        $propiedad = Properties::find($id);
-
-        return view('admin.details', compact('propiedad', 'municipios'));
-    }
-
-    public function showProperties($propiedad)
-    {
-        $propiedad = Properties::find($propiedad);
-
-        if (!$propiedad) {
-            return redirect()->route('admin.properties')->withErrors('La propiedad no existe.');
-        }
-
-        $municipio_propiedad = Municipios::find($propiedad->id_municipio);
-
-        if (!$municipio_propiedad) {
-            return redirect()->route('admin.properties')->withErrors('El municipio de la propiedad no existe.');
-        }
-
-        $estado_propiedad = $municipio_propiedad->id_estado;
-        $municipios = Municipios::where('id_estado', $estado_propiedad)->get();
-        $colonias = Colonias::where('id_municipio', $propiedad->id_municipio)->get();
-
-        return view('admin.showProperties', compact('municipios', 'colonias', 'propiedad'));
-    }
 
     public function queue()
     {

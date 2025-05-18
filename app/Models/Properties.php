@@ -54,7 +54,7 @@ class Properties extends Model
 
     public function estado(): BelongsTo
     {
-        return $this->belongsTo(Estados::class);
+        return $this->belongsTo(Estados::class, 'id_estado', 'id');
     }
 
     public function municipio(): BelongsTo
@@ -64,11 +64,11 @@ class Properties extends Model
 
     public function colonia(): BelongsTo
     {
-        return $this->belongsTo(Colonias::class);
+        return $this->belongsTo(Colonias::class, 'id_colonia', 'id');
     }
 
     public function propertiesHighlights(): HasMany
     {
-        return $this->hasMany(PropertiesHighlights::class);
+        return $this->hasMany(PropertiesHighlights::class, 'id_property', 'id');
     }
 }

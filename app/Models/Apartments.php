@@ -66,21 +66,21 @@ class Apartments extends Model
 
     public function estado(): BelongsTo
     {
-        return $this->belongsTo(Estados::class);
+        return $this->belongsTo(Estados::class, 'id_estado', 'id');
     }
 
     public function municipio(): BelongsTo
     {
-        return $this->belongsTo(Municipios::class);
+        return $this->belongsTo(Municipios::class, 'id_municipio', 'id');
     }
 
     public function colonia(): BelongsTo
     {
-        return $this->belongsTo(Colonias::class);
+        return $this->belongsTo(Colonias::class, 'id_colonia', 'id');
     }
 
     public function apartmentHighlights(): HasMany
     {
-        return $this->hasMany(ApartmentsHighlights::class);
+        return $this->hasMany(ApartmentsHighlights::class, 'id_apartment', 'id');
     }
 }

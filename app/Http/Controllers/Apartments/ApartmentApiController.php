@@ -72,7 +72,7 @@ class ApartmentApiController extends Controller
 
     protected function imagesOrdering(Request $request, int $id)
     {
-        return $this->orderingImages($request, $id);
+        return $this->processImageOrdering($request, $id);
     }
 
     public function deleteApartmentQueue(int $id)

@@ -29,7 +29,7 @@ Editar propiedad
     <div class="col-12 col-lg-4 px-2 px-lg-5 d-flex flex-column align-items-center justify-content-center w-100">
         <div class="w-100">
 
-            <form method="post" class="w-100" action="{{route('admin.propertiesUpdate', $estate)}}" enctype="multipart/form-data">
+            <form method="post" class="w-100" action="{{route('properties.update', $estate)}}" enctype="multipart/form-data">
 
                 @csrf
                 <input type="hidden" name="id" value="{{$estate->id}}">

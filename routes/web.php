@@ -55,9 +55,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
 
     // Propiedades
     Route::prefix('properties')->group(function () {
-        Route::get('list', [AdminController::class, 'properties'])->name('properties');
-        Route::get('details/{id}', [AdminController::class, 'details'])->name('details');
-        Route::get('edit/{propiedad}', [AdminController::class, 'showProperties'])->name('showProperties');
         Route::post('update/{propiedad}', [PropertiesController::class, 'updateProperties'])->name('propertiesUpdate');
         Route::get('queue', [AdminController::class, 'queue'])->name('queue');
         Route::get('highlights', [AdminController::class, 'highlights'])->name('highlights.properties');
@@ -164,8 +161,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
     Route::get('statistics', [AdminController::class, 'statistics'])->name('statistics');
     Route::get('settings', [AdminController::class, 'settingsinfo'])->name('settings');
 });
-
-Route::get('/getColonias', [AdminController::class, 'getColonias'])->name('getColonias');
 
 Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('emails.confirm');
 
