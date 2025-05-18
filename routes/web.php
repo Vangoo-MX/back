@@ -59,7 +59,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
 
     // Propiedades
     Route::prefix('properties')->group(function () {
-        Route::post('update/{propiedad}', [PropertiesController::class, 'updateProperties'])->name('propertiesUpdate');
         Route::get('queue', [AdminController::class, 'queue'])->name('queue');
         Route::get('highlights', [AdminController::class, 'highlights'])->name('highlights.properties');
         Route::get('deleteHighlight/{id}', [PropertiesController::class, 'deletePropertyHightlight'])->name('deleteHighlightProperties');
@@ -69,7 +68,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('revisionQueue/{id}', [PropertiesController::class, 'revisionPropertyQueue'])->name('revisionPropertyQueue');
         Route::post('aprovedQueue', [PropertiesController::class, 'aprovedPropertyQueue'])->name('aprovedPropertyQueue');
         Route::get('delete/{id}', [PropertiesController::class, 'deleteProperty'])->name('deleteProperty');
-        // Route::delete('deleteImage/{propertyId}/{imageId}', [PropertiesController::class, 'deleteImage'])->name('deleteImageProperty');
         Route::get('deactiveProperty/{id}', [PropertiesController::class, 'deactiveProperty'])->name('deactiveProperty');
         Route::get('activeProperty/{id}', [PropertiesController::class, 'activeProperty'])->name('activeProperty');
     });
