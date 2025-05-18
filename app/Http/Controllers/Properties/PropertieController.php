@@ -16,22 +16,13 @@ class PropertieController extends Controller
     public function index()
     {
         $viewEstate = 'admin.properties.index';
-        return $this->getEstate($viewEstate);
+        return $this->indexEstate($viewEstate);
     }
 
-    public function create()
+    public function show($id)
     {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(string $id)
-    {
-        //
+        $viewEstate = 'admin.properties.show';
+        return $this->showEstate($id, $viewEstate);
     }
 
     public function edit(string $id)
