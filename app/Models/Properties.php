@@ -59,7 +59,7 @@ class Properties extends Model
 
     public function municipio(): BelongsTo
     {
-        return $this->belongsTo(Municipios::class);
+        return $this->belongsTo(Municipios::class, 'id_municipio', 'id');
     }
 
     public function colonia(): BelongsTo
