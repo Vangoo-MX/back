@@ -32,9 +32,9 @@ class PropertieController extends Controller
         return $this->editEstate($id, $viewEstate);
     }
 
-    public function update(Request $request, Properties $propiedad)
+    public function update(Request $request, Properties $property)
     {
-        $propiedad->update($request->only([
+        $property->update($request->only([
             'title',
             'operation_type',
             'price',
@@ -56,14 +56,14 @@ class PropertieController extends Controller
             'antiquity'
         ]));
 
-        $propiedad->update([
-            'location' => $this->getPropertyLocation($propiedad),
-            'images' => $propiedad->images + ($request->hasFile('images') ? count($request->file('images')) : 0)
+        $property->update([
+            'location' => $this->getPropertyLocation($property),
+            'images' => $property->images + ($request->hasFile('images') ? count($request->file('images')) : 0)
         ]);
 
-        $this->handleImageProcessing($request, $propiedad);
+        $this->handleImageProcessing($request, $property);
 
-        return redirect()->route('properties.show', $propiedad)
+        return redirect()->route('properties.show', $property)
             ->with('success', 'Propiedad actualizada correctamente');
     }
 
