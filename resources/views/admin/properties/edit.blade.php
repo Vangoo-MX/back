@@ -295,7 +295,7 @@ Editar propiedad
                     <button type="submit" class="btn1">Editar propiedad</button>
                 </div>
             </form>
-            <form id="delete-form" action="{{ route('admin.deleteImageProperty', ['propertyId' => $estate->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+            <form id="delete-form" action="{{ route('properties.deleteImage', ['propertyId' => $estate->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>

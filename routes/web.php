@@ -41,8 +41,10 @@ Route::prefix('auth')->group(function () {
 
 // Propiedades
 Route::resource('properties', PropertieController::class)->except(['create', 'store']);
+Route::prefix('properties')->name('properties.')->group(function () {
+    Route::delete('deleteImage/{propertyId}/{imageId}', [PropertieController::class, 'destroyImage'])->name('deleteImage');
+});
 
-Route::delete('deleteImage/{propertyId}/{imageId}', [PropertieController::class, 'destroyImage'])->name('deleteImageProperty');
 
 //Gestion de usuarios
 Route::resource('users', UserController::class);
