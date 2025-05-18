@@ -26,16 +26,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($propiedades as $p)
+                @foreach($estates as $estate)
                 <tr>
-                    <td>{{$p->id}}</td>
-                    <td>{{limitString($p->title,37)}}</td>
-                    <td>{{moneyFormat($p->price)}}</td>
-                    <td>{{limitString(colonia($p->id_colonia),30)}}</td>
-                    <td>{{municipio($p->id_municipio)}}</td>
-                    <td>{{estado($p->id_estado)}}</td>
-                    <td><a href="user/{{$p->id_user}}">{{username($p->id_user)}}</a></td>
-                    <td>{{ convertDate($p->created_at) }}</td>
+                    <td>{{$estate->id}}</td>
+                    <td>{{limitString($estate->title,37)}}</td>
+                    <td>{{moneyFormat($estate->price)}}</td>
+                    <td>{{limitString(colonia($estate->id_colonia),30)}}</td>
+                    <td>{{municipio($estate->id_municipio)}}</td>
+                    <td>{{estado($estate->id_estado)}}</td>
+                    <td><a href="user/{{$estate->id_user}}">{{username($estate->id_user)}}</a></td>
+                    <td>{{ convertDate($estate->created_at) }}</td>
                     <td>
                         <div class="dropdown">
                             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
@@ -43,13 +43,13 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{route('admin.details',$p->id)}}">
+                                    <a class="dropdown-item" href="{{route('admin.details',$estate->id)}}">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/propiedad/{{$p->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/propiedad/{{$estate->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
@@ -61,20 +61,20 @@
                                     </a>
                                 </li>
                                 <li>
-                                    @if ($p->status == 1)
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$p->id}})" id="propertyDeactiveConfirmBtn{{$p->id}}" data-url="{{route('admin.deactiveProperty',$p->id)}}">
+                                    @if ($estate->status == 1)
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$estate->id}})" id="propertyDeactiveConfirmBtn{{$estate->id}}" data-url="{{route('admin.deactiveProperty',$estate->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Desactivar
                                     </a>
                                     @else
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$p->id}})" id="propertyActivateConfirmBtn{{$p->id}}" data-url="{{route('admin.activeProperty',$p->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$estate->id}})" id="propertyActivateConfirmBtn{{$estate->id}}" data-url="{{route('admin.activeProperty',$estate->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Activar
                                     </a>
                                     @endif
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeleteModal" onclick="propertyDeleteModalData({{$p->id}})" id="propertyDeleteConfirmBtn{{$p->id}}" data-url="{{route('admin.deleteProperty',$p->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeleteModal" onclick="propertyDeleteModalData({{$estate->id}})" id="propertyDeleteConfirmBtn{{$estate->id}}" data-url="{{route('admin.deleteProperty',$estate->id)}}">
                                         <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>

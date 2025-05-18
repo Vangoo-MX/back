@@ -6,8 +6,8 @@ trait HandlesEstate
 {
     public function getEstate($viewEstate)
     {
-        $Estate = $this->model::all();
+        $estates = $this->model::all();
 
-        return view($viewEstate, compact('Estate'));
+        return view($viewEstate, compact('estates'));
     }
 }
