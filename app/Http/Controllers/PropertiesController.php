@@ -100,23 +100,6 @@ class PropertiesController extends Controller
         return redirect()->route('admin.queue');
     }
 
-    public function deleteProperty($id)
-    {
-        if ($highlight = PropertiesHighlights::where('id_property', $id)->first()) {
-            $highlight->delete();
-        }
-
-        $property = Properties::findOrFail($id);
-        $directoryPath = public_path("storage/img/posts/properties/{$property->id}");
-
-        if (is_dir($directoryPath)) {
-            File::deleteDirectory($directoryPath, true);
-        }
-
-        $property->delete();
-        return redirect()->route('admin.properties');
-    }
-
     public function deactiveProperty($id)
     {
         Properties::findOrFail($id)->update(['status' => 0]);
