@@ -39,10 +39,11 @@ Route::prefix('auth')->group(function () {
 });
 
 //Gestion de usuarios
-Route::resource('users', UserController::class);
-
-Route::put('users/{user}/status', [UserController::class, 'statusUser'])
-    ->name('users.status.update');
+Route::prefix('users')->group(function () {
+    Route::resource('/', UserController::class);
+    Route::put('{user}/status', [UserController::class, 'statusUser'])
+        ->name('users.status.update');
+});
 
 // Panel de administración
 Route::prefix('overview')->name('admin.')->group(function () {
