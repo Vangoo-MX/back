@@ -47,7 +47,7 @@ trait HandlesEstate
 
     protected function processNewImages(array $images, Model $estate): void
     {
-        $directory = storage_path("app/public/img/posts/{$this->directory}/properties/{$estate->id}");
+        $directory = storage_path("app/public/img/posts/{$this->directory}/{$estate->id}");
 
         File::ensureDirectoryExists($directory);
 
@@ -72,7 +72,7 @@ trait HandlesEstate
 
     protected function reorderImages(array $newOrder, Model $estate): void
     {
-        $directory = storage_path("app/public/img/posts/{$this->directory}/properties/{$estate->id}");
+        $directory = storage_path("app/public/img/posts/{$this->directory}/{$estate->id}");
         $tempPrefix = 'reorder_temp_';
 
         foreach ($newOrder as $newPosition => $originalPosition) {
