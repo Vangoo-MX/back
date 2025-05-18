@@ -56,12 +56,14 @@ class PropertieController extends Controller
             'antiquity'
         ]));
 
+        $this->handleImageProcessing($request, $property);
+
         $property->update([
             'location' => $this->getPropertyLocation($property),
             'images' => $property->images + ($request->hasFile('images') ? count($request->file('images')) : 0)
         ]);
 
-        $this->handleImageProcessing($request, $property);
+
 
         return redirect()->route('properties.show', $property)
             ->with('success', 'Propiedad actualizada correctamente');
