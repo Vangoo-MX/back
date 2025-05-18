@@ -52,7 +52,7 @@ trait HandlesEstate
         File::ensureDirectoryExists($directory);
 
         foreach ($images as $index => $image) {
-            $imageName = Str::slug($estate->images + $index + 1) . '.webp';
+            $imageName = Str::slug($estate->images + $index) . '.webp';
             $path = "{$directory}/{$imageName}";
 
             $this->processSingleImage($image, $directory, $path);
