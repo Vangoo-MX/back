@@ -108,14 +108,14 @@ Detalle
 
                         <div class="mb-3 mt-3">
                             <label for="id_municipio" class="form-label">Municipio:</label>
-                            <select class="form-select" name="id_municipio" id="id_municipio" disabled>
-                                <option hidden>Selecciona un municipio</option>
-                                @foreach($municipios as $e)
-                                <option value="{{$e->id}}" data-id="{{$e->id}}" <?php if ($estate->id_municipio == $e->id) {
-                                                                                    echo 'selected';
-                                                                                } ?>>{{$e->nombre}}</option>
-                                @endforeach
-                            </select>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="id_municipio"
+                                id="id_municipio"
+                                value="{{ $estate->municipio->nombre ?? '' }}"
+                                disabled
+                                readonly>
                         </div>
                         <div class="mb-3 mt-3">
                             <label for="id_colonia" class="form-label">Colonia:</label>
