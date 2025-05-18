@@ -25,9 +25,10 @@ class PropertieController extends Controller
         return $this->showEstate($id, $viewEstate);
     }
 
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $viewEstate = 'admin.properties.edit';
+        return $this->editEstate($id, $viewEstate);
     }
 
     public function update(Request $request, string $id)

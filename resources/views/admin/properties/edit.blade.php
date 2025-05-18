@@ -9,7 +9,7 @@ Editar propiedad
 @endsection()
 
 @section('title')
-{{$propiedad->title}}
+{{$estate->title}}
 @endsection()
 
 @section('titleContent','Detalles de propiedad')
@@ -19,7 +19,7 @@ Editar propiedad
 <!-- Content Row -->
 
 
-<?php if ($propiedad->status == 0) { ?>
+<?php if ($estate->status == 0) { ?>
     <div class="alert alert-danger">
         Esta propiedad está deshabilitada
     </div>
@@ -29,17 +29,17 @@ Editar propiedad
     <div class="col-12 col-lg-4 px-2 px-lg-5 d-flex flex-column align-items-center justify-content-center w-100">
         <div class="w-100">
 
-            <form method="post" class="w-100" action="{{route('admin.propertiesUpdate', $propiedad)}}" enctype="multipart/form-data">
+            <form method="post" class="w-100" action="{{route('admin.propertiesUpdate', $estate)}}" enctype="multipart/form-data">
 
                 @csrf
-                <input type="hidden" name="id" value="{{$propiedad->id}}">
+                <input type="hidden" name="id" value="{{$estate->id}}">
 
                 <div class="d-flex gap-5 w-100 flex-column flex-lg-row">
                     <div class="w-100">
 
                         <div class="mb-3 mt-3">
                             <label for="title" class="form-label">Titulo:</label>
-                            <input type="text" class="form-control" id="title" value="{{old('title', $propiedad->title)}}" placeholder="Ingresa un titulo" name="title">
+                            <input type="text" class="form-control" id="title" value="{{old('title', $estate->title)}}" placeholder="Ingresa un titulo" name="title">
                             @error('title')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -48,10 +48,10 @@ Editar propiedad
                         <div class="mb-3 mt-3">
                             <label for="operation_type" class="form-label">Tipo de operación:</label>
                             <select class="form-select" name="operation_type">
-                                <option value="venta" <?php if ($propiedad->operation_type == 'venta') {
+                                <option value="venta" <?php if ($estate->operation_type == 'venta') {
                                                             echo 'selected';
                                                         } ?>>Venta</option>
-                                <option value="renta" <?php if ($propiedad->operation_type == 'renta') {
+                                <option value="renta" <?php if ($estate->operation_type == 'renta') {
                                                             echo 'selected';
                                                         } ?>>Renta</option>
                             </select>
@@ -59,7 +59,7 @@ Editar propiedad
 
                         <div class="mb-3 mt-3">
                             <label for="price" class="form-label">Precio:</label>
-                            <input type="number" class="form-control" step="0.01" id="price" value="{{old('price', $propiedad->price)}}" placeholder="Precio de venta/renta" name="price">
+                            <input type="number" class="form-control" step="0.01" id="price" value="{{old('price', $estate->price)}}" placeholder="Precio de venta/renta" name="price">
                             @error('price')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -67,7 +67,7 @@ Editar propiedad
 
                         <div class="mb-3 mt-3">
                             <label for="price_maintenance" class="form-label">Precio de mantenimiento:</label>
-                            <input type="number" class="form-control" id="price_maintenance" value="{{old('price_maintenance', $propiedad->price_maintenance)}}" placeholder="Precio de mantenimiento" name="price_maintenance">
+                            <input type="number" class="form-control" id="price_maintenance" value="{{old('price_maintenance', $estate->price_maintenance)}}" placeholder="Precio de mantenimiento" name="price_maintenance">
                             @error('price_maintenance')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -75,7 +75,7 @@ Editar propiedad
 
                         <div class="mb-3 mt-3">
                             <label for="description">Descripción:</label>
-                            <textarea class="form-control" rows="5" id="description" name="description">{{old('description', $propiedad->description)}}</textarea>
+                            <textarea class="form-control" rows="5" id="description" name="description">{{old('description', $estate->description)}}</textarea>
                             @error('description')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -85,13 +85,13 @@ Editar propiedad
                             <div class="d-flex gap-5">
                                 <div>
                                     <label for="rooms" class="form-label">Cuartos:</label>
-                                    <input type="number" class="form-control" step="1" id="rooms" value="{{old('rooms', $propiedad->rooms)}}" placeholder="Cuartos" name="rooms">
+                                    <input type="number" class="form-control" step="1" id="rooms" value="{{old('rooms', $estate->rooms)}}" placeholder="Cuartos" name="rooms">
                                     @error('rooms')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 @php
-                                $bathroomsFormatted = (intval($propiedad->bathrooms) == $propiedad->bathrooms) ? intval($propiedad->bathrooms) : $propiedad->bathrooms;
+                                $bathroomsFormatted = (intval($estate->bathrooms) == $estate->bathrooms) ? intval($estate->bathrooms) : $estate->bathrooms;
                                 @endphp
                                 <div>
                                     <label for="bathrooms" class="form-label">Baños:</label>
@@ -105,7 +105,7 @@ Editar propiedad
 
                         <div class="mb-3 mt-3">
                             <label for="parkings" class="form-label">Lugares de estacionamiento:</label>
-                            <input type="number" class="form-control" step="1" id="parkings" value="{{old('parkings', $propiedad->parkings)}}" placeholder="Lugares de estacionamiento" name="parkings">
+                            <input type="number" class="form-control" step="1" id="parkings" value="{{old('parkings', $estate->parkings)}}" placeholder="Lugares de estacionamiento" name="parkings">
                             @error('parkings')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -113,12 +113,12 @@ Editar propiedad
 
                         <div class="mb-3 mt-3">
                             <label for="map" class="form-label">Mapa:</label>
-                            <input type="text" class="form-control" id="map" value="{{old('map', $propiedad->map)}}" placeholder="Ingresa el link de google maps" name="map">
+                            <input type="text" class="form-control" id="map" value="{{old('map', $estate->map)}}" placeholder="Ingresa el link de google maps" name="map">
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="area" class="form-label">Area:</label>
-                            <input type="number" step="0.01" class="form-control" id="area" value="{{old('area', $propiedad->area)}}" placeholder="Ingresa el area del inmueble" name="area">
+                            <input type="number" step="0.01" class="form-control" id="area" value="{{old('area', $estate->area)}}" placeholder="Ingresa el area del inmueble" name="area">
                             @error('area')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -132,10 +132,10 @@ Editar propiedad
                             <label for="id_municipio" class="form-label">Municipio:</label>
                             <select class="form-select" name="id_municipio" id="id_municipio">
                                 <option hidden>Selecciona un municipio</option>
-                                @foreach($municipios as $e)
-                                <option value="{{$e->id}}" data-id="{{$e->id}}" <?php if ($propiedad->id_municipio == $e->id) {
-                                                                                    echo 'selected';
-                                                                                } ?>>{{$e->nombre}}</option>
+                                @foreach($municipios as $municipio)
+                                <option value="{{$municipio->id}}" data-id="{{$municipio->id}}" <?php if ($estate->id_municipio == $municipio->id) {
+                                                                                                    echo 'selected';
+                                                                                                } ?>>{{$municipio->nombre}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -146,7 +146,7 @@ Editar propiedad
 
                         <div class="mb-3 mt-3">
                             <label for="street" class="form-label">Calle:</label>
-                            <input type="text" class="form-control" id="street" value="{{old('street' ,$propiedad->street)}}" placeholder="Ingresa la calle" name="street">
+                            <input type="text" class="form-control" id="street" value="{{old('street' ,$estate->street)}}" placeholder="Ingresa la calle" name="street">
                             @error('street')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -157,14 +157,14 @@ Editar propiedad
                             <div class="d-flex gap-5">
                                 <div>
                                     <label for="num_ext" class="form-label">Número exterior:</label>
-                                    <input type="number" class="form-control" id="num_ext" value="{{old('num_ext', $propiedad->num_ext)}}" placeholder="Ingresa el número exterior" name="num_ext">
+                                    <input type="number" class="form-control" id="num_ext" value="{{old('num_ext', $estate->num_ext)}}" placeholder="Ingresa el número exterior" name="num_ext">
                                     @error('num_ext')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div>
                                     <label for="num_int" class="form-label">Número interior:</label>
-                                    <input type="number" class="form-control" id="num_int" value="{{old('num_int', $propiedad->num_int)}}" placeholder="Ingresa el número interior" name="num_int">
+                                    <input type="number" class="form-control" id="num_int" value="{{old('num_int', $estate->num_int)}}" placeholder="Ingresa el número interior" name="num_int">
                                     @error('num_int')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -174,17 +174,17 @@ Editar propiedad
                         </div>
                         <div class="mb-3 mt-3">
                             <label for="map_lat" class="form-label">Coordenadas Latitud:</label>
-                            <input type="text" class="form-control" id="map_lat" name="map_lat" value="{{old('map_lat', $propiedad->map_lat)}}">
+                            <input type="text" class="form-control" id="map_lat" name="map_lat" value="{{old('map_lat', $estate->map_lat)}}">
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="map_long" class="form-label">Coordenadas Longitud:</label>
-                            <input type="text" class="form-control" id="map_long" name="map_long" value="{{old('map_long', $propiedad->map_long)}}">
+                            <input type="text" class="form-control" id="map_long" name="map_long" value="{{old('map_long', $estate->map_long)}}">
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="cp" class="form-label">Codigo postal:</label>
-                            <input type="number" class="form-control" id="cp" value="{{old('cp', $propiedad->cp)}}" placeholder="Ingresa el código postal" name="cp" disabled>
+                            <input type="number" class="form-control" id="cp" value="{{old('cp', $estate->cp)}}" placeholder="Ingresa el código postal" name="cp" disabled>
                             @error('cp')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -193,7 +193,7 @@ Editar propiedad
 
                         <div class="mb-3 mt-3">
                             <label for="amenities" class="form-label">Amenidades:</label>
-                            <input type="text" class="form-control" id="amenities" value="{{old('amenities', $propiedad->amenities)}}" placeholder="Separe con comas y sin espacios" name="amenities">
+                            <input type="text" class="form-control" id="amenities" value="{{old('amenities', $estate->amenities)}}" placeholder="Separe con comas y sin espacios" name="amenities">
                             @error('amenities')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -201,7 +201,7 @@ Editar propiedad
 
                         <div class="mb-3 mt-3">
                             <label for="services" class="form-label">Servicios:</label>
-                            <input type="text" class="form-control" id="services" value="{{old('services', $propiedad->services)}}" placeholder="Separe con comas y sin espacios" name="services">
+                            <input type="text" class="form-control" id="services" value="{{old('services', $estate->services)}}" placeholder="Separe con comas y sin espacios" name="services">
                             @error('services')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -209,7 +209,7 @@ Editar propiedad
 
                         <div class="mb-3 mt-3">
                             <label for="sell_type" class="form-label">Tipo de venta:</label>
-                            <input type="text" class="form-control" id="sell_type" value="{{old('sell_type', $propiedad->sell_type)}}" placeholder="Tipo de venta" name="sell_type">
+                            <input type="text" class="form-control" id="sell_type" value="{{old('sell_type', $estate->sell_type)}}" placeholder="Tipo de venta" name="sell_type">
                             @error('sell_type')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -217,16 +217,16 @@ Editar propiedad
 
                         <div class="mb-3 mt-3">
                             <label for="share-conditions">Condiciones para compartir:</label>
-                            <textarea class="form-control" rows="5" id="share_conditions" name="share_conditions">{{old('share_conditions', $propiedad->share_conditions)}}</textarea>
+                            <textarea class="form-control" rows="5" id="share_conditions" name="share_conditions">{{old('share_conditions', $estate->share_conditions)}}</textarea>
                             @error('share_conditions')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <?php if ($propiedad->price_m2) { ?>
+                        <?php if ($estate->price_m2) { ?>
                             <div class="mb-3 mt-3">
                                 <label for="price_m2" class="form-label">Precio basado en m2:</label>
-                                <input type="text" class="form-control" id="price_m2" value="{{old('price_m2', $propiedad->price_m2)}}" placeholder="Precio basado en m2" name="price_m2">
+                                <input type="text" class="form-control" id="price_m2" value="{{old('price_m2', $estate->price_m2)}}" placeholder="Precio basado en m2" name="price_m2">
                                 @error('price_m2')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -235,7 +235,7 @@ Editar propiedad
 
                         <div class="mb-3 mt-3">
                             <label for="antiquity" class="form-label">Antiguedad:</label>
-                            <input type="text" class="form-control" id="antiquity" value="{{old('antiquity', $propiedad->antiquity)}}" placeholder="Antiguedad del inmueble" name="antiquity">
+                            <input type="text" class="form-control" id="antiquity" value="{{old('antiquity', $estate->antiquity)}}" placeholder="Antiguedad del inmueble" name="antiquity">
                             @error('antiquity')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -243,7 +243,7 @@ Editar propiedad
 
                         <div class="mb-3 mt-3">
                             <label for="no_exact_location">Mostrar locación exacta:</label>
-                            <?php if ($propiedad->no_exact_location == 1) {
+                            <?php if ($estate->no_exact_location == 1) {
                                 echo "si";
                             } else {
                                 echo "no";
@@ -254,15 +254,15 @@ Editar propiedad
 
                 <span>Imagenes:</span>
                 <div class="d-flex gap-2 mt-2">
-                    @for ($i = 1; $i <= $propiedad->images; $i++)
+                    @for ($i = 1; $i <= $estate->images; $i++)
                         <div class="d-flex flex-column align-items-center image-container">
                             @php
-                            $imagePath = 'public/img/posts/properties/' . $propiedad->id . '/' . $i . '.webp';
+                            $imagePath = 'public/img/posts/properties/' . $estate->id . '/' . $i . '.webp';
                             @endphp
 
                             @if(Storage::exists($imagePath))
                             @php
-                            $imageUrl = asset('storage/img/posts/properties/' . $propiedad->id . '/' . $i . '.webp');
+                            $imageUrl = asset('storage/img/posts/properties/' . $estate->id . '/' . $i . '.webp');
                             @endphp
                             <div class="d-flex flex-column align-items-center image-container">
                                 <a href="{{ $imageUrl }}" target="_blank">
@@ -271,7 +271,7 @@ Editar propiedad
 
                                 <div class="mt-1">
                                     <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%" required>
-                                        @for($j = 1; $j <= $propiedad->images; $j++)
+                                        @for($j = 1; $j <= $estate->images; $j++)
                                             <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
                                                 {{ $j }}
                                             </option>
@@ -294,7 +294,7 @@ Editar propiedad
                     <button type="submit" class="btn1">Editar propiedad</button>
                 </div>
             </form>
-            <form id="delete-form" action="{{ route('admin.deleteImageProperty', ['propertyId' => $propiedad->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+            <form id="delete-form" action="{{ route('admin.deleteImageProperty', ['propertyId' => $estate->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>
@@ -450,7 +450,7 @@ Editar propiedad
                 var hasSelected = false;
                 for (var i = 0; i < colonias.length; i++) {
                     var selected = '';
-                    if (colonias[i].id == <?php echo $propiedad->id_colonia; ?>) {
+                    if (colonias[i].id == <?php echo $estate->id_colonia; ?>) {
                         selected = 'selected';
                         hasSelected = true;
                     }
