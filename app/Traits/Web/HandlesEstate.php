@@ -13,7 +13,7 @@ trait HandlesEstate
 
     public function showEstate($id, $viewEstate)
     {
-        $estate = $this->model::with('municipio')->find($id);
+        $estate = $this->model::findOrFail($id);
 
         return view($viewEstate, compact('estate'));
     }
