@@ -32,6 +32,7 @@ Editar propiedad
             <form method="post" class="w-100" action="{{route('properties.update', $estate)}}" enctype="multipart/form-data">
 
                 @csrf
+                @method('PUT')
                 <input type="hidden" name="id" value="{{$estate->id}}">
 
                 <div class="d-flex gap-5 w-100 flex-column flex-lg-row">
