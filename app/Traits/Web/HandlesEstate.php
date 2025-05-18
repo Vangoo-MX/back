@@ -10,6 +10,9 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Response;
 
 trait HandlesEstate
 {
@@ -33,6 +36,32 @@ trait HandlesEstate
         $municipios = Municipios::where('id_estado', 19)->get();
 
         return view($viewEstate, compact('estate', 'municipios'));
+    }
+
+    public function deleteEstate(int $id, $viewEstate)
+    {
+        try {
+            if ($highlight = $this->highlightModel::where('id_property', $id)->first()) {
+                $highlight->delete();
+            }
+
+            $estate = $this->model::findOrFail($id);
+            $directoryPath = public_path("storage/img/posts/{$this->directory}/{$estate->id}");
+
+            if (File::exists($directoryPath)) {
+                File::deleteDirectory($directoryPath);
+            }
+
+            $estate->delete();
+
+            return view($viewEstate)->with('success', __('Propiedad eliminada exitosamente'));
+        } catch (Exception $e) {
+            Log::error("Error deleting resource queue: {$e->getMessage()}");
+            return response()->json(
+                ['error' => 'Failed to delete resource'],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 
     protected function handleImageProcessing(Request $request, Model $estate): void

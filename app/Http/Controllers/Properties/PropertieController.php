@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Properties;
 
 use App\Http\Controllers\Controller;
 use App\Models\Properties;
+use App\Models\PropertiesHighlights;
 use App\Traits\Web\HandlesEstate;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,7 @@ class PropertieController extends Controller
     use HandlesEstate;
 
     protected $model = Properties::class;
+    protected $highlightModel = PropertiesHighlights::class;
     protected $directory = 'properties';
 
     public function index()
@@ -71,7 +73,8 @@ class PropertieController extends Controller
 
     public function destroy(string $id)
     {
-        //
+        $viewEstate = 'admin.properties.index';
+        return $this->deleteEstate($id, $viewEstate);
     }
 
     public function destroyImage($propertyId, $imageId)
