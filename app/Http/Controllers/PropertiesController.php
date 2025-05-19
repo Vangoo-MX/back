@@ -65,12 +65,6 @@ class PropertiesController extends Controller
         return redirect()->route('admin.queue');
     }
 
-    public function revisionPropertyQueue($id)
-    {
-        PropertiesQueue::where('id', $id)->update(['status_aproved' => 3]);
-        return redirect()->route('admin.queue');
-    }
-
     public function deletePropertyQueue($id)
     {
         PropertiesQueue::findOrFail($id)->delete();

@@ -24,7 +24,11 @@ class PropertyQueueController extends Controller
 
     public function store(Request $request)
     {
-        $viewEstate = 'admin.properties.queue.index';
-        return $this->storeQueue($request, $viewEstate);
+        return $this->approvedQueueQueue($request);
+    }
+
+    public function update($id)
+    {
+        return $this->revisionQueue($id);
     }
 }

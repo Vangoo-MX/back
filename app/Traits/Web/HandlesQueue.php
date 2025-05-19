@@ -25,7 +25,7 @@ trait HandlesQueue
         ));
     }
 
-    public function storeQueue(Request $request, $viewEstate)
+    public function approvedQueue(Request $request)
     {
         $estateQueue = $this->modelQueue::findOrFail($request->id);
         $newEstate = $this->model::create(Arr::except($estateQueue->toArray(), ['id']));
@@ -44,6 +44,14 @@ trait HandlesQueue
         File::deleteDirectory(public_path($sourceDir));
         $estateQueue->delete();
 
-        return view($viewEstate);
+        return redirect()->back()->with('success', 'Property approved successfully.');
+    }
+
+    public function revisionQueue($id)
+    {
+        $estate = $this->modelQueue::findOrFail($id);
+        $estate->update(['status_aproved' => 3]);
+
+        return redirect()->back()->with('success', 'Property sent for revision successfully.');
     }
 }
