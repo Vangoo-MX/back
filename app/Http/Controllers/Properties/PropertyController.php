@@ -8,7 +8,7 @@ use App\Models\PropertiesHighlights;
 use App\Traits\Web\HandlesEstate;
 use Illuminate\Http\Request;
 
-class PropertieController extends Controller
+class PropertyController extends Controller
 {
     use HandlesEstate;
 

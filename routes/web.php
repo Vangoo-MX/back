@@ -17,7 +17,8 @@ use App\Http\Controllers\{
     LotsController,
     Users\UserController,
 };
-use App\Http\Controllers\Properties\PropertieController;
+use App\Http\Controllers\Properties\PropertyController;
+use App\Http\Controllers\Properties\PropertyQueueController;
 
 Route::redirect('/', '/auth/user/login');
 
@@ -40,9 +41,10 @@ Route::prefix('auth')->group(function () {
 });
 
 // Propiedades
-Route::resource('properties', PropertieController::class)->except(['create', 'store']);
+Route::resource('properties', PropertyController::class)->except(['create', 'store']);
 Route::prefix('properties')->name('properties.')->group(function () {
-    Route::delete('deleteImage/{propertyId}/{imageId}', [PropertieController::class, 'destroyImage'])->name('deleteImage');
+    Route::resource('queue', PropertyQueueController::class);
+    Route::delete('deleteImage/{propertyId}/{imageId}', [PropertyController::class, 'destroyImage'])->name('deleteImage');
 });
 
 

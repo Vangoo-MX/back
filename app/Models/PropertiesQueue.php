@@ -7,11 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PropertiesQueue extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'list_properties_queue';
 
     protected $fillable = [
@@ -44,7 +39,7 @@ class PropertiesQueue extends Model
         'no_exact_location',
         'images',
         'id_user',
-        'status',
+        'status_aproved',
     ];
 
     protected $casts = [
@@ -53,16 +48,16 @@ class PropertiesQueue extends Model
 
     public function estado(): BelongsTo
     {
-        return $this->belongsTo(Estados::class);
+        return $this->belongsTo(Estados::class, 'id_estado', 'id');
     }
 
     public function municipio(): BelongsTo
     {
-        return $this->belongsTo(Municipios::class);
+        return $this->belongsTo(Municipios::class, 'id_municipio', 'id');
     }
 
     public function colonia(): BelongsTo
     {
-        return $this->belongsTo(Colonias::class);
+        return $this->belongsTo(Colonias::class, 'id_colonia', 'id');
     }
 }
