@@ -16,9 +16,9 @@ use App\Http\Controllers\{
     DevelopmentsHorizontalController,
     LotsController,
     Users\UserController,
+    Properties\PropertyController,
+    Properties\PropertyQueueController,
 };
-use App\Http\Controllers\Properties\PropertyController;
-use App\Http\Controllers\Properties\PropertyQueueController;
 
 Route::redirect('/', '/auth/user/login');
 
