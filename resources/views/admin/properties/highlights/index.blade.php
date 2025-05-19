@@ -10,7 +10,7 @@
 
 <h3>Nueva propiedad destacada</h3>
 <br>
-<form method="post" action="{{ route('admin.addHighlightProperties') }}">
+<form method="post" action="{{ route('properties.highlights.store') }}">
     @csrf
     <div class="d-flex gap-2">
         <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">

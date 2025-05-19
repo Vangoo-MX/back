@@ -2,7 +2,6 @@
 
 namespace App\Traits\Web;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 
@@ -25,7 +24,7 @@ trait HandlesQueue
         ));
     }
 
-    public function approvedQueue(Request $request)
+    public function approvedQueue($request)
     {
         $estateQueue = $this->modelQueue::findOrFail($request->id);
         $newEstate = $this->model::create(Arr::except($estateQueue->toArray(), ['id']));

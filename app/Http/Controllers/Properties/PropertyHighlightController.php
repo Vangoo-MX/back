@@ -12,6 +12,8 @@ class PropertyHighlightController extends Controller
     use HandlesHighlights;
 
     protected $modelHighlights = PropertiesHighlights::class;
+    protected $inputID = 'id_property';
+    protected $fieldID = 'id_property';
 
     public function index()
     {
@@ -19,24 +21,9 @@ class PropertyHighlightController extends Controller
         return $this->indexHighlights($viewState);
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-        //
-    }
-
-    public function show(string $id)
-    {
-        //
-    }
-
-    public function edit(string $id)
-    {
-        //
+        return $this->storeHighlight($request);
     }
 
     public function update(Request $request, string $id)

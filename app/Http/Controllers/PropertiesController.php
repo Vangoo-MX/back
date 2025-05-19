@@ -26,21 +26,6 @@ class PropertiesController extends Controller
         return response()->json(['error' => 'Agenda entry not found'], 404);
     }
 
-    public function addPropertyHightlight(Request $request)
-    {
-        try {
-            PropertiesHighlights::create([
-                'id_estado' => 19,
-                'id_municipio' => $request->id_municipio,
-                'id_property' => $request->id_property,
-            ]);
-
-            return redirect()->route('admin.highlights.properties');
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-
     public function orderPropertyHightlight(Request $request)
     {
         $highlight = PropertiesHighlights::where('id_property', $request->id)->first();
