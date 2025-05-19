@@ -31,4 +31,9 @@ class PropertyQueueController extends Controller
     {
         return $this->revisionQueue($id);
     }
+
+    public function reject($id)
+    {
+        return $this->rejectQueue($id);
+    }
 }

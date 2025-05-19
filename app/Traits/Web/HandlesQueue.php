@@ -54,4 +54,12 @@ trait HandlesQueue
 
         return redirect()->back()->with('success', 'Property sent for revision successfully.');
     }
+
+    public function rejectQueue($id)
+    {
+        $estate = $this->modelQueue::findOrFail($id);
+        $estate->update(['status_aproved' => 2]);
+
+        return redirect()->back()->with('success', 'Property rejected successfully.');
+    }
 }
