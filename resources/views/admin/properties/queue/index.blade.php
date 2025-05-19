@@ -186,14 +186,16 @@
                     <td>{{$estateRevision->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
-                            <form method="post" action="{{route('admin.aprovedPropertyQueue')}}">
+                            <form method="post" action="{{route('properties.queue.store')}}">
                                 @csrf
-                                <input type="hidden" id="id" name="id" value="{{$estateRevision->id}}">
+                                <input type="hidden" id="id" name="id" value="{{$estateQueue->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <a href="{{route('admin.rejectPropertyQueue', $estateRevision->id)}}">
-                                <button class="btnDanger">Rechazar</button>
-                            </a>
+                            <form method="post" action="{{route('properties.queue.reject', $estateQueue->id)}}">
+                                @csrf
+                                @method('PUT')
+                                <button class="btnDanger" type="submit">Rechazar</button>
+                            </form>
                         </div>
                     </td>
                     <td>
