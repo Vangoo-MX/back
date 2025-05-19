@@ -42,17 +42,25 @@ Route::prefix('auth')->group(function () {
 
 // Propiedades
 Route::prefix('properties')->name('properties.')->group(function () {
-    Route::delete('deleteImage/{propertyId}/{imageId}', [PropertyController::class, 'destroyImage'])->name('deleteImage');
-    Route::put('queue/rejected/{id}', [PropertyController::class, 'reject'])->name('queue.reject');
-    Route::resource('queue', PropertyQueueController::class)->except(['create', 'show', 'edit', 'destroy']);
-    Route::resource('/', PropertyController::class)->except(['create', 'store'])->parameters(['' => 'property']);
+    Route::delete('deleteImage/{propertyId}/{imageId}', [PropertyController::class, 'destroyImage'])
+        ->name('deleteImage');
+    Route::put('queue/rejected/{id}', [PropertyController::class, 'reject'])
+        ->name('queue.reject');
+    Route::resource('queue', PropertyQueueController::class)
+        ->except(['create', 'show', 'edit', 'destroy']);
+    Route::resource('/', PropertyController::class)->except(['create', 'store'])
+        ->parameters(['' => 'property']);
 });
 
 //Gestion de usuarios
-Route::resource('users', UserController::class);
+Route::prefix('users')->name('users.')->group(function () {
+    Route::put('{user}/status', [UserController::class, 'statusUser'])
+        ->name('status.update');
+    Route::resource('/', UserController::class)
+        ->parameters(['' => 'user']);
+});
 
-Route::put('users/{user}/status', [UserController::class, 'statusUser'])
-    ->name('users.status.update');
+
 
 // Panel de administración
 Route::prefix('overview')->name('admin.')->group(function () {
