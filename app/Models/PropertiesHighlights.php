@@ -7,11 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PropertiesHighlights extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     public $timestamps = false;
     protected $table = 'post_properties_highlights';
 
@@ -24,12 +19,12 @@ class PropertiesHighlights extends Model
 
     public function estado(): BelongsTo
     {
-        return $this->belongsTo(Estados::class);
+        return $this->belongsTo(Estados::class, 'id_estado', 'id');
     }
 
     public function municipio(): BelongsTo
     {
-        return $this->belongsTo(Municipios::class);
+        return $this->belongsTo(Municipios::class, 'id_municipio', 'id');
     }
 
     public function property(): BelongsTo

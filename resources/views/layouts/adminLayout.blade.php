@@ -49,13 +49,13 @@
                         </a>
                     </li>
                     <li class="dropdown dropdown-menu-end">
-                        <a class="cursor-pointer {{ (request()->is('properties*')) ? 'active' : '' }} {{ (request()->is('overview/queue*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
+                        <a class="cursor-pointer {{ (request()->is('properties*')) ? 'active' : '' }} {{ (request()->is('properties/queue*')) ? 'active' : '' }} {{ (request()->is('properties/highlights*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
                             <img src="{{url('./img/icon/properties.png')}}" title="Propiedades" alt="Properties" />
                         </a>
                         <ul class="dropdown-menu menu-primary-dropdown">
                             <li><a class="{{ (request()->is('properties')) ? 'active' : '' }}" href="{{route('properties.index')}}">Todas las propiedades</a></li>
                             <li><a class="{{ (request()->is('properties/queue*')) ? 'active' : '' }}" href="{{route('properties.queue.index')}}">Cola de aprobación</a></li>
-                            <li><a class="{{ (request()->is('overview/properties-highlights*')) ? 'active' : '' }}" href="{{route('admin.highlights.properties')}}">Propiedades destacadas</a></li>
+                            <li><a class="{{ (request()->is('properties/highlights*')) ? 'active' : '' }}" href="{{route('properties.highlights.index')}}">Propiedades destacadas</a></li>
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">

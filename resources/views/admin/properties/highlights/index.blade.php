@@ -15,8 +15,8 @@
     <div class="d-flex gap-2">
         <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">
             <option selected value="0" data-municipio-id="0">Todas las propiedades destacadas</option>
-            @foreach($municipiosh as $e)
-            <option value="{{$e->id}}" data-municipio-id="{{$e->id}}">{{$e->nombre}}</option>
+            @foreach($municipios as $municipio)
+            <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
             @endforeach
         </select>
 
@@ -43,29 +43,29 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($propertieshl as $p)
-                <tr class="municipio-{{$p->id_municipio}}">
-                    <td>{{$p->id_property}}</td>
-                    <td>{{property($p->id_property)[0]['title']}}</td>
-                    <td>{{estado($p->id_estado)}}</td>
-                    <td>{{$p->id_municipio}}</td>
-                    <td>{{municipio($p->id_municipio)}}</td>
-                    <td>{{$p->num_order}}</td>
+                @foreach($estates as $estate)
+                <tr class="municipio-{{$estate->id_municipio}}">
+                    <td>{{$estate->id_property}}</td>
+                    <td>{{property($estate->id_property)[0]['title']}}</td>
+                    <td>{{estado($estate->id_estado)}}</td>
+                    <td>{{$estate->id_municipio}}</td>
+                    <td>{{municipio($estate->id_municipio)}}</td>
+                    <td>{{$estate->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('admin.deleteHighlightProperties', $p->id) }}" class="btn btn-danger">
+                        <a href="{{ route('admin.deleteHighlightProperties', $estate->id) }}" class="btn btn-danger">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </a>
-                        <a href="https://vangoo.mx/details/propiedad/{{$p->id}}" target="_blank">
+                        <a href="https://vangoo.mx/details/propiedad/{{$estate->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$p->id_property}}" action="{{ route('admin.orderHighlightProperties') }}" method="POST">
+                        <form id="orden-form{{$estate->id_property}}" action="{{ route('admin.orderHighlightProperties') }}" method="POST">
                             @csrf
                             <span class="d-flex gap-1">
-                                <input type="hidden" name="id" value="{{$p->id_property}}">
-                                <select class="form-select" name="num_order" onchange="ordenSelect({{$p->id_property}})">
+                                <input type="hidden" name="id" value="{{$estate->id_property}}">
+                                <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_property}})">
                                     <option selected hidden>Orden</option>
                                     @foreach($propertieshl as $key => $q)
-                                    @if($key == $p->num_order)
+                                    @if($key == $estate->num_order)
                                     <option value="{{$key}}" selected>{{$key}}</option>
                                     @else
                                     <option value="{{$key+1}}">{{$key+1}}</option>

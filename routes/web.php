@@ -19,6 +19,7 @@ use App\Http\Controllers\{
     Properties\PropertyController,
     Properties\PropertyQueueController,
 };
+use App\Http\Controllers\Properties\PropertyHighlightController;
 
 Route::redirect('/', '/auth/user/login');
 
@@ -51,6 +52,8 @@ Route::prefix('properties')->name('properties.')->group(function () {
     Route::put('queue/rejected/{id}', [PropertyController::class, 'reject'])
         ->name('queue.reject');
     Route::resource('queue', PropertyQueueController::class)
+        ->except(['create', 'show', 'edit']);
+    Route::resource('highlights', PropertyHighlightController::class)
         ->except(['create', 'show', 'edit', 'destroy']);
     Route::resource('/', PropertyController::class)->except(['create', 'store'])
         ->parameters(['' => 'property']);
@@ -73,7 +76,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
 
     // Propiedades
     Route::prefix('properties')->group(function () {
-        Route::get('highlights', [AdminController::class, 'highlights'])->name('highlights.properties');
         Route::get('deleteHighlight/{id}', [PropertiesController::class, 'deletePropertyHightlight'])->name('deleteHighlightProperties');
         Route::post('addHighlight', [PropertiesController::class, 'addPropertyHightlight'])->name('addHighlightProperties');
         Route::post('orderHighlight', [PropertiesController::class, 'orderPropertyHightlight'])->name('orderHighlightProperties');
