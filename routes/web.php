@@ -43,7 +43,7 @@ Route::prefix('auth')->group(function () {
 // Propiedades
 Route::resource('properties', PropertyController::class)->except(['create', 'store']);
 Route::prefix('propertie')->name('properties.')->group(function () {
-    Route::resource('queue', PropertyQueueController::class);
+    Route::resource('queue', PropertyQueueController::class)->except(['create', 'show', 'edit']);
     Route::delete('deleteImage/{propertyId}/{imageId}', [PropertyController::class, 'destroyImage'])->name('deleteImage');
 });
 
@@ -67,7 +67,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::post('orderHighlight', [PropertiesController::class, 'orderPropertyHightlight'])->name('orderHighlightProperties');
         Route::get('rejectQueue/{id}', [PropertiesController::class, 'rejectPropertyQueue'])->name('rejectPropertyQueue');
         Route::get('revisionQueue/{id}', [PropertiesController::class, 'revisionPropertyQueue'])->name('revisionPropertyQueue');
-        Route::post('aprovedQueue', [PropertiesController::class, 'aprovedPropertyQueue'])->name('aprovedPropertyQueue');
         Route::get('deactiveProperty/{id}', [PropertiesController::class, 'deactiveProperty'])->name('deactiveProperty');
         Route::get('activeProperty/{id}', [PropertiesController::class, 'activeProperty'])->name('activeProperty');
     });

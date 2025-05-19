@@ -46,7 +46,7 @@
                     <td>{{$estateQueue->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
-                            <form method="post" action="{{route('admin.aprovedPropertyQueue')}}">
+                            <form method="post" action="{{route('properties.queue.store')}}">
                                 @csrf
                                 <input type="hidden" id="id" name="id" value="{{$estateQueue->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>

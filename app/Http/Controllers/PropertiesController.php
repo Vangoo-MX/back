@@ -71,29 +71,6 @@ class PropertiesController extends Controller
         return redirect()->route('admin.queue');
     }
 
-    public function aprovedPropertyQueue(Request $request)
-    {
-        $propertyQueue = PropertiesQueue::findOrFail($request->id);
-        $propertyData = Arr::except($propertyQueue->toArray(), ['id']);
-        $newProperty = Properties::create($propertyData);
-        $sourcePath = public_path("storage/img/postsqueue/properties/" . $request->id . "/");
-        $destinationPath = public_path("storage/img/posts/properties/" . $newProperty->id . "/");
-
-        if (!File::exists($destinationPath)) {
-            File::makeDirectory($destinationPath, 0777, true);
-        }
-
-        foreach (File::allFiles($sourcePath) as $file) {
-            File::move($file->getRealPath(), $destinationPath . $file->getFilename());
-        }
-
-        File::deleteDirectory($sourcePath, true);
-
-        $propertyQueue->delete();
-
-        return redirect()->route('admin.queue');
-    }
-
     public function deletePropertyQueue($id)
     {
         PropertiesQueue::findOrFail($id)->delete();
