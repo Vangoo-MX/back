@@ -42,7 +42,7 @@ Route::prefix('auth')->group(function () {
 
 // Propiedades
 Route::resource('properties', PropertyController::class)->except(['create', 'store']);
-Route::prefix('properties')->name('properties.')->group(function () {
+Route::prefix('propertie')->name('properties.')->group(function () {
     Route::resource('queue', PropertyQueueController::class);
     Route::delete('deleteImage/{propertyId}/{imageId}', [PropertyController::class, 'destroyImage'])->name('deleteImage');
 });
