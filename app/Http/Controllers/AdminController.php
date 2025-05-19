@@ -67,15 +67,6 @@ class AdminController extends Controller
 
     //properties
 
-    public function queue()
-    {
-        $propiedadesqueue = PropertiesQueue::where('status_aproved', 0)->get();
-        $propiedadesrejected = PropertiesQueue::where('status_aproved', 2)->get();
-        $propiedadesrevision = PropertiesQueue::where('status_aproved', 3)->get();
-
-        return view('admin.queue', compact('propiedadesqueue', 'propiedadesrejected', 'propiedadesrevision'));
-    }
-
     public function highlights()
     {
         $propertieshl = PropertiesHighlights::all();

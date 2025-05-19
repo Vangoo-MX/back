@@ -61,7 +61,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
 
     // Propiedades
     Route::prefix('properties')->group(function () {
-        Route::get('queue', [AdminController::class, 'queue'])->name('queue');
         Route::get('highlights', [AdminController::class, 'highlights'])->name('highlights.properties');
         Route::get('deleteHighlight/{id}', [PropertiesController::class, 'deletePropertyHightlight'])->name('deleteHighlightProperties');
         Route::post('addHighlight', [PropertiesController::class, 'addPropertyHightlight'])->name('addHighlightProperties');
