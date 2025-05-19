@@ -20,11 +20,13 @@ trait HandlesHighlights
 
     public function storeHighlight($request)
     {
+        $config = $this->getHighlightConfig();
+
         try {
             $this->modelHighlights::create([
                 'id_estado' => 19,
                 'id_municipio' => $request->id_municipio,
-                $this->fieldID => $request->$this->inputID,
+                $config['field_id'] => $request->$config['input_id'],
             ]);
 
             return redirect()->back()->with('success', 'Highlight creado exitosamente');

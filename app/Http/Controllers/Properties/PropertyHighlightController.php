@@ -12,8 +12,14 @@ class PropertyHighlightController extends Controller
     use HandlesHighlights;
 
     protected $modelHighlights = PropertiesHighlights::class;
-    protected $inputID = 'id_property';
-    protected $fieldID = 'id_property';
+
+    protected function getHighlightConfig(): array
+    {
+        return [
+            'input_id' => 'id_property',
+            'field_id' => 'id_property',
+        ];
+    }
 
     public function index()
     {
