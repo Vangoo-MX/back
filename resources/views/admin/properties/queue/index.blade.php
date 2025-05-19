@@ -54,10 +54,9 @@
                             <a href="{{route('admin.rejectPropertyQueue', $estateQueue->id)}}">
                                 <button class="btnDanger">Rechazar</button>
                             </a>
-                            <form method="post" action="{{route('properties.queue.update')}}">
+                            <form method="post" action="{{route('properties.queue.update', $estateQueue->id)}}">
                                 @csrf
                                 @method('PUT')
-                                <input type="hidden" id="id" name="id" value="{{$estateQueue->id}}">
                                 <button class="btnWarning" type="submit">Revisar</button>
                             </form>
                         </div>
