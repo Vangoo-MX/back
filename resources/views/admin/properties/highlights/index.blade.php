@@ -19,7 +19,6 @@
             <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
             @endforeach
         </select>
-
         <div id="properties-by-municipio" class="d-flex gap-2 larger-width"></div>
     </div>
 </form>

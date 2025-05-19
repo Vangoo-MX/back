@@ -54,7 +54,7 @@
                             <form method="post" action="{{route('properties.queue.reject', $estateQueue->id)}}">
                                 @csrf
                                 @method('PUT')
-                                <button class="btnWarning" type="submit">Revisar</button>
+                                <button class="btnDanger" type="submit">Rechazar</button>
                             </form>
                             <form method="post" action="{{route('properties.queue.update', $estateQueue->id)}}">
                                 @csrf
