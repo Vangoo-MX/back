@@ -41,12 +41,11 @@ Route::prefix('auth')->group(function () {
 });
 
 // Propiedades
-Route::resource('properties', PropertyController::class)->except(['create', 'store']);
-Route::prefix('propertie')->name('properties.')->group(function () {
-    Route::resource('queue', PropertyQueueController::class)->except(['create', 'show', 'edit']);
+Route::prefix('properties')->name('properties.')->group(function () {
     Route::delete('deleteImage/{propertyId}/{imageId}', [PropertyController::class, 'destroyImage'])->name('deleteImage');
+    Route::resource('queue', PropertyQueueController::class)->except(['create', 'show', 'edit']);
+    Route::resource('/', PropertyController::class)->except(['create', 'store'])->parameters(['' => 'property']);
 });
-
 
 //Gestion de usuarios
 Route::resource('users', UserController::class);
