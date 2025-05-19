@@ -65,18 +65,6 @@ class PropertiesController extends Controller
         return redirect()->route('admin.queue');
     }
 
-    public function deactiveProperty($id)
-    {
-        Properties::findOrFail($id)->update(['status' => 0]);
-        return redirect()->route('admin.properties');
-    }
-
-    public function activeProperty($id)
-    {
-        Properties::findOrFail($id)->update(['status' => 1]);
-        return redirect()->route('admin.properties');
-    }
-
     public function getPropertyQueue($id)
     {
         $propertyQueue = PropertiesQueue::where('id', $id)->get();

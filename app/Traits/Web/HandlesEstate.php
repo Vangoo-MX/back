@@ -168,4 +168,16 @@ trait HandlesEstate
             }
         }
     }
+
+    public function deactiveEstate($id)
+    {
+        $this->model::findOrFail($id)->update(['status' => 0]);
+        return redirect()->back();
+    }
+
+    public function activeEstate($id)
+    {
+        $this->model::findOrFail($id)->update(['status' => 1]);
+        return redirect()->back();
+    }
 }

@@ -42,6 +42,10 @@ Route::prefix('auth')->group(function () {
 
 // Propiedades
 Route::prefix('properties')->name('properties.')->group(function () {
+    Route::get('active/{id}', [PropertyController::class, 'active'])
+        ->name('active');
+    Route::get('deactive/{id}', [PropertyController::class, 'deactive'])
+        ->name('deactive');
     Route::delete('deleteImage/{propertyId}/{imageId}', [PropertyController::class, 'destroyImage'])
         ->name('deleteImage');
     Route::put('queue/rejected/{id}', [PropertyController::class, 'reject'])
@@ -73,8 +77,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('deleteHighlight/{id}', [PropertiesController::class, 'deletePropertyHightlight'])->name('deleteHighlightProperties');
         Route::post('addHighlight', [PropertiesController::class, 'addPropertyHightlight'])->name('addHighlightProperties');
         Route::post('orderHighlight', [PropertiesController::class, 'orderPropertyHightlight'])->name('orderHighlightProperties');
-        Route::get('deactiveProperty/{id}', [PropertiesController::class, 'deactiveProperty'])->name('deactiveProperty');
-        Route::get('activeProperty/{id}', [PropertiesController::class, 'activeProperty'])->name('activeProperty');
     });
 
     // Apartamentos

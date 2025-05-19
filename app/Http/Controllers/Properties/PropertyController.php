@@ -87,4 +87,14 @@ class PropertyController extends Controller
 
         return redirect()->back()->with('error', 'Imagen no encontrada');
     }
+
+    public function deactive($id)
+    {
+        return $this->deactiveEstate($id);
+    }
+
+    public function active($id)
+    {
+        return $this->activeEstate($id);
+    }
 }
