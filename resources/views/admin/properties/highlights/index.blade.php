@@ -64,7 +64,7 @@
                                 <input type="hidden" name="id" value="{{$estate->id_property}}">
                                 <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_property}})">
                                     <option selected hidden>Orden</option>
-                                    @foreach($propertieshl as $key => $q)
+                                    @foreach($estates as $key => $q)
                                     @if($key == $estate->num_order)
                                     <option value="{{$key}}" selected>{{$key}}</option>
                                     @else
