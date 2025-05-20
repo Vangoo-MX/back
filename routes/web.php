@@ -52,9 +52,9 @@ Route::prefix('properties')->name('properties.')->group(function () {
     Route::put('queue/rejected/{id}', [PropertyController::class, 'reject'])
         ->name('queue.reject');
     Route::resource('queue', PropertyQueueController::class)
-        ->except(['create', 'show', 'edit']);
-    Route::resource('highlights', PropertyHighlightController::class)
         ->except(['create', 'show', 'edit', 'destroy']);
+    Route::resource('highlights', PropertyHighlightController::class)
+        ->except(['create', 'show', 'edit']);
     Route::resource('/', PropertyController::class)->except(['create', 'store'])
         ->parameters(['' => 'property']);
 });
