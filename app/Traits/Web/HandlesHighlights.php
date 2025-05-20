@@ -45,13 +45,15 @@ trait HandlesHighlights
 
     public function orderHightlight($request)
     {
+        $config = $this->getHighlightConfig();
+
         $validated = $request->validate([
             'id' => 'required|integer|exists:post_properties_highlights,id_property',
             'num_order' => 'required|integer'
         ]);
 
         try {
-            $this->modelHighlights::where('id_property', $validated['id'])
+            $this->modelHighlights::where($config['field_id'], $validated['id'])
                 ->firstOrFail()
                 ->update(['num_order' => $validated['num_order']]);
 
