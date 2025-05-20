@@ -51,9 +51,13 @@
                     <td>{{municipio($estate->id_municipio)}}</td>
                     <td>{{$estate->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('properties.highlights.destroy', $estate->id) }}" class="btn btn-danger">
-                            <i class="fa-solid fa-circle-xmark"></i>
-                        </a>
+                        <form action="{{ route('properties.highlights.destroy', $estate->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </form>
                         <a href="https://vangoo.mx/details/propiedad/{{$estate->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
