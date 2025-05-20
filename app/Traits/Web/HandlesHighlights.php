@@ -13,7 +13,7 @@ trait HandlesHighlights
             ->orderBy('num_order')
             ->get();
 
-        $municipios = Municipios::whereHas('propertiesHighlight')
+        $municipios = Municipios::whereHas('properties')
             ->get();
 
         return view($viewState, compact('estates', 'municipios'));
