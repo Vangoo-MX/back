@@ -57,10 +57,11 @@
                         <a href="https://vangoo.mx/details/propiedad/{{$estate->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$estate->id_property}}" action="{{ route('properties.highlights.update', $estate->id_property) }}" method="POST">
+                        <form id="orden-form{{$estate->id_property}}" action="{{ route('properties.highlights.update', $estate->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <span class="d-flex gap-1">
+                                <input type="hidden" name="id" value="{{$estate->id_property}}">
                                 <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_property}})">
                                     <option selected hidden>Orden</option>
                                     @foreach($estates as $key => $q)
