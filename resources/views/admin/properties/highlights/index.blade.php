@@ -51,13 +51,13 @@
                     <td>{{municipio($estate->id_municipio)}}</td>
                     <td>{{$estate->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('admin.deleteHighlightProperties', $estate->id) }}" class="btn btn-danger">
+                        <a href="{{ route('properties.highlights.destroy', $estate->id) }}" class="btn btn-danger">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </a>
                         <a href="https://vangoo.mx/details/propiedad/{{$estate->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$estate->id_property}}" action="{{ route('admin.orderHighlightProperties') }}" method="POST">
+                        <form id="orden-form{{$estate->id_property}}" action="{{ route('properties.highlights.update') }}" method="POST">
                             @csrf
                             @method('PUT')
                             <span class="d-flex gap-1">
