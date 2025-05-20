@@ -49,7 +49,7 @@ Route::prefix('properties')->name('properties.')->group(function () {
         ->name('deactive');
     Route::delete('deleteImage/{propertyId}/{imageId}', [PropertyController::class, 'destroyImage'])
         ->name('deleteImage');
-    Route::get('municipio/{id}', [PropertyController::class, 'propertyByMunicipio'])
+    Route::get('municipio/{id}', [PropertyHighlightController::class, 'propertyByMunicipio'])
         ->name('municipio');
     Route::put('queue/rejected/{id}', [PropertyController::class, 'reject'])
         ->name('queue.reject');
