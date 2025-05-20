@@ -21,6 +21,7 @@
         </select>
         <div id="properties-by-municipio" class="d-flex gap-2 larger-width"></div>
     </div>
+    <button type="submit" style="display: none;" id="submit-btn"></button>
 </form>
 
 
@@ -126,28 +127,22 @@
     }
 
     document.getElementById('municipiosh-select').addEventListener('change', function() {
-        var municipioId = this.options[this.selectedIndex].getAttribute('data-municipio-id');
+        var municipioId = this.value;
         var url = '/ep/get-properties-by-municipio/' + municipioId;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var properties = JSON.parse(xhr.responseText);
-                var propertiesHtml = '';
-                for (var i = 0; i < properties.length; i++) {
-                    propertiesHtml += '<option value="' + properties[i].id + '">' + properties[i].id + ' - ' + properties[i].title + '</option>';
-                }
-                var selectHtml = '';
-                if (municipioId != 0) {
-                    selectHtml = '<select class="form-select larger-width" name="id_property">' + propertiesHtml + '</select><button class="btn btn-primary" type="submit">Asignar</button>';
-                }
-                document.getElementById('properties-by-municipio').innerHTML = selectHtml;
-            } else {
-                console.log('Error');
-            }
-        };
-        xhr.send();
+
+        fetch(url)
+            .then(response => response.json())
+            .then(properties => {
+                let html = '<select class="form-select larger-width" name="id_property" required>';
+                properties.forEach(property => {
+                    html += `<option value="${property.id}">${property.title}</option>`;
+                });
+                html += '</select>';
+
+                document.getElementById('properties-by-municipio').innerHTML = html;
+                document.getElementById('submit-btn').style.display = 'inline-block';
+            })
+            .catch(error => console.error('Error:', error));
     });
 </script>
 
