@@ -32,9 +32,9 @@ class PropertyHighlightController extends Controller
         return $this->storeHighlight($request);
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        return $this->orderHightlight($request);
     }
 
     public function destroy(string $id)

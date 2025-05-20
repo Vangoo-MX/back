@@ -26,18 +26,6 @@ class PropertiesController extends Controller
         return response()->json(['error' => 'Agenda entry not found'], 404);
     }
 
-    public function orderPropertyHightlight(Request $request)
-    {
-        $highlight = PropertiesHighlights::where('id_property', $request->id)->first();
-
-        if ($highlight) {
-            $highlight->update(['num_order' => $request->num_order]);
-            return redirect()->route('admin.highlights.properties');
-        }
-
-        return response()->json(['error' => 'Entry for property with id ' . $request->id . ' not found'], 404);
-    }
-
     public function getPropertyQueueEP($id)
     {
         return PropertiesQueue::where('id', $id)

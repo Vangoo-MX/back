@@ -3,7 +3,7 @@
 namespace App\Traits\Web;
 
 use App\Models\Municipios;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 trait HandlesHighlights
 {
@@ -23,8 +23,6 @@ trait HandlesHighlights
     {
         $config = $this->getHighlightConfig();
 
-        Log::debug('datos recibidos: ', $request->all());
-
         try {
             $validated = $request->validate([
                 'id_municipio' => 'required|exists:info_municipios,id',
@@ -42,6 +40,26 @@ trait HandlesHighlights
             return redirect()->back()
                 ->withInput()
                 ->withErrors(['error' => 'Error al crear el highlight: ' . $e->getMessage()]);
+        }
+    }
+
+    public function orderHightlight($request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|integer|exists:post_properties_highlights,id_property',
+            'num_order' => 'required|integer'
+        ]);
+
+        try {
+            $this->modelHighlights::where('id_property', $validated['id'])
+                ->firstOrFail()
+                ->update(['num_order' => $validated['num_order']]);
+
+            return redirect()->route('admin.highlights.properties');
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'Highlight para la propiedad ID ' . $validated['id'] . ' no encontrado'
+            ], 404);
         }
     }
 }
