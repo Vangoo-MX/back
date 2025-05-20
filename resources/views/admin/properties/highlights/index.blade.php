@@ -132,7 +132,7 @@
 
     document.getElementById('municipiosh-select').addEventListener('change', function() {
         var municipioId = this.value;
-        var url = '/ep/get-properties-by-municipio/' + municipioId;
+        var url = '/properties/municipio/' + municipioId;
 
         fetch(url)
             .then(response => response.json())

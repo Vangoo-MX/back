@@ -70,4 +70,11 @@ trait HandlesHighlights
         $this->modelHighlights::destroy($id);
         return redirect()->back()->with('success', 'Highlight eliminado exitosamente');
     }
+
+    public function estatesByMunicipio($id)
+    {
+        return response()
+            ->json($this->model::where('id_municipio', $id)
+                ->get());
+    }
 }

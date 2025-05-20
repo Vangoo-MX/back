@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Properties;
 
 use App\Http\Controllers\Controller;
+use App\Models\Properties;
 use App\Models\PropertiesHighlights;
 use App\Traits\Web\HandlesHighlights;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ class PropertyHighlightController extends Controller
 {
     use HandlesHighlights;
 
+    protected $model = Properties::class;
     protected $modelHighlights = PropertiesHighlights::class;
 
     protected function getHighlightConfig(): array
@@ -40,5 +42,10 @@ class PropertyHighlightController extends Controller
     public function destroy($id)
     {
         return $this->deleteHighlight($id);
+    }
+
+    public function propertyByMunicipio($id)
+    {
+        return $this->estatesByMunicipio($id);
     }
 }

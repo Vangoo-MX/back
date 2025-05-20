@@ -49,6 +49,8 @@ Route::prefix('properties')->name('properties.')->group(function () {
         ->name('deactive');
     Route::delete('deleteImage/{propertyId}/{imageId}', [PropertyController::class, 'destroyImage'])
         ->name('deleteImage');
+    Route::get('municipio/{id}', [PropertyController::class, 'propertyByMunicipio'])
+        ->name('municipio');
     Route::put('queue/rejected/{id}', [PropertyController::class, 'reject'])
         ->name('queue.reject');
     Route::resource('queue', PropertyQueueController::class)
@@ -169,16 +171,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
 Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('emails.confirm');
 
 Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('emails.template');
-
-/* PROPIEDADES */
-
-Route::get('ep/get-properties-by-municipio/{id}', [PropertiesController::class, 'getpropertiesbymunicipio']);
-
-/* property queue */
-
-Route::get('ep/deletePropertyQueue/{id}', [PropertiesController::class, 'deletePropertyQueue'])->name('epPropertyQueue.delete');
-
-Route::get('ep/getPropertyQueueEP/{id}', [PropertiesController::class, 'getPropertyQueueEP']);
 
 /* APARTAMENTOS */
 
