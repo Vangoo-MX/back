@@ -21,7 +21,6 @@
         </select>
         <div id="properties-by-municipio" class="d-flex gap-2 larger-width"></div>
     </div>
-    <button type="submit" style="display: none;" id="submit-btn"></button>
 </form>
 
 
@@ -135,9 +134,11 @@
             .then(properties => {
                 let html = '<select class="form-select larger-width" name="id_property" required>';
                 properties.forEach(property => {
-                    html += `<option value="${property.id}">${property.title}</option>`;
+                    html += `<option value="${property.id}">${property.id} - ${property.title}</option>`;
                 });
                 html += '</select>';
+
+                html += '<button type="submit" class="btn btn-primary ms-2">Asignar</button>';
 
                 document.getElementById('properties-by-municipio').innerHTML = html;
                 document.getElementById('submit-btn').style.display = 'inline-block';
