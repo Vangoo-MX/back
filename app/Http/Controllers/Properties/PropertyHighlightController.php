@@ -39,6 +39,6 @@ class PropertyHighlightController extends Controller
 
     public function destroy($id)
     {
-        return $this->deleteHightlight($id);
+        return $this->deleteHighlight($id);
     }
 }
