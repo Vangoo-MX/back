@@ -64,4 +64,10 @@ trait HandlesHighlights
             ], 404);
         }
     }
+
+    public function deleteHighlight($id)
+    {
+        $this->modelHighlights::destroy($id);
+        return redirect()->back()->with('success', 'Highlight eliminado exitosamente');
+    }
 }

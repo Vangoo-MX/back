@@ -2,30 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Properties;
 use App\Models\PropertiesQueue;
-use App\Models\PropertiesHighlights;
-use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
-use App\Models\Estados;
-use App\Models\Municipios;
-use App\Models\Colonias;
-use Illuminate\Support\Facades\Storage;
 
 class PropertiesController extends Controller
 {
-    public function deletePropertyHightlight($id)
-    {
-        if (PropertiesHighlights::destroy($id)) {
-            return redirect()->route('admin.highlights.properties');
-        }
-
-        return response()->json(['error' => 'Agenda entry not found'], 404);
-    }
-
     public function getPropertyQueueEP($id)
     {
         return PropertiesQueue::where('id', $id)

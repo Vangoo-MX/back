@@ -74,13 +74,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
     // Dashboard
     Route::get('home', [AdminController::class, 'index'])->name('index');
 
-    // Propiedades
-    Route::prefix('properties')->group(function () {
-        Route::get('deleteHighlight/{id}', [PropertiesController::class, 'deletePropertyHightlight'])->name('deleteHighlightProperties');
-        Route::post('addHighlight', [PropertiesController::class, 'addPropertyHightlight'])->name('addHighlightProperties');
-        Route::post('orderHighlight', [PropertiesController::class, 'orderPropertyHightlight'])->name('orderHighlightProperties');
-    });
-
     // Apartamentos
     Route::prefix('apartments')->group(function () {
         Route::get('list', [AdminController::class, 'apartments'])->name('apartments');
