@@ -57,7 +57,7 @@ trait HandlesHighlights
                 ->firstOrFail()
                 ->update(['num_order' => $validated['num_order']]);
 
-            return redirect()->route('admin.highlights.properties');
+            return redirect()->back()->with('success', 'Orden actualizado exitosamente');
         } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'Highlight para la propiedad ID ' . $validated['id'] . ' no encontrado'
