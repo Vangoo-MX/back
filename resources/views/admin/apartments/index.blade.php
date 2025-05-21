@@ -56,12 +56,12 @@
                                 </li>
                                 <li>
                                     @if ($estate->status == 1)
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$estate->id}})" id="propertyDeactiveConfirmBtn{{$estate->id}}" data-url="{{route('admin.deactiveApartment',$estate->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$estate->id}})" id="propertyDeactiveConfirmBtn{{$estate->id}}" data-url="{{route('apartments.deactive',$estate->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Desactivar
                                     </a>
                                     @else
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$estate->id}})" id="propertyActivateConfirmBtn{{$estate->id}}" data-url="{{route('admin.activeApartment',$estate->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$estate->id}})" id="propertyActivateConfirmBtn{{$estate->id}}" data-url="{{route('apartments.active',$estate->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Activar
                                     </a>

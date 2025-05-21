@@ -88,4 +88,14 @@ class ApartmentController extends Controller
 
         return redirect()->back()->with('error', 'Error al eliminar la imagen');
     }
+
+    public function deactive($id)
+    {
+        return $this->deactiveEstate($id);
+    }
+
+    public function active($id)
+    {
+        return $this->activeEstate($id);
+    }
 }

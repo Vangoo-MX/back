@@ -44,6 +44,12 @@ Route::prefix('auth')->group(function () {
 
 // Apartamentos
 Route::prefix('apartments')->name('apartments.')->middleware('check.admin')->group(function () {
+    Route::get('active/{id}', [ApartmentController::class, 'active'])
+        ->name('active');
+    Route::get('deactive/{id}', [ApartmentController::class, 'deactive'])
+        ->name('deactive');
+    Route::delete('deleteImage/{apartmentId}/{imageId}', [ApartmentController::class, 'destroyImage'])
+        ->name('deleteImage');
     Route::resource('/', ApartmentController::class)
         ->except(['create', 'store'])
         ->parameters(['' => 'apartment']);
