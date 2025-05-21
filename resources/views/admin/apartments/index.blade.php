@@ -68,7 +68,7 @@
                                     @endif
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeleteModal" onclick="propertyDeleteModalData({{$estate->id}})" id="propertyDeleteConfirmBtn{{$estate->id}}" data-url="{{route('admin.deleteApartment',$estate->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeleteModal" onclick="propertyDeleteModalData({{$estate->id}})" id="propertyDeleteConfirmBtn{{$estate->id}}" data-url="{{route('apartments.destroy',$estate->id)}}">
                                         <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>

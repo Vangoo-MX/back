@@ -93,10 +93,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
 
     // Apartamentos
     Route::prefix('apartments')->group(function () {
-        Route::get('list', [AdminController::class, 'apartments'])->name('apartments');
-        Route::get('details/{id}', [AdminController::class, 'detailsApartments'])->name('detailsApartments');
-        Route::get('edit/{apartments}', [AdminController::class, 'editApartmentPage'])->name('editApartmentPage');
-        Route::post('update/{apartments}', [ApartmentsController::class, 'updateApartments'])->name('apartmentsUpdate');
         Route::get('queue', [AdminController::class, 'queueApartments'])->name('queueApartments');
         Route::get('highlights', [AdminController::class, 'highlightsApartments'])->name('highlights.apartments');
         Route::get('deleteHighlight/{id}', [ApartmentsController::class, 'deleteApartmentHightlight'])->name('deleteHighlightApartment');
@@ -105,10 +101,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::get('rejectQueue/{id}', [ApartmentsController::class, 'rejectApartmentQueue'])->name('rejectApartmentQueue');
         Route::get('revisionQueue/{id}', [ApartmentsController::class, 'revisionApartmentQueue'])->name('revisionApartmentQueue');
         Route::post('aprovedQueue', [ApartmentsController::class, 'aprovedApartmentsQueue'])->name('aprovedApartmentQueue');
-        Route::get('delete/{id}', [ApartmentsController::class, 'deleteApartment'])->name('deleteApartment');
-        Route::delete('deleteImage/{apartmentId}/{imageId}', [ApartmentsController::class, 'deleteImage'])->name('deleteImageApartment');
-        Route::get('deactiveApartment/{id}', [ApartmentsController::class, 'deactiveApartment'])->name('deactiveApartment');
-        Route::get('activeApartment/{id}', [ApartmentsController::class, 'activeApartment'])->name('activeApartment');
     });
 
     // Terrenos
