@@ -41,18 +41,24 @@ trait HandlesEstate
     public function deleteEstate($id, $viewEstate)
     {
         try {
+            Log::info("Intentando eliminar propiedad con ID: {$id}");
             if ($highlight = $this->highlightModel::where('id_property', $id)->first()) {
                 $highlight->delete();
+                Log::info("Highlight eliminado para propiedad: {$id}");
             }
 
             $estate = $this->model::findOrFail($id);
+            Log::info("Propiedad encontrada: {$estate->id}");
+
             $directoryPath = public_path("storage/img/posts/{$this->directory}/{$estate->id}");
 
             if (File::exists($directoryPath)) {
                 File::deleteDirectory($directoryPath);
+                Log::info("Directorio eliminado: {$directoryPath}");
             }
 
             $estate->delete();
+            Log::info("Propiedad eliminada de la base de datos");
 
             return view($viewEstate)->with('success', __('Propiedad eliminada exitosamente'));
         } catch (Exception $e) {
