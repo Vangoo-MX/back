@@ -19,6 +19,7 @@ use App\Http\Controllers\{
     Properties\PropertyController,
     Properties\PropertyQueueController,
 };
+use App\Http\Controllers\Apartments\ApartmentController;
 use App\Http\Controllers\Properties\PropertyHighlightController;
 
 Route::redirect('/', '/auth/user/login');
@@ -41,6 +42,13 @@ Route::prefix('auth')->group(function () {
     });
 });
 
+// Apartamentos
+Route::prefix('apartments')->name('apartments.')->middleware('check.admin')->group(function () {
+    Route::resource('/', ApartmentController::class)
+        ->except(['create', 'store'])
+        ->parameters(['' => 'apartment']);
+});
+
 // Propiedades
 Route::prefix('properties')->name('properties.')->middleware('check.admin')->group(function () {
     Route::get('active/{id}', [PropertyController::class, 'active'])
@@ -57,7 +65,8 @@ Route::prefix('properties')->name('properties.')->middleware('check.admin')->gro
         ->except(['create', 'show', 'edit', 'destroy']);
     Route::resource('highlights', PropertyHighlightController::class)
         ->except(['create', 'show', 'edit']);
-    Route::resource('/', PropertyController::class)->except(['create', 'store'])
+    Route::resource('/', PropertyController::class)
+        ->except(['create', 'store'])
         ->parameters(['' => 'property']);
 });
 

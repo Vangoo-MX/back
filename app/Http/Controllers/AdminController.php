@@ -63,13 +63,6 @@ class AdminController extends Controller
     }
 
     //apartments
-    public function apartments()
-    {
-        $apartments = Apartments::get();
-
-        return view('admin.apartments', compact('apartments'));
-    }
-
     public function detailsApartments($id)
     {
         $municipios = Municipios::where('id_estado', 19)->get();

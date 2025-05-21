@@ -59,11 +59,11 @@
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">
-                        <a class="cursor-pointer {{ (request()->is('overview/apartments*')) ? 'active' : '' }} {{ (request()->is('overview/apartments-queue*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
+                        <a class="cursor-pointer {{ (request()->is('apartments*')) ? 'active' : '' }} {{ (request()->is('overview/apartments-queue*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
                             <img src="{{url('./img/icon/apartments.png')}}" title="Apartamentos" alt="Apartments" />
                         </a>
                         <ul class="dropdown-menu menu-primary-dropdown">
-                            <li><a class="{{ (request()->is('overview/apartments')) ? 'active' : '' }}" href="{{route('admin.apartments')}}">Todos los apartamentos</a></li>
+                            <li><a class="{{ (request()->is('apartments')) ? 'active' : '' }}" href="{{route('apartments.index')}}">Todos los apartamentos</a></li>
                             <li><a class="{{ (request()->is('overview/apartments-queue*')) ? 'active' : '' }}" href="{{route('admin.queueApartments')}}">Cola de aprobación</a></li>
                             <li><a class="{{ (request()->is('overview/apartments-highlights*')) ? 'active' : '' }}" href="{{route('admin.highlights.apartments')}}">Propiedades destacadas</a></li>
                         </ul>
