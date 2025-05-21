@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Models\Roles;
 use App\Models\Properties;
 use App\Models\PropertiesQueue;
-use App\Models\PropertiesHighlights;
 use App\Models\Developments;
 use App\Models\DevelopmentsHighlights;
 use App\Models\DevelopmentsApartments;

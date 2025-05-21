@@ -42,7 +42,7 @@ Route::prefix('auth')->group(function () {
 });
 
 // Propiedades
-Route::prefix('properties')->name('properties.')->group(function () {
+Route::prefix('properties')->name('properties.')->middleware('check.admin')->group(function () {
     Route::get('active/{id}', [PropertyController::class, 'active'])
         ->name('active');
     Route::get('deactive/{id}', [PropertyController::class, 'deactive'])

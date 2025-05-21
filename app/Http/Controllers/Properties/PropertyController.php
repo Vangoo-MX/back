@@ -10,11 +10,6 @@ use Illuminate\Http\Request;
 
 class PropertyController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('check.admin');
-    }
-
     use HandlesEstate;
 
     protected $model = Properties::class;
