@@ -71,4 +71,21 @@ class ApartmentController extends Controller
 
         return redirect()->route('apartments.show', $apartment)->with('success', __('messages.success.update'));
     }
+
+    public function destroy($id)
+    {
+        $viewEstate = 'admin.apartments.index';
+        return $this->destroyEstate($id, $viewEstate);
+    }
+
+    public function destroyImage($apartmentId, $imageId)
+    {
+        $apartment = Apartments::findOrFail($apartmentId);
+
+        if ($this->deleteImage($apartment, $imageId)) {
+            return redirect()->back()->with('success', 'Imagen eliminada correctamente');
+        }
+
+        return redirect()->back()->with('error', 'Error al eliminar la imagen');
+    }
 }
