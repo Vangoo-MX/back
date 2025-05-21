@@ -59,7 +59,7 @@ Route::prefix('properties')->name('properties.')->group(function () {
         ->except(['create', 'show', 'edit']);
     Route::resource('/', PropertyController::class)->except(['create', 'store'])
         ->parameters(['' => 'property']);
-});
+})->middleware('CheckAdmin');
 
 //Gestion de usuarios
 Route::prefix('users')->name('users.')->group(function () {
