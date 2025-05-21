@@ -171,6 +171,9 @@
         $.ajax({
             url: url,
             type: "DELETE",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             success: function(response) {
                 message('success', 'Propiedad ' + id + ' eliminada. Actualizando tabla... <div class="spinner-border text-success"></div>');
                 setTimeout(function() {
