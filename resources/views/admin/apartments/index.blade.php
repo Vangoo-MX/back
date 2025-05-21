@@ -43,7 +43,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{apartments.show',$estate->id)}}">
+                                    <a class="dropdown-item" href="{{route('apartments.show', $estate->id)}}">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
@@ -52,12 +52,6 @@
                                     <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://www.vangoo.mx/detailsDepa/apartments/{{$estate->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
-                                    </a>
-                                </li>
-                                <li class="d-none">
-                                    <a class="dropdown-item" href="#">
-                                        <img src="{{url('./img/icon/update.png')}}" />
-                                        Editar
                                     </a>
                                 </li>
                                 <li>
