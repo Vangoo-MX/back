@@ -63,34 +63,6 @@ class AdminController extends Controller
     }
 
     //apartments
-    public function detailsApartments($id)
-    {
-        $municipios = Municipios::where('id_estado', 19)->get();
-        $apartment = Apartments::find($id);
-
-        return view('admin.detailsApartments', compact('apartment', 'municipios'));
-    }
-
-    public function editApartmentPage($apartments)
-    {
-        $apartment = Apartments::find($apartments);
-
-        if (!$apartment) {
-            return redirect()->route('admin.apartments')->withErrors('El apartamento no existe.');
-        }
-
-        $municipio_propiedad = Municipios::find($apartment->id_municipio);
-
-        if (!$municipio_propiedad) {
-            return redirect()->route('admin.apartments')->withErrors('El municipio del apartamento no existe.');
-        }
-
-        $estado_propiedad = $municipio_propiedad->id_estado;
-        $municipios = Municipios::where('id_estado', $estado_propiedad)->get();
-        $colonias = Colonias::where('id_municipio', $apartment->id_municipio)->get();
-
-        return view('admin.editApartmentPage', compact('municipios', 'colonias', 'apartment'));
-    }
 
     public function queueApartments()
     {

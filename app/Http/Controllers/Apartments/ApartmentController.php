@@ -20,4 +20,16 @@ class ApartmentController extends Controller
         $viewEstate = 'admin.apartments.index';
         return $this->indexEstate($viewEstate);
     }
+
+    public function show($id)
+    {
+        $viewEstate = 'admin.apartments.show';
+        return $this->showEstate($id, $viewEstate);
+    }
+
+    public function edit($id)
+    {
+        $viewEstate = 'admin.apartments.edit';
+        return $this->editEstate($id, $viewEstate);
+    }
 }

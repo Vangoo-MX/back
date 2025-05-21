@@ -9,7 +9,7 @@ Editar apartamento
 @endsection()
 
 @section('title')
-{{$apartment->title}}
+{{->title}}
 @endsection()
 
 @section('titleContent','Detalles de propiedad')
@@ -19,7 +19,7 @@ Editar apartamento
 <!-- Content Row -->
 
 
-<?php if ($apartment->status == 0) { ?>
+<?php if (->status == 0) { ?>
     <div class="alert alert-danger">
         Esta propiedad está deshabilitada
     </div>
@@ -29,17 +29,17 @@ Editar apartamento
     <div class="col-12 col-lg-4 px-2 px-lg-5 d-flex flex-column align-items-center justify-content-center w-100">
         <div class="w-100">
 
-            <form method="post" class="w-100" action="{{route('admin.apartmentsUpdate', $apartment)}}" enctype="multipart/form-data">
+            <form method="post" class="w-100" action="{{route('admin.apartmentsUpdate', )}}" enctype="multipart/form-data">
 
                 @csrf
-                <input type="hidden" name="id" value="{{$apartment->id}}">
+                <input type="hidden" name="id" value="{{->id}}">
 
                 <div class="d-flex gap-5 w-100 flex-column flex-lg-row">
                     <div class="w-100">
 
                         <div class="mb-3 mt-3">
                             <label for="title" class="form-label">Titulo:</label>
-                            <input type="text" class="form-control" id="title" value="{{old('title', $apartment->title)}}" placeholder="Ingresa un titulo" name="title">
+                            <input type="text" class="form-control" id="title" value="{{old('title', ->title)}}" placeholder="Ingresa un titulo" name="title">
                             @error('title')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -48,14 +48,14 @@ Editar apartamento
                         <div class="mb-3 mt-3">
                             <label for="operation_type" class="form-label">Tipo de operación:</label>
                             <select class="form-select" name="operation_type">
-                                <option value="venta" @if ($apartment->operation_type == 'venta') selected @endif>Venta</option>
-                                <option value="renta" @if ($apartment->operation_type == 'renta') selected @endif>Renta</option>
+                                <option value="venta" @if (->operation_type == 'venta') selected @endif>Venta</option>
+                                <option value="renta" @if (->operation_type == 'renta') selected @endif>Renta</option>
                             </select>
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="price" class="form-label">Precio:</label>
-                            <input type="number" class="form-control" step="0.01" id="price" value="{{old('price', $apartment->price)}}" placeholder="Precio de venta/renta" name="price">
+                            <input type="number" class="form-control" step="0.01" id="price" value="{{old('price', ->price)}}" placeholder="Precio de venta/renta" name="price">
                             @error('price')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -63,7 +63,7 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="price_maintenance" class="form-label">Precio de mantenimiento:</label>
-                            <input type="number" class="form-control" id="price_maintenance" value="{{old('price_maintenance', $apartment->price_maintenance)}}" placeholder="Precio de mantenimiento" name="price_maintenance">
+                            <input type="number" class="form-control" id="price_maintenance" value="{{old('price_maintenance', ->price_maintenance)}}" placeholder="Precio de mantenimiento" name="price_maintenance">
                             @error('price_maintenance')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -71,7 +71,7 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="description">Descripción:</label>
-                            <textarea class="form-control" rows="5" id="description" name="description">{{old('description', $apartment->description)}}</textarea>
+                            <textarea class="form-control" rows="5" id="description" name="description">{{old('description', ->description)}}</textarea>
                             @error('description')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -81,13 +81,13 @@ Editar apartamento
                             <div class="d-flex gap-5">
                                 <div>
                                     <label for="rooms" class="form-label">Cuartos:</label>
-                                    <input type="number" class="form-control" step="1" id="rooms" value="{{old('rooms', $apartment->rooms)}}" placeholder="Cuartos" name="rooms">
+                                    <input type="number" class="form-control" step="1" id="rooms" value="{{old('rooms', ->rooms)}}" placeholder="Cuartos" name="rooms">
                                     @error('rooms')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 @php
-                                $bathroomsFormatted = (intval($apartment->bathrooms) == $apartment->bathrooms) ? intval($apartment->bathrooms) : $apartment->bathrooms;
+                                $bathroomsFormatted = (intval(->bathrooms) == ->bathrooms) ? intval(->bathrooms) : ->bathrooms;
                                 @endphp
                                 <div>
                                     <label for="bathrooms" class="form-label">Baños:</label>
@@ -101,7 +101,7 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="floor" class="form-label">Piso en el que se encuentra:</label>
-                            <input type="number" class="form-control" id="floor" value="{{old('floor', $apartment->floor)}}" placeholder="Piso en el que se encuentra" name="floor">
+                            <input type="number" class="form-control" id="floor" value="{{old('floor', ->floor)}}" placeholder="Piso en el que se encuentra" name="floor">
                             @error('floor')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -109,7 +109,7 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="parkings" class="form-label">Lugares de estacionamiento:</label>
-                            <input type="number" class="form-control" step="1" id="parkings" value="{{old('parkings', $apartment->parkings)}}" placeholder="Lugares de estacionamiento" name="parkings">
+                            <input type="number" class="form-control" step="1" id="parkings" value="{{old('parkings', ->parkings)}}" placeholder="Lugares de estacionamiento" name="parkings">
                             @error('parkings')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -117,21 +117,21 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="map" class="form-label">Mapa:</label>
-                            <input type="text" class="form-control" id="map" value="{{old('map', $apartment->map)}}" placeholder="Ingresa el link de google maps" name="map">
+                            <input type="text" class="form-control" id="map" value="{{old('map', ->map)}}" placeholder="Ingresa el link de google maps" name="map">
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="area" class="form-label">Area:</label>
-                            <input type="number" step="0.01" class="form-control" id="area" value="{{old('area', $apartment->area)}}" placeholder="Ingresa el area del inmueble" name="area">
+                            <input type="number" step="0.01" class="form-control" id="area" value="{{old('area', ->area)}}" placeholder="Ingresa el area del inmueble" name="area">
                             @error('area')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <?php if ($apartment->type == "terreno") { ?>
+                        <?php if (->type == "terreno") { ?>
                             <div class="mb-3 mt-3">
                                 <label for="area" class="form-label">Area del terreno:</label>
-                                <input type="number" class="form-control" id="area_terrain" value="{{old('area_terrain', $apartment->area_terrain)}}" placeholder="Ingresa el area del terreno" name="area_terrain">
+                                <input type="number" class="form-control" id="area_terrain" value="{{old('area_terrain', ->area_terrain)}}" placeholder="Ingresa el area del terreno" name="area_terrain">
                                 @error('area_terrain')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -141,8 +141,8 @@ Editar apartamento
                         <div class="mb-3 mt-3">
                             <label for="dev_type" class="form-label">Tipo de desarrollo:</label>
                             <select class="form-select" name="dev_type">
-                                <option value="horizontal" @if ($apartment->dev_type == 'horizontal') selected @endif>Horizontal</option>
-                                <option value="vertical" @if ($apartment->dev_type == 'vertical') selected @endif>Vertical</option>
+                                <option value="horizontal" @if (->dev_type == 'horizontal') selected @endif>Horizontal</option>
+                                <option value="vertical" @if (->dev_type == 'vertical') selected @endif>Vertical</option>
                             </select>
                         </div>
                     </div>
@@ -153,7 +153,7 @@ Editar apartamento
                             <select class="form-select" name="id_municipio" id="id_municipio">
                                 <option hidden>Selecciona un municipio</option>
                                 @foreach($municipios as $e)
-                                <option value="{{$e->id}}" data-id="{{$e->id}}" <?php if ($apartment->id_municipio == $e->id) {
+                                <option value="{{$e->id}}" data-id="{{$e->id}}" <?php if (->id_municipio == $e->id) {
                                                                                     echo 'selected';
                                                                                 } ?>>{{$e->nombre}}</option>
                                 @endforeach
@@ -166,7 +166,7 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="street" class="form-label">Calle:</label>
-                            <input type="text" class="form-control" id="street" value="{{old('street' ,$apartment->street)}}" placeholder="Ingresa la calle" name="street">
+                            <input type="text" class="form-control" id="street" value="{{old('street' ,->street)}}" placeholder="Ingresa la calle" name="street">
                             @error('street')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -177,14 +177,14 @@ Editar apartamento
                             <div class="d-flex gap-5">
                                 <div>
                                     <label for="num_ext" class="form-label">Número exterior:</label>
-                                    <input type="number" class="form-control" id="num_ext" value="{{old('num_ext', $apartment->num_ext)}}" placeholder="Ingresa el número exterior" name="num_ext">
+                                    <input type="number" class="form-control" id="num_ext" value="{{old('num_ext', ->num_ext)}}" placeholder="Ingresa el número exterior" name="num_ext">
                                     @error('num_ext')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div>
                                     <label for="num_int" class="form-label">Número interior:</label>
-                                    <input type="number" class="form-control" id="num_int" value="{{old('num_int', $apartment->num_int)}}" placeholder="Ingresa el número interior" name="num_int">
+                                    <input type="number" class="form-control" id="num_int" value="{{old('num_int', ->num_int)}}" placeholder="Ingresa el número interior" name="num_int">
                                     @error('num_int')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -195,7 +195,7 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="cp" class="form-label">Codigo postal:</label>
-                            <input type="number" class="form-control" id="cp" value="{{old('cp', $apartment->cp)}}" placeholder="Ingresa el código postal" name="cp" disabled>
+                            <input type="number" class="form-control" id="cp" value="{{old('cp', ->cp)}}" placeholder="Ingresa el código postal" name="cp" disabled>
                             @error('cp')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -203,17 +203,17 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="map_lat" class="form-label">Coordenadas Latitud:</label>
-                            <input type="text" class="form-control" id="map_lat" name="map_lat" value="{{old('map_lat', $apartment->map_lat)}}">
+                            <input type="text" class="form-control" id="map_lat" name="map_lat" value="{{old('map_lat', ->map_lat)}}">
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="map_long" class="form-label">Coordenadas Longitud:</label>
-                            <input type="text" class="form-control" id="map_long" name="map_long" value="{{old('map_long', $apartment->map_long)}}">
+                            <input type="text" class="form-control" id="map_long" name="map_long" value="{{old('map_long', ->map_long)}}">
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="amenities" class="form-label">Amenidades:</label>
-                            <input type="text" class="form-control" id="amenities" value="{{old('amenities', $apartment->amenities)}}" placeholder="Separe con comas y sin espacios" name="amenities">
+                            <input type="text" class="form-control" id="amenities" value="{{old('amenities', ->amenities)}}" placeholder="Separe con comas y sin espacios" name="amenities">
                             @error('amenities')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -221,7 +221,7 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="services" class="form-label">Servicios:</label>
-                            <input type="text" class="form-control" id="services" value="{{old('services', $apartment->services)}}" placeholder="Separe con comas y sin espacios" name="services">
+                            <input type="text" class="form-control" id="services" value="{{old('services', ->services)}}" placeholder="Separe con comas y sin espacios" name="services">
                             @error('services')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -229,7 +229,7 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="sell_type" class="form-label">Tipo de venta:</label>
-                            <input type="text" class="form-control" id="sell_type" value="{{old('sell_type', $apartment->sell_type)}}" placeholder="Tipo de venta" name="sell_type">
+                            <input type="text" class="form-control" id="sell_type" value="{{old('sell_type', ->sell_type)}}" placeholder="Tipo de venta" name="sell_type">
                             @error('sell_type')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -237,16 +237,16 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="share-conditions">Condiciones para compartir:</label>
-                            <textarea class="form-control" rows="5" id="share_conditions" name="share_conditions">{{old('share_conditions', $apartment->share_conditions)}}</textarea>
+                            <textarea class="form-control" rows="5" id="share_conditions" name="share_conditions">{{old('share_conditions', ->share_conditions)}}</textarea>
                             @error('share_conditions')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <?php if ($apartment->price_m2) { ?>
+                        <?php if (->price_m2) { ?>
                             <div class="mb-3 mt-3">
                                 <label for="price_m2" class="form-label">Precio basado en m2:</label>
-                                <input type="text" class="form-control" id="price_m2" value="{{old('price_m2', $apartment->price_m2)}}" placeholder="Precio basado en m2" name="price_m2">
+                                <input type="text" class="form-control" id="price_m2" value="{{old('price_m2', ->price_m2)}}" placeholder="Precio basado en m2" name="price_m2">
                                 @error('price_m2')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -255,7 +255,7 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="antiquity" class="form-label">Antiguedad:</label>
-                            <input type="text" class="form-control" id="antiquity" value="{{old('antiquity', $apartment->antiquity)}}" placeholder="Antiguedad del inmueble" name="antiquity">
+                            <input type="text" class="form-control" id="antiquity" value="{{old('antiquity', ->antiquity)}}" placeholder="Antiguedad del inmueble" name="antiquity">
                             @error('antiquity')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -263,7 +263,7 @@ Editar apartamento
 
                         <div class="mb-3 mt-3">
                             <label for="no_exact_location">Mostrar locación exacta:</label>
-                            <?php if ($apartment->no_exact_location == 1) {
+                            <?php if (->no_exact_location == 1) {
                                 echo "si";
                             } else {
                                 echo "no";
@@ -274,15 +274,15 @@ Editar apartamento
 
                 <span>Imagenes:</span>
                 <div class="d-flex gap-2 mt-2">
-                    @for ($i = 1; $i <= $apartment->images; $i++)
+                    @for ($i = 1; $i <= ->images; $i++)
                         <div class="d-flex flex-column align-items-center image-container">
                             @php
-                            $imagePath = 'public/img/posts/apartments/' . $apartment->id . '/' . $i . '.webp';
+                            $imagePath = 'public/img/posts/apartments/' . ->id . '/' . $i . '.webp';
                             @endphp
 
                             @if(Storage::exists($imagePath))
                             @php
-                            $imageUrl = asset('storage/img/posts/apartments/' . $apartment->id . '/' . $i . '.webp');
+                            $imageUrl = asset('storage/img/posts/apartments/' . ->id . '/' . $i . '.webp');
                             @endphp
                             <div class="d-flex flex-column align-items-center image-container">
                                 <a href="{{ $imageUrl }}" target="_blank">
@@ -291,7 +291,7 @@ Editar apartamento
 
                                 <div class="mt-1">
                                     <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%" required>
-                                        @for($j = 1; $j <= $apartment->images; $j++)
+                                        @for($j = 1; $j <= ->images; $j++)
                                             <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
                                                 {{ $j }}
                                             </option>
@@ -314,7 +314,7 @@ Editar apartamento
                     <button type="submit" class="btn1">Editar apartamento</button>
                 </div>
             </form>
-            <form id="delete-form" action="{{ route('admin.deleteImageApartment', ['apartmentId' => $apartment->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+            <form id="delete-form" action="{{ route('admin.deleteImageApartment', ['apartmentId' => ->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>
@@ -470,7 +470,7 @@ Editar apartamento
                 var hasSelected = false;
                 for (var i = 0; i < colonias.length; i++) {
                     var selected = '';
-                    if (colonias[i].id == <?php echo $apartment->id_colonia; ?>) {
+                    if (colonias[i].id == <?php echo ->id_colonia; ?>) {
                         selected = 'selected';
                         hasSelected = true;
                     }

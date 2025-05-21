@@ -43,7 +43,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{route('admin.detailsApartments',$estate->id)}}">
+                                    <a class="dropdown-item" href="{{apartments.show',$estate->id)}}">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
