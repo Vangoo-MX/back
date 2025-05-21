@@ -254,7 +254,6 @@ class ApartmentsController extends Controller
             'dev_type' => $request->dev_type,
             'map' => $request->map,
             'area' => $request->area,
-            'dev_type' => $request->dev_type,
             'id_municipio' => $request->id_municipio,
             'id_colonia' => $request->id_colonia,
             'street' => $request->street,

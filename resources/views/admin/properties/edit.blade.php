@@ -201,14 +201,6 @@ Editar propiedad
                         </div>
 
                         <div class="mb-3 mt-3">
-                            <label for="services" class="form-label">Servicios:</label>
-                            <input type="text" class="form-control" id="services" value="{{old('services', $estate->services)}}" placeholder="Separe con comas y sin espacios" name="services">
-                            @error('services')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3 mt-3">
                             <label for="sell_type" class="form-label">Tipo de venta:</label>
                             <input type="text" class="form-control" id="sell_type" value="{{old('sell_type', $estate->sell_type)}}" placeholder="Tipo de venta" name="sell_type">
                             @error('sell_type')

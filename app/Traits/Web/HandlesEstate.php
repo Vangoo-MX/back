@@ -124,7 +124,7 @@ trait HandlesEstate
         }
     }
 
-    protected function getPropertyLocation(Model $estate): string
+    protected function getLocation(Model $estate): string
     {
         return collect([
             $estate->colonia->nombre ?? null,

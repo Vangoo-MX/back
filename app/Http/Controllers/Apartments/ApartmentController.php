@@ -32,4 +32,43 @@ class ApartmentController extends Controller
         $viewEstate = 'admin.apartments.edit';
         return $this->editEstate($id, $viewEstate);
     }
+
+    public function update(Request $request, Apartments $apartment)
+    {
+        $apartment->update($request->only([
+            'title',
+            'operation_type',
+            'price',
+            'price_maintenance',
+            'description',
+            'rooms',
+            'bathrooms',
+            'parkings',
+            'floor',
+            'dev_type',
+            'map',
+            'area',
+            'id_municipio',
+            'id_colonia',
+            'street',
+            'num_ext',
+            'num_int',
+            'cp',
+            'map_lat',
+            'map_long',
+            'amenities',
+            'sell_type',
+            'share_conditions',
+            'antiquity',
+        ]));
+
+        $this->handleImageProcessing($request, $apartment);
+
+        $apartment->update([
+            'location' => $this->getLocation($apartment),
+            'images' => $apartment->images + ($request->hasFile('images') ? count($request->file('images')) : 0),
+        ]);
+
+        return redirect()->route('apartments.show', $apartment)->with('success', __('messages.success.update'));
+    }
 }

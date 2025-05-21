@@ -29,10 +29,10 @@ Editar apartamento
     <div class="col-12 col-lg-4 px-2 px-lg-5 d-flex flex-column align-items-center justify-content-center w-100">
         <div class="w-100">
 
-            <form method="post" class="w-100" action="{{route('admin.apartmentsUpdate', $estate)}}" enctype="multipart/form-data">
+            <form method="post" class="w-100" action="{{route('apartments.update', $estate->id)}}" enctype="multipart/form-data">
 
                 @csrf
-                <input type="hidden" name="id" value="{{$estate->id}}">
+                @method('PUT')
 
                 <div class="d-flex gap-5 w-100 flex-column flex-lg-row">
                     <div class="w-100">
@@ -215,14 +215,6 @@ Editar apartamento
                             <label for="amenities" class="form-label">Amenidades:</label>
                             <input type="text" class="form-control" id="amenities" value="{{old('amenities', $estate->amenities)}}" placeholder="Separe con comas y sin espacios" name="amenities">
                             @error('amenities')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3 mt-3">
-                            <label for="services" class="form-label">Servicios:</label>
-                            <input type="text" class="form-control" id="services" value="{{old('services', $estate->services)}}" placeholder="Separe con comas y sin espacios" name="services">
-                            @error('services')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>

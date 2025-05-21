@@ -53,6 +53,9 @@ class PropertyController extends Controller
             'num_int',
             'cp',
             'amenities',
+            'map_lat',
+            'map_long',
+            'amenities',
             'sell_type',
             'share_conditions',
             'antiquity'
@@ -61,7 +64,7 @@ class PropertyController extends Controller
         $this->handleImageProcessing($request, $property);
 
         $property->update([
-            'location' => $this->getPropertyLocation($property),
+            'location' => $this->getLocation($property),
             'images' => $property->images + ($request->hasFile('images') ? count($request->file('images')) : 0)
         ]);
 
