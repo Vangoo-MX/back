@@ -74,7 +74,7 @@ class PropertyController extends Controller
             ->with('success', 'Propiedad actualizada correctamente');
     }
 
-    public function destroy(string $id)
+    public function destroy($id)
     {
         $viewEstate = 'admin.properties.index';
         return $this->deleteEstate($id, $viewEstate);

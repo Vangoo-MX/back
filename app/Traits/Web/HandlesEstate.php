@@ -38,7 +38,7 @@ trait HandlesEstate
         return view($viewEstate, compact('estate', 'municipios'));
     }
 
-    public function deleteEstate(int $id, $viewEstate)
+    public function deleteEstate($id, $viewEstate)
     {
         try {
             if ($highlight = $this->highlightModel::where('id_property', $id)->first()) {
