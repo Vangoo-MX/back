@@ -168,11 +168,12 @@
     function propertyDeleteSend() {
         var id = $("#propertyDeleteId").val();
         var url = $("#propertyDeleteConfirmBtn" + id).data("url");
+
         $.ajax({
             url: url,
             type: "DELETE",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            data: {
+                _token: "{{ csrf_token() }}"
             },
             success: function(response) {
                 message('success', 'Propiedad ' + id + ' eliminada. Actualizando tabla... <div class="spinner-border text-success"></div>');
