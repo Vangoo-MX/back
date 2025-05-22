@@ -65,7 +65,7 @@ Route::prefix('properties')->name('properties.')->middleware('check.admin')->gro
         ->name('deleteImage');
     Route::get('municipio/{id}', [PropertyHighlightController::class, 'propertyByMunicipio'])
         ->name('municipio');
-    Route::put('queue/rejected/{id}', [PropertyController::class, 'reject'])
+    Route::put('queue/rejected/{id}', [PropertyQueueController::class, 'reject'])
         ->name('queue.reject');
     Route::resource('queue', PropertyQueueController::class)
         ->except(['create', 'show', 'edit', 'destroy']);
