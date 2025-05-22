@@ -63,13 +63,12 @@ trait HandlesEstate
             return response()->json([
                 'success' => true,
                 'message' => __('Propiedad eliminada exitosamente')
-            ], 200); // 👈 Asegura el código de estado
-
+            ], 200);
         } catch (Exception $e) {
             Log::error("Error: " . $e->getMessage());
             return response()->json([
                 'error' => 'Error interno del servidor'
-            ], 500); // 👈 Retorna código 500 en errores
+            ], 500);
         }
     }
 
