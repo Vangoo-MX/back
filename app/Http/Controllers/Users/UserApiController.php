@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Mockery\Exception;
+use Illuminate\Support\Str;
 
 class UserApiController extends Controller
 {
@@ -75,8 +76,8 @@ class UserApiController extends Controller
                 if ($user->profile_image) {
                     Storage::delete("public/img/users/{$user->profile_image}");
                 }
-                $extension = $request->profile_image->extension();
-                $filename = "{$user->id}.{$extension}";
+
+                $filename = Str::slug($user->id) . '.' . $request->profile_image->extension();
 
                 $request->profile_image->storeAs('public/img/users', $filename);
                 $updateData['profile_image'] = $filename;
