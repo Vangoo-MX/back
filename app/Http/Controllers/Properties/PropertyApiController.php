@@ -198,9 +198,11 @@ class PropertyApiController extends Controller
 
         $property->fill($data);
 
+        Log::info('Property data', ['property' => $property->toArray()]);
+
         if ($request->has('number_images')) {
             $property->images += $request->number_images;
-            Log::info('Number_images', $property->images);
+            Log::info('Number_images', ['images' => $property->images]);
         }
 
         if ($request->has('status_aproved')) {
