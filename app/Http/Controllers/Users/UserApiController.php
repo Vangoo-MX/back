@@ -72,15 +72,14 @@ class UserApiController extends Controller
             ]);
 
             if ($request->hasFile('profile_image')) {
+                if ($user->profile_image) {
+                    Storage::delete("public/img/users/{$user->profile_image}");
+                }
                 $extension = $request->profile_image->extension();
                 $filename = "{$user->id}.{$extension}";
 
                 $request->profile_image->storeAs('public/img/users', $filename);
                 $updateData['profile_image'] = $filename;
-
-                if ($user->profile_image) {
-                    Storage::delete("public/img/users/{$user->profile_image}");
-                }
             }
 
             $user->update($updateData);
