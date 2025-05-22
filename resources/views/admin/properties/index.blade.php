@@ -175,6 +175,7 @@
             data: {
                 _token: "{{ csrf_token() }}"
             },
+            dataType: 'json',
             success: function(response) {
                 message('success', 'Propiedad ' + id + ' eliminada. Actualizando tabla... <div class="spinner-border text-success"></div>');
                 setTimeout(function() {

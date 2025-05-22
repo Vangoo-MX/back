@@ -60,13 +60,16 @@ trait HandlesEstate
             $estate->delete();
             Log::info("Propiedad eliminada de la base de datos");
 
-            return view($viewEstate)->with('success', __('Propiedad eliminada exitosamente'));
+            return response()->json([
+                'success' => true,
+                'message' => __('Propiedad eliminada exitosamente')
+            ], 200); // 👈 Asegura el código de estado
+
         } catch (Exception $e) {
-            Log::error("Error deleting resource queue: {$e->getMessage()}");
-            return response()->json(
-                ['error' => 'Failed to delete resource'],
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
+            Log::error("Error: " . $e->getMessage());
+            return response()->json([
+                'error' => 'Error interno del servidor'
+            ], 500); // 👈 Retorna código 500 en errores
         }
     }
 
