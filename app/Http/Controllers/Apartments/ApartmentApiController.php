@@ -183,7 +183,6 @@ class ApartmentApiController extends Controller
             'propertyPriceMaintenance' => 'price_maintenance',
             'propertyOperationType' => 'operation_type',
             'propertyAmountPriceBasedM2' => 'price_m2',
-            'number_images' => 'images',
         ];
 
         $data = collect($fieldMapping)

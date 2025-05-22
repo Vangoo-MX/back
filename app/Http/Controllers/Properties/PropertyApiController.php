@@ -180,7 +180,6 @@ class PropertyApiController extends Controller
             'propertyLocation' => 'location',
             'propertyOperationType' => 'operation_type',
             'propertyAmountPriceBasedM2' => 'price_m2',
-            'number_images' => 'images',
         ];
 
         $data = collect($fieldMapping)
