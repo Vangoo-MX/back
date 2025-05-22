@@ -24,7 +24,7 @@ class PropertyQueueController extends Controller
 
     public function store(Request $request)
     {
-        return $this->approvedQueueQueue($request);
+        return $this->approvedQueue($request);
     }
 
     public function update($id)
