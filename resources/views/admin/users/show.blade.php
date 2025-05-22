@@ -18,11 +18,7 @@
             <div class="card mb-4">
                 <div class="card-body text-center d-flex flex-column align-items-center" style="padding:54px 0 30px;">
                     <div class="img-fluid img-profile rounded-circle" style="width:150px;height:150px;">
-                        <img src="{{ asset('storage/img/users/' . $user->profile_image) }}?v={{ filemtime(storage_path('app/public/img/users/' . $user->profile_image)) }}"
-                            alt="avatar"
-                            class="img-fluid rounded-circle"
-                            style="width:100%;height: 100%;object-fit:cover;border-radius:50%;"
-                            onerror="this.src='{{ url('./img/img404.jpg') }}'">
+                        <img src="{{asset('storage/img/users').'/'.$user->profile_image}}" alt="avatar" class="img-fluid rounded-circle" style="width:100%;height: 100%;object-fit:cover;border-radius:50%;" onerror="{this.src='{{url('./img/img404.jpg')}}'}">
                     </div>
                     <h5 class="my-3">{{$user->name}}</h5>
                     <p class="mb-1 {{ $user->rol->value === 1 ? 'text-danger' : 'text-primary' }}">

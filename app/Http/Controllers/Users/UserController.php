@@ -74,13 +74,11 @@ class UserController extends Controller
                 Storage::delete('public/img/users/' . $user->profile_image);
             }
 
-            $filename = Str::slug($user->id) . '.' . $request->profile_image->extension();
+            $filename = Str::slug($user->id) . '_' . time() . '.' . $request->profile_image->extension();
 
             $request->profile_image->storeAs('public/img/users', $filename);
 
             $updateData['profile_image'] = $filename;
-
-            $user->touch();
         }
 
         if ($request->filled('password')) {
