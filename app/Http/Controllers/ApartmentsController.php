@@ -8,15 +8,9 @@ use App\Models\Apartments;
 use App\Models\ApartmentsQueue;
 use App\Models\ApartmentsHighlights;
 use App\Models\Images;
-use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
-use App\Models\Estados;
-use App\Models\Municipios;
-use App\Models\Colonias;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
+
 
 class ApartmentsController extends Controller
 {
