@@ -9,6 +9,7 @@ use App\Models\PropertiesQueue;
 use App\Traits\Api\HandlesHighlights;
 use App\Traits\Api\HandlesEstate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PropertyApiController extends Controller
 {
@@ -92,6 +93,7 @@ class PropertyApiController extends Controller
 
     public function storePropertyQueue(Request $request)
     {
+        Log::info('Storing property queue', ['request' => $request->all()]);
         $fieldMapping = [
             'propertyTitle' => 'title',
             'propertySellPrice' => 'price',
@@ -132,6 +134,7 @@ class PropertyApiController extends Controller
 
         $property = new PropertiesQueue($data);
         $property->location = $this->getLocationFromRelations($property);
+        Log::info('Property data', $property->toArray());
         $property->save();
 
         return response()->json(['id' => $property->id]);
