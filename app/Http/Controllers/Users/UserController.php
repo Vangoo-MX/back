@@ -79,6 +79,8 @@ class UserController extends Controller
             $request->profile_image->storeAs('public/img/users', $filename);
 
             $updateData['profile_image'] = $filename;
+
+            $user->touch();
         }
 
         if ($request->filled('password')) {
