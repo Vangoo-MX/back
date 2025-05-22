@@ -44,9 +44,9 @@ Route::prefix('auth')->group(function () {
 
 // Apartamentos
 Route::prefix('apartments')->name('apartments.')->middleware('check.admin')->group(function () {
-    Route::put('active/{id}', [ApartmentController::class, 'active'])
+    Route::get('active/{id}', [ApartmentController::class, 'active'])
         ->name('active');
-    Route::put('deactive/{id}', [ApartmentController::class, 'deactive'])
+    Route::get('deactive/{id}', [ApartmentController::class, 'deactive'])
         ->name('deactive');
     Route::delete('deleteImage/{apartmentId}/{imageId}', [ApartmentController::class, 'destroyImage'])
         ->name('deleteImage');
@@ -57,9 +57,9 @@ Route::prefix('apartments')->name('apartments.')->middleware('check.admin')->gro
 
 // Propiedades
 Route::prefix('properties')->name('properties.')->middleware('check.admin')->group(function () {
-    Route::put('active/{id}', [PropertyController::class, 'active'])
+    Route::get('active/{id}', [PropertyController::class, 'active'])
         ->name('active');
-    Route::put('deactive/{id}', [PropertyController::class, 'deactive'])
+    Route::get('deactive/{id}', [PropertyController::class, 'deactive'])
         ->name('deactive');
     Route::delete('deleteImage/{propertyId}/{imageId}', [PropertyController::class, 'destroyImage'])
         ->name('deleteImage');

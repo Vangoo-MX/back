@@ -193,10 +193,7 @@
         var url = $("#propertyDeactiveConfirmBtn" + id).data("url");
         $.ajax({
             url: url,
-            type: "PUT",
-            data: {
-                _token: "{{ csrf_token() }}"
-            },
+            type: "GET",
             success: function(response) {
                 message('success', 'Propiedad ' + id + ' desactivada. Actualizando tabla... <div class="spinner-border text-success"></div>');
                 setTimeout(function() {
