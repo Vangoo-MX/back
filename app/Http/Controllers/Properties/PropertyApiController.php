@@ -156,6 +156,7 @@ class PropertyApiController extends Controller
      */
     public function updatePropertyQueue(Request $request)
     {
+        Log::info('update property queue', ['request' => $request->all()]);
         $property = PropertiesQueue::findOrFail($request->id);
 
         $fieldMapping = [
@@ -197,8 +198,10 @@ class PropertyApiController extends Controller
 
         $property->fill($data);
 
+        Log::info('Number_images', $request->number_images);
         if ($request->has('number_images')) {
             $property->images += $request->number_images;
+            Log::info('images', $property->toArray());
         }
 
         if ($request->has('status_aproved')) {
