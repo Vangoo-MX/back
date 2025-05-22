@@ -38,7 +38,7 @@ trait HandlesEstate
         return view($viewEstate, compact('estate', 'municipios'));
     }
 
-    public function deleteEstate($id, $viewEstate)
+    public function deleteEstate($id)
     {
         try {
             Log::info("Intentando eliminar propiedad con ID: {$id}");
