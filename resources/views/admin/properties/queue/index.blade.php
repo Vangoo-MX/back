@@ -188,10 +188,10 @@
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
                             <form method="post" action="{{route('properties.queue.store')}}">
                                 @csrf
-                                <input type="hidden" id="id" name="id" value="{{$estateQueue->id}}">
+                                <input type="hidden" id="id" name="id" value="{{$estateRevision->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <form method="post" action="{{route('properties.queue.reject', $estateQueue->id)}}">
+                            <form method="post" action="{{route('properties.queue.reject', $estateRevision->id)}}">
                                 @csrf
                                 @method('PUT')
                                 <button class="btnDanger" type="submit">Rechazar</button>
