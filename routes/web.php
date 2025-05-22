@@ -77,7 +77,7 @@ Route::prefix('properties')->name('properties.')->middleware('check.admin')->gro
 });
 
 //Gestion de usuarios
-Route::prefix('users')->name('users.')->group(function () {
+Route::prefix('users')->name('users.')->middleware('check.admin')->group(function () {
     Route::put('{user}/status', [UserController::class, 'statusUser'])
         ->name('status.update');
     Route::resource('/', UserController::class)
