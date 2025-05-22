@@ -75,7 +75,7 @@ class ApartmentController extends Controller
     public function destroy($id)
     {
         $viewEstate = 'admin.apartments.index';
-        return $this->destroyEstate($id, $viewEstate);
+        return $this->deleteEstate($id, $viewEstate);
     }
 
     public function destroyImage($apartmentId, $imageId)
