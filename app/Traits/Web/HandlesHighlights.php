@@ -53,14 +53,14 @@ trait HandlesHighlights
         // ]);
 
         try {
-            $this->modelHighlights::where($config['field_id'], 'id')
+            $this->modelHighlights::where($config['field_id'], $request->id)
                 ->firstOrFail()
-                ->update(['num_order' => 'num_order']);
+                ->update(['num_order' => $request->num_order]);
 
             return redirect()->back()->with('success', 'Orden actualizado exitosamente');
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Highlight para la propiedad ID ' . 'id' . ' no encontrado'
+                'error' => 'Highlight para la propiedad ID ' . $request->id . ' no encontrado'
             ], 404);
         }
     }
