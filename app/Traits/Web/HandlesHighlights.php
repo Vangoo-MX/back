@@ -47,11 +47,6 @@ trait HandlesHighlights
     {
         $config = $this->getHighlightConfig();
 
-        // $validated = $request->validate([
-        //     'id' => 'required|integer|exists:post_properties_highlights,id_property',
-        //     'num_order' => 'required|integer'
-        // ]);
-
         try {
             $this->modelHighlights::where($config['field_id'], $request->id)
                 ->firstOrFail()

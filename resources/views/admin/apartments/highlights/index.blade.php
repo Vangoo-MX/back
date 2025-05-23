@@ -68,14 +68,12 @@
                             <span class="d-flex gap-1">
                                 <input type="hidden" name="id" value="{{$estate->id_property}}">
                                 <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_property}})">
-                                    <option selected hidden>Orden</option>
-                                    @foreach($estates as $key => $q)
-                                    @if($key == $estate->num_order)
-                                    <option value="{{$key}}" selected>{{$key}}</option>
-                                    @else
-                                    <option value="{{$key+1}}">{{$key+1}}</option>
-                                    @endif
-                                    @endforeach
+                                    <option value="" selected hidden>Orden</option>
+                                    @for($i = 1; $i <= count($estates); $i++)
+                                        <option value="{{ $i }}" {{ $estate->num_order == $i ? 'selected' : '' }}>
+                                        {{ $i }}
+                                        </option>
+                                        @endfor
                                 </select>
                             </span>
                         </form>
