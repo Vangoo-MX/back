@@ -10,12 +10,12 @@
 
 <h3>Nuevo terreno destacado</h3>
 <br>
-<form method="post" action="{{ route('admin.addHighlightTerrain') }}">
+<form method="post" action="{{ route('terrains.highlights.store') }}">
     @csrf
     <div class="d-flex gap-2">
         <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">
-            <option selected value="0" data-municipio-id="0">Todos los Terrenos destacados</option>
-            @foreach($municipiosh as $municipio)
+            <option selected value="0" data-municipio-id="0">Todas las propiedades destacadas</option>
+            @foreach($municipios as $municipio)
             <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
             @endforeach
         </select>
@@ -42,34 +42,37 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($terrainshl as $terrain)
-                <tr class="municipio-{{$terrain->id_municipio}}">
-                    <td>{{$terrain->id_property}}</td>
-                    <td>{{$terrain->terrain->title ?? 'Sin título'}}</td>
-                    <td>{{ $terrain->estado->nombre ?? 'Sin estado' }}</td>
-                    <td>{{$terrain->id_municipio}}</td>
-                    <td>{{ $terrain->municipio->nombre ?? 'Sin municipio' }}</td>
-                    <td>{{$terrain->num_order}}</td>
+                @foreach($estates as $estate)
+                <tr class="municipio-{{$estate->id_municipio}}">
+                    <td>{{$estate->id_property}}</td>
+                    <td>{{$estate->terrain->title ?? 'Sin título'}}</td>
+                    <td>{{ $estate->estado->nombre ?? 'Sin estado' }}</td>
+                    <td>{{$estate->id_municipio}}</td>
+                    <td>{{ $estate->municipio->nombre ?? 'Sin municipio' }}</td>
+                    <td>{{$estate->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('admin.deleteHighlightTerrain', $terrain->id) }}" class="btn btn-danger">
-                            <i class="fa-solid fa-circle-xmark"></i>
-                        </a>
-                        <a href="https://www.vangoo.mx/detailsTerrain/terrains/{{$terrain->id_property}}" target="_blank">
+                        <form action="{{ route('terrains.highlights.destroy', $estate->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </form>
+                        <a href="https://www.vangoo.mx/detailsTerrain/terrains/{{$estate->id_property}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$terrain->id_property}}" action="{{ route('admin.orderHighlightTerrain') }}" method="POST">
+                        <form id="orden-form{{$estate->id_property}}" action="{{ route('terrains.highlights.update', $estate->id) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <span class="d-flex gap-1">
-                                <input type="hidden" name="id" value="{{$terrain->id_property}}">
-                                <select class="form-select" name="num_order" onchange="ordenSelect({{$terrain->id_property}})">
-                                    <option selected hidden>Orden</option>
-                                    @foreach($terrainshl as $key => $q)
-                                    @if($key == $terrain->num_order)
-                                    <option value="{{$key}}" selected>{{$key}}</option>
-                                    @else
-                                    <option value="{{$key}}">{{$key}}</option>
-                                    @endif
-                                    @endforeach
+                                <input type="hidden" name="id" value="{{$estate->id_property}}">
+                                <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_property}})">
+                                    <option value="" selected hidden>Orden</option>
+                                    @for($i = 1; $i <= count($estates); $i++)
+                                        <option value="{{ $i }}" {{ $estate->num_order == $i ? 'selected' : '' }}>
+                                        {{ $i }}
+                                        </option>
+                                        @endfor
                                 </select>
                             </span>
                         </form>
@@ -126,28 +129,24 @@
     }
 
     document.getElementById('municipiosh-select').addEventListener('change', function() {
-        var municipioId = this.options[this.selectedIndex].getAttribute('data-municipio-id');
-        var url = '/ep/get-terrain-by-municipio/' + municipioId;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var properties = JSON.parse(xhr.responseText);
-                var propertiesHtml = '';
-                for (var i = 0; i < properties.length; i++) {
-                    propertiesHtml += '<option value="' + properties[i].id + '">' + properties[i].id + ' - ' + properties[i].title + '</option>';
-                }
-                var selectHtml = '';
-                if (municipioId != 0) {
-                    selectHtml = '<select class="form-select larger-width" name="id_property">' + propertiesHtml + '</select><button class="btn btn-primary" type="submit">Asignar</button>';
-                }
-                document.getElementById('properties-by-municipio').innerHTML = selectHtml;
-            } else {
-                console.log('Error');
-            }
-        };
-        xhr.send();
+        var municipioId = this.value;
+        var url = '/terrains/municipio/' + municipioId;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(properties => {
+                let html = '<select class="form-select larger-width" name="id_property" required>';
+                properties.forEach(property => {
+                    html += `<option value="${property.id}">${property.id} - ${property.title}</option>`;
+                });
+                html += '</select>';
+
+                html += '<button type="submit" class="btn btn-primary ms-2">Asignar</button>';
+
+                document.getElementById('properties-by-municipio').innerHTML = html;
+                document.getElementById('submit-btn').style.display = 'inline-block';
+            })
+            .catch(error => console.error('Error:', error));
     });
 </script>
 
