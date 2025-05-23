@@ -47,20 +47,20 @@ trait HandlesHighlights
     {
         $config = $this->getHighlightConfig();
 
-        $validated = $request->validate([
-            'id' => 'required|integer|exists:post_properties_highlights,id_property',
-            'num_order' => 'required|integer'
-        ]);
+        // $validated = $request->validate([
+        //     'id' => 'required|integer|exists:post_properties_highlights,id_property',
+        //     'num_order' => 'required|integer'
+        // ]);
 
         try {
-            $this->modelHighlights::where($config['field_id'], $validated['id'])
+            $this->modelHighlights::where($config['field_id'], 'id')
                 ->firstOrFail()
-                ->update(['num_order' => $validated['num_order']]);
+                ->update(['num_order' => 'num_order']);
 
             return redirect()->back()->with('success', 'Orden actualizado exitosamente');
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Highlight para la propiedad ID ' . $validated['id'] . ' no encontrado'
+                'error' => 'Highlight para la propiedad ID ' . 'id' . ' no encontrado'
             ], 404);
         }
     }
