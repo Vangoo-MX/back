@@ -177,20 +177,6 @@ Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('ema
 
 Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('emails.template');
 
-/* APARTAMENTOS */
-
-Route::get('ep/getAllApartments', [ApartmentsController::class, 'getAll'])->name('epApartments.get');
-
-Route::get('ep/getApartmentCard/{id}', [ApartmentsController::class, 'getApartmentCard'])->name('epApartmentCard.get');
-
-Route::get('ep/getMultiApartmentCard/{array}', [ApartmentsController::class, 'getMultiApartmentCard'])->name('epMultiApartmentCard.get');
-
-Route::get('ep/getApartmentsImagesCards', [ApartmentsController::class, 'getApartmentsImagesCards'])->name('epApartmentsImagesCards.get');
-
-Route::get('ep/getApartmentsImagesDetail/{id}', [ApartmentsController::class, 'getApartmentsImagesDetail'])->name('epApartmentsImagesDetail.get');
-
-Route::get('ep/get-apartment-by-municipio/{id}', [ApartmentsController::class, 'getApartmentsByMunicipio']);
-
 /* TERRENOS */
 Route::get('ep/getAllTerrains', [TerrainsController::class, 'getAll'])->name('epTerrains.get');
 
