@@ -9,11 +9,11 @@ trait HandlesHighlights
 {
     public function indexHighlights($viewState)
     {
-        $estates = $this->modelHighlights::with(['estado', 'municipio', 'property'])
+        $estates = $this->modelHighlights::with(['estado', 'municipio', $this->relationHighlight])
             ->orderBy('num_order')
             ->get();
 
-        $municipios = Municipios::whereHas('properties')
+        $municipios = Municipios::whereHas($this->relationMunicipio)
             ->get();
 
         return view($viewState, compact('estates', 'municipios'));

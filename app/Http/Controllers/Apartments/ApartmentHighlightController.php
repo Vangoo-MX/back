@@ -13,6 +13,8 @@ class ApartmentHighlightController extends Controller
     use HandlesHighlights;
     protected $model = Apartments::class;
     protected $modelHighlights = ApartmentsHighlights::class;
+    protected $relationHighlight = 'apartment';
+    protected $relationMunicipio = 'apartments';
 
     protected function getHighlightConfig(): array
     {
