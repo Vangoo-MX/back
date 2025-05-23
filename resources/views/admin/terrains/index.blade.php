@@ -26,16 +26,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($terrains as $terrain)
+                @foreach($estates as $estate)
                 <tr>
-                    <td>{{$terrain->id}}</td>
-                    <td>{{limitString($terrain->title,37)}}</td>
-                    <td>{{moneyFormat($terrain->price)}}</td>
-                    <td>{{limitString(colonia($terrain->id_colonia),30)}}</td>
-                    <td>{{municipio($terrain->id_municipio)}}</td>
-                    <td>{{estado($terrain->id_estado)}}</td>
-                    <td><a href="user/{{$terrain->id_user}}">{{username($terrain->id_user)}}</a></td>
-                    <td>{{ convertDate($terrain->created_at) }}</td>
+                    <td>{{$estate->id}}</td>
+                    <td>{{limitString($estate->title,37)}}</td>
+                    <td>{{moneyFormat($estate->price)}}</td>
+                    <td>{{limitString(colonia($estate->id_colonia),30)}}</td>
+                    <td>{{municipio($estate->id_municipio)}}</td>
+                    <td>{{estado($estate->id_estado)}}</td>
+                    <td><a href="user/{{$estate->id_user}}">{{username($estate->id_user)}}</a></td>
+                    <td>{{ convertDate($estate->created_at) }}</td>
                     <td>
                         <div class="dropdown">
                             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
@@ -43,38 +43,32 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{route('admin.detailsTerrains',$terrain->id)}}">
+                                    <a class="dropdown-item" href="{{route('terrains.show',$estate->id)}}">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://www.vangoo.mx/detailsTerrain/terrains/{{$terrain->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://www.vangoo.mx/detailsTerrain/terrains/{{$estate->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
                                 </li>
-                                <li class="d-none">
-                                    <a class="dropdown-item" href="#">
-                                        <img src="{{url('./img/icon/update.png')}}" />
-                                        Editar
-                                    </a>
-                                </li>
                                 <li>
-                                    @if ($terrain->status == 1)
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$terrain->id}})" id="propertyDeactiveConfirmBtn{{$terrain->id}}" data-url="{{route('admin.deactiveTerrain',$terrain->id)}}">
+                                    @if ($estate->status == 1)
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeactivateModal" onclick="propertyDeactiveModalData({{$estate->id}})" id="propertyDeactiveConfirmBtn{{$estate->id}}" data-url="{{route('admin.deactiveTerrain',$estate->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Desactivar
                                     </a>
                                     @else
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$terrain->id}})" id="propertyActivateConfirmBtn{{$terrain->id}}" data-url="{{route('admin.activeTerrain',$terrain->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyActivateModal" onclick="propertyActiveModalData({{$estate->id}})" id="propertyActivateConfirmBtn{{$estate->id}}" data-url="{{route('admin.activeTerrain',$estate->id)}}">
                                         <img src="{{url('./img/icon/desactive.png')}}" />
                                         Activar
                                     </a>
                                     @endif
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeleteModal" onclick="propertyDeleteModalData({{$terrain->id}})" id="propertyDeleteConfirmBtn{{$terrain->id}}" data-url="{{route('admin.deleteTerrain',$terrain->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyDeleteModal" onclick="propertyDeleteModalData({{$estate->id}})" id="propertyDeleteConfirmBtn{{$estate->id}}" data-url="{{route('admin.deleteTerrain',$estate->id)}}">
                                         <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>
@@ -174,9 +168,14 @@
     function propertyDeleteSend() {
         var id = $("#propertyDeleteId").val();
         var url = $("#propertyDeleteConfirmBtn" + id).data("url");
+
         $.ajax({
             url: url,
-            type: "GET",
+            type: "DELETE",
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            dataType: "json",
             success: function(response) {
                 message('success', 'Propiedad ' + id + ' eliminada. Actualizando tabla... <div class="spinner-border text-success"></div>');
                 setTimeout(function() {
@@ -195,7 +194,11 @@
         var url = $("#propertyDeactiveConfirmBtn" + id).data("url");
         $.ajax({
             url: url,
-            type: "GET",
+            type: "PUT",
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            dataType: "json",
             success: function(response) {
                 message('success', 'Propiedad ' + id + ' desactivada. Actualizando tabla... <div class="spinner-border text-success"></div>');
                 setTimeout(function() {
@@ -214,7 +217,11 @@
         var url = $("#propertyActivateConfirmBtn" + id).data("url");
         $.ajax({
             url: url,
-            type: "GET",
+            type: "PUT",
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            dataType: "json",
             success: function(response) {
                 message('success', 'Propiedad ' + id + ' activada. Actualizando tabla... <div class="spinner-border text-success"></div>');
                 setTimeout(function() {

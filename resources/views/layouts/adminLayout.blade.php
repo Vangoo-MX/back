@@ -69,13 +69,13 @@
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">
-                        <a class="cursor-pointer {{ (request()->is('overview/terrains*')) ? 'active' : '' }} {{ (request()->is('overview/terrains-queue*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
+                        <a class="cursor-pointer {{ (request()->is('terrains*')) ? 'active' : '' }} {{ (request()->is('terrains/queue*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
                             <img src="{{url('./img/icon/terrain.png')}}" title="Terrenos" alt="Terrains" />
                         </a>
                         <ul class="dropdown-menu menu-primary-dropdown">
-                            <li><a class="{{ (request()->is('overview/terrains')) ? 'active' : '' }}" href="{{route('admin.terrains')}}">Todos los terrenos</a></li>
-                            <li><a class="{{ (request()->is('overview/terrains-queue*')) ? 'active' : '' }}" href="{{route('admin.queueTerrains')}}">Cola de aprobación</a></li>
-                            <li><a class="{{ (request()->is('overview/terrains-highlights*')) ? 'active' : '' }}" href="{{route('admin.highlights.terrains')}}">Terrenos destacados</a></li>
+                            <li><a class="{{ (request()->is('terrains')) ? 'active' : '' }}" href="{{route('terrains.index')}}">Todos los terrenos</a></li>
+                            <li><a class="{{ (request()->is('terrains/queue*')) ? 'active' : '' }}" href="{{route('terrains.queue.index')}}">Cola de aprobación</a></li>
+                            <li><a class="{{ (request()->is('terrains/highlights*')) ? 'active' : '' }}" href="{{route('terrains.highlghts.index')}}">Terrenos destacados</a></li>
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">

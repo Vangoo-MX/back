@@ -3,13 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AdminController,
-    ApartmentsController,
     TerrainsController,
     Auth\ForgotPasswordController,
     Auth\ResetPasswordController,
     Auth\AuthController,
     ContactsController,
-    PropertiesController,
     DevelopmentsController,
     DevelopmentsApartmentsController,
     DevelopmentsHorizontalApartmentsController,
@@ -23,6 +21,7 @@ use App\Http\Controllers\Apartments\ApartmentController;
 use App\Http\Controllers\Apartments\ApartmentHighlightController;
 use App\Http\Controllers\Apartments\ApartmentQueueController;
 use App\Http\Controllers\Properties\PropertyHighlightController;
+use App\Http\Controllers\Terrains\TerrainController;
 
 Route::redirect('/', '/auth/user/login');
 
@@ -84,6 +83,13 @@ Route::prefix('properties')->name('properties.')->middleware('check.admin')->gro
     Route::resource('/', PropertyController::class)
         ->except(['create', 'store'])
         ->parameters(['' => 'property']);
+});
+
+// Terrenos
+Route::prefix('terrains')->name('terrains.')->middleware('check.admin')->group(function () {
+    Route::resource('/', TerrainController::class)
+        ->except(['create', 'store'])
+        ->parameters(['' => 'terrain']);
 });
 
 //Gestion de usuarios
