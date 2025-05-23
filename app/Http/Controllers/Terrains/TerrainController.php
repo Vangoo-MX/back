@@ -33,4 +33,39 @@ class TerrainController extends Controller
         $viewEstate = 'admin.terrains.edit';
         return $this->editEstate($id, $viewEstate);
     }
+
+    public function update(Request $request, Terrains $terrain)
+    {
+        $terrain->update($request->only([
+            'title',
+            'operation_type',
+            'price',
+            'description',
+            'parking',
+            'map',
+            'id_municipio',
+            'id_colonia',
+            'street',
+            'num_ext',
+            'num_int',
+            'cp',
+            'map_lat',
+            'map_long',
+            'services',
+            'sell_type',
+            'share_conditions',
+            'antiquity',
+            'area_terrain',
+            'price_m2',
+        ]));
+
+        $this->handleImageProcessing($request, $terrain);
+
+        $terrain->update([
+            'location' => $this->getLocation($terrain),
+            'images' => $terrain->images + ($request->hasFile('images') ? count($request->file('images')) : 0)
+        ]);
+
+        return redirect()->route('terrains.show', $terrain)->with('success', __('Terrain updated successfully.'));
+    }
 }

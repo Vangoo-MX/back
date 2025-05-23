@@ -63,41 +63,6 @@ class AdminController extends Controller
     }
 
     //terrains
-    public function terrains()
-    {
-        $terrains = Terrains::get();
-
-        return view('admin.terrains', compact('terrains'));
-    }
-
-    public function detailsTerrains($id)
-    {
-        $municipios = Municipios::where('id_estado', 19)->get();
-        $terrain = Terrains::find($id);
-
-        return view('admin.detailsTerrains', compact('terrain', 'municipios'));
-    }
-
-    public function editTerrainPage($terrains)
-    {
-        $terrain = Terrains::find($terrains);
-
-        if (!$terrain) {
-            return redirect()->route('admin.terrains')->withErrors('El terreno no existe.');
-        }
-
-        $municipio_propiedad = Municipios::find($terrain->id_municipio);
-
-        if (!$municipio_propiedad) {
-            return redirect()->route('admin.terrains')->withErrors('El municipio del terreno no existe.');
-        }
-
-        $estado_propiedad = $municipio_propiedad->id_estado;
-        $municipios = Municipios::where('id_estado', $estado_propiedad)->get();
-        $colonias = Colonias::where('id_municipio', $terrain->id_municipio)->get();
-
-        return view('admin.editTerrainPage', compact('municipios', 'colonias', 'terrain'));
-    }
 
     public function queueTerrains()
     {
