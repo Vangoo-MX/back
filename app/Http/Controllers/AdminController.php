@@ -64,17 +64,6 @@ class AdminController extends Controller
 
     //apartments
 
-    public function queueApartments()
-    {
-        $apartmentsQueue = ApartmentsQueue::where('status_aproved', 0)->get();
-
-        $apartmentsRejected = ApartmentsQueue::where('status_aproved', 2)->get();
-
-        $apartmentsRevision = ApartmentsQueue::where('status_aproved', 3)->get();
-
-        return view('admin.queueApartments', compact('apartmentsQueue', 'apartmentsRejected', 'apartmentsRevision'));
-    }
-
     public function highlightsApartments()
     {
         $apartmentshl = ApartmentsHighlights::with(['estado', 'municipio', 'apartment'])->get();

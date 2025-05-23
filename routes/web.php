@@ -20,6 +20,7 @@ use App\Http\Controllers\{
     Properties\PropertyQueueController,
 };
 use App\Http\Controllers\Apartments\ApartmentController;
+use App\Http\Controllers\Apartments\ApartmentQueueController;
 use App\Http\Controllers\Properties\PropertyHighlightController;
 
 Route::redirect('/', '/auth/user/login');
@@ -50,6 +51,10 @@ Route::prefix('apartments')->name('apartments.')->middleware('check.admin')->gro
         ->name('deactive');
     Route::delete('deleteImage/{apartmentId}/{imageId}', [ApartmentController::class, 'destroyImage'])
         ->name('deleteImage');
+    Route::put('queue/rejected/{id}', [ApartmentQueueController::class, 'reject'])
+        ->name('queue.reject');
+    Route::resource('queue', ApartmentQueueController::class)
+        ->except(['create', 'show', 'edit', 'destroy']);
     Route::resource('/', ApartmentController::class)
         ->except(['create', 'store'])
         ->parameters(['' => 'apartment']);
@@ -93,14 +98,10 @@ Route::prefix('overview')->name('admin.')->group(function () {
 
     // Apartamentos
     Route::prefix('apartments')->group(function () {
-        Route::get('queue', [AdminController::class, 'queueApartments'])->name('queueApartments');
         Route::get('highlights', [AdminController::class, 'highlightsApartments'])->name('highlights.apartments');
         Route::get('deleteHighlight/{id}', [ApartmentsController::class, 'deleteApartmentHightlight'])->name('deleteHighlightApartment');
         Route::post('addHighlight', [ApartmentsController::class, 'addApartmentHightlight'])->name('addHighlightApartment');
         Route::post('orderHighlight', [ApartmentsController::class, 'orderApartmentHightlight'])->name('orderHighlightApartment');
-        Route::get('rejectQueue/{id}', [ApartmentsController::class, 'rejectApartmentQueue'])->name('rejectApartmentQueue');
-        Route::get('revisionQueue/{id}', [ApartmentsController::class, 'revisionApartmentQueue'])->name('revisionApartmentQueue');
-        Route::post('aprovedQueue', [ApartmentsController::class, 'aprovedApartmentsQueue'])->name('aprovedApartmentQueue');
     });
 
     // Terrenos

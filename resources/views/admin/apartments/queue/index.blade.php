@@ -34,64 +34,50 @@
             </thead>
             <tbody>
 
-                @foreach($apartmentsQueue as $apartments)
+                @foreach($estatesQueue as $estateQueue)
                 <tr>
 
-                    <td>{{$apartments->id}}</td>
-                    <td>{{$apartments->title}}</td>
-                    <td>{{moneyFormat($apartments->price)}}</td>
-                    <td>{{colonia($apartments->id_colonia)}}</td>
-                    <td>{{municipio($apartments->id_municipio)}}</td>
-                    <td>{{estado($apartments->id_estado)}}</td>
-                    <td><a href="user/{{$apartments->id_user}}">{{$apartments->id_user}}</a></td>
-                    <td>{{$apartments->created_at}}</td>
+                    <td>{{$estateQueue->id}}</td>
+                    <td>{{$estateQueue->title}}</td>
+                    <td>{{moneyFormat($estateQueue->price)}}</td>
+                    <td>{{colonia($estateQueue->id_colonia)}}</td>
+                    <td>{{municipio($estateQueue->id_municipio)}}</td>
+                    <td>{{estado($estateQueue->id_estado)}}</td>
+                    <td><a href="user/{{$estateQueue->id_user}}">{{$estateQueue->id_user}}</a></td>
+                    <td>{{$estateQueue->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
                             <form method="post" action="{{route('admin.aprovedApartmentQueue')}}">
                                 @csrf
-                                <input type="hidden" id="id" name="id" value="{{$apartments->id}}">
+                                <input type="hidden" id="id" name="id" value="{{$estateQueue->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <a href="{{route('admin.rejectApartmentQueue', $apartments->id)}}">
+                            <a href="{{route('admin.rejectApartmentQueue', $estateQueue->id)}}">
                                 <button class="btnDanger">Rechazar</button>
                             </a>
-                            <a href="{{route('admin.revisionApartmentQueue', $apartments->id)}}">
+                            <a href="{{route('admin.revisionApartmentQueue', $estateQueue->id)}}">
                                 <button class="btnWarning">Revisar</button>
                             </a>
                         </div>
                     </td>
                     <td>
-                        <!---
-                            <a href="{route('epPropertyQueue.delete',$apartments->id)}}">
-                                <i class="fa-solid fa-circle-xmark text-danger mx-1"></i>
-                            </a>
-                            <a href="https://vangoo.mx/details/propertyqueue/{$apartments->id}}" target="_blank">
-                                <i class="fa-solid fa-link mx-1"></i>
-                            </a>--->
-
                         <div class="dropdown">
                             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
                                 Opciones
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="https://vangoo.mx/detailsDepa/apartmentqueue/{{$apartments->id}}" target="_blank">
+                                    <a class="dropdown-item" href="https://vangoo.mx/detailsDepa/apartmentqueue/{{$estateQueue->id}}" target="_blank">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsDepa/apartmentqueue/{{$apartments->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsDepa/apartmentqueue/{{$estateQueue->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
                                 </li>
-                                <!-- <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyQueueDeleteModal" onclick="propertyQueueDeleteModalData({{$apartments->id}})" id="propertyQueueDeleteConfirmBtn{{$apartments->id}}" data-url="{{route('epPropertyQueue.delete',$apartments->id)}}">
-                                        <img src="{{url('./img/icon/trash.png')}}" />
-                                        Borrar
-                                    </a>
-                                </li> -->
                             </ul>
                         </div>
                     </td>
@@ -123,27 +109,18 @@
             </thead>
             <tbody>
 
-                @foreach($apartmentsRejected as $apartments)
+                @foreach($estatesReject as $estateReject)
                 <tr>
 
-                    <td>{{$apartments->id}}</td>
-                    <td>{{$apartments->title}}</td>
-                    <td>{{moneyFormat($apartments->price)}}</td>
-                    <td>{{colonia($apartments->id_colonia)}}</td>
-                    <td>{{municipio($apartments->id_municipio)}}</td>
-                    <td>{{estado($apartments->id_estado)}}</td>
-                    <td><a href="user/{{$apartments->id_user}}">{{$apartments->id_user}}</a></td>
-                    <td>{{$apartments->created_at}}</td>
+                    <td>{{$estateReject->id}}</td>
+                    <td>{{$estateReject->title}}</td>
+                    <td>{{moneyFormat($estateReject->price)}}</td>
+                    <td>{{colonia($estateReject->id_colonia)}}</td>
+                    <td>{{municipio($estateReject->id_municipio)}}</td>
+                    <td>{{estado($estateReject->id_estado)}}</td>
+                    <td><a href="user/{{$estateReject->id_user}}">{{$estateReject->id_user}}</a></td>
+                    <td>{{$estateReject->created_at}}</td>
                     <td>
-                        <!---
-                            <i class="fa-solid fa-file-lines mx-1 d-none"></i>
-                            <i class="fa-solid fa-pen-to-square text-info mx-1 d-none"></i>
-                            <a href="{route('epPropertyQueue.delete',$apartments->id)}}">
-                                <i class="fa-solid fa-circle-xmark text-danger mx-1"></i>
-                            </a>
-                            <a href="https://vangoo.mx/details/propertyqueue/{$apartments->id}}" target="_blank">
-                                <i class="fa-solid fa-link mx-1"></i>
-                            </a>--->
 
                         <div class="dropdown">
                             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
@@ -151,23 +128,17 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="https://vangoo.mx/detailsDepa/apartmentqueue/{{$apartments->id}}" target="_blank">
+                                    <a class="dropdown-item" href="https://vangoo.mx/detailsDepa/apartmentqueue/{{$estateReject->id}}" target="_blank">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsDepa/apartmentqueue/{{$apartments->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsDepa/apartmentqueue/{{$estateReject->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
                                 </li>
-                                <!-- <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyQueueDeleteModal" onclick="propertyQueueDeleteModalData({{$apartments->id}})" id="propertyQueueDeleteConfirmBtn{{$apartments->id}}" data-url="{{route('epPropertyQueue.delete',$apartments->id)}}">
-                                        <img src="{{url('./img/icon/trash.png')}}" />
-                                        Borrar
-                                    </a>
-                                </li> -->
                             </ul>
                         </div>
 
@@ -202,25 +173,25 @@
             </thead>
             <tbody>
 
-                @foreach($apartmentsRevision as $apartments)
+                @foreach($estatesRevision as $estateRevision)
                 <tr>
 
-                    <td>{{$apartments->id}}</td>
-                    <td>{{$apartments->title}}</td>
-                    <td>{{moneyFormat($apartments->price)}}</td>
-                    <td>{{colonia($apartments->id_colonia)}}</td>
-                    <td>{{municipio($apartments->id_municipio)}}</td>
-                    <td>{{estado($apartments->id_estado)}}</td>
-                    <td><a href="user/{{$apartments->id_user}}">{{$apartments->id_user}}</a></td>
-                    <td>{{$apartments->created_at}}</td>
+                    <td>{{$estateRevision->id}}</td>
+                    <td>{{$estateRevision->title}}</td>
+                    <td>{{moneyFormat($estateRevision->price)}}</td>
+                    <td>{{colonia($estateRevision->id_colonia)}}</td>
+                    <td>{{municipio($estateRevision->id_municipio)}}</td>
+                    <td>{{estado($estateRevision->id_estado)}}</td>
+                    <td><a href="user/{{$estateRevision->id_user}}">{{$estateRevision->id_user}}</a></td>
+                    <td>{{$estateRevision->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
                             <form method="post" action="{{route('admin.aprovedApartmentQueue')}}">
                                 @csrf
-                                <input type="hidden" id="id" name="id" value="{{$apartments->id}}">
+                                <input type="hidden" id="id" name="id" value="{{$estateRevision->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <a href="{{route('admin.rejectApartmentQueue', $apartments->id)}}">
+                            <a href="{{route('admin.rejectApartmentQueue', $estateRevision->id)}}">
                                 <button class="btnDanger">Rechazar</button>
                             </a>
                         </div>
@@ -232,23 +203,17 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="https://vangoo.mx/detailsDepa/apartmentqueue/{{$apartments->id}}" target="_blank">
+                                    <a class="dropdown-item" href="https://vangoo.mx/detailsDepa/apartmentqueue/{{$estateRevision->id}}" target="_blank">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsDepa/apartmentqueue/{{$apartments->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsDepa/apartmentqueue/{{$estateRevision->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
                                 </li>
-                                <!-- <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyQueueDeleteModal" onclick="propertyQueueDeleteModalData({{$apartments->id}})" id="propertyQueueDeleteConfirmBtn{{$apartments->id}}" data-url="{{route('epPropertyQueue.delete',$apartments->id)}}">
-                                        <img src="{{url('./img/icon/trash.png')}}" />
-                                        Borrar
-                                    </a>
-                                </li> -->
                             </ul>
                         </div>
 
