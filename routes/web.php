@@ -179,23 +179,6 @@ Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('ema
 
 Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('emails.template');
 
-/* TERRENOS */
-Route::get('ep/getAllTerrains', [TerrainsController::class, 'getAll'])->name('epTerrains.get');
-
-Route::get('ep/getTerrainCard/{id}', [TerrainsController::class, 'getTerrainCard'])->name('epTerrainCard.get');
-
-Route::get('ep/getMultiTerrainCard/{array}', [TerrainsController::class, 'getMultiTerrainCard'])->name('epMultiTerrainCard.get');
-
-Route::get('ep/getTerrainsImagesCards', [TerrainsController::class, 'getTerrainsImagesCards'])->name('epTerrainsImagesCards.get');
-
-Route::get('ep/getTerrainsImagesDetail/{id}', [TerrainsController::class, 'getTerrainsImagesDetail'])->name('epTerrainsImagesDetail.get');
-
-Route::get('ep/get-terrain-by-municipio/{id}', [TerrainsController::class, 'getTerrainsByMunicipio']);
-
-/* terrains queue */
-
-Route::get('ep/deleteTerrainQueue/{id}', [TerrainsController::class, 'deleteTerrainQueue'])->name('epTerrainQueue.delete');
-
 /* DESARROLLOS */
 Route::get('ep/getAllDevelopments', [DevelopmentsController::class, 'getAll'])->name('epAllDevelopments.get');
 

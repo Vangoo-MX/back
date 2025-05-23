@@ -62,29 +62,6 @@ class AdminController extends Controller
         return view('admin.contacts', compact('agenda', 'users', 'selectedUserID'));
     }
 
-    //terrains
-
-    public function queueTerrains()
-    {
-        $terrainsQueue = TerrainsQueue::where('status_aproved', 0)->get();
-
-        $terrainsRejected = TerrainsQueue::where('status_aproved', 2)->get();
-
-        $terrainsRevision = TerrainsQueue::where('status_aproved', 3)->get();
-
-        return view('admin.queueTerrains', compact('terrainsQueue', 'terrainsRejected', 'terrainsRevision'));
-    }
-
-    public function highlightsTerrains()
-    {
-        $terrainshl = TerrainsHighlights::with(['estado', 'municipio', 'terrain'])->get();
-        $estados = Estados::all();
-        $municipios = Municipios::all();
-        $municipiosh = Municipios::where('highlight', 1)->get();
-
-        return view('admin.highlightsTerrains', compact('terrainshl', 'estados', 'municipios', 'municipiosh'));
-    }
-
     //developments
     public function developments(Request $request)
     {
