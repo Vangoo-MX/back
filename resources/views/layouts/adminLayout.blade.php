@@ -75,7 +75,7 @@
                         <ul class="dropdown-menu menu-primary-dropdown">
                             <li><a class="{{ (request()->is('terrains')) ? 'active' : '' }}" href="{{route('terrains.index')}}">Todos los terrenos</a></li>
                             <li><a class="{{ (request()->is('terrains/queue*')) ? 'active' : '' }}" href="{{route('terrains.queue.index')}}">Cola de aprobación</a></li>
-                            <li><a class="{{ (request()->is('terrains/highlights*')) ? 'active' : '' }}" href="{{route('terrains.highlghts.index')}}">Terrenos destacados</a></li>
+                            <li><a class="{{ (request()->is('terrains/highlights*')) ? 'active' : '' }}" href="{{route('terrains.highlights.index')}}">Terrenos destacados</a></li>
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">
