@@ -47,17 +47,21 @@
                     <td>{{$estateQueue->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
-                            <form method="post" action="{{route('admin.aprovedApartmentQueue')}}">
+                            <form method="post" action="{{route('apartments.queue.store')}}">
                                 @csrf
                                 <input type="hidden" id="id" name="id" value="{{$estateQueue->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <a href="{{route('admin.rejectApartmentQueue', $estateQueue->id)}}">
-                                <button class="btnDanger">Rechazar</button>
-                            </a>
-                            <a href="{{route('admin.revisionApartmentQueue', $estateQueue->id)}}">
-                                <button class="btnWarning">Revisar</button>
-                            </a>
+                            <form method="post" action="{{route('apartments.queue.reject', $estateQueue->id)}}">
+                                @csrf
+                                @method('PUT')
+                                <button class="btnDanger" type="submit">Rechazar</button>
+                            </form>
+                            <form method="post" action="{{route('apartments.queue.update', $estateQueue->id)}}">
+                                @csrf
+                                @method('PUT')
+                                <button class="btnWarning" type="submit">Revisar</button>
+                            </form>
                         </div>
                     </td>
                     <td>
@@ -109,17 +113,17 @@
             </thead>
             <tbody>
 
-                @foreach($estatesReject as $estateReject)
+                @foreach($estatesRejected as $estateRejected)
                 <tr>
 
-                    <td>{{$estateReject->id}}</td>
-                    <td>{{$estateReject->title}}</td>
-                    <td>{{moneyFormat($estateReject->price)}}</td>
-                    <td>{{colonia($estateReject->id_colonia)}}</td>
-                    <td>{{municipio($estateReject->id_municipio)}}</td>
-                    <td>{{estado($estateReject->id_estado)}}</td>
-                    <td><a href="user/{{$estateReject->id_user}}">{{$estateReject->id_user}}</a></td>
-                    <td>{{$estateReject->created_at}}</td>
+                    <td>{{$estateRejected->id}}</td>
+                    <td>{{$estateRejected->title}}</td>
+                    <td>{{moneyFormat($estateRejected->price)}}</td>
+                    <td>{{colonia($estateRejected->id_colonia)}}</td>
+                    <td>{{municipio($estateRejected->id_municipio)}}</td>
+                    <td>{{estado($estateRejected->id_estado)}}</td>
+                    <td><a href="user/{{$estateRejected->id_user}}">{{$estateRejected->id_user}}</a></td>
+                    <td>{{$estateRejected->created_at}}</td>
                     <td>
 
                         <div class="dropdown">
@@ -128,13 +132,13 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="https://vangoo.mx/detailsDepa/apartmentqueue/{{$estateReject->id}}" target="_blank">
+                                    <a class="dropdown-item" href="https://vangoo.mx/detailsDepa/apartmentqueue/{{$estateRejected->id}}" target="_blank">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsDepa/apartmentqueue/{{$estateReject->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsDepa/apartmentqueue/{{$estateRejected->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
@@ -191,9 +195,11 @@
                                 <input type="hidden" id="id" name="id" value="{{$estateRevision->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <a href="{{route('admin.rejectApartmentQueue', $estateRevision->id)}}">
-                                <button class="btnDanger">Rechazar</button>
-                            </a>
+                            <form method="post" action="{{route('apartments.queue.reject', $estateRevision->id)}}">
+                                @csrf
+                                @method('PUT')
+                                <button class="btnDanger" type="submit">Rechazar</button>
+                            </form>
                         </div>
                     </td>
                     <td>
