@@ -73,7 +73,7 @@
                                     @if($key == $estate->num_order)
                                     <option value="{{$key}}" selected>{{$key}}</option>
                                     @else
-                                    <option value="{{$key}}">{{$key}}</option>
+                                    <option value="{{$key+1}}">{{$key+1}}</option>
                                     @endif
                                     @endforeach
                                 </select>
