@@ -62,18 +62,6 @@ class AdminController extends Controller
         return view('admin.contacts', compact('agenda', 'users', 'selectedUserID'));
     }
 
-    //apartments
-
-    public function highlightsApartments()
-    {
-        $apartmentshl = ApartmentsHighlights::with(['estado', 'municipio', 'apartment'])->get();
-        $estados = Estados::all();
-        $municipios = Municipios::all();
-        $municipiosh = Municipios::where('highlight', 1)->get();
-
-        return view('admin.highlightsApartments', compact('apartmentshl', 'estados', 'municipios', 'municipiosh'));
-    }
-
     //terrains
     public function terrains()
     {

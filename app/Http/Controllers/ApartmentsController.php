@@ -8,7 +8,6 @@ use App\Models\Apartments;
 use App\Models\ApartmentsQueue;
 use App\Models\ApartmentsHighlights;
 use App\Models\Images;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 
 
@@ -18,46 +17,6 @@ class ApartmentsController extends Controller
     {
         return Apartments::all();
     }
-
-    public function deleteApartmentHightlight($id)
-    {
-        if (ApartmentsHighlights::destroy($id)) {
-            return redirect()->route('admin.highlights.apartments');
-        } else {
-            return response()->json(['error' => 'No se pudo eliminar el registro'], 404);
-        }
-    }
-
-    public function addApartmentHightlight(Request $request)
-    {
-        try {
-            ApartmentsHighlights::create([
-                'id_estado' => 19,
-                'id_municipio' => $request->id_municipio,
-                'id_property' => $request->id_property,
-            ]);
-
-            return redirect()->route('admin.highlights.apartments');
-        } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-
-    public function orderApartmentHightlight(Request $request)
-    {
-        $highlight = ApartmentsHighlights::where('id_property', $request->id)
-            ->first();
-
-        if ($highlight) {
-            $highlight->update([
-                'num_order' => $request->num_order,
-            ]);
-            return redirect()->route('admin.highlights.apartments');
-        }
-
-        return response()->json(['error' => 'No se encontró el registro'], 404);
-    }
-
 
     public function getApartmentCard($id)
     {
@@ -111,41 +70,6 @@ class ApartmentsController extends Controller
             ['category', '=', 'card'],
             ['id_property', '=', $id]
         ])->get();
-    }
-
-    public function rejectApartmentQueue($id)
-    {
-        ApartmentsQueue::where('id', $id)->update(['status_aproved' => 2]);
-        return redirect()->route('admin.queueApartments');
-    }
-
-    public function revisionApartmentQueue($id)
-    {
-        ApartmentsQueue::where('id', $id)->update(['status_aproved' => 3]);
-        return redirect()->route('admin.queueApartments');
-    }
-
-    public function aprovedApartmentsQueue(Request $request)
-    {
-        $apartmentQueue = ApartmentsQueue::findOrFail($request->id);
-        $apartmentData = Arr::except($apartmentQueue->toArray(), ['id']);
-        $newApartment = Apartments::create($apartmentData);
-        $sourcePath = public_path("storage/img/postsqueue/apartments/" . $request->id . "/");
-        $destinationPath = public_path("storage/img/posts/apartments/" . $newApartment->id . "/");
-
-        if (!File::exists($destinationPath)) {
-            File::makeDirectory($destinationPath, 0777, true);
-        }
-
-        foreach (File::allFiles($sourcePath) as $file) {
-            File::move($file->getRealPath(), $destinationPath . $file->getFilename());
-        }
-
-        File::deleteDirectory($sourcePath, true);
-
-        $apartmentQueue->delete();
-
-        return redirect()->route('admin.queueApartments');
     }
 
     public function deleteApartmentEP($id)

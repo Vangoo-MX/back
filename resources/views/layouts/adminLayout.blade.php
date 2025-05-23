@@ -65,7 +65,7 @@
                         <ul class="dropdown-menu menu-primary-dropdown">
                             <li><a class="{{ (request()->is('apartments')) ? 'active' : '' }}" href="{{route('apartments.index')}}">Todos los apartamentos</a></li>
                             <li><a class="{{ (request()->is('apartments/queue*')) ? 'active' : '' }}" href="{{route('apartments.queue.index')}}">Cola de aprobación</a></li>
-                            <li><a class="{{ (request()->is('overview/apartments-highlights*')) ? 'active' : '' }}" href="{{route('admin.highlights.apartments')}}">Propiedades destacadas</a></li>
+                            <li><a class="{{ (request()->is('apartments/highlights')) ? 'active' : '' }}" href="{{route('propertes.highlights.index')}}">Propiedades destacadas</a></li>
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">

@@ -10,12 +10,12 @@
 
 <h3>Nuevo apartamento destacado</h3>
 <br>
-<form method="post" action="{{ route('admin.addHighlightApartment') }}">
+<form method="post" action="{{ route('apartments.highlights.store') }}">
     @csrf
     <div class="d-flex gap-2">
         <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">
             <option selected value="0" data-municipio-id="0">Todos los apartamentos destacados</option>
-            @foreach($municipiosh as $municipio)
+            @foreach($municipios as $municipio)
             <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
             @endforeach
         </select>
@@ -43,29 +43,34 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($apartmentshl as $apartment)
-                <tr class="municipio-{{$apartment->id_municipio}}">
-                    <td>{{$apartment->id_property}}</td>
-                    <td>{{$apartment->apartment->title ?? 'Sin título'}}</td>
-                    <td>{{ $apartment->estado->nombre ?? 'Sin estado' }}</td>
-                    <td>{{$apartment->id_municipio}}</td>
-                    <td>{{ $apartment->municipio->nombre ?? 'Sin municipio' }}</td>
-                    <td>{{$apartment->num_order}}</td>
+                @foreach($estates as $estate)
+                <tr class="municipio-{{$estate->id_municipio}}">
+                    <td>{{$estate->id_property}}</td>
+                    <td>{{$estate->apartment->title ?? 'Sin título'}}</td>
+                    <td>{{ $estate->estado->nombre ?? 'Sin estado' }}</td>
+                    <td>{{$estate->id_municipio}}</td>
+                    <td>{{ $estate->municipio->nombre ?? 'Sin municipio' }}</td>
+                    <td>{{$estate->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('admin.deleteHighlightApartment', $apartment->id) }}" class="btn btn-danger">
-                            <i class="fa-solid fa-circle-xmark"></i>
-                        </a>
-                        <a href="https://www.vangoo.mx/detailsDepa/apartments/{{$apartment->id_property}}" target="_blank">
+                        <form action="{{ route('apartments.highlights.destroy', $estate->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </form>
+                        <a href="https://www.vangoo.mx/detailsDepa/apartments/{{$estate->id_property}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$apartment->id_property}}" action="{{ route('admin.orderHighlightApartment') }}" method="POST">
+                        <form id="orden-form{{$estate->id_property}}" action="{{ route('apartments.highlights.update, $estate->id') }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <span class="d-flex gap-1">
-                                <input type="hidden" name="id" value="{{$apartment->id_property}}">
-                                <select class="form-select" name="num_order" onchange="ordenSelect({{$apartment->id_property}})">
+                                <input type="hidden" name="id" value="{{$estate->id_property}}">
+                                <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_property}})">
                                     <option selected hidden>Orden</option>
-                                    @foreach($apartmentshl as $key => $q)
-                                    @if($key == $apartment->num_order)
+                                    @foreach($estates as $key => $q)
+                                    @if($key == $estate->num_order)
                                     <option value="{{$key}}" selected>{{$key}}</option>
                                     @else
                                     <option value="{{$key}}">{{$key}}</option>
@@ -127,28 +132,24 @@
     }
 
     document.getElementById('municipiosh-select').addEventListener('change', function() {
-        var municipioId = this.options[this.selectedIndex].getAttribute('data-municipio-id');
-        var url = '/ep/get-apartment-by-municipio/' + municipioId;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var properties = JSON.parse(xhr.responseText);
-                var propertiesHtml = '';
-                for (var i = 0; i < properties.length; i++) {
-                    propertiesHtml += '<option value="' + properties[i].id + '">' + properties[i].id + ' - ' + properties[i].title + '</option>';
-                }
-                var selectHtml = '';
-                if (municipioId != 0) {
-                    selectHtml = '<select class="form-select larger-width" name="id_property">' + propertiesHtml + '</select><button class="btn btn-primary" type="submit">Asignar</button>';
-                }
-                document.getElementById('properties-by-municipio').innerHTML = selectHtml;
-            } else {
-                console.log('Error');
-            }
-        };
-        xhr.send();
+        var municipioId = this.value;
+        var url = '/apartments/municipio/' + municipioId;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(properties => {
+                let html = '<select class="form-select larger-width" name="id_property" required>';
+                properties.forEach(property => {
+                    html += `<option value="${property.id}">${property.id} - ${property.title}</option>`;
+                });
+                html += '</select>';
+
+                html += '<button type="submit" class="btn btn-primary ms-2">Asignar</button>';
+
+                document.getElementById('properties-by-municipio').innerHTML = html;
+                document.getElementById('submit-btn').style.display = 'inline-block';
+            })
+            .catch(error => console.error('Error:', error));
     });
 </script>
 
