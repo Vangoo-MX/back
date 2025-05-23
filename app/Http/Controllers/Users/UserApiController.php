@@ -47,17 +47,6 @@ class UserApiController extends Controller
         return json_encode('error');
     }
 
-    public function forceCheck()
-    {
-        if (Auth::check()) {
-            return response()
-                ->json(Auth::user())
-                ->header('Cache-Control', 'no-store, must-revalidate')
-                ->header('Pragma', 'no-cache');
-        }
-        return response()->json(['error' => 'Unauthenticated'], 401);
-    }
-
     public function updateUser(Request $request): JsonResponse
     {
         try {
