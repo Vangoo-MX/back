@@ -68,4 +68,30 @@ class TerrainController extends Controller
 
         return redirect()->route('terrains.show', $terrain)->with('success', __('Terrain updated successfully.'));
     }
+
+    public function destroy($id)
+    {
+        return $this->deleteEstate($id);
+    }
+
+    public function destroyImage($terrainId, $imageId)
+    {
+        $terrain = Terrains::findOrFail($terrainId);
+
+        if ($this->deleteImage($terrain, $imageId)) {
+            return redirect()->back()->with('success', 'Imagen eliminada correctamente');
+        }
+
+        return redirect()->back()->with('error', 'Imagen no encontrada');
+    }
+
+    public function deactive($id)
+    {
+        return $this->deactiveEstate($id);
+    }
+
+    public function active($id)
+    {
+        return $this->activeEstate($id);
+    }
 }

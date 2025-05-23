@@ -123,26 +123,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
     // Dashboard
     Route::get('home', [AdminController::class, 'index'])->name('index');
 
-    // Terrenos
-    Route::prefix('terrains')->group(function () {
-        Route::get('list', [AdminController::class, 'terrains'])->name('terrains');
-        Route::get('details/{id}', [AdminController::class, 'detailsTerrains'])->name('detailsTerrains');
-        Route::get('edit/{terrains}', [AdminController::class, 'editTerrainPage'])->name('editTerrainPage');
-        Route::post('update/{terrains}', [TerrainsController::class, 'updateTerrains'])->name('terrainsUpdate');
-        Route::get('queue', [AdminController::class, 'queueTerrains'])->name('queueTerrains');
-        Route::get('highlights', [AdminController::class, 'highlightsTerrains'])->name('highlights.terrains');
-        Route::get('deleteHighlight/{id}', [TerrainsController::class, 'deleteTerrainHightlight'])->name('deleteHighlightTerrain');
-        Route::post('addHighlight', [TerrainsController::class, 'addTerrainHightlight'])->name('addHighlightTerrain');
-        Route::post('orderHighlight', [TerrainsController::class, 'orderTerrainHightlight'])->name('orderHighlightTerrain');
-        Route::get('rejectQueue/{id}', [TerrainsController::class, 'rejectTerrainQueue'])->name('rejectTerrainQueue');
-        Route::get('revisionQueue/{id}', [TerrainsController::class, 'revisionTerrainQueue'])->name('revisionTerrainQueue');
-        Route::post('aprovedQueue', [TerrainsController::class, 'aprovedTerrainsQueue'])->name('aprovedTerrainQueue');
-        Route::get('delete/{id}', [TerrainsController::class, 'deleteTerrain'])->name('deleteTerrain');
-        Route::delete('deleteImage/{terrainId}/{imageId}', [TerrainsController::class, 'deleteImage'])->name('deleteImageTerrain');
-        Route::get('deactiveTerrain/{id}', [TerrainsController::class, 'deactiveTerrain'])->name('deactiveTerrain');
-        Route::get('activeTerrain/{id}', [TerrainsController::class, 'activeTerrain'])->name('activeTerrain');
-    });
-
     // Desarrollo vertical
     Route::prefix('developments')->group(function () {
         Route::get('list', [AdminController::class, 'developments'])->name('developments');
