@@ -14,6 +14,8 @@ class PropertyHighlightController extends Controller
 
     protected $model = Properties::class;
     protected $modelHighlights = PropertiesHighlights::class;
+    protected $relationHighlight = 'property';
+    protected $relationMunicipio = 'properties';
 
     protected function getHighlightConfig(): array
     {
