@@ -34,40 +34,37 @@
             </thead>
             <tbody>
 
-                @foreach($terrainsQueue as $terrains)
+                @foreach($estatesQueue as $estateQueue)
                 <tr>
 
-                    <td>{{$terrains->id}}</td>
-                    <td>{{$terrains->title}}</td>
-                    <td>{{moneyFormat($terrains->price)}}</td>
-                    <td>{{colonia($terrains->id_colonia)}}</td>
-                    <td>{{municipio($terrains->id_municipio)}}</td>
-                    <td>{{estado($terrains->id_estado)}}</td>
-                    <td><a href="user/{{$terrains->id_user}}">{{$terrains->id_user}}</a></td>
-                    <td>{{$terrains->created_at}}</td>
+                    <td>{{$estateQueue->id}}</td>
+                    <td>{{$estateQueue->title}}</td>
+                    <td>{{moneyFormat($estateQueue->price)}}</td>
+                    <td>{{colonia($estateQueue->id_colonia)}}</td>
+                    <td>{{municipio($estateQueue->id_municipio)}}</td>
+                    <td>{{estado($estateQueue->id_estado)}}</td>
+                    <td><a href="user/{{$estateQueue->id_user}}">{{$estateQueue->id_user}}</a></td>
+                    <td>{{$estateQueue->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
-                            <form method="post" action="{{route('admin.aprovedTerrainQueue')}}">
+                            <form method="post" action="{{route('terrains.queue.store')}}">
                                 @csrf
-                                <input type="hidden" id="id" name="id" value="{{$terrains->id}}">
+                                <input type="hidden" id="id" name="id" value="{{$estateQueue->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <a href="{{route('admin.rejectTerrainQueue', $terrains->id)}}">
-                                <button class="btnDanger">Rechazar</button>
-                            </a>
-                            <a href="{{route('admin.revisionTerrainQueue', $terrains->id)}}">
-                                <button class="btnWarning">Revisar</button>
-                            </a>
+                            <form method="post" action="{{route('terrains.queue.reject', $estateQueue->id)}}">
+                                @csrf
+                                @method('PUT')
+                                <button class="btnDanger" type="submit">Rechazar</button>
+                            </form>
+                            <form method="post" action="{{route('terrains.queue.update', $estateQueue->id)}}">
+                                @csrf
+                                @method('PUT')
+                                <button class="btnWarning" type="submit">Revisar</button>
+                            </form>
                         </div>
                     </td>
                     <td>
-                        <!---
-                            <a href="{route('epPropertyQueue.delete',$terrains->id)}}">
-                                <i class="fa-solid fa-circle-xmark text-danger mx-1"></i>
-                            </a>
-                            <a href="https://vangoo.mx/details/propertyqueue/{$terrains->id}}" target="_blank">
-                                <i class="fa-solid fa-link mx-1"></i>
-                            </a>--->
 
                         <div class="dropdown">
                             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
@@ -75,23 +72,17 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="https://vangoo.mx/detailsTerrain/terrainsqueue/{{$terrains->id}}" target="_blank">
+                                    <a class="dropdown-item" href="https://vangoo.mx/detailsTerrain/terrainsqueue/{{$estateQueue->id}}" target="_blank">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsTerrain/terrainsqueue/{{$terrains->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsTerrain/terrainsqueue/{{$estateQueue->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
                                 </li>
-                                <!-- <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyQueueDeleteModal" onclick="propertyQueueDeleteModalData({{$terrains->id}})" id="propertyQueueDeleteConfirmBtn{{$terrains->id}}" data-url="{{route('epPropertyQueue.delete',$terrains->id)}}">
-                                        <img src="{{url('./img/icon/trash.png')}}" />
-                                        Borrar
-                                    </a>
-                                </li> -->
                             </ul>
                         </div>
                     </td>
@@ -123,27 +114,18 @@
             </thead>
             <tbody>
 
-                @foreach($terrainsRejected as $terrains)
+                @foreach($estatesRejected as $estateRejected)
                 <tr>
 
-                    <td>{{$terrains->id}}</td>
-                    <td>{{$terrains->title}}</td>
-                    <td>{{moneyFormat($terrains->price)}}</td>
-                    <td>{{colonia($terrains->id_colonia)}}</td>
-                    <td>{{municipio($terrains->id_municipio)}}</td>
-                    <td>{{estado($terrains->id_estado)}}</td>
-                    <td><a href="user/{{$terrains->id_user}}">{{$terrains->id_user}}</a></td>
-                    <td>{{$terrains->created_at}}</td>
+                    <td>{{$estateRejected->id}}</td>
+                    <td>{{$estateRejected->title}}</td>
+                    <td>{{moneyFormat($estateRejected->price)}}</td>
+                    <td>{{colonia($estateRejected->id_colonia)}}</td>
+                    <td>{{municipio($estateRejected->id_municipio)}}</td>
+                    <td>{{estado($estateRejected->id_estado)}}</td>
+                    <td><a href="user/{{$estateRejected->id_user}}">{{$estateRejected->id_user}}</a></td>
+                    <td>{{$estateRejected->created_at}}</td>
                     <td>
-                        <!---
-                            <i class="fa-solid fa-file-lines mx-1 d-none"></i>
-                            <i class="fa-solid fa-pen-to-square text-info mx-1 d-none"></i>
-                            <a href="{route('epPropertyQueue.delete',$terrains->id)}}">
-                                <i class="fa-solid fa-circle-xmark text-danger mx-1"></i>
-                            </a>
-                            <a href="https://vangoo.mx/details/propertyqueue/{$terrains->id}}" target="_blank">
-                                <i class="fa-solid fa-link mx-1"></i>
-                            </a>--->
 
                         <div class="dropdown">
                             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
@@ -151,23 +133,17 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="https://vangoo.mx/detailsTerrain/terrainsqueue/{{$terrains->id}}" target="_blank">
+                                    <a class="dropdown-item" href="https://vangoo.mx/detailsTerrain/terrainsqueue/{{$estateRejected->id}}" target="_blank">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsTerrain/terrainsqueue/{{$terrains->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsTerrain/terrainsqueue/{{$estateRejected->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
                                 </li>
-                                <!-- <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyQueueDeleteModal" onclick="propertyQueueDeleteModalData({{$terrains->id}})" id="propertyQueueDeleteConfirmBtn{{$terrains->id}}" data-url="{{route('epPropertyQueue.delete',$terrains->id)}}">
-                                        <img src="{{url('./img/icon/trash.png')}}" />
-                                        Borrar
-                                    </a>
-                                </li> -->
                             </ul>
                         </div>
 
@@ -202,27 +178,29 @@
             </thead>
             <tbody>
 
-                @foreach($terrainsRevision as $terrains)
+                @foreach($estatesRevision as $estateRevision)
                 <tr>
 
-                    <td>{{$terrains->id}}</td>
-                    <td>{{$terrains->title}}</td>
-                    <td>{{moneyFormat($terrains->price)}}</td>
-                    <td>{{colonia($terrains->id_colonia)}}</td>
-                    <td>{{municipio($terrains->id_municipio)}}</td>
-                    <td>{{estado($terrains->id_estado)}}</td>
-                    <td><a href="user/{{$terrains->id_user}}">{{$terrains->id_user}}</a></td>
-                    <td>{{$terrains->created_at}}</td>
+                    <td>{{$estateRevision->id}}</td>
+                    <td>{{$estateRevision->title}}</td>
+                    <td>{{moneyFormat($estateRevision->price)}}</td>
+                    <td>{{colonia($estateRevision->id_colonia)}}</td>
+                    <td>{{municipio($estateRevision->id_municipio)}}</td>
+                    <td>{{estado($estateRevision->id_estado)}}</td>
+                    <td><a href="user/{{$estateRevision->id_user}}">{{$estateRevision->id_user}}</a></td>
+                    <td>{{$estateRevision->created_at}}</td>
                     <td>
                         <div class="d-flex gap-1 btn-aproved justify-content-start">
-                            <form method="post" action="{{route('admin.aprovedTerrainQueue')}}">
+                            <form method="post" action="{{route('terrains.queue.store')}}">
                                 @csrf
-                                <input type="hidden" id="id" name="id" value="{{$terrains->id}}">
+                                <input type="hidden" id="id" name="id" value="{{$estateRevision->id}}">
                                 <button class="btnSuccess" type="submit">Aprobar</button>
                             </form>
-                            <a href="{{route('admin.rejectTerrainQueue', $terrains->id)}}">
-                                <button class="btnDanger">Rechazar</button>
-                            </a>
+                            <form method="post" action="{{route('terrains.queue.reject', $estateRevision->id)}}">
+                                @csrf
+                                @method('PUT')
+                                <button class="btnDanger" type="submit">Rechazar</button>
+                            </form>
                         </div>
                     </td>
                     <td>
@@ -232,23 +210,17 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="https://vangoo.mx/detailsTerrain/terrainsqueue/{{$terrains->id}}" target="_blank">
+                                    <a class="dropdown-item" href="https://vangoo.mx/detailsTerrain/terrainsqueue/{{$estateRevision->id}}" target="_blank">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsTerrain/terrainsqueue/{{$terrains->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/detailsTerrain/terrainsqueue/{{$estateRevision->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
                                 </li>
-                                <!-- <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#propertyQueueDeleteModal" onclick="propertyQueueDeleteModalData({{$terrains->id}})" id="propertyQueueDeleteConfirmBtn{{$terrains->id}}" data-url="{{route('epPropertyQueue.delete',$terrains->id)}}">
-                                        <img src="{{url('./img/icon/trash.png')}}" />
-                                        Borrar
-                                    </a>
-                                </li> -->
                             </ul>
                         </div>
 
