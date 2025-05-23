@@ -22,6 +22,8 @@ use App\Http\Controllers\Apartments\ApartmentHighlightController;
 use App\Http\Controllers\Apartments\ApartmentQueueController;
 use App\Http\Controllers\Properties\PropertyHighlightController;
 use App\Http\Controllers\Terrains\TerrainController;
+use App\Http\Controllers\Terrains\TerrainHighlightController;
+use App\Http\Controllers\Terrains\TerrainQueueController;
 
 Route::redirect('/', '/auth/user/login');
 
@@ -87,6 +89,20 @@ Route::prefix('properties')->name('properties.')->middleware('check.admin')->gro
 
 // Terrenos
 Route::prefix('terrains')->name('terrains.')->middleware('check.admin')->group(function () {
+    Route::put('active/{id}', [TerrainController::class, 'active'])
+        ->name('active');
+    Route::put('deactive/{id}', [TerrainController::class, 'deactive'])
+        ->name('deactive');
+    Route::delete('deleteImage/{terrainId}/{imageId}', [TerrainController::class, 'destroyImage'])
+        ->name('deleteImage');
+    Route::get('municipio/{id}', [TerrainHighlightController::class, 'terrainByMunicipio'])
+        ->name('municipio');
+    Route::put('queue/rejected/{id}', [TerrainQueueController::class, 'reject'])
+        ->name('queue.reject');
+    Route::resource('queue', TerrainQueueController::class)
+        ->except(['create', 'show', 'edit', 'destroy']);
+    Route::resource('highlights', TerrainHighlightController::class)
+        ->except(['create', 'show', 'edit']);
     Route::resource('/', TerrainController::class)
         ->except(['create', 'store'])
         ->parameters(['' => 'terrain']);
