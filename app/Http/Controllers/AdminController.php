@@ -11,20 +11,14 @@ use App\Models\Developments;
 use App\Models\DevelopmentsHighlights;
 use App\Models\DevelopmentsApartments;
 use App\Models\Agenda;
-use App\Models\Apartments;
-use App\Models\ApartmentsHighlights;
-use App\Models\ApartmentsQueue;
 use App\Models\Estados;
 use App\Models\Municipios;
-use App\Models\Colonias;
 use App\Models\DevelopmentsHorizontalApartments;
 use App\Models\DevelopmentsHorizontalHighlights;
 use App\Models\DevelopmentsHorizontals;
 use App\Models\Lots;
 use App\Models\LotsHighlights;
-use App\Models\Terrains;
-use App\Models\TerrainsHighlights;
-use App\Models\TerrainsQueue;
+
 
 class AdminController extends Controller
 {
