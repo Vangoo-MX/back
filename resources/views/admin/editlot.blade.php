@@ -302,35 +302,31 @@ Editar
 
                 <span>Imagenes:</span>
                 <div class="d-flex gap-2 mt-2">
-                    @for ($i = 1; $i <= $lot->images; $i++)
-                        <div class="d-flex flex-column align-items-center image-container">
-                            @php
-                            $imagePath = 'public/img/posts/lots/' . $lot->id . '/' . $i . '.webp';
-                            @endphp
+                    @foreach(json_decode($lot->images, true) as $index => $filename)
+                    @php
+                    $imagePath = 'public/img/posts/lots/' . $lot->id . '/' . $filename;
+                    $imageUrl = asset('storage/img/posts/lots/' . $lot->id . '/' . $filename);
+                    @endphp
 
-                            @if(Storage::exists($imagePath))
-                            @php
-                            $imageUrl = asset('storage/img/posts/lots/' . $lot->id . '/' . $i . '.webp');
-                            @endphp
-                            <div class="d-flex flex-column align-items-center image-container">
-                                <a href="{{ $imageUrl }}" target="_blank">
-                                    <img class="pe-2" src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px">
-                                </a>
+                    @if(Storage::exists($imagePath))
+                    <div class="d-flex flex-column align-items-center image-container">
+                        <a href="{{ $imageUrl }}" target="_blank">
+                            <img src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px" class="pe-2 img-thumbnail">
+                        </a>
 
-                                <div class="mt-1">
-                                    <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%" required>
-                                        @for($j = 1; $j <= $lot->images; $j++)
-                                            <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
-                                                {{ $j }}
-                                            </option>
-                                            @endfor
-                                    </select>
-                                </div>
-                                <span class="delete-icon" onclick="confirmDelete(event, {{$i}})">❌</span>
-                            </div>
-                            @endif
+                        <div class="mt-1">
+                            <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%" required>
+                                @for($j = 1; $j <= $lot->images; $j++)
+                                    <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
+                                        {{ $j }}
+                                    </option>
+                                    @endfor
+                            </select>
                         </div>
-                        @endfor
+                        <span class="delete-icon" onclick="confirmDelete(event, {{$i}})">❌</span>
+                    </div>
+                    @endif
+                    @endforeach
                 </div>
 
                 <div class="images mb-3 mt-3">
