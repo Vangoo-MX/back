@@ -428,16 +428,12 @@ Editar
 
     #imageGallery {
         flex-wrap: nowrap !important;
-        /* Temporal para mejor comportamiento */
         overflow-x: auto;
-        /* Permite scroll horizontal si hay muchas imágenes */
         padding-bottom: 10px;
-        /* Espacio para scroll */
     }
 
     .draggable-item {
         flex-shrink: 0;
-        /* Previene que los items se encojan */
     }
 
     .draggable-item.dragging {
