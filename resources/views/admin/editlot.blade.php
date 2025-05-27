@@ -307,7 +307,6 @@ Editar
                     $imageUrl = asset('storage/img/posts/lots/' . $lot->id . '/' . $filename);
                     @endphp
 
-                    @if(Storage::exists($imagePath))
                     <div class="draggable-item" draggable="true" data-filename="{{ $filename }}">
                         <div class="d-flex flex-column align-items-center image-container position-relative">
                             <a href="{{ $imageUrl }}" target="_blank">
@@ -321,7 +320,6 @@ Editar
                                 onclick="confirmDelete(event, '{{ $filename }}')">❌</span>
                         </div>
                     </div>
-                    @endif
                     @endforeach
                 </div>
 
