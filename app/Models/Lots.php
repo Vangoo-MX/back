@@ -41,12 +41,12 @@ class Lots extends Model
         'images',
         'id_user',
     ];
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
+
     protected $table = 'post_lots';
+
+    protected $casts = [
+        'images' => 'array'
+    ];
 
     public function user(): BelongsTo
     {
