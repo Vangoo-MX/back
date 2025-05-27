@@ -311,8 +311,8 @@ Editar
                         <div class="d-flex flex-column align-items-center image-container position-relative">
                             <a href="{{ $imageUrl }}" target="_blank">
                                 <img src="{{ $imageUrl . '?' . uniqid() }}"
-                                    width="180px"
-                                    height="180px"
+                                    width="150px"
+                                    height="150px"
                                     class="pe-2 drag-image">
                             </a>
 
