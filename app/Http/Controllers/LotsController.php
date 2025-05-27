@@ -161,20 +161,30 @@ class LotsController
     public function reorderImages(Request $request, Lots $lot)
     {
         $request->validate([
-            'new_order' => 'required|array'
+            'new_order' => 'required|array',
+            'new_order.*' => 'string'
         ]);
 
-        $currentImages = $lot->images;
-        foreach ($request->new_order as $filename) {
-            if (!in_array($filename, $currentImages)) {
-                return response()->json(['error' => 'Invalid image order'], 400);
+        $newOrder = is_string($request->new_order)
+            ? json_decode($request->new_order, true)
+            : $request->new_order;
+
+        foreach ($newOrder as $filename) {
+            if (!in_array($filename, $lot->images)) {
+                return response()->json([
+                    'error' => 'El archivo ' . $filename . ' no pertenece a este lote'
+                ], 422);
             }
         }
 
-        $lot->images = $request->new_order;
-        $lot->save();
-
-        return response()->json(['success' => true]);
+        try {
+            $lot->update(['images' => $newOrder]);
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error al guardar: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function deleteImage(Request $request, $lotId, $imageId)

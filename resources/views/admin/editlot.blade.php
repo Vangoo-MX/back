@@ -613,7 +613,7 @@ Editar
             const newOrder = Array.from(container.querySelectorAll('.draggable-item'))
                 .map(item => item.dataset.filename);
 
-            fetch(`/lots/{{ $lot->id }}/reorder-images`, {
+            fetch("{{ route('lots.reorder-images', $lot->id) }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
