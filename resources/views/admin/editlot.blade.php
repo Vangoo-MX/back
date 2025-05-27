@@ -311,7 +311,7 @@ Editar
                     @if(Storage::exists($imagePath))
                     <div class="d-flex flex-column align-items-center image-container">
                         <a href="{{ $imageUrl }}" target="_blank">
-                            <img src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px" class="pe-2 img-thumbnail">
+                            <img src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px" class="pe-2">
                         </a>
 
                         <div class="mt-1">
