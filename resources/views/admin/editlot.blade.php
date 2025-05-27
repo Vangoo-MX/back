@@ -302,7 +302,7 @@ Editar
 
                 <span>Imagenes:</span>
                 <div class="d-flex gap-2 mt-2 flex-wrap" id="imageGallery">
-                    @foreach(json_decode($lot->images, true) as $filename)
+                    @foreach($lot->images as $filename)
                     @php
                     $imageUrl = asset('storage/img/posts/lots/' . $lot->id . '/' . $filename);
                     @endphp
