@@ -301,33 +301,25 @@ Editar
                 </div>
 
                 <span>Imagenes:</span>
-                <div class="d-flex gap-2 mt-2">
-                    @foreach(json_decode($lot->images, true) as $index => $filename)
+                <div class="d-flex gap-2 mt-2 flex-wrap" id="imageGallery">
+                    @foreach(json_decode($lot->images, true) as $filename)
                     @php
-                    $imagePath = 'public/img/posts/lots/' . $lot->id . '/' . $filename;
                     $imageUrl = asset('storage/img/posts/lots/' . $lot->id . '/' . $filename);
                     @endphp
 
                     @if(Storage::exists($imagePath))
-                    <div class="d-flex flex-column align-items-center image-container">
-                        <a href="{{ $imageUrl }}" target="_blank">
-                            <img src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px" class="pe-2">
-                        </a>
+                    <div class="draggable-item" draggable="true" data-filename="{{ $filename }}">
+                        <div class="d-flex flex-column align-items-center image-container position-relative">
+                            <a href="{{ $imageUrl }}" target="_blank">
+                                <img src="{{ $imageUrl . '?' . uniqid() }}"
+                                    width="90px"
+                                    height="90px"
+                                    class="pe-2 drag-image">
+                            </a>
 
-                        <div class="mt-1">
-                            <select class="form-control reorder-select"
-                                name="orderimg[{{ $filename }}]"
-                                data-filename="{{ $filename }}"
-                                style="width:100%" required>
-                                @foreach(json_decode($lot->images, true) as $j => $_)
-                                <option value="{{ $j }}" {{ $j == $index ? 'selected' : '' }}>
-                                    {{ $j + 1 }}
-                                </option>
-                                @endforeach
-                            </select>
+                            <span class="delete-icon position-absolute top-0 end-0"
+                                onclick="confirmDelete(event, '{{ $filename }}')">❌</span>
                         </div>
-                        <span class="delete-icon position-absolute top-0 end-0"
-                            onclick="confirmDelete(event, '{{ $filename }}')">❌</span>
                     </div>
                     @endif
                     @endforeach
@@ -434,6 +426,21 @@ Editar
         flex-wrap: wrap;
         align-items: stretch;
         width: 1%;
+    }
+
+    draggable-item {
+        cursor: move;
+        transition: transform 0.2s;
+    }
+
+    .draggable-item.dragging {
+        opacity: 0.5;
+        transform: scale(0.9);
+    }
+
+    .drag-over {
+        border: 2px dashed #007bff;
+        background: rgba(0, 123, 255, 0.1);
     }
 
     /*-----------RESPONSIVE--------------*/
@@ -550,16 +557,76 @@ Editar
         changeMuninicio();
     });
 
-    document.querySelectorAll('.reorder-select').forEach(select => {
-        select.addEventListener('change', () => {
-            const currentValue = select.value;
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('imageGallery');
+        let draggedItem = null;
 
-            document.querySelectorAll('.reorder-select').forEach(otherSelect => {
-                if (otherSelect !== select && otherSelect.value === currentValue) {
-                    otherSelect.value = '';
-                }
+        document.querySelectorAll('.draggable-item').forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                draggedItem = item;
+                item.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            item.addEventListener('dragend', () => {
+                draggedItem.classList.remove('dragging');
+                draggedItem = null;
+                updateImageOrder();
             });
         });
+
+        container.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const afterElement = getDragAfterElement(container, e.clientY);
+            const currentItem = draggedItem;
+
+            if (afterElement == null) {
+                container.appendChild(draggedItem);
+            } else {
+                container.insertBefore(draggedItem, afterElement);
+            }
+        });
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.draggable-item:not(.dragging)')];
+
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+
+                if (offset < 0 && offset > closest.offset) {
+                    return {
+                        offset: offset,
+                        element: child
+                    };
+                } else {
+                    return closest;
+                }
+            }, {
+                offset: Number.NEGATIVE_INFINITY
+            }).element;
+        }
+
+        function updateImageOrder() {
+            const newOrder = Array.from(container.querySelectorAll('.draggable-item'))
+                .map(item => item.dataset.filename);
+
+            fetch(`/lots/{{ $lot->id }}/reorder-images`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        new_order: newOrder
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        console.error('Error updating order');
+                    }
+                });
+        }
     });
 </script>
 

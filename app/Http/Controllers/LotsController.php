@@ -155,33 +155,26 @@ class LotsController
             $lot->images = $imagePaths;
             $lot->save();
         }
+        return redirect()->route('admin.lots');
+    }
 
-        if ($request->orderimg) {
-            foreach ($request->orderimg as $index => $order) {
-                $path = storage_path('app/public/img/posts/lots/' . $lot->id);
-                $key = $index;
-                $extensions = ['jpg', 'jpeg', 'png', 'webp'];
+    public function reorderImages(Request $request, Lots $lot)
+    {
+        $request->validate([
+            'new_order' => 'required|array'
+        ]);
 
-                foreach ($extensions as $ext) {
-                    if (file_exists($path . "/{$order}.{$ext}")) {
-                        rename($path . "/{$order}.{$ext}", $path . "/{$order}temp.{$ext}");
-                    }
-                }
-            }
-
-            foreach ($request->orderimg as $index => $order) {
-                $path = storage_path('app/public/img/posts/lots/' . $lot->id);
-                $key = $index;
-                $extensions = ['jpg', 'jpeg', 'png', 'webp'];
-
-                foreach ($extensions as $ext) {
-                    if (file_exists($path . "/{$key}temp.{$ext}")) {
-                        rename($path . "/{$key}temp.{$ext}", $path . "/{$order}.{$ext}");
-                    }
-                }
+        $currentImages = $lot->images;
+        foreach ($request->new_order as $filename) {
+            if (!in_array($filename, $currentImages)) {
+                return response()->json(['error' => 'Invalid image order'], 400);
             }
         }
-        return redirect()->route('admin.lots');
+
+        $lot->images = $request->new_order;
+        $lot->save();
+
+        return response()->json(['success' => true]);
     }
 
     public function deleteImage(Request $request, $lotId, $imageId)
