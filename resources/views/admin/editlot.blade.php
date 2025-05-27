@@ -426,9 +426,18 @@ Editar
         width: 1%;
     }
 
-    draggable-item {
-        cursor: move;
-        transition: transform 0.2s;
+    #imageGallery {
+        flex-wrap: nowrap !important;
+        /* Temporal para mejor comportamiento */
+        overflow-x: auto;
+        /* Permite scroll horizontal si hay muchas imágenes */
+        padding-bottom: 10px;
+        /* Espacio para scroll */
+    }
+
+    .draggable-item {
+        flex-shrink: 0;
+        /* Previene que los items se encojan */
     }
 
     .draggable-item.dragging {
@@ -575,22 +584,21 @@ Editar
 
         container.addEventListener('dragover', (e) => {
             e.preventDefault();
-            const afterElement = getDragAfterElement(container, e.clientY);
-            const currentItem = draggedItem;
+            const afterElement = getDragAfterElement(container, e.clientX);
 
-            if (afterElement == null) {
+            if (!afterElement) {
                 container.appendChild(draggedItem);
             } else {
                 container.insertBefore(draggedItem, afterElement);
             }
         });
 
-        function getDragAfterElement(container, y) {
+        function getDragAfterElement(container, x) {
             const draggableElements = [...container.querySelectorAll('.draggable-item:not(.dragging)')];
 
             return draggableElements.reduce((closest, child) => {
                 const box = child.getBoundingClientRect();
-                const offset = y - box.top - box.height / 2;
+                const offset = x - box.left - box.width / 2;
 
                 if (offset < 0 && offset > closest.offset) {
                     return {
