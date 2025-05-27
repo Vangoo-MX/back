@@ -315,15 +315,19 @@ Editar
                         </a>
 
                         <div class="mt-1">
-                            <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%" required>
-                                @for($j = 1; $j <= $lot->images; $j++)
-                                    <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
-                                        {{ $j }}
-                                    </option>
-                                    @endfor
+                            <select class="form-control reorder-select"
+                                name="orderimg[{{ $filename }}]"
+                                data-filename="{{ $filename }}"
+                                style="width:100%" required>
+                                @foreach(json_decode($lot->images, true) as $j => $_)
+                                <option value="{{ $j }}" {{ $j == $index ? 'selected' : '' }}>
+                                    {{ $j + 1 }}
+                                </option>
+                                @endforeach
                             </select>
                         </div>
-                        <span class="delete-icon" onclick="confirmDelete(event, {{$i}})">❌</span>
+                        <span class="delete-icon position-absolute top-0 end-0"
+                            onclick="confirmDelete(event, '{{ $filename }}')">❌</span>
                     </div>
                     @endif
                     @endforeach
