@@ -104,14 +104,6 @@ class LotsController
         $colonia = Colonias::find($request->id_colonia)->nombre;
         $location = $colonia . ', ' . $municipio . ', ' . $estado;
 
-        $images = $lot->images;
-
-        if ($request->hasFile('images')) {
-            $numImages = $images + sizeof($request->file('images'));
-        } else {
-            $numImages = $images;
-        }
-
         $lot->update([
             'title' => $request->title,
             'type_lots' => $request->type_lots,
@@ -141,23 +133,27 @@ class LotsController
             'amenities' => $request->amenities,
             'initial_fee' => $request->initial_fee,
             'commission_percentage' => $request->commission_percentage,
-            'images' => $numImages,
         ]);
 
         if ($request->hasFile('images')) {
+            $imagePaths = [];
+            $uploadPath = 'public/img/posts/lots/' . $lot->id . '/';
+
             foreach ($request->file('images') as $index => $image) {
-                $path = storage_path('app/public/img/posts/lots/' . $request->id . '/');
-                $imageName = Str::slug($images + $index + 1) . '.webp';
+                $filename = Str::uuid() . '.webp';
+                $fullPath = $uploadPath . $filename;
 
-                if ($image->getClientOriginalExtension() === 'webp') {
-                    $image->move($path, $imageName);
+                if ($image->getClientOriginalExtension() !== 'webp') {
+                    Image::make($image)->encode('webp', 90)->save(storage_path('app/' . $fullPath));
                 } else {
-                    $imageWebp = Image::make($image->getRealPath())
-                        ->encode('webp', 90);
-
-                    $imageWebp->save($path . $imageName);
+                    $image->storeAs($uploadPath, $filename);
                 }
+
+                $imagePaths[] = $filename;
             }
+
+            $lot->images = $imagePaths;
+            $lot->save();
         }
 
         if ($request->orderimg) {
