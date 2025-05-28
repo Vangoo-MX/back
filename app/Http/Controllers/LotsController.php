@@ -136,23 +136,31 @@ class LotsController
         ]);
 
         if ($request->hasFile('images')) {
-            $imagePaths = [];
             $uploadPath = 'public/img/posts/lots/' . $lot->id . '/';
 
-            foreach ($request->file('images') as $index => $image) {
+            if (!Storage::exists($uploadPath)) {
+                Storage::makeDirectory($uploadPath, 0755, true);
+            }
+
+            $existingImages = $lot->images ?? [];
+            $newImages = [];
+
+            foreach ($request->file('images') as $image) {
                 $filename = Str::uuid() . '.webp';
                 $fullPath = $uploadPath . $filename;
 
                 if ($image->getClientOriginalExtension() !== 'webp') {
-                    Image::make($image)->encode('webp', 90)->save(storage_path('app/' . $fullPath));
+                    Image::make($image)
+                        ->encode('webp', 90)
+                        ->save(storage_path('app/' . $fullPath));
                 } else {
                     $image->storeAs($uploadPath, $filename);
                 }
 
-                $imagePaths[] = $filename;
+                $newImages[] = $filename;
             }
 
-            $lot->images = $imagePaths;
+            $lot->images = array_merge($existingImages, $newImages);
             $lot->save();
         }
         return redirect()->route('admin.lots');
