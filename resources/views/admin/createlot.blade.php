@@ -274,7 +274,7 @@
 
                 <div class="images mb-3 mt-3">
                     <label for="image" class="form-label">Imágenes:</label>
-                    <input type="file" name="images[]" id="imagen" class="form-control" accept="image/jpeg" multiple onchange="previewImage()">
+                    <input type="file" name="images[]" id="imagen" class="form-control" multiple onchange="previewImage()">
                     @error('imagen')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror

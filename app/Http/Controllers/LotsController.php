@@ -65,29 +65,35 @@ class LotsController
             'initial_fee' => $request->initial_fee,
             'commission_percentage' => $request->commission_percentage,
             'id_user' => Auth::user()->id,
-            'images' => $request->hasFile('images') ? sizeof($request->file('images')) : 0
         ]);
 
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $index => $image) {
-                $path = storage_path('app/public/img/posts/lots/' . $lot->id . '/');
+            $imagePaths = [];
+            $uploadPath = 'public/img/posts/lots/' . $lot->id . '/';
 
-                if (!file_exists($path)) {
-                    mkdir($path, 0755, true);
-                }
-                chmod($path, 0755);
-
-                $imageName = Str::slug($index + 1) . '.webp';
-                if ($image->getClientOriginalExtension() === 'webp') {
-                    $image->move($path, $imageName);
-                } else {
-                    $imageWebp = Image::make($image->getRealPath())
-                        ->encode('webp', 90);
-
-                    $imageWebp->save($path . $imageName);
-                }
+            if (!Storage::exists($uploadPath)) {
+                Storage::makeDirectory($uploadPath, 0755, true);
             }
+
+            foreach ($request->file('images') as $image) {
+                $filename = Str::uuid() . '.webp';
+                $fullPath = $uploadPath . $filename;
+
+                if ($image->getClientOriginalExtension() !== 'webp') {
+                    Image::make($image)
+                        ->encode('webp', 90)
+                        ->save(storage_path('app/' . $fullPath));
+                } else {
+                    $image->storeAs($uploadPath, $filename);
+                }
+
+                $imagePaths[] = $filename;
+            }
+
+            $lot->images = $imagePaths;
+            $lot->save();
         }
+
         return redirect()->route('admin.lots');
     }
 
