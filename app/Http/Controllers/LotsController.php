@@ -71,9 +71,10 @@ class LotsController
             $imagePaths = [];
             $uploadPath = 'public/img/posts/lots/' . $lot->id . '/';
 
-            if (!Storage::exists($uploadPath)) {
-                Storage::makeDirectory($uploadPath, 0755, true);
+            if (!file_exists(storage_path('app/' . $uploadPath))) {
+                mkdir(storage_path('app/' . $uploadPath), 0755, true);
             }
+            chmod(storage_path('app/' . $uploadPath), 0755);
 
             foreach ($request->file('images') as $image) {
                 $filename = Str::uuid() . '.webp';
