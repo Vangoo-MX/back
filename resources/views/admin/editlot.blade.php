@@ -336,15 +336,6 @@ Editar
                 </div>
 
             </form>
-            <!-- <form id="delete-form" action="{{ route('admin.deleteImageLot', ['lotId' => $lot->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
-                @csrf
-                @method('DELETE')
-            </form>
-            @if(session('error'))
-            <script>
-                alert("{{ session('error') }}");
-            </script>
-            @endif -->
         </div>
 
 
