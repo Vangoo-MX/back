@@ -336,7 +336,7 @@ Editar
                 </div>
 
             </form>
-            <form id="delete-form" action="{{ route('admin.deleteImageLot', ['lotId' => $lot->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+            <!-- <form id="delete-form" action="{{ route('admin.deleteImageLot', ['lotId' => $lot->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>
@@ -344,7 +344,7 @@ Editar
             <script>
                 alert("{{ session('error') }}");
             </script>
-            @endif
+            @endif -->
         </div>
 
 
@@ -434,6 +434,7 @@ Editar
 
     .draggable-item {
         flex-shrink: 0;
+        transition: all 0.3s ease;
     }
 
     .draggable-item.dragging {
@@ -444,6 +445,11 @@ Editar
     .drag-over {
         border: 2px dashed #007bff;
         background: rgba(0, 123, 255, 0.1);
+    }
+
+    .removing {
+        transform: scale(0);
+        opacity: 0;
     }
 
     /*-----------RESPONSIVE--------------*/
@@ -493,13 +499,35 @@ Editar
         });
     });
 
-    function confirmDelete(event, imageId) {
+    function confirmDelete(event, filename) {
         event.preventDefault();
-        if (confirm('¿Estás seguro de eliminar esta imagen?')) {
-            var form = document.getElementById('delete-form');
-            form.action = form.action.replace(':imageId', imageId);
-            form.submit();
-        }
+        if (!confirm('¿Estás seguro de eliminar esta imagen?')) return;
+
+        const imageContainer = event.target.closest('.draggable-item');
+
+        imageContainer.classList.add('removing');
+
+        fetch("{{ route('admin.deleteImageLot', ['lot' => $lot->id, 'filename' => ':filename']) }}"
+                .replace(':filename', filename), {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    imageContainer.classList.remove('removing');
+                    alert(data.error || 'Error al eliminar');
+                }
+            })
+            .catch(error => {
+                imageContainer.classList.remove('removing');
+                console.error('Error:', error);
+                alert('Error de conexión');
+            });
     }
 
     function changeMuninicio() {

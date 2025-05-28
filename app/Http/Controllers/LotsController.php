@@ -187,41 +187,40 @@ class LotsController
         }
     }
 
-    public function deleteImage(Request $request, $lotId, $imageId)
+    public function deleteImage(Lots $lot, $filename)
     {
-        $extensions = ['jpg', 'jpeg', 'png', 'webp'];
-        $imageDeleted = false;
-
-        $lot = Lots::findOrFail($lotId);
-
-        foreach ($extensions as $extension) {
-            $imagePath = 'public/img/posts/lots/' . $lotId . '/' . $imageId . '.' . $extension;
-
-            if (Storage::exists($imagePath)) {
-                Storage::delete($imagePath);
-                $imageDeleted = true;
-                $lot->decrement('images');
-                break;
+        try {
+            if (!in_array($filename, $lot->images)) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'La imagen no existe en este lote'
+                ], 404);
             }
-        }
 
-        if (!$imageDeleted) {
-            return redirect()->back()->with('error', 'La imagen no fue encontrada.');
-        }
-
-        for ($i = $imageId + 1; $i <= $lot->images + 1; $i++) {
-            foreach ($extensions as $extension) {
-                $oldImagePath = 'public/img/posts/lots/' . $lotId . '/' . $i . '.' . $extension;
-                $newImagePath = 'public/img/posts/lots/' . $lotId . '/' . ($i - 1) . '.' . $extension;
-
-                if (Storage::exists($oldImagePath)) {
-                    Storage::move($oldImagePath, $newImagePath);
-                    break;
-                }
+            $path = 'public/img/posts/lots/' . $lot->id . '/' . $filename;
+            if (!Storage::exists($path)) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'Archivo no encontrado en el servidor'
+                ], 404);
             }
-        }
 
-        return redirect()->back()->with('success', 'Imagen eliminada correctamente.');
+            Storage::delete($path);
+
+            $updatedImages = array_values(array_filter($lot->images, function ($item) use ($filename) {
+                return $item !== $filename;
+            }));
+
+            $lot->images = $updatedImages;
+            $lot->save();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Error al eliminar: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function deleteLot($id)

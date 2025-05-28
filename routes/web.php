@@ -162,7 +162,7 @@ Route::prefix('overview')->name('admin.')->group(function () {
         Route::post('store', [LotsController::class, 'storeLot'])->name('storeLot');
         Route::post('update', [LotsController::class, 'editLot'])->name('updateLot');
         Route::post('{lot}/reorder-images', [LotsController::class, 'reorderImages'])->name('lots.reorder-images');
-        Route::delete('deleteImage/{lotId}/{imageId}', [LotsController::class, 'deleteImage'])->name('deleteImageLot');
+        Route::delete('deleteImage/{lot}/{filename}', [LotsController::class, 'deleteImage'])->name('deleteImageLot');
         Route::get('delete/{id}', [LotsController::class, 'deleteLot'])->name('deleteLot');
         Route::get('deleteHighlight/{id}', [LotsController::class, 'deleteLotHightlight'])->name('deleteHighlightLot');
         Route::post('addHighlight', [LotsController::class, 'addLotHightlight'])->name('addHighlightLot');
