@@ -41,21 +41,15 @@ error_log(print_r($data, true));
 $backupImage = 'https://www.vangoo.mx/assets/img/img404.jpg';
 $imageToUse = $backupImage;
 
-try {
-    if (!empty($data['images'])) {
-        $images = $data['images'];
+if (isset($data['images']) && is_array($data['images']) && count($data['images']) > 0) {
+    $baseImagePath = 'https://dashboard.vangoo.mx/storage/img/posts/lots/' . $data['id'] . '/';
+    $firstImageName = $data['images'][0];
+    $imageToUse = $baseImagePath . $firstImageName;
 
-        if (is_string($images)) {
-            $decoded = json_decode($images, true, 512, JSON_THROW_ON_ERROR);
-            $images = is_array($decoded) ? $decoded : [];
-        }
-
-        if (is_array($images) && count($images) > 0) {
-            $imageToUse = $images[0];
-        }
+    $imageHeaders = @get_headers($imageToUse);
+    if ($imageHeaders === false || strpos($imageHeaders[0], '404') !== false) {
+        $imageToUse = $backupImage;
     }
-} catch (Exception $e) {
-    error_log("Error procesando imágenes: " . $e->getMessage());
 }
 
 function moneyFormat($numero)
