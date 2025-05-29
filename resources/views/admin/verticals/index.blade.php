@@ -11,16 +11,6 @@
 <!-- Content Row -->
 <div class="row">
     <div class="container mt-3 px-4">
-        <!-- <form method="GET" action="{{ route('admin.developments') }}" class="mb-4">
-            <div class="form-group">
-                <label for="modeSelect">Filtrar por tipo de desarrollo:</label>
-                <select name="mode" id="modeSelect" class="form-control" onchange="this.form.submit()">
-                    <option value="all" {{ $selectedMode == 'all' ? 'selected' : '' }}>Todos</option>
-                    <option value="horizontal" {{ $selectedMode == 'horizontal' ? 'selected' : '' }}>Horizontal</option>
-                    <option value="vertical" {{ $selectedMode == 'vertical' ? 'selected' : '' }}>Vertical</option>
-                </select>
-            </div>
-        </form> -->
         <table class="table table-striped table-bordered" id="propertiesTable">
             <thead>
                 <tr>
@@ -37,17 +27,17 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($desarrollos as $p)
+                @foreach($estates as $estate)
                 <tr>
-                    <td>{{$p->id}}</td>
-                    <td>{{limitString($p->title,37)}}</td>
-                    <td>{{moneyFormat($p->price_max)}}</td>
-                    <td>{{moneyFormat($p->price_min)}}</td>
-                    <td>@if($p->id_colonia) {{limitString(colonia($p->id_colonia),30)}} @endif</td>
-                    <td>@if($p->id_municipio) {{municipio($p->id_municipio)}} @endif</td>
-                    <td>@if($p->id_estado) {{estado($p->id_estado)}} @endif</td>
-                    <td><a href="user/{{$p->id_user}}">{{username($p->id_user)}}</a></td>
-                    <td>{{ convertDate($p->created_at) }}</td>
+                    <td>{{$estate->id}}</td>
+                    <td>{{limitString($estate->title,37)}}</td>
+                    <td>{{moneyFormat($estate->price_max)}}</td>
+                    <td>{{moneyFormat($estate->price_min)}}</td>
+                    <td>@if($estate->id_colonia) {{limitString(colonia($estate->id_colonia),30)}} @endif</td>
+                    <td>@if($estate->id_municipio) {{municipio($estate->id_municipio)}} @endif</td>
+                    <td>@if($estate->id_estado) {{estado($estate->id_estado)}} @endif</td>
+                    <td><a href="user/{{$estate->id_user}}">{{username($estate->id_user)}}</a></td>
+                    <td>{{ convertDate($estate->created_at) }}</td>
                     <td>
                         <div class="dropdown">
                             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
@@ -55,31 +45,25 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" target="_blank" href="https://vangoo.mx/details/desarrollo/{{$p->id}}">
+                                    <a class="dropdown-item" target="_blank" href="https://vangoo.mx/details/desarrollo/{{$estate->id}}">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Detalles
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/desarrollo/{{$p->id}}')">
+                                    <a class="dropdown-item cursor-pointer" onclick="copyToClipboard('https://vangoo.mx/details/desarrollo/{{$estate->id}}')">
                                         <img src="{{url('./img/icon/link.png')}}" />
                                         Copiar link
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{route('admin.editdev',$p->id)}}">
+                                    <a class="dropdown-item" href="{{route('admin.editdev',$estate->id)}}">
                                         <img src="{{url('./img/icon/update.png')}}" />
                                         Editar
                                     </a>
                                 </li>
-                                <!-- <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#devDeactivateModal" onclick="devDeactiveModalData({{$p->id}})" id="devDeactiveConfirmBtn{{$p->id}}" data-url="">
-                                        <img src="{{url('./img/icon/desactive.png')}}" />
-                                        Desactivar
-                                    </a>
-                                </li> -->
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#devDeleteModal" onclick="devDeleteModalData({{$p->id}})" id="devDeleteConfirmBtn{{$p->id}}" data-url="{{route('admin.deleteDev',$p->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#devDeleteModal" onclick="devDeleteModalData({{$estate->id}})" id="devDeleteConfirmBtn{{$estate->id}}" data-url="{{route('admin.deleteDev',$estate->id)}}">
                                         <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>
@@ -117,65 +101,25 @@
         </div>
     </div>
 </div>
-<!----Deactivate----->
-<div class="modal fade" id="devDeactivateModal">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h4 class="modal-title">¿Estás seguro que deseas desactivar este desarrollo?</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <div class="modal-body">
-                <p>Mientras el desarrollo esté desactivado no podrá ser visualizado en el portal de Vangoo.mx</p>
-                <div class="d-flex justify-content-end">
-                    <input type="hidden" id="devDeactivateId">
-                    <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                    <button class="btn1" data-bs-dismiss="modal" onclick="devDeactiveSend()">Confirmar</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 <script>
     function devDeleteModalData(id) {
         $("#devDeleteId").val(id);
     }
 
-    function devDeactiveModalData(id) {
-        $("#devDeactivateId").val(id);
-    }
-
     function devDeleteSend() {
         var id = $("#devDeleteId").val();
         var url = $("#devDeleteConfirmBtn" + id).data("url");
+
         $.ajax({
             url: url,
-            type: "GET",
+            type: "DELETE",
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            dataType: "json",
             success: function(response) {
                 message('success', 'Desarrollo ' + id + ' eliminado. Actualizando tabla... <div class="spinner-border text-success"></div>');
-                setTimeout(function() {
-                    window.location.reload();
-                }, 1000);
-            },
-            error: function(xhr) {
-                message('danger', 'Algo salió mal');
-                console.error('Error en la solicitud. Código de estado: ' + xhr.status);
-            }
-        });
-    }
-
-    function devDeactiveSend() {
-        var id = $("#devDeactivateId").val();
-        var url = $("#devDeactiveConfirmBtn" + id).data("url");
-        $.ajax({
-            url: url,
-            type: "GET",
-            success: function(response) {
-                message('success', 'Desarrollo ' + id + ' desactivado. Actualizando tabla... <div class="spinner-border text-success"></div>');
                 setTimeout(function() {
                     window.location.reload();
                 }, 1000);
