@@ -57,23 +57,6 @@ class AdminController extends Controller
     }
 
     //developments
-    public function developments(Request $request)
-    {
-        $selectedMode = $request->input('mode', 'all');
-
-        $desarrollos = $selectedMode === 'all'
-            ? Developments::all()
-            : Developments::where('mode', $selectedMode)->get();
-
-        return view('admin.developments', compact('desarrollos', 'selectedMode'));
-    }
-
-    public function createdev()
-    {
-        $municipios = Municipios::where('id_estado', 19)->get();
-
-        return view('admin.createdev', compact('municipios'));
-    }
 
     public function editdev($id)
     {

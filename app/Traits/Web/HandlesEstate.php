@@ -23,6 +23,13 @@ trait HandlesEstate
         return view($viewEstate, compact('estates'));
     }
 
+    public function createEstate($viewEstate)
+    {
+        $municipios = Municipios::where('id_estado', 19)->get();
+
+        return view($viewEstate, compact('municipios'));
+    }
+
     public function showEstate($id, $viewEstate)
     {
         $estate = $this->model::findOrFail($id);
