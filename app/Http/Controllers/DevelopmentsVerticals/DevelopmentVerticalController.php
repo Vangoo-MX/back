@@ -8,6 +8,7 @@ use App\Models\DevelopmentsApartments;
 use App\Models\DevelopmentsHighlights;
 use App\Traits\Web\HandlesEstate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DevelopmentVerticalController extends Controller
 {
@@ -55,7 +56,7 @@ class DevelopmentVerticalController extends Controller
             'area' => $request->area,
             'amenities' => $request->amenities,
             'commission_percentage' => $request->commission_percentage,
-            'id_user' => $request->id_user,
+            'id_user' => Auth::user()->id,
             'images' => $request->hasFile('images') ? count($request->file('images')) : 0,
         ]);
 
