@@ -75,10 +75,10 @@ trait HandlesEstate
         }
     }
 
-    protected function handleImageProcessing(Request $request, Model $estate): void
+    protected function handleImageProcessing(Request $request, Model $estate, bool $isUpdate = true): void
     {
         if ($request->hasFile('images')) {
-            $this->processNewImages($request->file('images'), $estate);
+            $this->processNewImages($request->file('images'), $estate, $isUpdate);
         }
 
         if ($request->orderimg && is_array($request->orderimg)) {
@@ -86,7 +86,7 @@ trait HandlesEstate
         }
     }
 
-    protected function processNewImages(array $images, Model $estate): void
+    protected function processNewImages(array $images, Model $estate, bool $isUpdate): void
     {
         $directory = storage_path("app/public/img/posts/{$this->directory}/{$estate->id}");
 
@@ -95,8 +95,10 @@ trait HandlesEstate
         }
         chmod($directory, 0755);
 
+        $startingIndex = $isUpdate ? $estate->images : 0;
+
         foreach ($images as $index => $image) {
-            $imageName = Str::slug($estate->images + $index + 1) . '.webp';
+            $imageName = Str::slug($startingIndex + $index + 1) . '.webp';
             $path = "{$directory}/{$imageName}";
 
             $this->processSingleImage($image, $directory, $path);

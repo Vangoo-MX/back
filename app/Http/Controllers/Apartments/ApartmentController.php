@@ -62,10 +62,10 @@ class ApartmentController extends Controller
             'antiquity',
         ]));
 
-        $this->handleImageProcessing($request, $apartment);
+        $this->handleImageProcessing($request, $apartment, true);
 
         $apartment->update([
-            'location' => $this->getLocation($apartment),
+            'location' => $this->getLocation($request->id_colonia, $request->id_municipio, $request->id_estado),
             'images' => $apartment->images + ($request->hasFile('images') ? count($request->file('images')) : 0),
         ]);
 

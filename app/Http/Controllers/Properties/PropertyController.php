@@ -61,7 +61,7 @@ class PropertyController extends Controller
             'antiquity'
         ]));
 
-        $this->handleImageProcessing($request, $property);
+        $this->handleImageProcessing($request, $property, true);
 
         $property->update([
             'location' => $this->getLocation($request->id_colonia, $request->id_municipio, $request->id_estado),

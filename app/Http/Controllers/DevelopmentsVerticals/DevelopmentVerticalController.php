@@ -61,7 +61,7 @@ class DevelopmentVerticalController extends Controller
         ]);
 
         if ($request->hasFile('images')) {
-            $this->handleImageProcessing($request, $development);
+            $this->handleImageProcessing($request, $development, false);
         }
 
         $this->processApartments($request, $development);

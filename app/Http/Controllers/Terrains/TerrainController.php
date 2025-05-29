@@ -59,10 +59,14 @@ class TerrainController extends Controller
             'price_m2',
         ]));
 
-        $this->handleImageProcessing($request, $terrain);
+        $this->handleImageProcessing($request, $terrain, true);
 
         $terrain->update([
-            'location' => $this->getLocation($terrain),
+            'location' => $this->getLocation(
+                $request->id_colonia,
+                $request->id_municipio,
+                $request->id_estado
+            ),
             'images' => $terrain->images + ($request->hasFile('images') ? count($request->file('images')) : 0)
         ]);
 
