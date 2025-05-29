@@ -231,7 +231,7 @@ trait HandlesEstate
         $apartment->price = $optionData['price'];
         $apartment->rooms = $optionData['rooms'];
         $apartment->bathrooms = $optionData['bathrooms'];
-        $apartment->parking = $optionData['parking'];
+        $apartment->parking = $optionData['parkings'];
         $apartment->area = $optionData['area'];
         $apartment->num_available = $optionData['num_available'] ?? 0;
     }
