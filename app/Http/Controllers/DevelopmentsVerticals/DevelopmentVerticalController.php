@@ -100,10 +100,6 @@ class DevelopmentVerticalController extends Controller
             'commission_percentage'
         ]);
 
-        if ($request->hasFile('images')) {
-            $this->handleImageProcessing($request, $development, false);
-        }
-
         $updateData['location'] = $this->getLocation(
             $request->id_colonia,
             $request->id_municipio,
