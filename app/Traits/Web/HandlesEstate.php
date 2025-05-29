@@ -3,6 +3,8 @@
 namespace App\Traits\Web;
 
 use App\Models\Municipios;
+use App\Models\Estados;
+use App\Models\Colonias;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
@@ -12,7 +14,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Exception;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Response;
 
 trait HandlesEstate
 {
@@ -89,7 +90,10 @@ trait HandlesEstate
     {
         $directory = storage_path("app/public/img/posts/{$this->directory}/{$estate->id}");
 
-        File::ensureDirectoryExists($directory);
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true);
+        }
+        chmod($directory, 0755);
 
         foreach ($images as $index => $image) {
             $imageName = Str::slug($estate->images + $index + 1) . '.webp';
@@ -134,12 +138,16 @@ trait HandlesEstate
         }
     }
 
-    protected function getLocation(Model $estate): string
+    protected function getLocation(int $coloniaId, int $municipioId, int $estadoId): string
     {
+        $colonia = Colonias::find($coloniaId);
+        $municipio = Municipios::find($municipioId);
+        $estado = Estados::find($estadoId);
+
         return collect([
-            $estate->colonia->nombre ?? null,
-            $estate->municipio->nombre ?? null,
-            $estate->estado->nombre ?? null
+            $colonia->nombre ?? null,
+            $municipio->nombre ?? null,
+            $estado->nombre ?? null,
         ])->filter()->join(', ');
     }
 
@@ -195,5 +203,78 @@ trait HandlesEstate
             'success' => true,
             'message' => __('Propiedad eliminada exitosamente')
         ], 200);
+    }
+
+    protected function processApartments(Request $request, Model $estate,  string $imageFieldName = 'imageoption'): void
+    {
+        if (!$request->filled('option') || !is_array($request->option)) {
+            return;
+        }
+
+        $key = 1;
+        foreach ($request->option as $option) {
+            $apartment = new $this->apartmentModel;
+            $apartment->id_development = $estate->id;
+
+            $this->fillApartmentData($apartment, $option);
+            $this->setApartmentImageCount($apartment, $request, $key, $imageFieldName);
+            $apartment->save();
+
+            $this->proccessApartmentImages($request, $estate, $key, $imageFieldName);
+            $key++;
+        }
+    }
+
+    private function fillApartmentData(Model $apartment, array $optionData): void
+    {
+        $apartment->title = $optionData['title'];
+        $apartment->price = $optionData['price'];
+        $apartment->rooms = $optionData['rooms'];
+        $apartment->bathrooms = $optionData['bathrooms'];
+        $apartment->parking = $optionData['parking'];
+        $apartment->area = $optionData['area'];
+        $apartment->num_available = $optionData['num_available'] ?? 0;
+    }
+
+    private function setApartmentImageCount(Model $apartment, Request $request, int $key, string $imageFieldName): void
+    {
+        $field = $imageFieldName . '.' . $key;
+
+        if ($request->hasFile($field)) {
+            $files = $request->file($field);
+            $apartment->image_´lans = is_array($files) ? count($files) : 1;
+        } else {
+            $apartment->image_plans = 0;
+        }
+    }
+
+    private function proccessApartmentImages(Request $request, Model $estate, int $key, string $imageFieldName): void
+    {
+        $field = $imageFieldName . '.' . $key;
+
+        if (!$request->hasFile($field)) {
+            return;
+        }
+
+        $directory = storage_path("app/public/img/posts/{$this->directory}/{$estate->id}/plans/");
+
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true);
+        }
+        chmod($directory, 0755);
+
+        $images = $request->file($field);
+
+        $images = is_array($images) ? $images : [$images];
+
+        $index = 1;
+
+        foreach ($images as $image) {
+            $nameImg = Str::slug($key . '_' . $index) . '.webp';
+            $path = $directory . $nameImg;
+
+            $this->processSingleImage($image, $directory, $path);
+            $index++;
+        }
     }
 }
