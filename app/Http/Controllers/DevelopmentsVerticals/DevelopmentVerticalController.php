@@ -75,9 +75,11 @@ class DevelopmentVerticalController extends Controller
         return $this->editDevelopment($id, $viewEstate);
     }
 
-    public function update(Request $request, Developments $development)
+    public function update(Request $request, $id)
     {
-        $development->update($request->only([
+        $development = Developments::findOrFail($id);
+
+        $updateData = $request->only([
             'title',
             'status',
             'price_min',
@@ -96,20 +98,23 @@ class DevelopmentVerticalController extends Controller
             'area',
             'amenities',
             'commission_percentage'
-        ]));
+        ]);
 
         if ($request->hasFile('images')) {
             $this->handleImageProcessing($request, $development, false);
         }
 
-        $development->update([
-            'location' => $this->getLocation(
-                $request->id_colonia,
-                $request->id_municipio,
-                $request->id_estado
-            ),
-            'images' => $development->images + ($request->hasFile('images') ? count($request->file('images')) : 0)
-        ]);
+        $updateData['location'] = $this->getLocation(
+            $request->id_colonia,
+            $request->id_municipio,
+            $request->id_estado
+        );
+
+        $development->update($updateData);
+
+        if ($request->hasFile('images')) {
+            $this->handleImageProcessing($request, $development, true);
+        }
 
         if ($request->optionappartments) {
             $this->updateApartments($request, $development, 'optionapp', 'option', 'imageoption');
