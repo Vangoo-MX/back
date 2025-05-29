@@ -133,15 +133,10 @@ Route::prefix('overview')->name('admin.')->group(function () {
     // Desarrollo vertical
     Route::prefix('developments')->group(function () {
         Route::get('highlights', [AdminController::class, 'highlightsdev'])->name('highlights.developments');
-        Route::get('create', [AdminController::class, 'createdev'])->name('createdev');
-        Route::get('edit/{id}', [AdminController::class, 'editdev'])->name('editdev');
         Route::get('deleteHighlight/{id}', [DevelopmentsController::class, 'deleteDevHightlight'])->name('deleteHighlightDev');
         Route::post('addHighlight', [DevelopmentsController::class, 'addDevHightlight'])->name('addHighlightDev');
         Route::post('orderHighlight', [DevelopmentsController::class, 'orderDevHightlight'])->name('orderHighlightDev');
-        Route::post('store', [DevelopmentsController::class, 'storeDev'])->name('storeDev');
-        Route::post('edit', [DevelopmentsController::class, 'editdev'])->name('editDev');
         Route::delete('deleteImage/{developmentId}/{imageId}', [DevelopmentsController::class, 'deleteImage'])->name('deleteImageDev');
-        Route::get('delete/{id}', [DevelopmentsController::class, 'deleteDev'])->name('deleteDev');
     });
 
     // Desarrollo horizontal
