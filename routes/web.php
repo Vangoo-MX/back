@@ -132,7 +132,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
 
     // Desarrollo vertical
     Route::prefix('developments')->group(function () {
-        Route::get('list', [AdminController::class, 'developments'])->name('developments');
         Route::get('highlights', [AdminController::class, 'highlightsdev'])->name('highlights.developments');
         Route::get('create', [AdminController::class, 'createdev'])->name('createdev');
         Route::get('edit/{id}', [AdminController::class, 'editdev'])->name('editdev');
