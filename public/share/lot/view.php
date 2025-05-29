@@ -10,7 +10,6 @@ if ($_GET && isset($_GET['id'])) {
     exit;
 }
 
-$typeText = 'lots';
 $urlShare = 'https://dashboard.vangoo.mx/share/lot/view.php?id=' . $id;
 
 $urlApi = 'https://dashboard.vangoo.mx/api/lot/detail/' . $id;
@@ -37,14 +36,16 @@ if (!$data) {
     exit;
 }
 
-$imagePath = 'https://dashboard.vangoo.mx/storage/img/posts/' . $typeText . '/' . $data['id'] . '/1.webp';
 $backupImage = 'https://www.vangoo.mx/assets/img/img404.jpg';
 
-$imageHeaders = @get_headers($imagePath);
-if ($imageHeaders === false || strpos($imageHeaders[0], '404') !== false) {
-    $imageToUse = $backupImage;
-} else {
-    $imageToUse = $imagePath;
+if (isset($data['images'])) {
+    $images = json_decode($data['images'], true);
+
+    if (is_array($images) && count($images) > 0) {
+        $imageToUse = $images[0];
+    } else {
+        $imageToUse = $backupImage;
+    }
 }
 
 function moneyFormat($numero)
@@ -234,7 +235,7 @@ function moneyFormat($numero)
         <div class="card">
             <div class="card-header">
                 <div class="image-container">
-                    <img src="https://dashboard.vangoo.mx/storage/img/posts/<?php echo $typeText; ?>/<?php echo $data['id']; ?>/1.webp?height=250&width=400" alt="Property" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                    <img src="<?php echo htmlspecialchars($imageToUse); ?>?height=250&width=400" alt="Property" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
                 </div>
             </div>
 

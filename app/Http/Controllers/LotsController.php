@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Lots;
-use App\Models\Images;
 use Illuminate\support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
