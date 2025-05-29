@@ -329,10 +329,6 @@
                 var hasSelected = false;
                 for (var i = 0; i < colonias.length; i++) {
                     var selected = '';
-                    if (colonias[i].id == <?php echo $estate->id_colonia; ?>) {
-                        selected = 'selected';
-                        hasSelected = true;
-                    }
                     coloniasHtml += '<option value="' + colonias[i].id + '" ' + selected +
                         ' data-codigo-postal="' + colonias[i].codigo_postal + '">' +
                         colonias[i].nombre + '</option>';
