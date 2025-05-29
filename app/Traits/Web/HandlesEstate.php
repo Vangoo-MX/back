@@ -242,7 +242,7 @@ trait HandlesEstate
 
         if ($request->hasFile($field)) {
             $files = $request->file($field);
-            $apartment->image_´lans = is_array($files) ? count($files) : 1;
+            $apartment->image_plans = is_array($files) ? count($files) : 1;
         } else {
             $apartment->image_plans = 0;
         }
