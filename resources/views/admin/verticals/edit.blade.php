@@ -15,7 +15,7 @@
         <h3>{{$estate->title}}</h3>
 
         <div class="w-100">
-            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('verticals.update') }}">
+            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('verticals.update', $estate) }}">
 
                 @csrf
                 @method('PUT')
