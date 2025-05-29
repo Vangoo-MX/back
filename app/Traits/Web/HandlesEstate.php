@@ -85,6 +85,11 @@ trait HandlesEstate
         }
     }
 
+    public function deleteDevelopment($id)
+    {
+        //
+    }
+
     protected function handleImageProcessing(Request $request, Model $estate, bool $isUpdate = true): void
     {
         if ($request->hasFile('images')) {
@@ -287,6 +292,72 @@ trait HandlesEstate
 
             $this->processSingleImage($image, $directory, $path);
             $index++;
+        }
+    }
+
+    protected function updateApartments(Request $request, Model $estate, string $existingKey = 'optionapp', string $newKey = 'option', string $imageFieldName = 'imageoption')
+    {
+        $apartmentModel = $this->apartmentModel;
+        $this->processExistingApartments(
+            $request,
+            $estate,
+            $apartmentModel,
+            $existingKey,
+            $imageFieldName
+        );
+
+        $this->processNewApartments(
+            $request,
+            $estate,
+            $apartmentModel,
+            $newKey,
+            $imageFieldName,
+            $request->filled($existingKey) ? count($request->input($existingKey)) : 0
+        );
+    }
+
+    private function processExistingApartments(Request $request, Model $estate, string $apartmentModel, string $keyName, string $imageFieldName): void
+    {
+        if (!$request->filled($keyName)) {
+            return;
+        }
+
+        $key = 1;
+
+        foreach ($request->input($keyName) as $option) {
+            if (empty($option['id'])) {
+                continue;
+            }
+
+            $apartment = $apartmentModel::findOrFail($option['id']);
+            $this->fillApartmentData($apartment, $option);
+            $this->setApartmentImageCount($apartment, $request, $key, $imageFieldName);
+            $apartment->save();
+
+            $this->proccessApartmentImages($request, $estate, $key, $imageFieldName);
+
+            $key++;
+        }
+    }
+
+    private function processNewApartments(Request $request, Model $estate, string $apartmentModel, string $keyName, string $imageFieldName, int $startingIndex = 0): void
+    {
+        if (!$request->filled($keyName)) {
+            return;
+        }
+
+        $key = $startingIndex + 1;
+        foreach ($request->input($keyName) as $option) {
+            $apartment = new $apartmentModel;
+            $apartment->id_development = $estate->id;
+
+            $this->fillApartmentData($apartment, $option);
+            $this->setApartmentImageCount($apartment, $request, $key, $imageFieldName);
+            $apartment->save();
+
+            $this->proccessApartmentImages($request, $estate, $key, $imageFieldName);
+
+            $key++;
         }
     }
 }

@@ -74,4 +74,48 @@ class DevelopmentVerticalController extends Controller
         $viewEstate = 'admin.verticals.edit';
         return $this->editDevelopment($id, $viewEstate);
     }
+
+    public function update(Request $request, Developments $development)
+    {
+        $development->update($request->only([
+            'title',
+            'status',
+            'price_min',
+            'price_max',
+            'description',
+            'availability',
+            'financing',
+            'mode',
+            'id_estado',
+            'id_municipio',
+            'id_colonia',
+            'street',
+            'num_ext',
+            'map_lat',
+            'map_long',
+            'area',
+            'amenities',
+            'commission_percentage'
+        ]));
+
+        if ($request->hasFile('images')) {
+            $this->handleImageProcessing($request, $development, false);
+        }
+
+        $development->update([
+            'location' => $this->getLocation(
+                $request->id_colonia,
+                $request->id_municipio,
+                $request->id_estado
+            ),
+            'images' => $development->images + ($request->hasFile('images') ? count($request->file('images')) : 0)
+        ]);
+
+        if ($request->optionappartments) {
+            $this->updateApartments($request, $development, 'optionapp', 'option', 'imageoption');
+        }
+
+        return redirect()->route('verticals.index', $development)
+            ->with('success', 'Desarrollo vertical actualizado correctamente');
+    }
 }

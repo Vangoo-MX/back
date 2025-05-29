@@ -126,9 +126,8 @@ Editar propiedad
                         </div>
 
                     </div>
-
-
                     <div class="w-100">
+                        <input type="hidden" id="id_estado" name="id_estado" value="19">
                         <div class="mb-3 mt-3">
                             <label for="id_municipio" class="form-label">Municipio:</label>
                             <select class="form-select" name="id_municipio" id="id_municipio">
