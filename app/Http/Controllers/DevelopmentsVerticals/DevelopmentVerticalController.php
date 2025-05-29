@@ -72,6 +72,6 @@ class DevelopmentVerticalController extends Controller
     public function edit($id)
     {
         $viewEstate = 'admin.verticals.edit';
-        return $this->editEstate($id, $viewEstate);
+        return $this->editDevelopment($id, $viewEstate);
     }
 }

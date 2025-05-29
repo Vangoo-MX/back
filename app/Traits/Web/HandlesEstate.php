@@ -42,6 +42,14 @@ trait HandlesEstate
     {
         $estate = $this->model::findOrFail($id);
         $municipios = Municipios::where('id_estado', 19)->get();
+
+        return view($viewEstate, compact('estate', 'municipios'));
+    }
+
+    public function editDevelopment($id, $viewEstate)
+    {
+        $estate = $this->model::findOrFail($id);
+        $municipios = Municipios::where('id_estado', 19)->get();
         $apartments = $this->apartmentModel::where('id_development', $id)
             ->get();
 
