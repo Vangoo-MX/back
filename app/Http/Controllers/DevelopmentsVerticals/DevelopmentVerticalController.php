@@ -17,19 +17,19 @@ class DevelopmentVerticalController extends Controller
 
     public function index()
     {
-        $viewEstate = 'admin.developments.index';
+        $viewEstate = 'admin.verticals.index';
         return $this->indexEstate($viewEstate);
     }
 
     public function create()
     {
-        $viewEstate = 'admin.developments.create';
+        $viewEstate = 'admin.verticals.create';
         return $this->createEstate($viewEstate);
     }
 
     public function edit($id)
     {
-        $viewEstate = 'admin.developments.edit';
+        $viewEstate = 'admin.verticals.edit';
         return $this->editEstate($id, $viewEstate);
     }
 }
