@@ -20,6 +20,7 @@ use App\Http\Controllers\{
 use App\Http\Controllers\Apartments\ApartmentController;
 use App\Http\Controllers\Apartments\ApartmentHighlightController;
 use App\Http\Controllers\Apartments\ApartmentQueueController;
+use App\Http\Controllers\DevelopmentsVerticals\DevelopmentVerticalController;
 use App\Http\Controllers\Properties\PropertyHighlightController;
 use App\Http\Controllers\Terrains\TerrainController;
 use App\Http\Controllers\Terrains\TerrainHighlightController;
@@ -64,6 +65,12 @@ Route::prefix('apartments')->name('apartments.')->middleware('check.admin')->gro
     Route::resource('/', ApartmentController::class)
         ->except(['create', 'store'])
         ->parameters(['' => 'apartment']);
+});
+
+Route::prefix('developments/vertical')->name('verticals.')->middleware('check.admin')->group(function () {
+    Route::resource('/', DevelopmentVerticalController::class)
+        ->except(['show'])
+        ->parameters(['' => 'vertical']);
 });
 
 // Propiedades

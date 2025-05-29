@@ -79,12 +79,12 @@
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">
-                        <a class="cursor-pointer {{ (request()->is('overview/developments*')) ? 'active' : '' }} {{ (request()->is('overview/createdev*')) ? 'active' : '' }} {{ (request()->is('overview/highlightsdev*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
+                        <a class="cursor-pointer {{ (request()->is('developments/vertical*')) ? 'active' : '' }} {{ (request()->is('developments/vertical/create*')) ? 'active' : '' }} {{ (request()->is('developments/vertical/highlights*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
                             <img src="{{url('./img/icon/developments.png')}}" title="Desarrollos" alt="Developments" />
                         </a>
                         <ul class="dropdown-menu menu-primary-dropdown">
-                            <li><a class="{{ (request()->is('overview/developments*')) ? 'active' : '' }}" href="{{route('admin.developments')}}">Todas los desarrollos</a></li>
-                            <li><a class="{{ (request()->is('overview/createdev*')) ? 'active' : '' }}" href="{{route('admin.createdev')}}">Crear desarrollo</a></li>
+                            <li><a class="{{ (request()->is('developments/vertical*')) ? 'active' : '' }}" href="{{route('verticals.index')}}">Todas los desarrollos</a></li>
+                            <li><a class="{{ (request()->is('overview/create*')) ? 'active' : '' }}" href="{{route('verticals.create')}}">Crear desarrollo</a></li>
                             <li><a class="" href="{{route('admin.highlights.developments')}}">Desarrollos destacados</a></li>
                         </ul>
                     </li>
