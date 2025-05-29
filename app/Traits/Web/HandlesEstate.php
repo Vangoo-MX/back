@@ -270,7 +270,7 @@ trait HandlesEstate
         $index = 1;
 
         foreach ($images as $image) {
-            $nameImg = Str::slug($key . '_' . $index) . '.webp';
+            $nameImg = Str::slug($key) . '.webp';
             $path = $directory . $nameImg;
 
             $this->processSingleImage($image, $directory, $path);

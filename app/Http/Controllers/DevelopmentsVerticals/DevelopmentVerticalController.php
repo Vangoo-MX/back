@@ -60,6 +60,10 @@ class DevelopmentVerticalController extends Controller
             'images' => $request->hasFile('images') ? count($request->file('images')) : 0,
         ]);
 
+        if ($request->hasFile('images')) {
+            $this->handleImageProcessing($request, $development);
+        }
+
         $this->processApartments($request, $development);
 
         return redirect()->route('verticals.index')->with('success', 'Desarrollo vertical creado exitosamente.');
