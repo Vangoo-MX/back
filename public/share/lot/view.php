@@ -37,14 +37,13 @@ if (!$data) {
 }
 
 $backupImage = 'https://www.vangoo.mx/assets/img/img404.jpg';
+$imageToUse = $backupImage;
 
-if (isset($data['images'])) {
-    $images = json_decode($data['images'], true);
+if (isset($data['images']) && !empty($data['images'])) {
+    $images = is_string($data['images']) ? json_decode($data['images'], true) : $data['images'];
 
     if (is_array($images) && count($images) > 0) {
         $imageToUse = $images[0];
-    } else {
-        $imageToUse = $backupImage;
     }
 }
 
@@ -235,7 +234,10 @@ function moneyFormat($numero)
         <div class="card">
             <div class="card-header">
                 <div class="image-container">
-                    <img src="<?php echo htmlspecialchars($imageToUse); ?>?height=250&width=400" alt="Property" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                    <img src="<?php echo htmlspecialchars($imageToUse); ?>?height=250&width=400"
+                        alt="Property"
+                        class="property-image"
+                        onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
                 </div>
             </div>
 
