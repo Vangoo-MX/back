@@ -100,6 +100,12 @@ class DevelopmentVerticalController extends Controller
             'commission_percentage'
         ]);
 
+        if ($request->hasFile('images')) {
+            $this->handleImageProcessing($request, $development, true);
+        }
+
+        $updateData['images'] = $development->images + ($request->hasFile('images') ? count($request->file('images')) : 0);
+
         $updateData['location'] = $this->getLocation(
             $request->id_colonia,
             $request->id_municipio,
@@ -107,10 +113,6 @@ class DevelopmentVerticalController extends Controller
         );
 
         $development->update($updateData);
-
-        if ($request->hasFile('images')) {
-            $this->handleImageProcessing($request, $development, true);
-        }
 
         if ($request->optionappartments) {
             $this->updateApartments($request, $development, 'optionapp', 'option', 'imageoption');
