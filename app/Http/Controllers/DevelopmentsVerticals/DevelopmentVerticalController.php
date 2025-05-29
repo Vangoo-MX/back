@@ -115,7 +115,7 @@ class DevelopmentVerticalController extends Controller
             $this->updateApartments($request, $development, 'optionapp', 'option', 'imageoption');
         }
 
-        return redirect()->route('verticals.index', $development)
+        return redirect()->route('verticals.index')
             ->with('success', 'Desarrollo vertical actualizado correctamente');
     }
 }
