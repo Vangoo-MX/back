@@ -57,13 +57,13 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{route('admin.editdev',$estate->id)}}">
+                                    <a class="dropdown-item" href="{{route('verticals.edit',$estate->id)}}">
                                         <img src="{{url('./img/icon/update.png')}}" />
                                         Editar
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#devDeleteModal" onclick="devDeleteModalData({{$estate->id}})" id="devDeleteConfirmBtn{{$estate->id}}" data-url="{{route('admin.deleteDev',$estate->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#devDeleteModal" onclick="devDeleteModalData({{$estate->id}})" id="devDeleteConfirmBtn{{$estate->id}}" data-url="{{route('verticals.destroy',$estate->id)}}">
                                         <img src="{{url('./img/icon/trash.png')}}" />
                                         Borrar
                                     </a>

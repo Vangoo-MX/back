@@ -15,7 +15,7 @@
         <h3>{{$dev->title}}</h3>
 
         <div class="w-100">
-            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('admin.editDev') }}">
+            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('verticals.update') }}">
 
                 @csrf
                 <input type="hidden" name="id" value="{{$dev->id}}">
