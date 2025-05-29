@@ -42,8 +42,10 @@ trait HandlesEstate
     {
         $estate = $this->model::findOrFail($id);
         $municipios = Municipios::where('id_estado', 19)->get();
+        $apartments = $this->apartmentModel::where('id_development', $id)
+            ->get();
 
-        return view($viewEstate, compact('estate', 'municipios'));
+        return view($viewEstate, compact('estate', 'municipios', 'apartments'));
     }
 
     public function deleteEstate($id)

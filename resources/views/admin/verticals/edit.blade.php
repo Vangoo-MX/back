@@ -12,20 +12,21 @@
 <div class="row d-flex justify-content-center w-100">
     <div class="col-12 col-lg-4 px-2 px-lg-5 d-flex flex-column align-items-center justify-content-center w-100">
 
-        <h3>{{$dev->title}}</h3>
+        <h3>{{$estate->title}}</h3>
 
         <div class="w-100">
             <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('verticals.update') }}">
 
                 @csrf
-                <input type="hidden" name="id" value="{{$dev->id}}">
+                @method('PUT')
+                <input type="hidden" name="id" value="{{$estate->id}}">
 
                 <div class="d-flex gap-5 w-100 flex-column flex-lg-row">
                     <div class="w-100">
 
                         <div class="mb-3 mt-3">
                             <label for="title" class="form-label">Titulo:</label>
-                            <input type="text" class="form-control" id="title" placeholder="Ingresa un titulo" name="title" value="{{old('title', $dev->title)}}" required>
+                            <input type="text" class="form-control" id="title" placeholder="Ingresa un titulo" name="title" value="{{old('title', $estate->title)}}" required>
                             @error('title')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -34,10 +35,10 @@
                         <div class="mb-3 mt-3">
                             <label for="status" class="form-label">Estado de venta:</label>
                             <select class="form-select" name="status">
-                                <option value="presale" <?php if ($dev->status == 'presale') {
+                                <option value="presale" <?php if ($estate->status == 'presale') {
                                                             echo 'selected';
                                                         } ?>>Preventa</option>
-                                <option value="sale" <?php if ($dev->status == 'sale') {
+                                <option value="sale" <?php if ($estate->status == 'sale') {
                                                             echo 'selected';
                                                         } ?>>Venta</option>
                             </select>
@@ -45,7 +46,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="price_min" class="form-label">Precio mínimo:</label>
-                            <input type="number" class="form-control" id="price_min" placeholder="Precio mínimo" name="price_min" value="{{old('price_min', $dev->price_min)}}" required>
+                            <input type="number" class="form-control" id="price_min" placeholder="Precio mínimo" name="price_min" value="{{old('price_min', $estate->price_min)}}" required>
                             @error('price_min')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -53,7 +54,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="price_max" class="form-label">Precio máximo:</label>
-                            <input type="number" class="form-control" id="price_max" placeholder="Precio máximo" name="price_max" value="{{old('price_max', $dev->price_max)}}" required>
+                            <input type="number" class="form-control" id="price_max" placeholder="Precio máximo" name="price_max" value="{{old('price_max', $estate->price_max)}}" required>
                             @error('price_max')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -61,7 +62,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="description">Descripción:</label>
-                            <textarea class="form-control" rows="5" id="description" name="description">{{old('description', $dev->description)}}</textarea>
+                            <textarea class="form-control" rows="5" id="description" name="description">{{old('description', $estate->description)}}</textarea>
                             @error('description')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -69,7 +70,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="availability" class="form-label">Disponibilidad:</label>
-                            <input type="date" class="form-control" id="availability" placeholder="Fecha en que estará disponible" name="availability" value="{{old('availability', $dev->availability)}}">
+                            <input type="date" class="form-control" id="availability" placeholder="Fecha en que estará disponible" name="availability" value="{{old('availability', $estate->availability)}}">
                             @error('availability')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -77,35 +78,19 @@
 
                         <div class="mb-3 mt-3">
                             <label for="financing" class="form-label">Financiación:</label>
-                            <input type="text" class="form-control" id="financing" placeholder="Financiado" name="financing" value="{{old('financing', $dev->financing)}}">
+                            <input type="text" class="form-control" id="financing" placeholder="Financiado" name="financing" value="{{old('financing', $estate->financing)}}">
                         </div>
                         <input type="hidden" id="mode" name="mode" value="horizontal">
                     </div>
                     <div class="w-100">
-
-                        <!---
-                            <div class="mb-3 mt-3">
-                                <label for="id_estado" class="form-label">Estado:</label>
-                                <select class="form-select" name="id_estado" id="id_estado">
-                                    @ foreach($estados as $e)
-                                        <option value="$e->id" data-id="$e->id">$e->nombre</option>
-                                    @ endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3 mt-3">
-                                <label for="id_municipio" class="form-label">Municipio:</label>
-                                <span id="municipioshtml"></span>
-                            </div>--->
-                        <input type="hidden" id="id_estado" name="id_estado" value="19">
-
                         <div class="mb-3 mt-3">
                             <label for="id_municipio" class="form-label">Municipio:</label>
-                            <select class="form-select" name="id_municipio" id="id_municipio" required>
+                            <select class="form-select" name="id_municipio" id="id_municipio">
                                 <option hidden>Selecciona un municipio</option>
-                                @foreach($municipios as $e)
-                                <option value="{{$e->id}}" data-id="{{$e->id}}" <?php if ($dev->id_municipio == $e->id) {
-                                                                                    echo 'selected';
-                                                                                } ?>>{{$e->nombre}}</option>
+                                @foreach($municipios as $municipio)
+                                <option value="{{$municipio->id}}" data-id="{{$municipio->id}}" <?php if ($estate->id_municipio == $municipio->id) {
+                                                                                                    echo 'selected';
+                                                                                                } ?>>{{$municipio->nombre}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -117,7 +102,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="street" class="form-label">Calle:</label>
-                            <input type="text" class="form-control" id="street" placeholder="Ingresa la calle" name="street" value="{{old('street', $dev->street)}}">
+                            <input type="text" class="form-control" id="street" placeholder="Ingresa la calle" name="street" value="{{old('street', $estate->street)}}">
                             @error('street')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -125,7 +110,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="num_ext" class="form-label">Número exterior:</label>
-                            <input type="number" class="form-control" id="num_ext" placeholder="Ingresa el número exterior" name="num_ext" value="{{old('num_ext', $dev->num_ext)}}">
+                            <input type="number" class="form-control" id="num_ext" placeholder="Ingresa el número exterior" name="num_ext" value="{{old('num_ext', $estate->num_ext)}}">
                             @error('num_ext')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -133,7 +118,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="cp" class="form-label">Codigo Postal:</label>
-                            <input type="number" class="form-control" id="cp" placeholder="Ingresa el código postal" name="cp" value="{{old('cp', $dev->cp)}}" disabled>
+                            <input type="number" class="form-control" id="cp" placeholder="Ingresa el código postal" name="cp" value="{{old('cp', $estate->cp)}}" disabled>
                             @error('cp')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -146,19 +131,19 @@
 
                         <div class="mb-3 mt-3">
                             <label for="map_lat" class="form-label">Coordenadas Latitud:</label>
-                            <input type="text" class="form-control" id="map_lat" name="map_lat" value="{{old('map_lat', $dev->map_lat)}}">
+                            <input type="text" class="form-control" id="map_lat" name="map_lat" value="{{old('map_lat', $estate->map_lat)}}">
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="map_long" class="form-label">Coordenadas Longitud:</label>
-                            <input type="text" class="form-control" id="map_long" name="map_long" value="{{old('map_long', $dev->map_long)}}">
+                            <input type="text" class="form-control" id="map_long" name="map_long" value="{{old('map_long', $estate->map_long)}}">
                         </div>
 
                         <div class="row mb-3 mt-3">
                             <div class="col-md-6">
                                 <label for="area" class="form-label">Area:</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="number" step="0.01" class="form-control" id="area" placeholder="Ingresa el area del inmueble" name="area" value="{{old('area', $dev->area)}}">
+                                    <input type="number" step="0.01" class="form-control" id="area" placeholder="Ingresa el area del inmueble" name="area" value="{{old('area', $estate->area)}}">
                                     <span class="ms-2">m²</span>
                                 </div>
                                 @error('area')
@@ -168,7 +153,7 @@
                             <div class="col-md-6">
                                 <label for="commission_percentage" class="form-label">Porcentaje de comisión de venta:</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="number" class="form-control" id="commission_percentage" placeholder="Porcentaje en números sin signos" name="commission_percentage" value="{{old('commission_percentage', $dev->commission_percentage)}}">
+                                    <input type="number" class="form-control" id="commission_percentage" placeholder="Porcentaje en números sin signos" name="commission_percentage" value="{{old('commission_percentage', $estate->commission_percentage)}}">
                                     <span class="ms-2">%</span>
                                 </div>
                                 @error('commission_percentage')
@@ -179,26 +164,26 @@
 
                         <div class="mb-3 mt-3">
                             <label for="amenities" class="form-label">Amenidades:</label>
-                            <input type="text" class="form-control" id="amenities" placeholder="Separe con comas y sin espacios" name="amenities" value="{{old('amenities', $dev->amenities)}}">
+                            <input type="text" class="form-control" id="amenities" placeholder="Separe con comas y sin espacios" name="amenities" value="{{old('amenities', $estate->amenities)}}">
                             @error('amenities')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <input type="hidden" name="num_images" value="{{old('images', $dev->images)}}">
+                        <input type="hidden" name="num_images" value="{{old('images', $estate->images)}}">
                     </div>
                 </div>
 
                 <span>Imagenes:</span>
                 <div class="d-flex gap-2 mt-2">
-                    @for ($i = 1; $i <= $dev->images; $i++)
+                    @for ($i = 1; $i <= $estate->images; $i++)
                         <div class="d-flex flex-column align-items-center image-container">
                             @php
-                            $imagePath = 'public/img/posts/developments/' . $dev->id . '/' . $i . '.webp';
+                            $imagePath = 'public/img/posts/developments/' . $estate->id . '/' . $i . '.webp';
                             @endphp
 
                             @if(Storage::exists($imagePath))
                             @php
-                            $imageUrl = asset('storage/img/posts/developments/' . $dev->id . '/' . $i . '.webp');
+                            $imageUrl = asset('storage/img/posts/developments/' . $estate->id . '/' . $i . '.webp');
                             @endphp
                             <div class="d-flex flex-column align-items-center image-container">
                                 <a href="{{ $imageUrl }}" target="_blank">
@@ -206,7 +191,7 @@
                                 </a>
                                 <div class="mt-1">
                                     <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%" required>
-                                        @for($j = 1; $j <= $dev->images; $j++)
+                                        @for($j = 1; $j <= $estate->images; $j++)
                                             <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
                                                 {{ $j }}
                                             </option>
@@ -243,37 +228,37 @@
                     </div>
 
                     <div class="options-container">
-                        @foreach($app as $a)
+                        @foreach($apartments as $apartment)
                         <div class="row align-items-center mb-2 option-appartment" id="option-appartment-{{$loop->index+1}}">
-                            <input type="hidden" name="optionapp[{{$loop->index+1}}][id]" value="{{$a->id}}">
+                            <input type="hidden" name="optionapp[{{$loop->index+1}}][id]" value="{{$apartment->id}}">
 
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="Titulo" value="{{old('title', $a->title)}}" name="optionapp[{{$loop->index+1}}][title]" required>
+                                <input type="text" class="form-control" placeholder="Titulo" value="{{old('title', $apartment->title)}}" name="optionapp[{{$loop->index+1}}][title]" required>
                             </div>
                             <div class="col">
-                                <input type="number" class="form-control" placeholder="Precio" value="{{old('price', $a->price)}}" name="optionapp[{{$loop->index+1}}][price]" required>
+                                <input type="number" class="form-control" placeholder="Precio" value="{{old('price', $apartment->price)}}" name="optionapp[{{$loop->index+1}}][price]" required>
                             </div>
                             <div class="col">
-                                <input type="number" step="0.01" class="form-control" placeholder="Area" value="{{old('area', $a->area)}}" name="optionapp[{{$loop->index+1}}][area]" required>
+                                <input type="number" step="0.01" class="form-control" placeholder="Area" value="{{old('area', $apartment->area)}}" name="optionapp[{{$loop->index+1}}][area]" required>
                             </div>
                             <div class="col">
-                                <input type="number" class="form-control" placeholder="Habitaciones" value="{{old('rooms', $a->rooms)}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
+                                <input type="number" class="form-control" placeholder="Habitaciones" value="{{old('rooms', $apartment->rooms)}}" name="optionapp[{{$loop->index+1}}][rooms]" required>
                             </div>
 
                             @php
-                            $bathroomsFormatted = (intval($a->bathrooms) == $a->bathrooms) ? intval($a->bathrooms) : $a->bathrooms;
+                            $bathroomsFormatted = (intval($apartment->bathrooms) == $apartment->bathrooms) ? intval($apartment->bathrooms) : $apartment->bathrooms;
                             @endphp
                             <div class="col">
                                 <input type="number" step="0.01" class="form-control" placeholder="Baños" value="{{old('bathrooms', $bathroomsFormatted)}}" name="optionapp[{{$loop->index+1}}][bathrooms]" required>
                             </div>
                             <div class="col">
-                                <input type="number" class="form-control" placeholder="Estacionamientos" value="{{old('parkings',$a->parkings)}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
+                                <input type="number" class="form-control" placeholder="Estacionamientos" value="{{old('parkings',$apartment->parkings)}}" name="optionapp[{{$loop->index+1}}][parkings]" required>
                             </div>
                             <div class="col">
-                                <input type="number" class="form-control" placeholder="Num disponibles" value="{{old('num_available', $a->num_available)}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
+                                <input type="number" class="form-control" placeholder="Num disponibles" value="{{old('num_available', $apartment->num_available)}}" name="optionapp[{{$loop->index+1}}][num_available]" required>
                             </div>
                             <div class="col">
-                                <input type="file" class="form-control" value="{{old('imageoption', $a->imageoption)}}" name="imageoption[{{$loop->index+1}}]" accept="image/jpeg">
+                                <input type="file" class="form-control" value="{{old('imageoption', $apartment->imageoption)}}" name="imageoption[{{$loop->index+1}}]" accept="image/jpeg">
                             </div>
                         </div>
                         @endforeach
@@ -305,7 +290,7 @@
                 </div>
 
             </form>
-            <form id="delete-form" action="{{ route('admin.deleteImageDev', ['developmentId' => $dev->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+            <form id="delete-form" action="{{ route('admin.deleteImageDev', ['developmentId' => $estate->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>
@@ -476,7 +461,7 @@
                 var hasSelected = false;
                 for (var i = 0; i < colonias.length; i++) {
                     var selected = '';
-                    if (colonias[i].id == <?php echo $dev->id_colonia; ?>) {
+                    if (colonias[i].id == <?php echo $estate->id_colonia; ?>) {
                         selected = 'selected';
                         hasSelected = true;
                     }
@@ -534,7 +519,7 @@
     });
 
     //opciones de apartamentos
-    let optionCount = <?php echo isset($app) ? sizeof($app) : 0; ?>;
+    let optionCount = <?php echo isset($apartments) ? sizeof($apartments) : 0; ?>;
     const addOptionBtn = document.getElementById('add-option-btn');
     const optionsContainer = document.querySelector('.options-container');
 
