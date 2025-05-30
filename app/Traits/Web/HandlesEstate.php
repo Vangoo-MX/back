@@ -164,8 +164,6 @@ trait HandlesEstate
 
     protected function reorderEstateImages(Request $request, Model $estate)
     {
-        Log::info('Reordering images for estate ID: ' . $estate->id);
-        Log::info('New order received: ', $request->all());
         $request->validate([
             'new_order' => 'required|array',
             'new_order.*' => 'string'
@@ -177,7 +175,6 @@ trait HandlesEstate
             $currentImages = json_decode($currentImages, true) ?? [];
         }
 
-        Log::info('Current images in DB: ', $currentImages);
 
         foreach ($request->new_order as $filename) {
             if (!in_array($filename, $currentImages)) {
@@ -188,10 +185,8 @@ trait HandlesEstate
         }
 
         try {
-            // Actualizar usando el mismo método que en Lots
             $estate->update(['images' => $request->new_order]);
 
-            Log::info('Order updated successfully');
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
             Log::error('Error updating order: ' . $e->getMessage());
@@ -244,13 +239,6 @@ trait HandlesEstate
 
         return response()->json(['success' => true]);
     }
-
-    // public function handleDragDropReorder(Request $request, Model $estate)
-    // {
-    //     Log::info('Handling drag and drop reorder for estate ID: ' . $estate->id);
-    //     Log::info('New order received: ', $request->all());
-    //     return $this->reorderModelImages($request, $estate);
-    // }
 
     public function deactiveEstate($id)
     {

@@ -81,8 +81,6 @@ class PropertyController extends Controller
 
     public function reorderImages(Request $request, Properties $property)
     {
-        Log::info('Reordering images for property ID: ' . $property->id);
-        Log::info('Request data: ', $request->all());
         return $this->reorderEstateImages($request, $property);
     }
 

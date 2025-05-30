@@ -572,8 +572,6 @@ Editar propiedad
             const newOrder = Array.from(container.querySelectorAll('.draggable-item'))
                 .map(item => item.dataset.filename);
 
-            console.log('Sending new order:', newOrder);
-
             fetch("{{ route('properties.reorder-images', $estate->id) }}", {
                     method: 'POST',
                     headers: {
