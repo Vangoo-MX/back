@@ -104,7 +104,7 @@ Route::prefix('properties')->name('properties.')->middleware('check.admin')->gro
         ->name('deactive');
     Route::post('{property}/reorder-images', [PropertyController::class, 'reorderImages'])
         ->name('reorder-images');
-    Route::delete('deleteImage/{propertyId}/{filename}', [PropertyController::class, 'destroyImage'])
+    Route::delete('deleteImage/{property}/{filename}', [PropertyController::class, 'destroyImage'])
         ->name('deleteImage');
     Route::get('municipio/{id}', [PropertyHighlightController::class, 'propertyByMunicipio'])
         ->name('municipio');

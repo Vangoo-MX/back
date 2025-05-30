@@ -438,7 +438,7 @@ Editar propiedad
 
         imageContainer.classList.add('removing');
 
-        fetch("{{ route('properties.deleteImage', ['propertyId' => $estate->id, 'filename' => ':filename']) }}"
+        fetch("{{ route('properties.deleteImage', ['property' => $estate->id, 'filename' => ':filename']) }}"
                 .replace(':filename', filename), {
                     method: 'DELETE',
                     headers: {
