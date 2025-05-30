@@ -78,15 +78,14 @@ class PropertyController extends Controller
         return $this->deleteEstate($id);
     }
 
-    public function destroyImage($propertyId, $imageId)
+    public function reorderImages(Request $request, Properties $property)
     {
-        $property = Properties::findOrFail($propertyId);
+        return $this->handleDragDropReorder($request, $property);
+    }
 
-        if ($this->deleteImage($property, $imageId)) {
-            return redirect()->back()->with('success', 'Imagen eliminada correctamente');
-        }
-
-        return redirect()->back()->with('error', 'Imagen no encontrada');
+    public function deleteImage(Properties $property, $filename)
+    {
+        return $this->deleteModelImage($property, $filename);
     }
 
     public function deactive($id)
