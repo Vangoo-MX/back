@@ -137,15 +137,6 @@ Route::prefix('overview')->name('admin.')->group(function () {
     // Dashboard
     Route::get('home', [AdminController::class, 'index'])->name('index');
 
-    // Desarrollo vertical
-    Route::prefix('developments')->group(function () {
-        Route::get('highlights', [AdminController::class, 'highlightsdev'])->name('highlights.developments');
-        Route::get('deleteHighlight/{id}', [DevelopmentsController::class, 'deleteDevHightlight'])->name('deleteHighlightDev');
-        Route::post('addHighlight', [DevelopmentsController::class, 'addDevHightlight'])->name('addHighlightDev');
-        Route::post('orderHighlight', [DevelopmentsController::class, 'orderDevHightlight'])->name('orderHighlightDev');
-        Route::delete('deleteImage/{developmentId}/{imageId}', [DevelopmentsController::class, 'deleteImage'])->name('deleteImageDev');
-    });
-
     // Desarrollo horizontal
     Route::prefix('horizontal')->group(function () {
         Route::get('list', [AdminController::class, 'developmentsHorizontal'])->name('developmentsHorizontal');
