@@ -281,11 +281,10 @@ trait HandlesEstate
         chmod($directory, 0755);
 
         $images = $request->file($field);
-
         $images = is_array($images) ? $images : [$images];
 
-        foreach ($images as $index => $image) {
-            $nameImg = Str::slug($index) . '.webp';
+        foreach ($images as $image) {
+            $nameImg = Str::slug($key) . '.webp';
             $path = $directory . $nameImg;
 
             $this->processSingleImage($image, $directory, $path);
