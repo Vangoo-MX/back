@@ -73,4 +73,63 @@ class DevelopmentHorizontalController extends Controller
         $viewEstate = 'admin.horizontals.edit';
         return $this->editDevelopment($id, $viewEstate);
     }
+
+    public function update(Request $request, $id)
+    {
+        $development = DevelopmentsHorizontals::findOrFail($id);
+
+        $updateData = $request->only([
+            'title',
+            'status',
+            'price_min',
+            'price_max',
+            'description',
+            'availability',
+            'financing',
+            'mode',
+            'id_estado',
+            'id_municipio',
+            'id_colonia',
+            'cp',
+            'street',
+            'num_ext',
+            'map_lat',
+            'map_long',
+            'area',
+            'amenities',
+            'commission_percentage'
+        ]);
+
+        $this->handleImageProcessing($request, $development, true);
+
+        $updateData['images'] = $development->images + ($request->hasFile('images') ? count($request->file('images')) : 0);
+
+        $updateData['location'] = $this->getLocation(
+            $request->id_colonia,
+            $request->id_municipio,
+            $request->id_estado
+        );
+
+        $development->update($updateData);
+
+        $submittedIds = [];
+        if ($request->optionapp) {
+            foreach ($request->optionapp as $option) {
+                if (!empty($option['id'])) {
+                    $submittedIds[] = $option['id'];
+                }
+            }
+        }
+
+        $this->updateApartments(
+            $request,
+            $development,
+            'optionapp',
+            'option',
+            'imageoption'
+        );
+
+        return redirect()->route('horizontals.index')
+            ->with('success', 'Desarrollo vertical actualizado correctamente');
+    }
 }

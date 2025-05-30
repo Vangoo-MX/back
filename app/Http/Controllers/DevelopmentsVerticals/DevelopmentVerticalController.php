@@ -89,6 +89,7 @@ class DevelopmentVerticalController extends Controller
             'id_estado',
             'id_municipio',
             'id_colonia',
+            'cp',
             'street',
             'num_ext',
             'map_lat',
