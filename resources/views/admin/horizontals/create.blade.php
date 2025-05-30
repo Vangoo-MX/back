@@ -15,7 +15,7 @@
         <h3>Crear nuevo desarrollo horizontal</h3>
 
         <div class="w-100">
-            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('admin.storeDevHorizontal') }}">
+            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('horizontals.store) }}">
 
                 @csrf
 
@@ -77,28 +77,14 @@
                         <input type="hidden" id="mode" name="mode" value="horizontal">
                     </div>
                     <div class="w-100">
-
-                        <!---
-                            <div class="mb-3 mt-3">
-                                <label for="id_estado" class="form-label">Estado:</label>
-                                <select class="form-select" name="id_estado" id="id_estado">
-                                    @ foreach($estados as $e)
-                                        <option value="$e->id" data-id="$e->id">$e->nombre</option>
-                                    @ endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3 mt-3">
-                                <label for="id_municipio" class="form-label">Municipio:</label>
-                                <span id="municipioshtml"></span>
-                            </div>--->
                         <input type="hidden" id="id_estado" name="id_estado" value="19">
 
                         <div class="mb-3 mt-3">
                             <label for="id_municipio" class="form-label">Municipio:</label>
                             <select class="form-select" name="id_municipio" id="id_municipio" required>
                                 <option value="" hidden selected>Selecciona un municipio</option>
-                                @foreach($municipios as $e)
-                                <option value="{{$e->id}}" data-id="{{$e->id}}">{{$e->nombre}}</option>
+                                @foreach($municipios as $municipio)
+                                <option value="{{$municipio->id}}" data-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
                                 @endforeach
                                 @error('id_municipio')
                                 <span class="text-danger">{{ $message }}</span>
@@ -212,22 +198,6 @@
 
                     <span class="btn btn-secondary" id="add-option-btn">Agregar opción</span>
                 </div>
-
-                <!-- @if ($errors->any())
-                <div class="alert alert-danger mt-3">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-
-                @if(session('success'))
-                <div class="alert alert-success mt-3">
-                    {{ session('success') }}
-                </div>
-                @endif -->
 
                 <div class="d-flex justify-content-center mt-4">
                     <button type="submit" class="btn bg-gradient-info btn-lg">Crear</button>
@@ -346,9 +316,8 @@
         });
     });
 
-    document.getElementById('id_municipio').addEventListener('change', function() {
-
-        var municipioId = this.options[this.selectedIndex].getAttribute('data-id');
+    function changeMuninicio() {
+        var municipioId = document.getElementById('id_municipio').options[document.getElementById('id_municipio').selectedIndex].getAttribute('data-id');
         var url = '/api/info/colonias/municipio/' + municipioId;
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
@@ -357,9 +326,18 @@
             if (xhr.status === 200) {
                 var colonias = JSON.parse(xhr.responseText);
                 var coloniasHtml = '';
+                var hasSelected = false;
                 for (var i = 0; i < colonias.length; i++) {
-                    coloniasHtml += '<option value="' + colonias[i].id + '" data-codigo-postal="' + colonias[i].codigo_postal + '">' +
+                    var selected = '';
+                    coloniasHtml += '<option value="' + colonias[i].id + '" ' + selected +
+                        ' data-codigo-postal="' + colonias[i].codigo_postal + '">' +
                         colonias[i].nombre + '</option>';
+                }
+                if (!hasSelected && colonias.length > 0) {
+                    coloniasHtml = '<option value="" selected disabled>Seleccionar colonia</option>' + coloniasHtml;
+                }
+                if (colonias.length === 0) {
+                    coloniasHtml = '<option value="" disabled>No hay colonias disponibles</option>';
                 }
                 var selectHtml = '';
                 if (municipioId != 0) {
@@ -367,23 +345,29 @@
                 }
                 document.getElementById('coloniashtml').innerHTML = selectHtml;
 
-                setTimeout(function() {
-                    var coloniaSelect = document.getElementById('id_colonia');
-                    if (coloniaSelect) {
-                        coloniaSelect.addEventListener('change', function() {
-                            var codigoPostal = this.options[this.selectedIndex].getAttribute('data-codigo-postal');
-                            document.getElementById('cp').value = codigoPostal || '';
-                        });
+                var coloniaSelect = document.getElementById('id_colonia');
+                if (coloniaSelect) {
+                    coloniaSelect.addEventListener('change', function() {
+                        var codigoPostal = this.options[this.selectedIndex].getAttribute('data-codigo-postal');
+                        document.getElementById('cp').value = codigoPostal;
+                    });
 
-                        var initialCp = coloniaSelect.options[coloniaSelect.selectedIndex]?.getAttribute('data-codigo-postal');
-                        document.getElementById('cp').value = initialCp || '';
-                    }
-                }, 0);
+                    var initialCp = coloniaSelect.options[coloniaSelect.selectedIndex].getAttribute('data-codigo-postal');
+                    document.getElementById('cp').value = initialCp;
+                }
             } else {
                 console.log('Error');
             }
         };
         xhr.send();
+    }
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        changeMuninicio();
+    });
+
+    document.getElementById('id_municipio').addEventListener('change', function() {
+        changeMuninicio();
     });
 
     //opciones de apartamentos

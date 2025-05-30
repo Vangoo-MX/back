@@ -369,6 +369,7 @@
     document.getElementById('id_municipio').addEventListener('change', function() {
         changeMuninicio();
     });
+
     //opciones de apartamentos
     let optionCount = 1;
     const addOptionBtn = document.getElementById('add-option-btn');
