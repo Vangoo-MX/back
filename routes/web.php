@@ -186,12 +186,6 @@ Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('ema
 
 Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('emails.template');
 
-/* LOTES */
-
-Route::get('ep/getAllLots', [LotsController::class, 'getAll'])->name('epAllLots.get');
-
-Route::get('ep/get-lots-by-municipio/{id}', [LotsController::class, 'getLotsByMunicipio']);
-
 /* Agenda */
 
 Route::get('ep/getDocsAgenda/{id}', [ContactsController::class, 'getDocsAgenda'])->name('contactDocs.get');
