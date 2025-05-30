@@ -132,4 +132,20 @@ class DevelopmentHorizontalController extends Controller
         return redirect()->route('horizontals.index')
             ->with('success', 'Desarrollo horizontal actualizado correctamente');
     }
+
+    public function destroy($id)
+    {
+        return $this->deleteDevelopment($id);
+    }
+
+    public function destroyImage($developmentId, $imageId)
+    {
+        $development = DevelopmentsHorizontals::findOrFail($developmentId);
+
+        if ($this->deleteImage($development, $imageId)) {
+            return redirect()->back()->with('success', 'Imagen eliminada correctamente');
+        }
+
+        return redirect()->back()->with('error', 'Error al eliminar la imagen');
+    }
 }
