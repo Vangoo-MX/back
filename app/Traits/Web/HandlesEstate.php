@@ -117,18 +117,14 @@ trait HandlesEstate
         }
     }
 
-    protected function handleImageProcessing(Request $request, Model $estate, bool $isUpdate = true): void
+    protected function handleImageProcessing(Request $request, Model $estate): void
     {
         if ($request->hasFile('images')) {
-            $this->processNewImages($request->file('images'), $estate, $isUpdate);
-        }
-
-        if ($request->orderimg && is_array($request->orderimg)) {
-            $this->reorderImages($request->orderimg, $estate);
+            $this->processNewImages($request->file('images'), $estate);
         }
     }
 
-    protected function processNewImages(array $images, Model $estate, bool $isUpdate): void
+    protected function processNewImages(array $images, Model $estate): void
     {
         $directory = storage_path("app/public/img/posts/{$this->directory}/{$estate->id}");
 
@@ -137,49 +133,56 @@ trait HandlesEstate
         }
         chmod($directory, 0755);
 
-        $startingIndex = $isUpdate ? $estate->images : 0;
+        $existingImages = $model->images ?? [];
+        $newImages = [];
 
-        foreach ($images as $index => $image) {
-            $imageName = Str::slug($startingIndex + $index + 1) . '.webp';
-            $path = "{$directory}/{$imageName}";
-
-            $this->processSingleImage($image, $directory, $path);
+        foreach ($images as $image) {
+            $filename = $this->generateFilename($image);
+            $this->processSingleImage($image, $directory, $filename);
+            $newImages[] = $filename;
         }
+
+        $estate->images = array_merge($existingImages, $newImages);
+        $estate->save();
     }
 
-    private function processSingleImage(UploadedFile $image, string $directory, string $path): void
+    protected function generateFilename(UploadedFile $image): string
+    {
+        return Str::uuid() . '.webp';
+    }
+
+    private function processSingleImage(UploadedFile $image, string $directory, string $filename): void
     {
         if (strtolower($image->extension()) === 'webp') {
-            $image->move($directory, basename($path));
+            $image->move($directory, $filename);
         } else {
             Image::make($image->getRealPath())
                 ->encode('webp', 90)
-                ->save($path);
+                ->save($directory);
         }
     }
 
-    protected function reorderImages(array $newOrder, Model $estate): void
+    protected function reorderImages(Request $request, Model $estate)
     {
-        $directory = storage_path("app/public/img/posts/{$this->directory}/{$estate->id}");
-        $tempPrefix = 'reorder_temp_';
+        $request->validate([
+            'new_order' => 'required|array',
+            'new_order.*' => 'string'
+        ]);
 
-        foreach ($newOrder as $newPosition => $originalPosition) {
-            $originalFile = "{$directory}/{$originalPosition}.webp";
-            $tempFile = "{$directory}/{$tempPrefix}{$newPosition}.webp";
+        $currentImages = $model->images ?? [];
 
-            if (File::exists($originalFile)) {
-                File::move($originalFile, $tempFile);
+        foreach ($request->new_order as $filename) {
+            if (!in_array($filename, $currentImages, true)) {
+                return response()->json([
+                    'error' => 'Archivo no válido: ' . $filename
+                ], 422);
             }
         }
 
-        foreach ($newOrder as $newPosition => $originalPosition) {
-            $tempFile = "{$directory}/{$tempPrefix}{$newPosition}.webp";
-            $newFile = "{$directory}/{$newPosition}.webp";
+        $estate->images = $request->new_order;
+        $estate->save();
 
-            if (File::exists($tempFile)) {
-                File::move($tempFile, $newFile);
-            }
-        }
+        return response()->json(['success' => true]);
     }
 
     protected function getLocation(int $coloniaId, int $municipioId, int $estadoId): string
@@ -195,40 +198,39 @@ trait HandlesEstate
         ])->filter()->join(', ');
     }
 
-    protected function deleteImage(Model $estate, int $imageId): bool
+    protected function deleteImage(Model $estate, string $filename)
     {
-        $imagePath = "public/img/posts/{$this->directory}/{$estate->id}/{$imageId}.webp";
-
-        if (!Storage::exists($imagePath)) {
-            return false;
+        if (!in_array($filename, $model->images ?? [], true)) {
+            return response()->json([
+                'success' => false,
+                'error' => 'La imagen no existe en este registro'
+            ], 404);
         }
 
-        Storage::delete($imagePath);
+        $path = "public/img/posts/{$this->directory}/{$estate->id}/{$filename}";
 
-        $this->decrementImageCount($estate);
-        $this->reorderRemainingImages($estate, $imageId);
+        if (Storage::exists($path)) {
+            Storage::delete($path);
+        } else {
+            return response()->json([
+                'success' => false,
+                'error' => 'Archivo no encontrado en el servidor'
+            ], 404);
+        }
 
-        return true;
-    }
+        $updatedImages = array_values(array_filter($estate->images, function ($item) use ($filename) {
+            return $item !== $filename;
+        }));
 
-    private function decrementImageCount(Model $estate): void
-    {
-        $estate->images = max(0, $estate->images - 1);
+        $estate->images = $updatedImages;
         $estate->save();
+
+        return response()->json(['success' => true]);
     }
 
-    private function reorderRemainingImages(Model $estate, int $deletedImageId): void
+    public function handleDragDropReorder(Request $request, Model $model)
     {
-        $directory = "public/img/posts/{$this->directory}/{$estate->id}";
-
-        for ($i = $deletedImageId + 1; $i <= $estate->images + 1; $i++) {
-            $oldPath = "{$directory}/{$i}.webp";
-            $newPath = "{$directory}/" . ($i - 1) . ".webp";
-
-            if (Storage::exists($oldPath)) {
-                Storage::move($oldPath, $newPath);
-            }
-        }
+        return $this->reorderModelImages($request, $model);
     }
 
     public function deactiveEstate($id)
