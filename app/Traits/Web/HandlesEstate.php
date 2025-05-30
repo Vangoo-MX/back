@@ -119,7 +119,6 @@ trait HandlesEstate
 
     protected function handleImageProcessing(Request $request, Model $estate, bool $isUpdate = true): void
     {
-        Log::info($request->orderimg);
         if ($request->hasFile('images')) {
             $this->processNewImages($request->file('images'), $estate, $isUpdate);
         }

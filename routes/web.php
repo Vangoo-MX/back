@@ -21,6 +21,7 @@ use App\Http\Controllers\Apartments\ApartmentController;
 use App\Http\Controllers\Apartments\ApartmentHighlightController;
 use App\Http\Controllers\Apartments\ApartmentQueueController;
 use App\Http\Controllers\DevelopmentsVerticals\DevelopmentVerticalController;
+use App\Http\Controllers\DevelopmentsVerticals\DevelopmentVerticalHighlightController;
 use App\Http\Controllers\Properties\PropertyHighlightController;
 use App\Http\Controllers\Terrains\TerrainController;
 use App\Http\Controllers\Terrains\TerrainHighlightController;
@@ -70,6 +71,10 @@ Route::prefix('apartments')->name('apartments.')->middleware('check.admin')->gro
 Route::prefix('developments/vertical')->name('verticals.')->middleware('check.admin')->group(function () {
     Route::delete('deleteImage/{developmentId}/{imageId}', [DevelopmentVerticalController::class, 'destroyImage'])
         ->name('deleteImage');
+    Route::get('municipio/{id}', [DevelopmentVerticalHighlightController::class, 'verticalByMunicipio'])
+        ->name('municipio');
+    Route::resource('highlights', DevelopmentVerticalHighlightController::class)
+        ->except(['create', 'show', 'edit']);
     Route::resource('/', DevelopmentVerticalController::class)
         ->except(['show'])
         ->parameters(['' => 'vertical']);

@@ -85,7 +85,7 @@
                         <ul class="dropdown-menu menu-primary-dropdown">
                             <li><a class="{{ (request()->is('developments/vertical*')) ? 'active' : '' }}" href="{{route('verticals.index')}}">Todas los desarrollos</a></li>
                             <li><a class="{{ (request()->is('overview/create*')) ? 'active' : '' }}" href="{{route('verticals.create')}}">Crear desarrollo</a></li>
-                            <li><a class="" href="{{route('admin.highlights.developments')}}">Desarrollos destacados</a></li>
+                            <li><a class="" href="{{route('verticals.highlights.index')}}">Desarrollos destacados</a></li>
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">
