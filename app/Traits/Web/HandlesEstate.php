@@ -163,6 +163,11 @@ trait HandlesEstate
         $directory = storage_path("app/public/img/posts/{$this->directory}/{$estate->id}");
         $tempPrefix = 'reorder_temp_';
 
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true);
+        }
+        chmod($directory, 0755);
+
         $newOrder = [];
 
         foreach ($orderMap as $originalPosition => $newPosition) {
