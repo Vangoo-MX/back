@@ -51,6 +51,7 @@ class DevelopmentVerticalController extends Controller
                 $request->id_municipio,
                 $request->id_estado
             ),
+            'cp' => $request->cp,
             'map_lat' => $request->map_lat,
             'map_long' => $request->map_long,
             'area' => $request->area,
@@ -60,10 +61,7 @@ class DevelopmentVerticalController extends Controller
             'images' => $request->hasFile('images') ? count($request->file('images')) : 0,
         ]);
 
-        if ($request->hasFile('images')) {
-            $this->handleImageProcessing($request, $development, false);
-        }
-
+        $this->handleImageProcessing($request, $development, false);
         $this->processApartments($request, $development);
 
         return redirect()->route('verticals.index')->with('success', 'Desarrollo vertical creado exitosamente.');
