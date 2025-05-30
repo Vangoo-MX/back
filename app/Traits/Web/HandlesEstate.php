@@ -133,7 +133,7 @@ trait HandlesEstate
         }
         chmod($directory, 0755);
 
-        $existingImages = $model->images ?? [];
+        $existingImages = $estate->images ?? [];
         $newImages = [];
 
         foreach ($images as $image) {
@@ -212,7 +212,6 @@ trait HandlesEstate
 
     protected function destroyImage($estate, string $filename)
     {
-        Log::info("Deleting image in trait: {$filename} for estate ID: {$estate->id}");
         if (!in_array($filename, $estate->images ?? [], true)) {
             return response()->json([
                 'success' => false,
