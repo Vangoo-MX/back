@@ -169,6 +169,9 @@ trait HandlesEstate
             'new_order.*' => 'string'
         ]);
 
+        Log::info('Reordering images for property ID: ' . $estate->id);
+        Log::info('New order received: ' . json_encode($request->new_order));
+
         $newOrder = is_string($request->new_order)
             ? json_decode($request->new_order, true)
             : $request->new_order;
@@ -177,17 +180,30 @@ trait HandlesEstate
             ? $estate->images
             : json_decode($estate->images, true) ?? [];
 
+        Log::info('Current images in DB: ' . json_encode($currentImages));
+
         foreach ($newOrder as $filename) {
             if (!in_array($filename, $currentImages)) {
+                Log::warning('File not in property images: ' . $filename);
                 return response()->json([
                     'error' => 'Archivo no válido: ' . $filename
                 ], 422);
             }
         }
 
-        $estate->update(['images' => $newOrder]);
+        try {
+            // Actualizar usando el mismo método que en Lots
+            $estate->update(['images' => $newOrder]);
 
-        return response()->json(['success' => true]);
+            Log::info('Order updated successfully');
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            Log::error('Error updating order: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            return response()->json([
+                'error' => 'Error al guardar: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     protected function getLocation(int $coloniaId, int $municipioId, int $estadoId): string
