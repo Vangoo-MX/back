@@ -7,6 +7,7 @@ use App\Models\Properties;
 use App\Models\PropertiesHighlights;
 use App\Traits\Web\HandlesEstate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PropertyController extends Controller
 {
@@ -80,6 +81,8 @@ class PropertyController extends Controller
 
     public function reorderImages(Request $request, Properties $property)
     {
+        Log::info('Reordering images for property ID: ' . $property->id);
+        Log::info('Request data: ', $request->all());
         return $this->handleDragDropReorder($request, $property);
     }
 
