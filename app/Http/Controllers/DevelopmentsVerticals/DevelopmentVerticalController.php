@@ -114,9 +114,22 @@ class DevelopmentVerticalController extends Controller
 
         $development->update($updateData);
 
-        if ($request->optionappartments) {
-            $this->updateApartments($request, $development, 'optionapp', 'option', 'imageoption');
+        $submittedIds = [];
+        if ($request->optionapp) {
+            foreach ($request->optionapp as $option) {
+                if (!empty($option['id'])) {
+                    $submittedIds[] = $option['id'];
+                }
+            }
         }
+
+        $this->updateApartments(
+            $request,
+            $development,
+            'optionapp',
+            'option',
+            'imageoption'
+        );
 
         return redirect()->route('verticals.index')
             ->with('success', 'Desarrollo vertical actualizado correctamente');

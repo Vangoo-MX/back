@@ -253,7 +253,7 @@ trait HandlesEstate
         $apartment->num_available = $optionData['num_available'] ?? 0;
     }
 
-    private function setApartmentImageCount(Model $apartment, Request $request, int $key, string $imageFieldName): void
+    private function setApartmentImageCount(Model $apartment, Request $request, $key, string $imageFieldName): void
     {
         $field = $imageFieldName . '.' . $key;
 
@@ -265,7 +265,7 @@ trait HandlesEstate
         }
     }
 
-    private function proccessApartmentImages(Request $request, Model $estate, int $key, string $imageFieldName): void
+    private function proccessApartmentImages(Request $request, Model $estate, $key, string $imageFieldName): void
     {
         $field = $imageFieldName . '.' . $key;
 
@@ -284,14 +284,11 @@ trait HandlesEstate
 
         $images = is_array($images) ? $images : [$images];
 
-        $index = 1;
-
-        foreach ($images as $image) {
-            $nameImg = Str::slug($key) . '.webp';
+        foreach ($images as $index => $image) {
+            $nameImg = Str::slug($index) . '.webp';
             $path = $directory . $nameImg;
 
             $this->processSingleImage($image, $directory, $path);
-            $index++;
         }
     }
 
@@ -306,13 +303,18 @@ trait HandlesEstate
             $imageFieldName
         );
 
+        $startingIndex = 1;
+        if ($request->has($existingKey)) {
+            $startingIndex = count($request->input($existingKey)) + 1;
+        }
+
         $this->processNewApartments(
             $request,
             $estate,
             $apartmentModel,
             $newKey,
             $imageFieldName,
-            $request->filled($existingKey) ? count($request->input($existingKey)) : 0
+            $startingIndex
         );
     }
 
@@ -340,24 +342,23 @@ trait HandlesEstate
         }
     }
 
-    private function processNewApartments(Request $request, Model $estate, string $apartmentModel, string $keyName, string $imageFieldName, int $startingIndex = 0): void
+    private function processNewApartments(Request $request, Model $estate, string $apartmentModel, string $keyName, string $imageFieldName, int $startingIndex = 1): void
     {
         if (!$request->filled($keyName)) {
             return;
         }
 
-        $key = $startingIndex + 1;
-        foreach ($request->input($keyName) as $option) {
+        $optionKeys = array_keys($request->input($keyName));
+        foreach ($optionKeys as $index) {
+            $option = $request->input("{$keyName}.{$index}");
             $apartment = new $apartmentModel;
             $apartment->id_development = $estate->id;
 
             $this->fillApartmentData($apartment, $option);
-            $this->setApartmentImageCount($apartment, $request, $key, $imageFieldName);
+            $this->setApartmentImageCount($apartment, $request, $index, $imageFieldName);
             $apartment->save();
 
-            $this->proccessApartmentImages($request, $estate, $key, $imageFieldName);
-
-            $key++;
+            $this->proccessApartmentImages($request, $estate, $index, $imageFieldName);
         }
     }
 }
