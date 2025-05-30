@@ -16,20 +16,21 @@ Editar
 <div class="row d-flex justify-content-center w-100">
     <div class="col-12 col-lg-4 px-2 px-lg-5 d-flex flex-column align-items-center justify-content-center w-100">
 
-        <h3>{{$lot->title}}</h3>
+        <h3>{{$estate->title}}</h3>
 
         <div class="w-100">
-            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('admin.updateLot') }}">
+            <form method="post" class="w-100" enctype="multipart/form-data" action="{{ route('lots.update', $estate->id) }}">
 
                 @csrf
-                <input type="hidden" name="id" value="{{$lot->id}}">
+                @method('PUT')
+                <input type="hidden" name="id" value="{{$estate->id}}">
 
                 <div class="d-flex gap-5 w-100 flex-column flex-lg-row">
                     <div class="w-100">
 
                         <div class="mb-3 mt-3">
                             <label for="title" class="form-label">Titulo:</label>
-                            <input type="text" class="form-control" id="title" placeholder="Ingresa un titulo" name="title" value="{{old('title', $lot->title)}}" required>
+                            <input type="text" class="form-control" id="title" placeholder="Ingresa un titulo" name="title" value="{{old('title', $estate->title)}}" required>
                             @error('title')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -38,10 +39,10 @@ Editar
                         <div class="mb-3 mt-3">
                             <label for="type_lots" class="form-label">Tipo de terreno:</label>
                             <select class="form-select" name="type_lots">
-                                <option value="residencial" <?php if ($lot->type_lots == 'residencial') {
+                                <option value="residencial" <?php if ($estate->type_lots == 'residencial') {
                                                                 echo 'selected';
                                                             } ?>>Residencial</option>
-                                <option value="comercial" <?php if ($lot->type_lots == 'comercial') {
+                                <option value="comercial" <?php if ($estate->type_lots == 'comercial') {
                                                                 echo 'selected';
                                                             } ?>>Comercial</option>
                             </select>
@@ -49,7 +50,7 @@ Editar
 
                         <div class="mb-3 mt-3">
                             <label for="developers" class="form-label">Desarrolladora:</label>
-                            <input type="text" class="form-control" id="developers" placeholder="Ingresa el nombre de la desarrolladora" name="developers" value="{{old('developers', $lot->developers)}}" required>
+                            <input type="text" class="form-control" id="developers" placeholder="Ingresa el nombre de la desarrolladora" name="developers" value="{{old('developers', $estate->developers)}}" required>
                             @error('developers')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -58,10 +59,10 @@ Editar
                         <div class="mb-3 mt-3">
                             <label for="status" class="form-label">Estado de venta:</label>
                             <select class="form-select" name="status">
-                                <option value="presale" <?php if ($lot->status == 'presale') {
+                                <option value="presale" <?php if ($estate->status == 'presale') {
                                                             echo 'selected';
                                                         } ?>>Preventa</option>
-                                <option value="sale" <?php if ($lot->status == 'sale') {
+                                <option value="sale" <?php if ($estate->status == 'sale') {
                                                             echo 'selected';
                                                         } ?>>Venta</option>
                             </select>
@@ -69,7 +70,7 @@ Editar
 
                         <div class="mb-3 mt-3">
                             <label for="number_lots" class="form-label">Cantidad total de lotes:</label>
-                            <input type="number" class="form-control" id="number_lots" placeholder="Ingrese el numero total de lotes disponibles" name="number_lots" value="{{old('number_lots', $lot->number_lots)}}">
+                            <input type="number" class="form-control" id="number_lots" placeholder="Ingrese el numero total de lotes disponibles" name="number_lots" value="{{old('number_lots', $estate->number_lots)}}">
                             @error('number_lots')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -79,7 +80,7 @@ Editar
                             <div class="col-md-6">
                                 <label for="lots_min" class="form-label">Lotes desde:</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="number" class="form-control" id="lots_min" placeholder="Área mínima del lote" name="lots_min" value="{{ old('lots_min', $lot->lots_min) }}" required>
+                                    <input type="number" class="form-control" id="lots_min" placeholder="Área mínima del lote" name="lots_min" value="{{ old('lots_min', $estate->lots_min) }}" required>
                                     <span class="ms-2">m²</span>
                                 </div>
                                 @error('lots_min')
@@ -89,7 +90,7 @@ Editar
                             <div class="col-md-6">
                                 <label for="lots_max" class="form-label">Hasta:</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="number" class="form-control" id="lots_max" placeholder="Área máxima del lote" name="lots_max" value="{{ old('lots_max', $lot->lots_max) }}" required>
+                                    <input type="number" class="form-control" id="lots_max" placeholder="Área máxima del lote" name="lots_max" value="{{ old('lots_max', $estate->lots_max) }}" required>
                                     <span class="ms-2">m²</span>
                                 </div>
                                 @error('lots_max')
@@ -101,14 +102,14 @@ Editar
                         <div class="row mb-3 mt-3">
                             <div class="col-md-6">
                                 <label for="price_min" class="form-label">Precios de lotes desde:</label>
-                                <input type="number" class="form-control" id="price_min" placeholder="Precio mínimo" name="price_min" value="{{ old('price_min', $lot->price_min) }}" required>
+                                <input type="number" class="form-control" id="price_min" placeholder="Precio mínimo" name="price_min" value="{{ old('price_min', $estate->price_min) }}" required>
                                 @error('price_min')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-md-6">
                                 <label for="price_max" class="form-label">Hasta:</label>
-                                <input type="number" class="form-control" id="price_max" placeholder="Precio máximo" name="price_max" value="{{ old('price_max', $lot->price_max) }}" required>
+                                <input type="number" class="form-control" id="price_max" placeholder="Precio máximo" name="price_max" value="{{ old('price_max', $estate->price_max) }}" required>
                                 @error('price_max')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -117,7 +118,7 @@ Editar
 
                         <div class="mb-3 mt-3">
                             <label for="description">Descripción:</label>
-                            <textarea class="form-control" rows="5" id="description" name="description">{{old('description', $lot->description)}}</textarea>
+                            <textarea class="form-control" rows="5" id="description" name="description">{{old('description', $estate->description)}}</textarea>
                             @error('description')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -125,7 +126,7 @@ Editar
 
                         <div class="mb-3 mt-3">
                             <label for="availability" class="form-label">Disponibilidad:</label>
-                            <input type="date" class="form-control" id="availability" placeholder="Fecha en que estará disponible" name="availability" value="{{old('availability', $lot->availability)}}">
+                            <input type="date" class="form-control" id="availability" placeholder="Fecha en que estará disponible" name="availability" value="{{old('availability', $estate->availability)}}">
                             @error('availability')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -135,10 +136,10 @@ Editar
                             <div class="col-md-6">
                                 <label for="type_terrain" class="form-label">Tipo de terreno del lote:</label>
                                 <select class="form-select" name="type_terrain">
-                                    <option value="regular" <?php if ($lot->type_terrain == 'regular') {
+                                    <option value="regular" <?php if ($estate->type_terrain == 'regular') {
                                                                 echo 'selected';
                                                             } ?>>Regular</option>
-                                    <option value="irregular" <?php if ($lot->type_terrain == 'irregular') {
+                                    <option value="irregular" <?php if ($estate->type_terrain == 'irregular') {
                                                                     echo 'selected';
                                                                 } ?>>Irregular</option>
                                 </select>
@@ -147,10 +148,10 @@ Editar
                             <div class="col-md-6">
                                 <label for="slope" class="form-label">Se encuentra sobre una pendiente?:</label>
                                 <select class="form-select" name="slope">
-                                    <option value="si" <?php if ($lot->slope == 'si') {
+                                    <option value="si" <?php if ($estate->slope == 'si') {
                                                             echo 'selected';
                                                         } ?>>Si</option>
-                                    <option value="no" <?php if ($lot->slope == 'no') {
+                                    <option value="no" <?php if ($estate->slope == 'no') {
                                                             echo 'selected';
                                                         } ?>>No</option>
                                 </select>
@@ -159,34 +160,16 @@ Editar
                         </div>
                     </div>
                     <div class="w-100">
-
-                        <!---
-                            <div class="mb-3 mt-3">
-                                <label for="id_estado" class="form-label">Estado:</label>
-                                <select class="form-select" name="id_estado" id="id_estado">
-                                    @ foreach($estados as $e)
-                                        <option value="$e->id" data-id="$e->id">$e->nombre</option>
-                                    @ endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3 mt-3">
-                                <label for="id_municipio" class="form-label">Municipio:</label>
-                                <span id="municipioshtml"></span>
-                            </div>--->
                         <input type="hidden" id="id_estado" name="id_estado" value="19">
-
                         <div class="mb-3 mt-3">
                             <label for="id_municipio" class="form-label">Municipio:</label>
-                            <select class="form-select" name="id_municipio" id="id_municipio" required>
-                                <option value="" hidden selected>Selecciona un municipio</option>
-                                @foreach($municipios as $e)
-                                <option value="{{$e->id}}" data-id="{{$e->id}}" <?php if ($lot->id_municipio == $e->id) {
-                                                                                    echo 'selected';
-                                                                                } ?>>{{$e->nombre}}</option>
+                            <select class="form-select" name="id_municipio" id="id_municipio">
+                                <option hidden>Selecciona un municipio</option>
+                                @foreach($municipios as $municipio)
+                                <option value="{{$municipio->id}}" data-id="{{$municipio->id}}" <?php if ($estate->id_municipio == $municipio->id) {
+                                                                                                    echo 'selected';
+                                                                                                } ?>>{{$municipio->nombre}}</option>
                                 @endforeach
-                                @error('id_municipio')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </select>
                         </div>
 
@@ -195,17 +178,9 @@ Editar
                             <span id="coloniashtml"></span>
                         </div>
 
-                        <!-- <div class="mb-3 mt-3">
-                            <label for="street" class="form-label">Calle:</label>
-                            <input type="text" class="form-control" id="street" placeholder="Ingresa la calle" name="street" value="{{old('street', $lot->street)}}">
-                            @error('street')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div> -->
-
                         <div class="mb-3 mt-3">
                             <label for="num_ext" class="form-label">Número exterior:</label>
-                            <input type="number" class="form-control" id="num_ext" placeholder="Ingresa el número exterior" name="num_ext" value="{{old('num_ext', $lot->num_ext)}}">
+                            <input type="number" class="form-control" id="num_ext" placeholder="Ingresa el número exterior" name="num_ext" value="{{old('num_ext', $estate->num_ext)}}">
                             @error('num_ext')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -213,7 +188,7 @@ Editar
 
                         <div class="mb-3 mt-3">
                             <label for="cp" class="form-label">Codigo Postal:</label>
-                            <input type="number" class="form-control" id="cp" placeholder="Ingresa el código postal" name="cp" value="{{old('cp', $lot->cp)}}" disabled>
+                            <input type="number" class="form-control" id="cp" placeholder="Ingresa el código postal" name="cp" value="{{old('cp', $estate->cp)}}" disabled>
                             @error('cp')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -226,19 +201,19 @@ Editar
 
                         <div class="mb-3 mt-3">
                             <label for="map_lat" class="form-label">Coordenadas Latitud:</label>
-                            <input type="text" class="form-control" id="map_lat" name="map_lat" value="{{old('map_lat', $lot->map_lat)}}">
+                            <input type="text" class="form-control" id="map_lat" name="map_lat" value="{{old('map_lat', $estate->map_lat)}}">
                         </div>
 
                         <div class="mb-3 mt-3">
                             <label for="map_long" class="form-label">Coordenadas Longitud:</label>
-                            <input type="text" class="form-control" id="map_long" name="map_long" value="{{old('map_long', $lot->map_long)}}">
+                            <input type="text" class="form-control" id="map_long" name="map_long" value="{{old('map_long', $estate->map_long)}}">
                         </div>
 
                         <div class="row mb-3 mt-3">
                             <div class="col-md-6">
                                 <label for="broad" class="form-label">Ancho:</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="number" class="form-control" id="broad" placeholder="Ancho del lote" name="broad" value="{{ old('broad', $lot->broad) }}">
+                                    <input type="number" class="form-control" id="broad" placeholder="Ancho del lote" name="broad" value="{{ old('broad', $estate->broad) }}">
                                     <span class="ms-2">m</span>
                                 </div>
                                 @error('broad')
@@ -248,7 +223,7 @@ Editar
                             <div class="col-md-6">
                                 <label for="largue" class="form-label">Largo:</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="number" class="form-control" id="largue" placeholder="Largo del lote" name="largue" value="{{ old('largue', $lot->largue) }}">
+                                    <input type="number" class="form-control" id="largue" placeholder="Largo del lote" name="largue" value="{{ old('largue', $estate->largue) }}">
                                     <span class="ms-2">m</span>
                                 </div>
                                 @error('largue')
@@ -259,7 +234,7 @@ Editar
 
                         <div class="mb-3 mt-3">
                             <label for="price_mt2" class="form-label">Precio del metro cuadrado:</label>
-                            <input type="number" step="0.01" class="form-control" id="price_mt2" placeholder="Ingresa el area del inmueble" name="price_mt2" value="{{old('price_mt2', $lot->price_mt2)}}">
+                            <input type="number" step="0.01" class="form-control" id="price_mt2" placeholder="Ingresa el area del inmueble" name="price_mt2" value="{{old('price_mt2', $estate->price_mt2)}}">
                             @error('price_mt2')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -267,7 +242,7 @@ Editar
 
                         <div class="mb-3 mt-3">
                             <label for="amenities" class="form-label">Amenidades:</label>
-                            <input type="text" class="form-control" id="amenities" placeholder="Separe con comas y sin espacios" name="amenities" value="{{old('amenities', $lot->amenities)}}">
+                            <input type="text" class="form-control" id="amenities" placeholder="Separe con comas y sin espacios" name="amenities" value="{{old('amenities', $estate->amenities)}}">
                             @error('amenities')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -275,12 +250,12 @@ Editar
 
                         <div class="mb-3 mt-3">
                             <label for="financing" class="form-label">Financiación:</label>
-                            <input type="text" class="form-control" id="financing" placeholder="Financiado" name="financing" value="{{old('financing', $lot->financing)}}">
+                            <input type="text" class="form-control" id="financing" placeholder="Financiado" name="financing" value="{{old('financing', $estate->financing)}}">
                         </div>
                         <div class="row mb-3 mt-3">
                             <div class="col-md-6">
                                 <label for="initial_fee" class="form-label">Enganche:</label>
-                                <input type="number" class="form-control" id="initial_fee" placeholder="Cuota inicial del lote" name="initial_fee" value="{{old('initial_fee', $lot->initial_fee)}}">
+                                <input type="number" class="form-control" id="initial_fee" placeholder="Cuota inicial del lote" name="initial_fee" value="{{old('initial_fee', $estate->initial_fee)}}">
                                 @error('initial_fee')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -289,7 +264,7 @@ Editar
                             <div class="col-md-6">
                                 <label for="commission_percentage" class="form-label">Porcentaje de comisión de venta:</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="number" class="form-control" id="commission_percentage" placeholder="Porcentaje en números sin signos" name="commission_percentage" value="{{old('commission_percentage', $lot->commission_percentage)}}">
+                                    <input type="number" class="form-control" id="commission_percentage" placeholder="Porcentaje en números sin signos" name="commission_percentage" value="{{old('commission_percentage', $estate->commission_percentage)}}">
                                     <span class="ms-2">%</span>
                                 </div>
                                 @error('commission_percentage')
@@ -302,9 +277,9 @@ Editar
 
                 <span>Imagenes:</span>
                 <div class="d-flex gap-2 mt-2 flex-wrap" id="imageGallery">
-                    @foreach($lot->images as $filename)
+                    @foreach($estate->images as $filename)
                     @php
-                    $imageUrl = asset('storage/img/posts/lots/' . $lot->id . '/' . $filename);
+                    $imageUrl = asset('storage/img/posts/lots/' . $estate->id . '/' . $filename);
                     @endphp
 
                     <div class="draggable-item" draggable="true" data-filename="{{ $filename }}">
@@ -498,7 +473,7 @@ Editar
 
         imageContainer.classList.add('removing');
 
-        fetch("{{ route('admin.deleteImageLot', ['lot' => $lot->id, 'filename' => ':filename']) }}"
+        fetch("{{ route('lots.deleteImage', ['lot' => $estate->id, 'filename' => ':filename']) }}"
                 .replace(':filename', filename), {
                     method: 'DELETE',
                     headers: {
@@ -534,7 +509,7 @@ Editar
                 var hasSelected = false;
                 for (var i = 0; i < colonias.length; i++) {
                     var selected = '';
-                    if (colonias[i].id == <?php echo $lot->id_colonia; ?>) {
+                    if (colonias[i].id == <?php echo $estate->id_colonia; ?>) {
                         selected = 'selected';
                         hasSelected = true;
                     }
@@ -632,7 +607,7 @@ Editar
             const newOrder = Array.from(container.querySelectorAll('.draggable-item'))
                 .map(item => item.dataset.filename);
 
-            fetch("{{ route('admin.lots.reorder-images', $lot->id) }}", {
+            fetch("{{ route('lots.reorder-images', $estate->id) }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
