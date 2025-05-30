@@ -266,50 +266,35 @@ Editar apartamento
                 </div>
 
                 <span>Imagenes:</span>
-                <div class="d-flex gap-2 mt-2">
-                    @for ($i = 1; $i <= $estate->images; $i++)
-                        <div class="d-flex flex-column align-items-center image-container">
-                            @php
-                            $imagePath = 'public/img/posts/apartments/' . $estate->id . '/' . $i . '.webp';
-                            @endphp
+                <div class="d-flex gap-2 mt-2 flex-wrap" id="imageGallery">
+                    @foreach($estate->images as $filename)
+                    @php
+                    $imageUrl = asset('storage/img/posts/apartments/' . $estate->id . '/' . $filename);
+                    @endphp
+                    <div class="draggable-item" draggable="true" data-filename="{{ $filename }}">
+                        <div class="d-flex flex-column align-items-center image-container position-relative">
+                            <a href="{{ $imageUrl }}" target="_blank">
+                                <img src="{{ $imageUrl . '?' . uniqid() }}"
+                                    width="150px"
+                                    height="150px"
+                                    class="pe-2 drag-image">
+                            </a>
 
-                            @if(Storage::exists($imagePath))
-                            @php
-                            $imageUrl = asset('storage/img/posts/apartments/' . $estate->id . '/' . $i . '.webp');
-                            @endphp
-                            <div class="d-flex flex-column align-items-center image-container">
-                                <a href="{{ $imageUrl }}" target="_blank">
-                                    <img class="pe-2" src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px">
-                                </a>
-
-                                <div class="mt-1">
-                                    <select class="form-control reorder-select" name="orderimg[{{$i}}]" style="width:100%" required>
-                                        @for($j = 1; $j <= $estate->images; $j++)
-                                            <option value="{{ $j }}" {{ $j == $i ? 'selected' : '' }}>
-                                                {{ $j }}
-                                            </option>
-                                            @endfor
-                                    </select>
-                                </div>
-                                <span class="delete-icon" onclick="confirmDelete(event, {{$i}})">❌</span>
-                            </div>
-                            @endif
+                            <span class="delete-icon position-absolute top-0 end-0"
+                                onclick="confirmDelete(event, '{{ $filename }}')">❌</span>
                         </div>
-                        @endfor
+                    </div>
+                    @endforeach
                 </div>
                 <div class="images mb-3 mt-3">
                     <label for="image" class="form-label">Agregar más imágenes:</label>
-                    <input type="file" name="images[]" id="imagen" class="form-control" accept="image/jpeg" multiple onchange="previewImage()">
+                    <input type="file" name="images[]" id="imagen" class="form-control" multiple onchange="previewImage()">
                     <div id="preview"></div>
                 </div>
                 <br><br>
                 <div class="d-flex justify-content-center mt-4">
                     <button type="submit" class="btn1">Editar apartamento</button>
                 </div>
-            </form>
-            <form id="delete-form" action="{{ route('apartments.deleteImage', ['apartmentId' => $estate->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
-                @csrf
-                @method('DELETE')
             </form>
             @if(session('error'))
             <script>
@@ -410,7 +395,6 @@ Editar apartamento
     }
 </style>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     //imagenes
     const imagenInput = document.getElementById('imagen');
@@ -441,13 +425,35 @@ Editar apartamento
         });
     });
 
-    function confirmDelete(event, imageId) {
+    function confirmDelete(event, filename) {
         event.preventDefault();
-        if (confirm('¿Estás seguro de eliminar esta imagen?')) {
-            var form = document.getElementById('delete-form');
-            form.action = form.action.replace(':imageId', imageId);
-            form.submit();
-        }
+        if (!confirm('¿Estás seguro de eliminar esta imagen?')) return;
+
+        const imageContainer = event.target.closest('.draggable-item');
+
+        imageContainer.classList.add('removing');
+
+        fetch("{{ route('apartments.deleteImage', ['apartment' => $estate->id, 'filename' => ':filename']) }}"
+                .replace(':filename', filename), {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    imageContainer.classList.remove('removing');
+                    alert(data.error || 'Error al eliminar');
+                }
+            })
+            .catch(error => {
+                imageContainer.classList.remove('removing');
+                console.error('Error:', error);
+                alert('Error de conexión');
+            });
     }
 
     function changeMuninicio() {
@@ -508,16 +514,75 @@ Editar apartamento
         changeMuninicio();
     });
 
-    document.querySelectorAll('.reorder-select').forEach(select => {
-        select.addEventListener('change', () => {
-            const currentValue = select.value;
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('imageGallery');
+        let draggedItem = null;
 
-            document.querySelectorAll('.reorder-select').forEach(otherSelect => {
-                if (otherSelect !== select && otherSelect.value === currentValue) {
-                    otherSelect.value = '';
-                }
+        document.querySelectorAll('.draggable-item').forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                draggedItem = item;
+                item.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            item.addEventListener('dragend', () => {
+                draggedItem.classList.remove('dragging');
+                draggedItem = null;
+                updateImageOrder();
             });
         });
+
+        container.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const afterElement = getDragAfterElement(container, e.clientX);
+
+            if (!afterElement) {
+                container.appendChild(draggedItem);
+            } else {
+                container.insertBefore(draggedItem, afterElement);
+            }
+        });
+
+        function getDragAfterElement(container, x) {
+            const draggableElements = [...container.querySelectorAll('.draggable-item:not(.dragging)')];
+
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = x - box.left - box.width / 2;
+
+                if (offset < 0 && offset > closest.offset) {
+                    return {
+                        offset: offset,
+                        element: child
+                    };
+                } else {
+                    return closest;
+                }
+            }, {
+                offset: Number.NEGATIVE_INFINITY
+            }).element;
+        }
+
+        function updateImageOrder() {
+            const newOrder = Array.from(container.querySelectorAll('.draggable-item'))
+                .map(item => item.dataset.filename);
+
+            fetch("{{ route('apartments.reorder-images', $estate->id) }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        new_order: newOrder
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        console.error('Error updating order');
+                    }
+                });
+        }
     });
 </script>
 

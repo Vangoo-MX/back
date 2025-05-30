@@ -55,7 +55,9 @@ Route::prefix('apartments')->name('apartments.')->middleware('check.admin')->gro
         ->name('active');
     Route::put('deactive/{id}', [ApartmentController::class, 'deactive'])
         ->name('deactive');
-    Route::delete('deleteImage/{apartmentId}/{imageId}', [ApartmentController::class, 'destroyImage'])
+    Route::post('{apartment}/reorder-images', [ApartmentController::class, 'reorderImages'])
+        ->name('reorder-images');
+    Route::delete('deleteImage/{apartment}/{filename}', [ApartmentController::class, 'deleteImage'])
         ->name('deleteImage');
     Route::get('municipio/{id}', [ApartmentHighlightController::class, 'apartmentByMunicipio'])
         ->name('municipio');

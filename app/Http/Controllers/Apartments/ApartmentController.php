@@ -62,14 +62,13 @@ class ApartmentController extends Controller
             'antiquity',
         ]));
 
-        $this->handleImageProcessing($request, $apartment, true);
+        $this->handleImageProcessing($request, $apartment);
 
         $apartment->update([
             'location' => $this->getLocation($request->id_colonia, $request->id_municipio, $request->id_estado),
-            'images' => $apartment->images + ($request->hasFile('images') ? count($request->file('images')) : 0),
         ]);
 
-        return redirect()->route('apartments.show', $apartment)->with('success', __('messages.success.update'));
+        return redirect()->route('apartments.show', $apartment)->with('success', ('Departamento actualizado correctamente'));
     }
 
     public function destroy($id)
@@ -77,15 +76,14 @@ class ApartmentController extends Controller
         return $this->deleteEstate($id);
     }
 
-    public function destroyImage($apartmentId, $imageId)
+    public function reorderImages(Request $request, Apartments $apartment)
     {
-        $apartment = Apartments::findOrFail($apartmentId);
+        return $this->reorderEstateImages($request, $apartment);
+    }
 
-        if ($this->deleteImage($apartment, $imageId)) {
-            return redirect()->back()->with('success', 'Imagen eliminada correctamente');
-        }
-
-        return redirect()->back()->with('error', 'Error al eliminar la imagen');
+    public function deleteImage(Apartments $apartments, $filename)
+    {
+        return $this->destroyImage($apartments, $filename);
     }
 
     public function deactive($id)

@@ -68,8 +68,6 @@ class PropertyController extends Controller
             'location' => $this->getLocation($request->id_colonia, $request->id_municipio, $request->id_estado),
         ]);
 
-
-
         return redirect()->route('properties.show', $property)
             ->with('success', 'Propiedad actualizada correctamente');
     }

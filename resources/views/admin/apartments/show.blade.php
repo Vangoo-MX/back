@@ -214,24 +214,16 @@ Detalle
 
                 <span>Imagenes:</span>
                 <div class="d-flex gap-2 mt-2">
-                    @for ($i = 1; $i <= $estate->images; $i++)
-                        <div class="d-flex flex-column align-items-center">
-                            @php
-                            $imagePath = 'public/img/posts/apartments/' . $estate->id . '/' . $i . '.webp';
-                            @endphp
-
-                            @if(Storage::exists($imagePath))
-                            @php
-                            $imageUrl = asset('storage/img/posts/apartments/' . $estate->id . '/' . $i . '.webp');
-                            @endphp
-                            <div class="d-flex flex-column align-items-center image-container">
-                                <a href="{{ $imageUrl }}" target="_blank">
-                                    <img class="pe-2" src="{{ $imageUrl . '?' . uniqid() }}" width="90px" height="90px">
-                                </a>
-                            </div>
-                            @endif
-                        </div>
-                        @endfor
+                    @foreach($estate->images as $filename)
+                    @php
+                    $imageUrl = asset('storage/img/posts/apartments/' . $estate->id . '/' . $filename);
+                    @endphp
+                    <div class="d-flex flex-column align-items-center image-container">
+                        <a href="{{ $imageUrl }}" target="_blank">
+                            <img class="pe-2" src="{{ $imageUrl . '?' . uniqid() }}" width="150px" height="150px">
+                        </a>
+                    </div>
+                    @endforeach
                 </div>
 
             </form>
