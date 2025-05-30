@@ -86,7 +86,8 @@ class PropertyController extends Controller
 
     public function deleteImage(Properties $property, $filename)
     {
-        return $this->deleteModelImage($property, $filename);
+        Log::info("Deleting image: {$filename} for property ID: {$property->id}");
+        return $this->destroyImage($property, $filename);
     }
 
     public function deactive($id)
