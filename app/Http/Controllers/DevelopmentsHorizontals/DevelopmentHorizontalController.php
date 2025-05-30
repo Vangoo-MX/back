@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\DevelopmentsHorizontals;
 
 use App\Http\Controllers\Controller;
+use App\Models\Developments;
 use App\Models\DevelopmentsHorizontalApartments;
 use App\Models\DevelopmentsHorizontalHighlights;
 use App\Models\DevelopmentsHorizontals;
@@ -59,10 +60,9 @@ class DevelopmentHorizontalController extends Controller
             'amenities' => $request->amenities,
             'commission_percentage' => $request->commission_percentage,
             'id_user' => Auth::user()->id,
-            'images' => $request->hasFile('images') ? count($request->file('images')) : 0,
         ]);
 
-        $this->handleImageProcessing($request, $development, false);
+        $this->handleImageProcessing($request, $development);
         $this->processApartments($request, $development);
 
         return redirect()->route('horizontals.index')->with('success', __('messages.development_created'));
@@ -100,9 +100,7 @@ class DevelopmentHorizontalController extends Controller
             'commission_percentage'
         ]);
 
-        $this->handleImageProcessing($request, $development, true);
-
-        $updateData['images'] = $development->images + ($request->hasFile('images') ? count($request->file('images')) : 0);
+        $this->handleImageProcessing($request, $development);
 
         $updateData['location'] = $this->getLocation(
             $request->id_colonia,
@@ -138,14 +136,13 @@ class DevelopmentHorizontalController extends Controller
         return $this->deleteDevelopment($id);
     }
 
-    public function destroyImage($developmentId, $imageId)
+    public function reorderImages(Request $request, DevelopmentsHorizontals $horizontal)
     {
-        $development = DevelopmentsHorizontals::findOrFail($developmentId);
+        return $this->reorderEstateImages($request, $horizontal);
+    }
 
-        if ($this->deleteImage($development, $imageId)) {
-            return redirect()->back()->with('success', 'Imagen eliminada correctamente');
-        }
-
-        return redirect()->back()->with('error', 'Error al eliminar la imagen');
+    public function deleteImage(DevelopmentsHorizontals $horizontal, $filename)
+    {
+        return $this->destroyImage($horizontal, $filename);
     }
 }
