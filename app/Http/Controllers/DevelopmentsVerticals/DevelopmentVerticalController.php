@@ -100,9 +100,7 @@ class DevelopmentVerticalController extends Controller
             'commission_percentage'
         ]);
 
-        if ($request->hasFile('images')) {
-            $this->handleImageProcessing($request, $development, true);
-        }
+        $this->handleImageProcessing($request, $development, true);
 
         $updateData['images'] = $development->images + ($request->hasFile('images') ? count($request->file('images')) : 0);
 
