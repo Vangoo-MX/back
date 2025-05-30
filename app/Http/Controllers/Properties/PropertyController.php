@@ -15,6 +15,7 @@ class PropertyController extends Controller
     protected $model = Properties::class;
     protected $highlightModel = PropertiesHighlights::class;
     protected $directory = 'properties';
+    protected $idHighlight = 'id_property';
 
     public function index()
     {

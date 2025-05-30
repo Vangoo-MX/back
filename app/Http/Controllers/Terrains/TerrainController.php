@@ -15,6 +15,7 @@ class TerrainController extends Controller
     protected $model = Terrains::class;
     protected $highlightModel = TerrainsHighlights::class;
     protected $directory = 'terrains';
+    protected $idHighlight = 'id_property';
 
     public function index()
     {

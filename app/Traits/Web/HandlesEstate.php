@@ -59,7 +59,7 @@ trait HandlesEstate
     public function deleteEstate($id)
     {
         try {
-            if ($highlight = $this->highlightModel::where('id_property', $id)->first()) {
+            if ($highlight = $this->highlightModel::where($this->idHighlight, $id)->first()) {
                 $highlight->delete();
             }
 
