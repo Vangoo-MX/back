@@ -66,8 +66,8 @@
                             @csrf
                             @method('PUT')
                             <span class="d-flex gap-1">
-                                <input type="hidden" name="id" value="{{$estate->id_property}}">
-                                <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_property}})">
+                                <input type="hidden" name="id" value="{{$estate->id_development}}">
+                                <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_development}})">
                                     <option value="" selected hidden>Orden</option>
                                     @for($i = 1; $i <= count($estates); $i++)
                                         <option value="{{ $i }}" {{ $estate->num_order == $i ? 'selected' : '' }}>
