@@ -8,16 +8,40 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DevelopmentsHorizontals extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'post_developments_horizontal';
+
+    protected $fillable = [
+        'title',
+        'status',
+        'price_min',
+        'price_max',
+        'description',
+        'availability',
+        'financing',
+        'mode',
+        'id_estado',
+        'id_municipio',
+        'id_colonia',
+        'cp',
+        'street',
+        'num_ext',
+        'location',
+        'map_lat',
+        'map_long',
+        'area',
+        'amenities',
+        'commission_percentage',
+        'id_user',
+        'images',
+    ];
+
+    protected $casts = [
+        'images' => 'array',
+    ];
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id_user', 'id');
     }
 
     public function estado(): BelongsTo

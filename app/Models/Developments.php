@@ -22,6 +22,7 @@ class Developments extends Model
         'id_estado',
         'id_municipio',
         'id_colonia',
+        'cp',
         'street',
         'num_ext',
         'location',
