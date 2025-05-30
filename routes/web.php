@@ -20,6 +20,8 @@ use App\Http\Controllers\{
 use App\Http\Controllers\Apartments\ApartmentController;
 use App\Http\Controllers\Apartments\ApartmentHighlightController;
 use App\Http\Controllers\Apartments\ApartmentQueueController;
+use App\Http\Controllers\DevelopmentsHorizontals\DevelopmentHorizontalController;
+use App\Http\Controllers\DevelopmentsHorizontals\DevelopmentHorizontalHighlightController;
 use App\Http\Controllers\DevelopmentsVerticals\DevelopmentVerticalController;
 use App\Http\Controllers\DevelopmentsVerticals\DevelopmentVerticalHighlightController;
 use App\Http\Controllers\Properties\PropertyHighlightController;
@@ -68,6 +70,20 @@ Route::prefix('apartments')->name('apartments.')->middleware('check.admin')->gro
         ->parameters(['' => 'apartment']);
 });
 
+// Desarrollos horizontales
+Route::prefix('developments/horizontal')->name('horizontal.')->middleware('check.admin')->group(function () {
+    Route::delete('deleteImage/{developmentId}/{imageId}', [DevelopmentHorizontalController::class, 'destroyImage'])
+        ->name('deleteImage');
+    Route::get('municipio/{id}', [DevelopmentHorizontalHighlightController::class, 'horizontalByMunicipio'])
+        ->name('municipio');
+    Route::resource('highlights', DevelopmentHorizontalHighlightController::class)
+        ->except(['create', 'show', 'edit']);
+    Route::resource('/', DevelopmentHorizontalController::class)
+        ->except(['show'])
+        ->parameters(['' => 'horizontal']);
+});
+
+// Desarrollos verticales
 Route::prefix('developments/vertical')->name('verticals.')->middleware('check.admin')->group(function () {
     Route::delete('deleteImage/{developmentId}/{imageId}', [DevelopmentVerticalController::class, 'destroyImage'])
         ->name('deleteImage');
@@ -136,21 +152,6 @@ Route::prefix('users')->name('users.')->middleware('check.admin')->group(functio
 Route::prefix('overview')->name('admin.')->group(function () {
     // Dashboard
     Route::get('home', [AdminController::class, 'index'])->name('index');
-
-    // Desarrollo horizontal
-    Route::prefix('horizontal')->group(function () {
-        Route::get('list', [AdminController::class, 'developmentsHorizontal'])->name('developmentsHorizontal');
-        Route::get('highlights', [AdminController::class, 'highlightsdevHorizontal'])->name('highlights.developmentsHorizontal');
-        Route::get('create', [AdminController::class, 'createdevHorizontal'])->name('createdevHorizontal');
-        Route::get('edit/{id}', [AdminController::class, 'editdevHorizontal'])->name('editdevHorizontal');
-        Route::get('deleteHighlight/{id}', [DevelopmentsHorizontalController::class, 'deleteDevHorizontalHightlight'])->name('deleteHighlightDevHorizontal');
-        Route::post('addHighlight', [DevelopmentsHorizontalController::class, 'addDevHorizontalHightlight'])->name('addHighlightDevHorizontal');
-        Route::post('orderHighlight', [DevelopmentsHorizontalController::class, 'orderDevHorizontalHightlight'])->name('orderHighlightDevHorizontal');
-        Route::post('store', [DevelopmentsHorizontalController::class, 'storeDevHorizontal'])->name('storeDevHorizontal');
-        Route::post('editDevhorizontal', [DevelopmentsHorizontalController::class, 'editDevHorizontal'])->name('editDevHorizontal');
-        Route::delete('deleteImage/{developmentId}/{imageId}', [DevelopmentsHorizontalController::class, 'deleteImage'])->name('deleteImageDevHorizontal');
-        Route::get('delete/{id}', [DevelopmentsHorizontalController::class, 'deleteDevHorizontal'])->name('deleteDevHorizontal');
-    });
 
     // Lotes
     Route::prefix('lots')->group(function () {

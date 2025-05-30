@@ -89,13 +89,13 @@
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">
-                        <a class="cursor-pointer {{ (request()->is('overview/horizontal*')) ? 'active' : '' }} {{ (request()->is('overview/createhorizontal*')) ? 'active' : '' }} {{ (request()->is('overview/horizontal-highlights*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
+                        <a class="cursor-pointer {{ (request()->is('developments/horizontal*')) ? 'active' : '' }} {{ (request()->is('developments/horizontal/create*')) ? 'active' : '' }} {{ (request()->is('developments/horizontal/highlight*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
                             <img src="{{url('./img/icon/horizontal.png')}}" title="Desarrollos" alt="Developments" />
                         </a>
                         <ul class="dropdown-menu menu-primary-dropdown">
-                            <li><a class="{{ (request()->is('overview/developments-horizontal*')) ? 'active' : '' }}" href="{{route('admin.developmentsHorizontal')}}">Todas los desarrollos horizontales</a></li>
-                            <li><a class="{{ (request()->is('overview/createhorizontal*')) ? 'active' : '' }}" href="{{route('admin.createdevHorizontal')}}">Crear desarrollo horizontal</a></li>
-                            <li><a class="" href="{{route('admin.highlights.developmentsHorizontal')}}">Desarrollos horizontales destacados</a></li>
+                            <li><a class="{{ (request()->is('developments/horizontal*')) ? 'active' : '' }}" href="{{route('horizontals.index')}}">Todas los desarrollos horizontales</a></li>
+                            <li><a class="{{ (request()->is('developments/horizontal/create*')) ? 'active' : '' }}" href="{{route('horizontals.create')}}">Crear desarrollo horizontal</a></li>
+                            <li><a class="" href="{{route('horizontals.highlight.index')}}">Desarrollos horizontales destacados</a></li>
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">
