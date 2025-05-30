@@ -169,13 +169,12 @@ trait HandlesEstate
             'new_order.*' => 'string'
         ]);
 
-        $currentImages = is_array($estate->images) ? $estate->images : json_decode($estate->images, true);
+        $currentImages = $estate->images ?? [];
 
         foreach ($request->new_order as $filename) {
-            $path = 'public/img/posts/properties/' . $estate->id . '/' . $filename;
-            if (!Storage::exists($path)) {
+            if (!in_array($filename, $currentImages, true)) {
                 return response()->json([
-                    'error' => 'Archivo no encontrado: ' . $filename
+                    'error' => 'Archivo no válido: ' . $filename
                 ], 422);
             }
         }
@@ -231,7 +230,7 @@ trait HandlesEstate
 
     public function handleDragDropReorder(Request $request, Model $estate)
     {
-        return $this->reorderModelImages($request, $estate);
+        return $this->reorderImages($request, $estate);
     }
 
     public function deactiveEstate($id)
