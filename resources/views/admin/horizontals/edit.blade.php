@@ -279,10 +279,6 @@
                 </div>
 
             </form>
-            <form id="delete-form" action="{{ route('horizontals.deleteImage', ['developmentId' => $estate->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
-                @csrf
-                @method('DELETE')
-            </form>
             @if(session('error'))
             <script>
                 alert("{{ session('error') }}");
