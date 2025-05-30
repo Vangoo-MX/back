@@ -164,36 +164,28 @@ trait HandlesEstate
 
     protected function reorderImages(Request $request, Model $estate)
     {
-        Log::info('Reordering images for estate ID: ' . $estate->id);
-        Log::info('New order received: ' . json_encode($request->new_order));
         $request->validate([
             'new_order' => 'required|array',
             'new_order.*' => 'string'
         ]);
 
+        $newOrder = is_string($request->new_order)
+            ? json_decode($request->new_order, true)
+            : $request->new_order;
+
         $currentImages = is_array($estate->images)
             ? $estate->images
             : json_decode($estate->images, true) ?? [];
 
-        Log::info('Current images in DB: ' . json_encode($currentImages));
-
-        foreach ($request->new_order as $filename) {
-            $path = 'public/img/posts/properties/' . $estate->id . '/' . $filename;
-
-            if (!Storage::exists($path)) {
-                Log::error('File not found: ' . $path);
+        foreach ($newOrder as $filename) {
+            if (!in_array($filename, $currentImages)) {
                 return response()->json([
-                    'error' => 'Archivo no encontrado: ' . $filename
+                    'error' => 'Archivo no válido: ' . $filename
                 ], 422);
-            }
-
-            if (!in_array($filename, $currentImages, true)) {
-                Log::warning('File not in DB images: ' . $filename);
             }
         }
 
-        $estate->images = $request->new_order;
-        $estate->save();
+        $estate->update(['images' => $newOrder]);
 
         return response()->json(['success' => true]);
     }

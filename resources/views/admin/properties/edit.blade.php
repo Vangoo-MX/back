@@ -250,7 +250,7 @@ Editar propiedad
                     @php
                     $imageUrl = asset('storage/img/posts/properties/' . $estate->id . '/' . $filename);
                     @endphp
-                    <div class="draggable-item" draggable="true" data-filename="{{ basename($filename) }}">
+                    <div class="draggable-item" draggable="true" data-filename="{{ $filename }}">
                         <div class="d-flex flex-column align-items-center image-container position-relative">
                             <a href="{{ $imageUrl }}" target="_blank">
                                 <img src="{{ $imageUrl . '?' . uniqid() }}"
