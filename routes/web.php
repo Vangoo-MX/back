@@ -102,7 +102,7 @@ Route::prefix('properties')->name('properties.')->middleware('check.admin')->gro
         ->name('active');
     Route::put('deactive/{id}', [PropertyController::class, 'deactive'])
         ->name('deactive');
-    Route::post('{property/reorder-images}', [PropertyController::class, 'reorderImages'])
+    Route::post('{property}/reorder-images', [PropertyController::class, 'reorderImages'])
         ->name('reorder-images');
     Route::delete('deleteImage/{propertyId}/{filename}', [PropertyController::class, 'destroyImage'])
         ->name('deleteImage');
