@@ -169,12 +169,13 @@ trait HandlesEstate
             'new_order.*' => 'string'
         ]);
 
-        $currentImages = $estate->images ?? [];
+        $currentImages = is_array($estate->images) ? $estate->images : json_decode($estate->images, true);
 
         foreach ($request->new_order as $filename) {
-            if (!in_array($filename, $currentImages, true)) {
+            $path = 'public/img/posts/properties/' . $estate->id . '/' . $filename;
+            if (!Storage::exists($path)) {
                 return response()->json([
-                    'error' => 'Archivo no válido: ' . $filename
+                    'error' => 'Archivo no encontrado: ' . $filename
                 ], 422);
             }
         }
