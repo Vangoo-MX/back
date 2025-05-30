@@ -71,6 +71,6 @@ class DevelopmentHorizontalController extends Controller
     public function edit($id)
     {
         $viewEstate = 'admin.horizontals.edit';
-        return $this->editDevelopment($viewEstate, $id);
+        return $this->editDevelopment($id, $viewEstate);
     }
 }
