@@ -59,7 +59,7 @@ class TerrainController extends Controller
             'price_m2',
         ]));
 
-        $this->handleImageProcessing($request, $terrain, true);
+        $this->handleImageProcessing($request, $terrain);
 
         $terrain->update([
             'location' => $this->getLocation(
@@ -67,10 +67,9 @@ class TerrainController extends Controller
                 $request->id_municipio,
                 $request->id_estado
             ),
-            'images' => $terrain->images + ($request->hasFile('images') ? count($request->file('images')) : 0)
         ]);
 
-        return redirect()->route('terrains.show', $terrain)->with('success', __('Terrain updated successfully.'));
+        return redirect()->route('terrains.show', $terrain)->with('success', 'Terreno actualizado correctamente');
     }
 
     public function destroy($id)
@@ -78,15 +77,14 @@ class TerrainController extends Controller
         return $this->deleteEstate($id);
     }
 
-    public function destroyImage($terrainId, $imageId)
+    public function reorderImages(Request $request, Terrains $terrain)
     {
-        $terrain = Terrains::findOrFail($terrainId);
+        return $this->reorderEstateImages($request, $terrain);
+    }
 
-        if ($this->deleteImage($terrain, $imageId)) {
-            return redirect()->back()->with('success', 'Imagen eliminada correctamente');
-        }
-
-        return redirect()->back()->with('error', 'Imagen no encontrada');
+    public function deleteImage(Terrains $terrain, $filename)
+    {
+        return $this->destroyImage($terrain, $filename);
     }
 
     public function deactive($id)

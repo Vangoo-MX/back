@@ -43,12 +43,12 @@ class Terrains extends Model
         'id_user',
         'status',
     ];
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
+
     protected $table = 'post_terrains';
+
+    protected $casts = [
+        'images' => 'array',
+    ];
 
     public function user(): BelongsTo
     {

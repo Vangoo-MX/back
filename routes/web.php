@@ -127,7 +127,9 @@ Route::prefix('terrains')->name('terrains.')->middleware('check.admin')->group(f
         ->name('active');
     Route::put('deactive/{id}', [TerrainController::class, 'deactive'])
         ->name('deactive');
-    Route::delete('deleteImage/{terrainId}/{imageId}', [TerrainController::class, 'destroyImage'])
+    Route::post('{terrain}/reorder-images', [TerrainController::class, 'reorderImages'])
+        ->name('reorder-images');
+    Route::delete('deleteImage/{terrain}/{filename}', [TerrainController::class, 'deleteImage'])
         ->name('deleteImage');
     Route::get('municipio/{id}', [TerrainHighlightController::class, 'terrainByMunicipio'])
         ->name('municipio');
