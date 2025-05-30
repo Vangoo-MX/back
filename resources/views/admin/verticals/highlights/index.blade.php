@@ -136,7 +136,7 @@
         fetch(url)
             .then(response => response.json())
             .then(properties => {
-                let html = '<select class="form-select larger-width" name="id_property" required>';
+                let html = '<select class="form-select larger-width" name="id_development" required>';
                 properties.forEach(property => {
                     html += `<option value="${property.id}">${property.id} - ${property.title}</option>`;
                 });
