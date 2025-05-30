@@ -62,7 +62,7 @@
                         <a href="https://vangoo.mx/details/desarrollo/{{$estate->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$estate->id_property}}" action="{{ route('verticals.highlights.update', $estate->id) }}" method="POST">
+                        <form id="orden-form{{$estate->id_development}}" action="{{ route('verticals.highlights.update', $estate->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <span class="d-flex gap-1">
