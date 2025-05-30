@@ -67,4 +67,10 @@ class DevelopmentHorizontalController extends Controller
 
         return redirect()->route('horizontals.index')->with('success', __('messages.development_created'));
     }
+
+    public function edit($id)
+    {
+        $viewEstate = 'admin.horizontals.edit';
+        return $this->editDevelopment($viewEstate, $id);
+    }
 }
