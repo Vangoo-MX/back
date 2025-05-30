@@ -7,7 +7,6 @@ use App\Models\Properties;
 use App\Models\PropertiesHighlights;
 use App\Traits\Web\HandlesEstate;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class PropertyController extends Controller
 {

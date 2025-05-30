@@ -99,13 +99,13 @@
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">
-                        <a class="cursor-pointer {{ (request()->is('overview/lots*')) ? 'active' : '' }} {{ (request()->is('overview/createlot*')) ? 'active' : '' }} {{ (request()->is('overview/highlightslot*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
+                        <a class="cursor-pointer {{ (request()->is('lots*')) ? 'active' : '' }} {{ (request()->is('lots/create*')) ? 'active' : '' }} {{ (request()->is('lots/highlights*')) ? 'active' : '' }}" data-bs-toggle="dropdown">
                             <img src="{{url('./img/icon/lots.png')}}" title="Lotes" alt="Lots" />
                         </a>
                         <ul class="dropdown-menu menu-primary-dropdown">
-                            <li><a class="{{ (request()->is('overview/lots*')) ? 'active' : '' }}" href="{{route('admin.lots')}}">Todos los lotes</a></li>
-                            <li><a class="{{ (request()->is('overview/createlot*')) ? 'active' : '' }}" href="{{route('admin.createLot')}}">Crear lote</a></li>
-                            <li><a class="" href="{{route('admin.highlights.lots')}}">Lotes destacados</a></li>
+                            <li><a class="{{ (request()->is('lots*')) ? 'active' : '' }}" href="{{route('lots.index')}}">Todos los lotes</a></li>
+                            <li><a class="{{ (request()->is('lots/create*')) ? 'active' : '' }}" href="{{route('lots.create')}}">Crear lote</a></li>
+                            <li><a class="" href="{{route('lots.highlights.index')}}">Lotes destacados</a></li>
                         </ul>
                     </li>
                     <li>

@@ -3,15 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AdminController,
-    TerrainsController,
     Auth\ForgotPasswordController,
     Auth\ResetPasswordController,
     Auth\AuthController,
     ContactsController,
-    DevelopmentsController,
-    DevelopmentsApartmentsController,
-    DevelopmentsHorizontalApartmentsController,
-    DevelopmentsHorizontalController,
     LotsController,
     Users\UserController,
     Properties\PropertyController,
@@ -24,6 +19,8 @@ use App\Http\Controllers\DevelopmentsHorizontals\DevelopmentHorizontalController
 use App\Http\Controllers\DevelopmentsHorizontals\DevelopmentHorizontalHighlightController;
 use App\Http\Controllers\DevelopmentsVerticals\DevelopmentVerticalController;
 use App\Http\Controllers\DevelopmentsVerticals\DevelopmentVerticalHighlightController;
+use App\Http\Controllers\Lots\LotController;
+use App\Http\Controllers\Lots\LotHighlightController;
 use App\Http\Controllers\Properties\PropertyHighlightController;
 use App\Http\Controllers\Terrains\TerrainController;
 use App\Http\Controllers\Terrains\TerrainHighlightController;
@@ -102,6 +99,21 @@ Route::prefix('developments/vertical')->name('verticals.')->middleware('check.ad
         ->parameters(['' => 'vertical']);
 });
 
+//Lotes
+Route::prefix('lots')->name('lots.')->middleware('check.admin')->group(function () {
+    Route::post('{lot}/reorder-images', [LotController::class, 'reorderImages'])
+        ->name('reorder-images');
+    Route::delete('deleteImage/{lot}/{filename}', [LotController::class, 'deleteImage'])
+        ->name('deleteImage');
+    Route::get('municipio/{id}', [LotHighlightController::class, 'lotsByMunicipio'])
+        ->name('municipio');
+    Route::resource('highlights', LotHighlightController::class)
+        ->except(['create', 'show', 'edit']);
+    Route::resource('/', LotController::class)
+        ->except(['show'])
+        ->parameters(['' => 'lot']);
+});
+
 // Propiedades
 Route::prefix('properties')->name('properties.')->middleware('check.admin')->group(function () {
     Route::put('active/{id}', [PropertyController::class, 'active'])
@@ -162,22 +174,6 @@ Route::prefix('users')->name('users.')->middleware('check.admin')->group(functio
 Route::prefix('overview')->name('admin.')->group(function () {
     // Dashboard
     Route::get('home', [AdminController::class, 'index'])->name('index');
-
-    // Lotes
-    Route::prefix('lots')->group(function () {
-        Route::get('list', [AdminController::class, 'lots'])->name('lots');
-        Route::get('highlights', [AdminController::class, 'highlightsLot'])->name('highlights.lots');
-        Route::get('create', [AdminController::class, 'createLot'])->name('createLot');
-        Route::get('edit/{id}', [AdminController::class, 'editLotPage'])->name('editLot');
-        Route::post('store', [LotsController::class, 'storeLot'])->name('storeLot');
-        Route::post('update', [LotsController::class, 'editLot'])->name('updateLot');
-        Route::post('{lot}/reorder-images', [LotsController::class, 'reorderImages'])->name('lots.reorder-images');
-        Route::delete('deleteImage/{lot}/{filename}', [LotsController::class, 'deleteImage'])->name('deleteImageLot');
-        Route::get('delete/{id}', [LotsController::class, 'deleteLot'])->name('deleteLot');
-        Route::get('deleteHighlight/{id}', [LotsController::class, 'deleteLotHightlight'])->name('deleteHighlightLot');
-        Route::post('addHighlight', [LotsController::class, 'addLotHightlight'])->name('addHighlightLot');
-        Route::post('orderHighlight', [LotsController::class, 'orderLotHightlight'])->name('orderHighlightLot');
-    });
 
     // Varios
     Route::get('contacts', [AdminController::class, 'contacts'])->name('contacts');
