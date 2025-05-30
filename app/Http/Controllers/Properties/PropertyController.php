@@ -83,7 +83,7 @@ class PropertyController extends Controller
     {
         Log::info('Reordering images for property ID: ' . $property->id);
         Log::info('Request data: ', $request->all());
-        return $this->handleDragDropReorder($request, $property);
+        return $this->reorderEstateImages($request, $property);
     }
 
     public function deleteImage(Properties $property, $filename)

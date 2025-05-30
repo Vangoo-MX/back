@@ -162,7 +162,7 @@ trait HandlesEstate
         }
     }
 
-    protected function reorderModelImages(Request $request, Model $estate)
+    protected function reorderEstateImages(Request $request, Model $estate)
     {
         Log::info('Reordering images for estate ID: ' . $estate->id);
         Log::info('New order received: ', $request->all());
@@ -245,12 +245,12 @@ trait HandlesEstate
         return response()->json(['success' => true]);
     }
 
-    public function handleDragDropReorder(Request $request, Model $estate)
-    {
-        Log::info('Handling drag and drop reorder for estate ID: ' . $estate->id);
-        Log::info('New order received: ', $request->all());
-        return $this->reorderModelImages($request, $estate);
-    }
+    // public function handleDragDropReorder(Request $request, Model $estate)
+    // {
+    //     Log::info('Handling drag and drop reorder for estate ID: ' . $estate->id);
+    //     Log::info('New order received: ', $request->all());
+    //     return $this->reorderModelImages($request, $estate);
+    // }
 
     public function deactiveEstate($id)
     {
