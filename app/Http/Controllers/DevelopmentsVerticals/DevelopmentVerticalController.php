@@ -137,4 +137,15 @@ class DevelopmentVerticalController extends Controller
     {
         return $this->deleteDevelopment($id);
     }
+
+    public function destroyImage($developmentId, $imageId)
+    {
+        $development = Developments::findOrFail($developmentId);
+
+        if ($this->deleteImage($development, $imageId)) {
+            return redirect()->back()->with('success', 'Imagen eliminada correctamente');
+        }
+
+        return redirect()->back()->with('error', 'Imagen no encontrada');
+    }
 }

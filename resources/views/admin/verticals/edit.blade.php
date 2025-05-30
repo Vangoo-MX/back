@@ -291,7 +291,7 @@
                 </div>
 
             </form>
-            <form id="delete-form" action="{{ route('admin.deleteImageDev', ['developmentId' => $estate->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
+            <form id="delete-form" action="{{ route('verticals.deleteImage', ['developmentId' => $estate->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>

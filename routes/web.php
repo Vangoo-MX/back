@@ -68,6 +68,8 @@ Route::prefix('apartments')->name('apartments.')->middleware('check.admin')->gro
 });
 
 Route::prefix('developments/vertical')->name('verticals.')->middleware('check.admin')->group(function () {
+    Route::delete('deleteImage/{developmentId}/{imageId}', [DevelopmentVerticalController::class, 'destroyImage'])
+        ->name('deleteImage');
     Route::resource('/', DevelopmentVerticalController::class)
         ->except(['show'])
         ->parameters(['' => 'vertical']);
