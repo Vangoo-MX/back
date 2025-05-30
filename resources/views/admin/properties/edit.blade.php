@@ -588,17 +588,6 @@ Editar propiedad
                     if (!response.ok) {
                         console.error('Error updating order');
                     }
-                }).then(data => {
-                    if (data.success) {
-                        console.log('Order updated successfully');
-                    } else {
-                        console.error('Server error:', data.error);
-                        alert('Error: ' + (data.error || 'Unknown error'));
-                    }
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    alert('Error: ' + (error.error || error.message));
                 });
         }
     });
