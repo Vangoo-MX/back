@@ -130,6 +130,6 @@ class DevelopmentHorizontalController extends Controller
         );
 
         return redirect()->route('horizontals.index')
-            ->with('success', 'Desarrollo vertical actualizado correctamente');
+            ->with('success', 'Desarrollo horizontal actualizado correctamente');
     }
 }
