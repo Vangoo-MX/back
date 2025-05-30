@@ -87,7 +87,34 @@ trait HandlesEstate
 
     public function deleteDevelopment($id)
     {
-        //
+        try {
+            if ($highlight = $this->highlightModel::where('id_development', $id)->first()) {
+                $highlight->delete();
+            }
+
+            $estate = $this->model::findOrFail($id);
+
+            $directoryPath = public_path("storage/img/posts/{$this->directory}/{$estate->id}");
+            if (File::exists($directoryPath)) {
+                File::deleteDirectory($directoryPath);
+            }
+
+            if ($this->apartmentModel::where('id_development', $id)->exists()) {
+                $this->apartmentModel::where('id_development', $id)->delete();
+            }
+
+            $estate->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => __('Desarrollo vertical eliminado exitosamente')
+            ], 200);
+        } catch (Exception $e) {
+            Log::error("Error: " . $e->getMessage());
+            return response()->json([
+                'error' => 'Error interno del servidor'
+            ], 500);
+        }
     }
 
     protected function handleImageProcessing(Request $request, Model $estate, bool $isUpdate = true): void
@@ -131,10 +158,16 @@ trait HandlesEstate
         }
     }
 
-    protected function reorderImages(array $newOrder, Model $estate): void
+    protected function reorderImages(array $orderMap, Model $estate): void
     {
         $directory = storage_path("app/public/img/posts/{$this->directory}/{$estate->id}");
         $tempPrefix = 'reorder_temp_';
+
+        $newOrder = [];
+
+        foreach ($orderMap as $originalPosition => $newPosition) {
+            $newOrder[$newPosition] = $originalPosition;
+        }
 
         foreach ($newOrder as $newPosition => $originalPosition) {
             $originalFile = "{$directory}/{$originalPosition}.webp";

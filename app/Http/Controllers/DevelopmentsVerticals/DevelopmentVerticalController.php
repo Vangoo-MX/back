@@ -134,4 +134,9 @@ class DevelopmentVerticalController extends Controller
         return redirect()->route('verticals.index')
             ->with('success', 'Desarrollo vertical actualizado correctamente');
     }
+
+    public function destroy($id)
+    {
+        return $this->deleteDevelopment($id);
+    }
 }
