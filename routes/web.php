@@ -71,7 +71,7 @@ Route::prefix('apartments')->name('apartments.')->middleware('check.admin')->gro
 });
 
 // Desarrollos horizontales
-Route::prefix('developments/horizontal')->name('horizontal.')->middleware('check.admin')->group(function () {
+Route::prefix('developments/horizontal')->name('horizontals.')->middleware('check.admin')->group(function () {
     Route::delete('deleteImage/{developmentId}/{imageId}', [DevelopmentHorizontalController::class, 'destroyImage'])
         ->name('deleteImage');
     Route::get('municipio/{id}', [DevelopmentHorizontalHighlightController::class, 'horizontalByMunicipio'])
