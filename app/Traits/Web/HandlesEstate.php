@@ -171,14 +171,24 @@ trait HandlesEstate
             'new_order.*' => 'string'
         ]);
 
-        $currentImages = is_array($estate->images) ? $estate->images : json_decode($estate->images, true);
+        $currentImages = is_array($estate->images)
+            ? $estate->images
+            : json_decode($estate->images, true) ?? [];
+
+        Log::info('Current images in DB: ' . json_encode($currentImages));
 
         foreach ($request->new_order as $filename) {
             $path = 'public/img/posts/properties/' . $estate->id . '/' . $filename;
+
             if (!Storage::exists($path)) {
+                Log::error('File not found: ' . $path);
                 return response()->json([
                     'error' => 'Archivo no encontrado: ' . $filename
                 ], 422);
+            }
+
+            if (!in_array($filename, $currentImages, true)) {
+                Log::warning('File not in DB images: ' . $filename);
             }
         }
 
