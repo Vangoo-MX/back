@@ -170,7 +170,6 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <input type="hidden" name="num_images" value="{{old('images', $estate->images)}}">
                     </div>
                 </div>
 
