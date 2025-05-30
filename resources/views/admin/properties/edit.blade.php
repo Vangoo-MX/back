@@ -267,7 +267,7 @@ Editar propiedad
                 </div>
                 <div class="images mb-3 mt-3">
                     <label for="image" class="form-label">Agregar más imágenes:</label>
-                    <input type="file" name="images[]" id="imagen" class="form-control" accept="image/jpeg" multiple onchange="previewImage()">
+                    <input type="file" name="images[]" id="imagen" class="form-control" multiple onchange="previewImage()">
                     <div id="preview"></div>
                 </div>
                 <br><br>
