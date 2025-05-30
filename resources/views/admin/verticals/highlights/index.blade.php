@@ -144,7 +144,7 @@
 
                 html += '<button type="submit" class="btn btn-primary ms-2">Asignar</button>';
 
-                document.getElementById('properties-by-municipio').innerHTML = html;
+                document.getElementById('devs-by-municipio').innerHTML = html;
                 document.getElementById('submit-btn').style.display = 'inline-block';
             })
             .catch(error => console.error('Error:', error));
