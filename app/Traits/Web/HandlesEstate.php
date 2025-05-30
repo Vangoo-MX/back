@@ -119,6 +119,7 @@ trait HandlesEstate
 
     protected function handleImageProcessing(Request $request, Model $estate, bool $isUpdate = true): void
     {
+        Log::info($request->orderimg);
         if ($request->hasFile('images')) {
             $this->processNewImages($request->file('images'), $estate, $isUpdate);
         }
@@ -158,21 +159,10 @@ trait HandlesEstate
         }
     }
 
-    protected function reorderImages(array $orderMap, Model $estate): void
+    protected function reorderImages(array $newOrder, Model $estate): void
     {
         $directory = storage_path("app/public/img/posts/{$this->directory}/{$estate->id}");
         $tempPrefix = 'reorder_temp_';
-
-        if (!file_exists($directory)) {
-            mkdir($directory, 0755, true);
-        }
-        chmod($directory, 0755);
-
-        $newOrder = [];
-
-        foreach ($orderMap as $originalPosition => $newPosition) {
-            $newOrder[$newPosition] = $originalPosition;
-        }
 
         foreach ($newOrder as $newPosition => $originalPosition) {
             $originalFile = "{$directory}/{$originalPosition}.webp";
