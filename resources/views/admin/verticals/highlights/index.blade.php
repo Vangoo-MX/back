@@ -33,7 +33,7 @@
         <table class="table table-striped table-bordered" id="hlTable">
             <thead>
                 <tr>
-                    <th>Id</th>
+                    <th>ID</th>
                     <th>Titulo</th>
                     <th>Estado</th>
                     <th>Id Municipio</th>

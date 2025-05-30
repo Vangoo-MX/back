@@ -10,13 +10,13 @@
 
 <h3>Nuevo desarrollo horizontal destacado</h3>
 <br>
-<form method="post" action="{{ route('admin.addHighlightDevHorizontal') }}">
+<form method="post" action="{{ route('horizontals.highlights.store') }}">
     @csrf
     <div class="d-flex gap-2">
         <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">
-            <option selected value="0" data-municipio-id="0">Todas los desarrollos horizontales destacados</option>
-            @foreach($municipiosh as $e)
-            <option value="{{$e->id}}" data-municipio-id="{{$e->id}}">{{$e->nombre}}</option>
+            <option selected value="0" data-municipio-id="0">Todas los desarrollos destacados</option>
+            @foreach($municipios as $municipio)
+            <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
             @endforeach
         </select>
 
@@ -33,7 +33,7 @@
         <table class="table table-striped table-bordered" id="hlTable">
             <thead>
                 <tr>
-                    <th>ID del desarrollo</th>
+                    <th>ID</th>
                     <th>Titulo</th>
                     <th>Estado</th>
                     <th>Id Municipio</th>
@@ -43,34 +43,37 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($devshl as $p)
-                <tr class="municipio-{{$p->id_municipio}}">
-                    <td>{{$p->id_development}}</td>
-                    <td>{{$p->horizontal->title}}</td>
-                    <td>{{estado($p->id_estado)}}</td>
-                    <td>{{$p->id_municipio}}</td>
-                    <td>{{municipio($p->id_municipio)}}</td>
-                    <td>{{$p->num_order}}</td>
+                @foreach($estates as $estate)
+                <tr class="municipio-{{$estate->id_municipio}}">
+                    <td>{{$estate->id_development}}</td>
+                    <td>{{$estate->horizontal->title}}</td>
+                    <td>{{estado($estate->id_estado)}}</td>
+                    <td>{{$estate->id_municipio}}</td>
+                    <td>{{municipio($estate->id_municipio)}}</td>
+                    <td>{{$estate->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('admin.deleteHighlightDevHorizontal', $p->id) }}" class="btn btn-danger">
-                            <i class="fa-solid fa-circle-xmark"></i>
-                        </a>
-                        <a href="https://vangoo.mx/details-horiz-dev/horizontalDev/{{$p->id}}" target="_blank">
+                        <form action="{{ route('horizontals.highlights.destroy', $estate->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </form>
+                        <a href="https://vangoo.mx/details-horiz-dev/horizontalDev/{{$estate->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$p->id_development}}" action="{{ route('admin.orderHighlightDevHorizontal') }}" method="POST">
+                        <form id="orden-form{{$estate->id_development}}" action="{{ route('verticals.highlights.update', $estate->id) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <span class="d-flex gap-1">
-                                <input type="hidden" name="id" value="{{$p->id_development}}">
-                                <select class="form-select" name="num_order" onchange="ordenSelect({{$p->id_development}})">
-                                    <option selected hidden>Orden</option>
-                                    @foreach($devshl as $key => $q)
-                                    @if($key == $p->num_order)
-                                    <option value="{{$key}}" selected>{{$key}}</option>
-                                    @else
-                                    <option value="{{$key}}">{{$key}}</option>
-                                    @endif
-                                    @endforeach
+                                <input type="hidden" name="id" value="{{$estate->id_development}}">
+                                <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_development}})">
+                                    <option value="" selected hidden>Orden</option>
+                                    @for($i = 1; $i <= count($estates); $i++)
+                                        <option value="{{ $i }}" {{ $estate->num_order == $i ? 'selected' : '' }}>
+                                        {{ $i }}
+                                        </option>
+                                        @endfor
                                 </select>
                             </span>
                         </form>
@@ -127,28 +130,24 @@
     }
 
     document.getElementById('municipiosh-select').addEventListener('change', function() {
-        var municipioId = this.options[this.selectedIndex].getAttribute('data-municipio-id');
-        var url = '/ep/get-devs-horizontal-by-municipio/' + municipioId;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var properties = JSON.parse(xhr.responseText);
-                var propertiesHtml = '';
-                for (var i = 0; i < properties.length; i++) {
-                    propertiesHtml += '<option value="' + properties[i].id + '">' + properties[i].id + ' - ' + properties[i].title + '</option>';
-                }
-                var selectHtml = '';
-                if (municipioId != 0) {
-                    selectHtml = '<select class="form-select larger-width" name="id_development">' + propertiesHtml + '</select><button class="btn btn-primary" type="submit">Asignar</button>';
-                }
-                document.getElementById('devs-by-municipio').innerHTML = selectHtml;
-            } else {
-                console.log('Error');
-            }
-        };
-        xhr.send();
+        var municipioId = this.value;
+        var url = '/developments/horizontal/municipio/' + municipioId;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(properties => {
+                let html = '<select class="form-select larger-width" name="id_development" required>';
+                properties.forEach(property => {
+                    html += `<option value="${property.id}">${property.id} - ${property.title}</option>`;
+                });
+                html += '</select>';
+
+                html += '<button type="submit" class="btn btn-primary ms-2">Asignar</button>';
+
+                document.getElementById('devs-by-municipio').innerHTML = html;
+                document.getElementById('submit-btn').style.display = 'inline-block';
+            })
+            .catch(error => console.error('Error:', error));
     });
 </script>
 

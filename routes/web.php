@@ -180,18 +180,6 @@ Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('ema
 
 Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('emails.template');
 
-
-/* DESARROLLOS HORIZONTALES */
-
-Route::get('ep/get-devs-horizontal-by-municipio/{id}', [DevelopmentsHorizontalController::class, 'getDevsHorizontalByMunicipio']);
-
-Route::get('ep/getDevHorizontalSearch/{estado?}/{municipio?}/{colonia?}/{status?}/{min?}/{max?}', [DevelopmentsHorizontalController::class, 'getDevHorizontalSearch'])->name('epDevHorizontalSearch.get');
-
-/* OPCIONES DESARROLLOS HORIZONTALES */
-Route::get('ep/getApartmentsFromDevHorizontal/{id}', [DevelopmentsHorizontalApartmentsController::class, 'getApartmentsFromDevHorizontal'])->name('epApartmentsFromDevHorizontal.get');
-
-Route::get('ep/getApartmentsImagesHorizontal/{id}', [DevelopmentsHorizontalApartmentsController::class, 'getApartmentsImagesHorizontal'])->name('epApartmentsImagesHorizontal.get');
-
 /* LOTES */
 
 Route::get('ep/getAllLots', [LotsController::class, 'getAll'])->name('epAllLots.get');
