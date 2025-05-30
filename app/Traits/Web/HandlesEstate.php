@@ -169,7 +169,7 @@ trait HandlesEstate
             'new_order.*' => 'string'
         ]);
 
-        $currentImages = $model->images ?? [];
+        $currentImages = $estate->images ?? [];
 
         foreach ($request->new_order as $filename) {
             if (!in_array($filename, $currentImages, true)) {
