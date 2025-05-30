@@ -164,36 +164,32 @@ trait HandlesEstate
 
     protected function reorderImages(Request $request, Model $estate)
     {
+        Log::info('Reordering images for estate ID: ' . $estate->id);
+        Log::info('New order received: ', $request->all());
         $request->validate([
             'new_order' => 'required|array',
             'new_order.*' => 'string'
         ]);
 
-        Log::info('Reordering images for property ID: ' . $estate->id);
-        Log::info('New order received: ' . json_encode($request->new_order));
+        $currentImages = $property->images ?? [];
 
-        $newOrder = is_string($request->new_order)
-            ? json_decode($request->new_order, true)
-            : $request->new_order;
+        if (is_string($currentImages)) {
+            $currentImages = json_decode($currentImages, true) ?? [];
+        }
 
-        $currentImages = is_array($estate->images)
-            ? $estate->images
-            : json_decode($estate->images, true) ?? [];
+        Log::info('Current images in DB: ', $currentImages);
 
-        Log::info('Current images in DB: ' . json_encode($currentImages));
-
-        foreach ($newOrder as $filename) {
+        foreach ($request->new_order as $filename) {
             if (!in_array($filename, $currentImages)) {
-                Log::warning('File not in property images: ' . $filename);
                 return response()->json([
-                    'error' => 'Archivo no válido: ' . $filename
+                    'error' => 'El archivo ' . $filename . ' no pertenece a este inmueble'
                 ], 422);
             }
         }
 
         try {
             // Actualizar usando el mismo método que en Lots
-            $estate->update(['images' => $newOrder]);
+            $estate->update(['images' => $request->new_order]);
 
             Log::info('Order updated successfully');
             return response()->json(['success' => true]);
