@@ -58,10 +58,9 @@ class DevelopmentVerticalController extends Controller
             'amenities' => $request->amenities,
             'commission_percentage' => $request->commission_percentage,
             'id_user' => Auth::user()->id,
-            'images' => $request->hasFile('images') ? count($request->file('images')) : 0,
         ]);
 
-        $this->handleImageProcessing($request, $development, false);
+        $this->handleImageProcessing($request, $development);
         $this->processApartments($request, $development);
 
         return redirect()->route('verticals.index')->with('success', 'Desarrollo vertical creado exitosamente.');
@@ -99,9 +98,7 @@ class DevelopmentVerticalController extends Controller
             'commission_percentage'
         ]);
 
-        $this->handleImageProcessing($request, $development, true);
-
-        $updateData['images'] = $development->images + ($request->hasFile('images') ? count($request->file('images')) : 0);
+        $this->handleImageProcessing($request, $development);
 
         $updateData['location'] = $this->getLocation(
             $request->id_colonia,
@@ -137,14 +134,13 @@ class DevelopmentVerticalController extends Controller
         return $this->deleteDevelopment($id);
     }
 
-    public function destroyImage($developmentId, $imageId)
+    public function reorderImages(Request $request, Developments $vertical)
     {
-        $development = Developments::findOrFail($developmentId);
+        return $this->reorderEstateImages($request, $vertical);
+    }
 
-        if ($this->deleteImage($development, $imageId)) {
-            return redirect()->back()->with('success', 'Imagen eliminada correctamente');
-        }
-
-        return redirect()->back()->with('error', 'Imagen no encontrada');
+    public function deleteImage(Developments $vertical, $filename)
+    {
+        return $this->destroyImage($vertical, $filename);
     }
 }

@@ -87,7 +87,9 @@ Route::prefix('developments/horizontal')->name('horizontals.')->middleware('chec
 
 // Desarrollos verticales
 Route::prefix('developments/vertical')->name('verticals.')->middleware('check.admin')->group(function () {
-    Route::delete('deleteImage/{developmentId}/{imageId}', [DevelopmentVerticalController::class, 'destroyImage'])
+    Route::post('{vertical}/reorder-images', [DevelopmentVerticalController::class, 'reorderImages'])
+        ->name('reorder-images');
+    Route::delete('deleteImage/{vertical}/{filename}', [DevelopmentVerticalController::class, 'deleteImage'])
         ->name('deleteImage');
     Route::get('municipio/{id}', [DevelopmentVerticalHighlightController::class, 'verticalByMunicipio'])
         ->name('municipio');

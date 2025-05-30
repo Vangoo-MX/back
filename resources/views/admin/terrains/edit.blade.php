@@ -354,6 +354,32 @@ Editar terreno
         width: 1%;
     }
 
+    #imageGallery {
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        padding-bottom: 10px;
+    }
+
+    .draggable-item {
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+    }
+
+    .draggable-item.dragging {
+        opacity: 0.5;
+        transform: scale(0.9);
+    }
+
+    .drag-over {
+        border: 2px dashed #007bff;
+        background: rgba(0, 123, 255, 0.1);
+    }
+
+    .removing {
+        transform: scale(0);
+        opacity: 0;
+    }
+
     /*-----------RESPONSIVE--------------*/
     @media only screen and (max-width: 600px) {
         .option-appartment {
