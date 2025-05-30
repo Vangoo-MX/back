@@ -210,10 +210,10 @@ trait HandlesEstate
         ])->filter()->join(', ');
     }
 
-    protected function destroyImage(Model $estate, string $filename)
+    protected function destroyImage($estate, string $filename)
     {
         Log::info("Deleting image in trait: {$filename} for estate ID: {$estate->id}");
-        if (!in_array($filename, $model->images ?? [], true)) {
+        if (!in_array($filename, $estate->images ?? [], true)) {
             return response()->json([
                 'success' => false,
                 'error' => 'La imagen no existe en este registro'
