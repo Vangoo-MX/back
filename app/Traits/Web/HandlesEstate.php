@@ -228,9 +228,9 @@ trait HandlesEstate
         return response()->json(['success' => true]);
     }
 
-    public function handleDragDropReorder(Request $request, Model $model)
+    public function handleDragDropReorder(Request $request, Model $estate)
     {
-        return $this->reorderModelImages($request, $model);
+        return $this->reorderModelImages($request, $estate);
     }
 
     public function deactiveEstate($id)
