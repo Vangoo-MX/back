@@ -179,15 +179,6 @@ Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('ema
 
 Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('emails.template');
 
-/* DESARROLLOS */
-Route::get('ep/getAllDevelopments', [DevelopmentsController::class, 'getAll'])->name('epAllDevelopments.get');
-
-Route::get('ep/get-devs-by-municipio/{id}', [DevelopmentsController::class, 'getDevsByMunicipio']);
-
-/* OPCIONES DESARROLLOS */
-Route::get('ep/getApartmentsFromDev/{id}', [DevelopmentsApartmentsController::class, 'getApartmentsFromDev'])->name('epApartmentsFromDev.get');
-
-Route::get('ep/getApartmentsImages/{id}', [DevelopmentsApartmentsController::class, 'getApartmentsImages'])->name('epApartmentsImages.get');
 
 /* DESARROLLOS HORIZONTALES */
 
