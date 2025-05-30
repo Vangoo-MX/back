@@ -95,7 +95,7 @@
                         <ul class="dropdown-menu menu-primary-dropdown">
                             <li><a class="{{ (request()->is('developments/horizontal*')) ? 'active' : '' }}" href="{{route('horizontals.index')}}">Todas los desarrollos horizontales</a></li>
                             <li><a class="{{ (request()->is('developments/horizontal/create*')) ? 'active' : '' }}" href="{{route('horizontals.create')}}">Crear desarrollo horizontal</a></li>
-                            <li><a class="" href="{{route('horizontals.highlight.index')}}">Desarrollos horizontales destacados</a></li>
+                            <li><a class="" href="{{route('horizontals.highlights.index')}}">Desarrollos horizontales destacados</a></li>
                         </ul>
                     </li>
                     <li class="dropdown dropdown-menu-end">
