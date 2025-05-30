@@ -10,17 +10,17 @@
 
 <h3>Nuevo lote destacado</h3>
 <br>
-<form method="post" action="{{ route('admin.addHighlightLot') }}">
+<form method="post" action="{{ route('lots.highlights.store') }}">
     @csrf
     <div class="d-flex gap-2">
         <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">
-            <option selected value="0" data-municipio-id="0">Todos los lotes destacados</option>
-            @foreach($municipiosh as $e)
-            <option value="{{$e->id}}" data-municipio-id="{{$e->id}}">{{$e->nombre}}</option>
+            <option selected value="0" data-municipio-id="0">Todas los desarrollos destacados</option>
+            @foreach($municipios as $municipio)
+            <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
             @endforeach
         </select>
 
-        <div id="lots-by-municipio" class="d-flex gap-2 larger-width"></div>
+        <div id="devs-by-municipio" class="d-flex gap-2 larger-width"></div>
     </div>
 </form>
 
@@ -43,34 +43,37 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($lotshl as $p)
-                <tr class="municipio-{{$p->id_municipio}}">
-                    <td>{{$p->id_lot}}</td>
-                    <td>{{lot($p->id_lot)[0]['title']}}</td>
-                    <td>{{estado($p->id_estado)}}</td>
-                    <td>{{$p->id_municipio}}</td>
-                    <td>{{municipio($p->id_municipio)}}</td>
-                    <td>{{$p->num_order}}</td>
+                @foreach($estates as $estate)
+                <tr class="municipio-{{$estate->id_municipio}}">
+                    <td>{{$estate->id_lot}}</td>
+                    <td>{{lot($estate->id_lot)[0]['title']}}</td>
+                    <td>{{estado($estate->id_estado)}}</td>
+                    <td>{{$estate->id_municipio}}</td>
+                    <td>{{municipio($estate->id_municipio)}}</td>
+                    <td>{{$estate->num_order}}</td>
                     <td class="d-flex gap-3">
-                        <a href="{{ route('admin.deleteHighlightLot', $p->id) }}" class="btn btn-danger">
-                            <i class="fa-solid fa-circle-xmark"></i>
-                        </a>
-                        <a href="https://vangoo.mx/detailslots/lots/{{$p->id}}" target="_blank">
+                        <form action="{{ route('lots.highlights.destroy', $estate->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </form>
+                        <a href="https://vangoo.mx/detailslots/lots/{{$estate->id}}" target="_blank">
                             <i class="fa-solid fa-link mx-1"></i>
                         </a>
-                        <form id="orden-form{{$p->id_lot}}" action="{{ route('admin.orderHighlightLot') }}" method="POST">
+                        <form id="orden-form{{$estate->id_lot}}" action="{{ route('lots.highlights.update', $estate->id) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <span class="d-flex gap-1">
-                                <input type="hidden" name="id" value="{{$p->id_lot}}">
-                                <select class="form-select" name="num_order" onchange="ordenSelect({{$p->id_lot}})">
-                                    <option selected hidden>Orden</option>
-                                    @foreach($lotshl as $key => $q)
-                                    @if($key == $p->num_order)
-                                    <option value="{{$key}}" selected>{{$key}}</option>
-                                    @else
-                                    <option value="{{$key}}">{{$key}}</option>
-                                    @endif
-                                    @endforeach
+                                <input type="hidden" name="id" value="{{$estate->id_lot}}">
+                                <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_lot}})">
+                                    <option value="" selected hidden>Orden</option>
+                                    @for($i = 1; $i <= count($estates); $i++)
+                                        <option value="{{ $i }}" {{ $estate->num_order == $i ? 'selected' : '' }}>
+                                        {{ $i }}
+                                        </option>
+                                        @endfor
                                 </select>
                             </span>
                         </form>
