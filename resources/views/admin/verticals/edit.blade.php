@@ -170,7 +170,6 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <input type="hidden" name="num_images" value="{{old('images', $estate->images)}}">
                     </div>
                 </div>
 
@@ -198,7 +197,7 @@
 
                 <div class="images mb-3 mt-3">
                     <label for="image" class="form-label">Agregar más imágenes:</label>
-                    <input type="file" name="images[]" id="imagen" class="form-control" accept="image/jpeg" multiple onchange="previewImage()">
+                    <input type="file" name="images[]" id="imagen" class="form-control" multiple onchange="previewImage()">
                     <div id="preview"></div>
                 </div>
 
@@ -280,10 +279,6 @@
                     <button type="submit" class="btn bg-gradient-info btn-lg">Editar</button>
                 </div>
 
-            </form>
-            <form id="delete-form" action="{{ route('verticals.deleteImage', ['developmentId' => $estate->id, 'imageId' => ':imageId']) }}" method="POST" style="display: none;">
-                @csrf
-                @method('DELETE')
             </form>
             @if(session('error'))
             <script>
