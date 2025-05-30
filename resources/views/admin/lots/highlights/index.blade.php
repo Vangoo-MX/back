@@ -131,7 +131,7 @@
 
     document.getElementById('municipiosh-select').addEventListener('change', function() {
         var municipioId = this.value;
-        var url = '/lots/horizontal/municipio/' + municipioId;
+        var url = '/lots/municipio/' + municipioId;
 
         fetch(url)
             .then(response => response.json())
