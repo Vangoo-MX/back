@@ -158,7 +158,7 @@ trait HandlesEstate
         } else {
             Image::make($image->getRealPath())
                 ->encode('webp', 90)
-                ->save($directory);
+                ->save($directory, $filename);
         }
     }
 
