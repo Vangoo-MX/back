@@ -14,7 +14,7 @@ class DevelopmentHorizontalHighlightController extends Controller
 
     protected $model = DevelopmentsHorizontals::class;
     protected $modelHighlights = DevelopmentsHorizontalHighlights::class;
-    protected $relationHighlight = 'developmentHorizontal';
+    protected $relationHighlight = 'horizontal';
     protected $relationMunicipio = 'developmentHorizontal';
 
     protected function getHighlightConfig(): array
