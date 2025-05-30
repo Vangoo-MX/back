@@ -171,7 +171,7 @@ trait HandlesEstate
             'new_order.*' => 'string'
         ]);
 
-        $currentImages = $property->images ?? [];
+        $currentImages = $estate->images ?? [];
 
         if (is_string($currentImages)) {
             $currentImages = json_decode($currentImages, true) ?? [];
