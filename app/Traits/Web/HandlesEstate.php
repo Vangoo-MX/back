@@ -153,12 +153,13 @@ trait HandlesEstate
 
     private function processSingleImage(UploadedFile $image, string $directory, string $filename): void
     {
+        $fullPath = $directory . '/' . $filename;
         if (strtolower($image->extension()) === 'webp') {
             $image->move($directory, $filename);
         } else {
-            Image::make($image->getRealPath())
+            Image::make($image)
                 ->encode('webp', 90)
-                ->save($directory, $filename);
+                ->save($fullPath);
         }
     }
 
