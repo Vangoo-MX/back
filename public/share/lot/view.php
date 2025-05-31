@@ -36,8 +36,6 @@ if (!$data) {
     exit;
 }
 
-error_log(print_r($data, true));
-
 $backupImage = 'https://www.vangoo.mx/assets/img/img404.jpg';
 $imageToUse = $backupImage;
 
