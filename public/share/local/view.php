@@ -364,7 +364,7 @@ function moneyFormat($numero)
                     <?php foreach ($propertyData as $property) : ?>
                         <div class="card">
                             <div class="image-container">
-                                <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $property['id']; ?>/1.webp?height=250&width=400"
+                                <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $property['id']; ?>/<?php echo $property['images'][0]; ?>?height=250&width=400"
                                     alt="Property"
                                     class="property-image"
                                     onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
