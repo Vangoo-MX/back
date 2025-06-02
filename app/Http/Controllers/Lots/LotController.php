@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Lots;
 use App\Http\Controllers\Controller;
 use App\Models\Lots;
 use App\Models\LotsHighlights;
+use App\Traits\Utility\HandlesImage;
 use App\Traits\Web\HandlesEstate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LotController extends Controller
 {
-    use HandlesEstate;
+    use HandlesEstate, HandlesImage;
     protected $model = Lots::class;
     protected $highlightModel = LotsHighlights::class;
     protected $directory = 'lots';
