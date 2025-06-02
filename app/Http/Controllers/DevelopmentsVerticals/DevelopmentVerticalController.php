@@ -7,12 +7,13 @@ use App\Models\Developments;
 use App\Models\DevelopmentsApartments;
 use App\Models\DevelopmentsHighlights;
 use App\Traits\Web\HandlesEstate;
+use App\Traits\Utility\HandlesImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DevelopmentVerticalController extends Controller
 {
-    use HandlesEstate;
+    use HandlesEstate, HandlesImage;
     protected $model = Developments::class;
     protected $highlightModel = DevelopmentsHighlights::class;
     protected $apartmentModel = DevelopmentsApartments::class;

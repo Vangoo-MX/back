@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Terrains;
 use App\Models\TerrainsHighlights;
 use App\Traits\Web\HandlesEstate;
+use App\Traits\Utility\HandlesImage;
 use Illuminate\Http\Request;
 
 class TerrainController extends Controller
 {
-    use HandlesEstate;
+    use HandlesEstate, HandlesImage;
 
     protected $model = Terrains::class;
     protected $highlightModel = TerrainsHighlights::class;

@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Apartments;
 
 use App\Http\Controllers\Controller;
 use App\Traits\Web\HandlesEstate;
+use App\Traits\Utility\HandlesImage;
 use App\Models\ApartmentsHighlights;
 use App\Models\Apartments;
 use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
 {
-    use HandlesEstate;
+    use HandlesEstate, HandlesImage;
     protected $model = Apartments::class;
     protected $highlightModel = ApartmentsHighlights::class;
     protected $directory = 'apartments';

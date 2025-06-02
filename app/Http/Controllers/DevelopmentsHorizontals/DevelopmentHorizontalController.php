@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\DevelopmentsHorizontals;
 
 use App\Http\Controllers\Controller;
-use App\Models\Developments;
+use App\Traits\Utility\HandlesImage;
 use App\Models\DevelopmentsHorizontalApartments;
 use App\Models\DevelopmentsHorizontalHighlights;
 use App\Models\DevelopmentsHorizontals;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class DevelopmentHorizontalController extends Controller
 {
-    use HandlesEstate;
+    use HandlesEstate, HandlesImage;
 
     protected $model = DevelopmentsHorizontals::class;
     protected $highlightModel = DevelopmentsHorizontalHighlights::class;

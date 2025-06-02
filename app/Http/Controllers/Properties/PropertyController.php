@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Properties;
 use App\Models\PropertiesHighlights;
 use App\Traits\Web\HandlesEstate;
+use App\Traits\Utility\HandlesImage;
 use Illuminate\Http\Request;
 
 class PropertyController extends Controller
 {
-    use HandlesEstate;
+    use HandlesEstate, HandlesImage;
 
     protected $model = Properties::class;
     protected $highlightModel = PropertiesHighlights::class;
