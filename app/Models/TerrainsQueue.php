@@ -49,6 +49,10 @@ class TerrainsQueue extends Model
         'views' => 0
     ];
 
+    protected $casts = [
+        'images' => 'array',
+    ];
+
     public function estado(): BelongsTo
     {
         return $this->belongsTo(Estados::class, 'id_estado', 'id');

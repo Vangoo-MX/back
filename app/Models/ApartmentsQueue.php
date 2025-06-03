@@ -53,6 +53,7 @@ class ApartmentsQueue extends Model
 
     protected $casts = [
         'bathrooms' => 'decimal:1',
+        'images' => 'array',
     ];
 
     public function estado(): BelongsTo
