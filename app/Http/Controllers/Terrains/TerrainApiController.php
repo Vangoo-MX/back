@@ -114,7 +114,6 @@ class TerrainApiController extends Controller
             'propertySellType' => 'sell_type',
             'propertyShareConditions' => 'share_conditions',
             'propertyServices' => 'services',
-            'number_images' => 'images',
             'id_user' => 'id_user',
         ];
 
@@ -129,21 +128,14 @@ class TerrainApiController extends Controller
             ->toArray();
 
         $terrain = new TerrainsQueue($data);
-        $terrain->location = $this->getLocationFromRelations($terrain);
+        $terrain->location = $this->getLocation(
+            $request->input('propertyColonia'),
+            $request->input('propertyMunicipio'),
+            $request->input('propertyEstado')
+        );
         $terrain->save();
 
         return response()->json(['id' => $terrain->id]);
-    }
-
-    protected function getLocationFromRelations(TerrainsQueue $terrain): string
-    {
-        return collect([
-            $terrain->colonia->nombre ?? null,
-            $terrain->municipio->nombre ?? null,
-            $terrain->estado->nombre ?? null
-        ])
-            ->filter()
-            ->join(', ');
     }
 
     /**
@@ -188,17 +180,16 @@ class TerrainApiController extends Controller
 
         $terrain->fill($data);
 
-        if ($request->has('number_images')) {
-            $terrain->images += $request->number_images;
-        }
-
         if ($request->has('status_aproved')) {
             $terrain->status_aproved = $request->status_aproved;
         }
 
-        $terrain->location = $this->getLocationFromRelations($terrain);
+        $terrain->location = $this->getLocation(
+            $request->input('propertyColonia'),
+            $request->input('propertyMunicipio'),
+            $request->input('propertyEstado')
+        );
         $terrain->save();
-        $this->imagesOrdering($request, $terrain->id);
 
         return response()->json(['id' => $terrain->id]);
     }

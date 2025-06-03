@@ -95,7 +95,6 @@ class PropertyApiController extends Controller
 
     public function storePropertyQueue(Request $request)
     {
-        Log::info('Storing property queue', ['request' => $request->all()]);
         $fieldMapping = [
             'propertyTitle' => 'title',
             'propertySellPrice' => 'price',
@@ -120,7 +119,6 @@ class PropertyApiController extends Controller
             'propertyAgeConstruction' => 'antiquity',
             'propertyOperationType' => 'operation_type',
             'propertyAmountPriceBasedM2' => 'price_m2',
-            'number_images' => 'images',
             'id_user' => 'id_user',
         ];
 
@@ -135,22 +133,14 @@ class PropertyApiController extends Controller
             ->toArray();
 
         $property = new PropertiesQueue($data);
-        $property->location = $this->getLocationFromRelations($property);
-        Log::info('Property data', $property->toArray());
+        $property->location = $this->getLocation(
+            $request->input('propertyColonia'),
+            $request->input('propertyMunicipio'),
+            $request->input('propertyEstado')
+        );
         $property->save();
 
         return response()->json(['id' => $property->id]);
-    }
-
-    protected function getLocationFromRelations(PropertiesQueue $property): string
-    {
-        return collect([
-            $property->colonia->nombre ?? null,
-            $property->municipio->nombre ?? null,
-            $property->estado->nombre ?? null
-        ])
-            ->filter()
-            ->join(', ');
     }
 
     /**
@@ -199,17 +189,16 @@ class PropertyApiController extends Controller
 
         $property->fill($data);
 
-        if ($request->has('number_images')) {
-            $property->images += $request->number_images;
-        }
-
         if ($request->has('status_aproved')) {
             $property->status_aproved = $request->status_aproved;
         }
 
-        $property->location = $this->getLocationFromRelations($property);
+        $property->location = $this->getLocation(
+            $request->input('propertyColonia'),
+            $request->input('propertyMunicipio'),
+            $request->input('propertyEstado')
+        );
         $property->save();
-        $this->imagesOrdering($request, $property->id);
 
         return response()->json(['id' => $property->id]);
     }

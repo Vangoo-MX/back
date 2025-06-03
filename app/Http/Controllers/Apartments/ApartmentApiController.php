@@ -118,7 +118,6 @@ class ApartmentApiController extends Controller
             'propertyPriceMaintenance' => 'price_maintenance',
             'propertyOperationType' => 'operation_type',
             'propertyAmountPriceBasedM2' => 'price_m2',
-            'number_images' => 'images',
             'id_user' => 'id_user',
         ];
 
@@ -133,21 +132,14 @@ class ApartmentApiController extends Controller
             ->toArray();
 
         $apartment = new ApartmentsQueue($data);
-        $apartment->location = $this->getLocationFromRelations($apartment);
+        $apartment->location = $this->getLocation(
+            $request->input('propertyColonia'),
+            $request->input('propertyMunicipio'),
+            $request->input('propertyEstado')
+        );
         $apartment->save();
 
         return response()->json(['id' => $apartment->id]);
-    }
-
-    protected function getLocationFromRelations(ApartmentsQueue $apartment): string
-    {
-        return collect([
-            $apartment->colonia->nombre ?? null,
-            $apartment->municipio->nombre ?? null,
-            $apartment->estado->nombre ?? null
-        ])
-            ->filter()
-            ->join(', ');
     }
 
     /**
@@ -198,17 +190,16 @@ class ApartmentApiController extends Controller
 
         $apartment->fill($data);
 
-        if ($request->has('number_images')) {
-            $apartment->images += $request->number_images;
-        }
-
         if ($request->has('status_aproved')) {
             $apartment->status_aproved = $request->status_aproved;
         }
 
-        $apartment->location = $this->getLocationFromRelations($apartment);
+        $apartment->location = $this->getLocation(
+            $request->input('propertyColonia'),
+            $request->input('propertyMunicipio'),
+            $request->input('propertyEstado')
+        );
         $apartment->save();
-        $this->imagesOrdering($request, $apartment->id);
 
         return response()->json(['id' => $apartment->id]);
     }

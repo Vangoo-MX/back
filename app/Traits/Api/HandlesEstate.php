@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 use Illuminate\Http\Response;
+use App\Models\Colonias;
+use App\Models\Estados;
+use App\Models\Municipios;
 
 trait HandlesEstate
 {
@@ -152,6 +155,19 @@ trait HandlesEstate
     /**
      * Inicio gestion de imagenes
      */
+
+    protected function getLocation(int $coloniaId, int $municipioId, int $estadoId): string
+    {
+        $colonia = Colonias::find($coloniaId);
+        $municipio = Municipios::find($municipioId);
+        $estado = Estados::find($estadoId);
+
+        return collect([
+            $colonia->nombre ?? null,
+            $municipio->nombre ?? null,
+            $estado->nombre ?? null,
+        ])->filter()->join(', ');
+    }
 
     public function uploadImages(Request $request)
     {
