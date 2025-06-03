@@ -41,6 +41,8 @@ trait HandlesImage
             $newImages[] = $filename;
         }
 
+        Log::info('Existing images before merge: ' . json_encode($existingImages));
+        Log::info('New images to be added: ' . json_encode($newImages));
         $estate->images = array_merge($existingImages, $newImages);
         $estate->save();
     }
