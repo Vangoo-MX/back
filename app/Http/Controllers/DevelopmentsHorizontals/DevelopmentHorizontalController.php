@@ -19,6 +19,7 @@ class DevelopmentHorizontalController extends Controller
     protected $highlightModel = DevelopmentsHorizontalHighlights::class;
     protected $apartmentModel = DevelopmentsHorizontalApartments::class;
     protected $directory = 'developmentsHorizontal';
+    protected $basePath = 'posts';
 
     public function index()
     {

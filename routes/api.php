@@ -82,7 +82,7 @@ Route::prefix('property')->group(function () {
     Route::post('queue/store', [PropertyApiController::class, 'storePropertyQueue']);
     Route::put('queue/update', [PropertyApiController::class, 'updatePropertyQueue']);
     Route::delete('queue/delete/{id}', [PropertyApiController::class, 'deletePropertyQueue']);
-    Route::post('images/upload', [PropertyApiController::class, 'imagesUpload']);
+    Route::post('{property}/images/upload', [PropertyApiController::class, 'imagesUpload']);
     Route::post('images/delete', [PropertyApiController::class, 'imagesDelete']);
     Route::get('detail/{id}', [PropertyApiController::class, 'getProperty']);
     Route::get('related/{id}', [PropertyApiController::class, 'getPropertyRelated']);

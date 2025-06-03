@@ -8,19 +8,21 @@ use App\Models\PropertiesHighlights;
 use App\Models\PropertiesQueue;
 use App\Traits\Api\HandlesHighlights;
 use App\Traits\Api\HandlesEstate;
+use App\Traits\Utility\HandlesImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class PropertyApiController extends Controller
 {
 
-    use HandlesHighlights, HandlesEstate;
+    use HandlesHighlights, HandlesEstate, HandlesImage;
 
     protected $model = Properties::class;
     protected $highlightModel = PropertiesHighlights::class;
     protected $modelQueue = PropertiesQueue::class;
     protected $highlightRelationship = 'property';
     protected $directory = 'properties';
+    protected $basePath = 'postsqueue';
 
     public function getPropertiesHighlights(?int $municipioId = null)
     {
@@ -62,9 +64,9 @@ class PropertyApiController extends Controller
         return $this->getUserQueue($id);
     }
 
-    public function imagesUpload(Request $request)
+    public function imagesUpload(Request $request, Properties $property)
     {
-        return $this->uploadImages($request);
+        return $this->handleImageProcessing($request, $property);
     }
 
     public function imagesDelete(Request $request)

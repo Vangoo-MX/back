@@ -15,6 +15,7 @@ class ApartmentController extends Controller
     protected $model = Apartments::class;
     protected $highlightModel = ApartmentsHighlights::class;
     protected $directory = 'apartments';
+    protected $basePath = 'posts';
     protected $idHighlight = 'id_property';
 
     public function index()

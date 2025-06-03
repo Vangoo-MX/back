@@ -16,6 +16,7 @@ class LotController extends Controller
     protected $model = Lots::class;
     protected $highlightModel = LotsHighlights::class;
     protected $directory = 'lots';
+    protected $basePath = 'posts';
     protected $idHighlight = 'id_lot';
 
     public function index()

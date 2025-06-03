@@ -19,6 +19,7 @@ class ApartmentApiController extends Controller
     protected $modelQueue = ApartmentsQueue::class;
     protected $highlightRelationship = 'apartment';
     protected $directory = 'apartments';
+    protected $basePath = 'postsqueue';
 
     public function getApartmentsHighlights(?int $municipioId = null)
     {

@@ -19,6 +19,7 @@ class TerrainApiController extends Controller
     protected $modelQueue = TerrainsQueue::class;
     protected $highlightRelationship = 'terrain';
     protected $directory = 'terrains';
+    protected $basePath = 'postsqueue';
 
     public function getTerrainsHighlights(?int $municipioId = null)
     {

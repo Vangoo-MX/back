@@ -18,6 +18,7 @@ class DevelopmentVerticalController extends Controller
     protected $highlightModel = DevelopmentsHighlights::class;
     protected $apartmentModel = DevelopmentsApartments::class;
     protected $directory = 'developments';
+    protected $basePath = 'posts';
 
     public function index()
     {

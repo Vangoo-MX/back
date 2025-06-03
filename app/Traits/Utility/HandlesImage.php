@@ -21,7 +21,7 @@ trait HandlesImage
 
     protected function processNewImages(array $images, Model $estate): void
     {
-        $directory = storage_path("app/public/img/posts/{$this->directory}/{$estate->id}");
+        $directory = storage_path("app/public/img/{$this->basePath}/{$this->directory}/{$estate->id}");
 
         if (!file_exists($directory)) {
             mkdir($directory, 0755, true);
@@ -102,7 +102,7 @@ trait HandlesImage
             ], 404);
         }
 
-        $path = "public/img/posts/{$this->directory}/{$estate->id}/{$filename}";
+        $path = "public/img/{$this->basePath}/{$this->directory}/{$estate->id}/{$filename}";
 
         if (Storage::exists($path)) {
             Storage::delete($path);
