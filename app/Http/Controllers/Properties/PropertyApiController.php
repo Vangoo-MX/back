@@ -64,19 +64,19 @@ class PropertyApiController extends Controller
         return $this->getUserQueue($id);
     }
 
-    public function imagesUpload(Request $request, Properties $property)
+    public function imagesUpload(Request $request, PropertiesQueue $property)
     {
         Log::info('Processing images upload for property ID: ' . $property->id);
         Log::info('Request data: ' . json_encode($request->all()));
         return $this->handleImageProcessing($request, $property);
     }
 
-    public function imagesDelete(Properties $property, $filename)
+    public function imagesDelete(PropertiesQueue $property, $filename)
     {
         return $this->destroyImage($property, $filename);
     }
 
-    protected function imagesOrdering(Request $request, Properties $property)
+    protected function imagesOrdering(Request $request, PropertiesQueue $property)
     {
         return $this->reorderEstateImages($request, $property);
     }
