@@ -69,14 +69,14 @@ class PropertyApiController extends Controller
         return $this->handleImageProcessing($request, $property);
     }
 
-    public function imagesDelete(Request $request)
+    public function imagesDelete(Properties $property, $filename)
     {
-        return $this->deleteImages($request);
+        return $this->destroyImage($property, $filename);
     }
 
-    protected function imagesOrdering(Request $request, int $id)
+    protected function imagesOrdering(Request $request, Properties $property)
     {
-        return $this->processImageOrdering($request, $id);
+        return $this->reorderEstateImages($request, $property);
     }
 
     public function deletePropertyQueue(int $id)
