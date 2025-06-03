@@ -10,7 +10,6 @@ use App\Traits\Api\HandlesHighlights;
 use App\Traits\Api\HandlesEstate;
 use App\Traits\Utility\HandlesImage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class PropertyApiController extends Controller
 {
@@ -66,8 +65,6 @@ class PropertyApiController extends Controller
 
     public function imagesUpload(Request $request, PropertiesQueue $property)
     {
-        Log::info('Processing images upload for property ID: ' . $property->id);
-        Log::info('Request data: ' . json_encode($request->all()));
         return $this->handleImageProcessing($request, $property);
     }
 

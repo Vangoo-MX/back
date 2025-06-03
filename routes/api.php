@@ -44,8 +44,9 @@ Route::prefix('apartment')->group(function () {
     Route::post('queue/store', [ApartmentApiController::class, 'storeApartmentQueue']);
     Route::put('queue/update', [ApartmentApiController::class, 'updateApartmentQueue']);
     Route::delete('queue/delete/{id}', [ApartmentApiController::class, 'deleteApartmentQueue']);
-    Route::post('images/upload', [ApartmentApiController::class, 'imagesUpload']);
-    Route::post('images/delete', [ApartmentApiController::class, 'imagesDelete']);
+    Route::post('{apartment}/images/upload', [ApartmentApiController::class, 'imagesUpload']);
+    Route::post('{apartment}/images/reorder-images', [ApartmentApiController::class, 'imagesOrdering']);
+    Route::post('deleteImage/{apartment}/{filename}', [ApartmentApiController::class, 'imagesDelete']);
     Route::get('detail/{id}', [ApartmentApiController::class, 'getApartment']);
     Route::get('related/{id}', [ApartmentApiController::class, 'getApartmentRelated']);
     Route::delete('delete/{id}', [ApartmentApiController::class, 'deleteApartment']);
@@ -99,8 +100,9 @@ Route::prefix('terrain')->group(function () {
     Route::post('queue/store', [TerrainApiController::class, 'storeTerrainQueue']);
     Route::put('queue/update', [TerrainApiController::class, 'updateTerrainQueue']);
     Route::delete('queue/delete/{id}', [TerrainApiController::class, 'deleteTerrainQueue']);
-    Route::post('images/upload', [TerrainApiController::class, 'imagesUpload']);
-    Route::post('images/delete', [TerrainApiController::class, 'imagesDelete']);
+    Route::post('{terrain}/images/upload', [TerrainApiController::class, 'imagesUpload']);
+    Route::post('{terrain}/images/reorder-images', [TerrainApiController::class, 'imagesOrdering']);
+    Route::post('deleteImage/{terrain}/{filename}', [TerrainApiController::class, 'imagesDelete']);
     Route::get('detail/{id}', [TerrainApiController::class, 'getTerrain']);
     Route::get('related/{id}', [TerrainApiController::class, 'getTerrainRelated']);
     Route::delete('delete/{id}', [TerrainApiController::class, 'deleteTerrain']);

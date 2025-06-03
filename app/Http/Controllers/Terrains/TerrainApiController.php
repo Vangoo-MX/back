@@ -8,11 +8,12 @@ use App\Models\TerrainsHighlights;
 use App\Models\TerrainsQueue;
 use App\Traits\Api\HandlesHighlights;
 use App\Traits\Api\HandlesEstate;
+use App\Traits\Utility\HandlesImage;
 use Illuminate\Http\Request;
 
 class TerrainApiController extends Controller
 {
-    use HandlesHighlights, HandlesEstate;
+    use HandlesHighlights, HandlesEstate, HandlesImage;
 
     protected $model = Terrains::class;
     protected $highlightModel = TerrainsHighlights::class;
@@ -61,19 +62,19 @@ class TerrainApiController extends Controller
         return $this->getUserQueue($id);
     }
 
-    public function imagesUpload(Request $request)
+    public function imagesUpload(Request $request, TerrainsQueue $terrains)
     {
-        return $this->uploadImages($request);
+        return $this->handleImageProcessing($request, $terrains);
     }
 
-    public function imagesDelete(Request $request)
+    public function imagesDelete(TerrainsQueue $terrains, $filename)
     {
-        return $this->deleteImages($request);
+        return $this->destroyImage($terrains, $filename);
     }
 
-    protected function imagesOrdering(Request $request, int $terrainId)
+    public function imagesOrdering(Request $request, TerrainsQueue $terrains)
     {
-        return $this->processImageOrdering($request, $terrainId);
+        return $this->reorderEstateImages($request, $terrains);
     }
 
     public function deleteTerrainQueue(int $id)

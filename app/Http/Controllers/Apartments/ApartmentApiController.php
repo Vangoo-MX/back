@@ -8,11 +8,12 @@ use App\Models\ApartmentsQueue;
 use App\Models\ApartmentsHighlights;
 use App\Traits\Api\HandlesHighlights;
 use App\Traits\Api\HandlesEstate;
+use App\Traits\Utility\HandlesImage;
 use Illuminate\Http\Request;
 
 class ApartmentApiController extends Controller
 {
-    use HandlesHighlights, HandlesEstate;
+    use HandlesHighlights, HandlesEstate, HandlesImage;
 
     protected $model = Apartments::class;
     protected $highlightModel = ApartmentsHighlights::class;
@@ -61,19 +62,19 @@ class ApartmentApiController extends Controller
         return $this->getUserQueue($id);
     }
 
-    public function imagesUpload(Request $request)
+    public function imagesUpload(Request $request, ApartmentsQueue $apartment)
     {
-        return $this->uploadImages($request);
+        return $this->handleImageProcessing($request, $apartment);
     }
 
-    public function imagesDelete(Request $request)
+    public function imagesDelete(ApartmentsQueue $apartment, $filename)
     {
-        return $this->deleteImages($request);
+        return $this->destroyImage($apartment, $filename);
     }
 
-    protected function imagesOrdering(Request $request, int $id)
+    protected function imagesOrdering(Request $request, ApartmentsQueue $apartment)
     {
-        return $this->processImageOrdering($request, $id);
+        return $this->reorderEstateImages($request, $apartment);
     }
 
     public function deleteApartmentQueue(int $id)

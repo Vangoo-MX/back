@@ -14,8 +14,6 @@ trait HandlesImage
 {
     protected function handleImageProcessing(Request $request, Model $estate): void
     {
-        Log::info('Processing images for estate ID: ' . $estate->id);
-        Log::info('Request data: ' . json_encode($request->all()));
         if ($request->hasFile('images')) {
             $this->processNewImages($request->file('images'), $estate);
         }
@@ -23,8 +21,6 @@ trait HandlesImage
 
     protected function processNewImages(array $images, Model $estate): void
     {
-        Log::info('Processing new images for estate ID: ' . $estate->id);
-        Log::info('Images count: ' . count($images));
         $directory = storage_path("app/public/img/{$this->basePath}/{$this->directory}/{$estate->id}");
 
         if (!file_exists($directory)) {
@@ -41,8 +37,6 @@ trait HandlesImage
             $newImages[] = $filename;
         }
 
-        Log::info('Existing images before merge: ' . json_encode($existingImages));
-        Log::info('New images to be added: ' . json_encode($newImages));
         $estate->images = array_merge($existingImages, $newImages);
         $estate->save();
     }
@@ -54,7 +48,6 @@ trait HandlesImage
 
     private function processSingleImage(UploadedFile $image, string $directory, string $filename): void
     {
-        Log::info('Processing single image: ' . $filename);
         $fullPath = $directory . '/' . $filename;
         if (strtolower($image->extension()) === 'webp') {
             $image->move($directory, $filename);
