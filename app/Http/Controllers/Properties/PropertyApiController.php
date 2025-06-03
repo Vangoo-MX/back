@@ -66,6 +66,8 @@ class PropertyApiController extends Controller
 
     public function imagesUpload(Request $request, Properties $property)
     {
+        Log::info('Processing images upload for property ID: ' . $property->id);
+        Log::info('Request data: ' . json_encode($request->all()));
         return $this->handleImageProcessing($request, $property);
     }
 

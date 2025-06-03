@@ -14,6 +14,8 @@ trait HandlesImage
 {
     protected function handleImageProcessing(Request $request, Model $estate): void
     {
+        Log::info('Processing images for estate ID: ' . $estate->id);
+        Log::info('Request data: ' . json_encode($request->all()));
         if ($request->hasFile('images')) {
             $this->processNewImages($request->file('images'), $estate);
         }
@@ -21,6 +23,8 @@ trait HandlesImage
 
     protected function processNewImages(array $images, Model $estate): void
     {
+        Log::info('Processing new images for estate ID: ' . $estate->id);
+        Log::info('Images count: ' . count($images));
         $directory = storage_path("app/public/img/{$this->basePath}/{$this->directory}/{$estate->id}");
 
         if (!file_exists($directory)) {
