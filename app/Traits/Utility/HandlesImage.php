@@ -54,6 +54,7 @@ trait HandlesImage
 
     private function processSingleImage(UploadedFile $image, string $directory, string $filename): void
     {
+        Log::info('Processing single image: ' . $filename);
         $fullPath = $directory . '/' . $filename;
         if (strtolower($image->extension()) === 'webp') {
             $image->move($directory, $filename);
