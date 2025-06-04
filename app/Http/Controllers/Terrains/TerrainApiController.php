@@ -62,14 +62,14 @@ class TerrainApiController extends Controller
         return $this->getUserQueue($id);
     }
 
-    public function imagesUpload(Request $request, TerrainsQueue $terrains)
+    public function imagesUpload(Request $request, TerrainsQueue $terrain)
     {
-        return $this->handleImageProcessing($request, $terrains);
+        return $this->handleImageProcessing($request, $terrain);
     }
 
-    public function imagesDelete(TerrainsQueue $terrains, $filename)
+    public function imagesDelete(TerrainsQueue $terrain, $filename)
     {
-        return $this->destroyImage($terrains, $filename);
+        return $this->destroyImage($terrain, $filename);
     }
 
     public function imagesOrdering(Request $request, TerrainsQueue $terrains)
