@@ -72,9 +72,9 @@ class TerrainApiController extends Controller
         return $this->destroyImage($terrain, $filename);
     }
 
-    public function imagesOrdering(Request $request, TerrainsQueue $terrains)
+    public function imagesOrdering(Request $request, TerrainsQueue $terrain)
     {
-        return $this->reorderEstateImages($request, $terrains);
+        return $this->reorderEstateImages($request, $terrain);
     }
 
     public function deleteTerrainQueue(int $id)
