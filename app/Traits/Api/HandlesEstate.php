@@ -76,7 +76,7 @@ trait HandlesEstate
 
     public function getUserQueue(int $id): Collection
     {
-        return $this->modelQueue::select('id', 'title', 'price', 'location', 'images', 'status_aproved', 'updated_at')
+        return $this->modelQueue::select('id', 'title', 'price', 'location', 'images', 'status_aproved', 'created_at', 'updated_at')
             ->where('id_user', $id)
             ->get();
     }
