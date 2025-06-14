@@ -69,14 +69,14 @@ trait HandlesEstate
 
     public function getUser(int $id)
     {
-        return $this->model::select('id', 'title', 'price', 'location', 'views', 'images')
+        return $this->model::select('id', 'title', 'price', 'location', 'views', 'images', 'created_at')
             ->where('id_user', $id)
             ->get();
     }
 
     public function getUserQueue(int $id): Collection
     {
-        return $this->modelQueue::select('id', 'title', 'price', 'location', 'images', 'status_aproved')
+        return $this->modelQueue::select('id', 'title', 'price', 'location', 'images', 'status_aproved', 'updated_at')
             ->where('id_user', $id)
             ->get();
     }
