@@ -36,7 +36,7 @@ class UserApiController extends Controller
         $request->session()->regenerateToken();
 
         return response()->json([
-            'status' => 'success',
+            'message' => 'success',
             'redirect' => 'https://www.vangoo.mx/'
         ]);
     }
