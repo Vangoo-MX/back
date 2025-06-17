@@ -134,7 +134,8 @@ Route::prefix('info')->group(function () {
 Route::prefix('user')->group(function () {
     Route::get('checkauth', [UserApiController::class, 'checkAuth'])
         ->middleware(['web']);
-    Route::get('logout', [UserApiController::class, 'logout']);
+    Route::get('logout', [UserApiController::class, 'logout'])
+        ->middleware(['web']);
     Route::post('update', [UserApiController::class, 'updateUser']);
     route::get('info/{id}', [UserApiController::class, 'getInfoUser'])
         ->middleware(['web', 'auth']);
