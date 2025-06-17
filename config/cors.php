@@ -9,6 +9,7 @@ return [
     'allowed_origins' => [
         'https://vangoo.mx',
         'https://www.vangoo.mx',
+        'https://dashboard.vangoo.mx',
     ],
 
     'allowed_origins_patterns' => [],

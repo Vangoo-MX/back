@@ -28,14 +28,17 @@ class UserApiController extends Controller
         return response()->json($userData);
     }
 
-    public function logout(Request $request): RedirectResponse
+    public function logout(Request $request): JsonResponse
     {
         Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->away('https://www.vangoo.mx/');
+        return response()->json([
+            'status' => 'success',
+            'redirect' => 'https://www.vangoo.mx/'
+        ]);
     }
 
     public function checkAuth()
