@@ -37,7 +37,6 @@ class UserApiController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'redirect' => 'https://www.vangoo.mx/'
         ]);
     }
 
