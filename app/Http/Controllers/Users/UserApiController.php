@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Http\RedirectResponse;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Mockery\Exception;
@@ -28,14 +28,14 @@ class UserApiController extends Controller
         return response()->json($userData);
     }
 
-    public function logout(Request $request): JsonResponse
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
 
-        Session::invalidate();
-        Session::regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        return response()->json(['status' => 'success']);
+        return redirect()->away('https://www.vangoo.mx/');
     }
 
     public function checkAuth()
