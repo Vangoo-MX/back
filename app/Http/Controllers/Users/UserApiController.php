@@ -23,7 +23,6 @@ class UserApiController extends Controller
         }
 
         $userData = $user->toArray();
-        // $userData['rol_title'] = $user->rol->title();
 
         return response()->json($userData);
     }
