@@ -31,4 +31,9 @@ class Agenda extends Model
     {
         return $this->hasMany(AgendaDocs::class, 'id_agenda', 'id');
     }
+
+    public function getUuidAttribute()
+    {
+        return $this->user->uuid;
+    }
 }

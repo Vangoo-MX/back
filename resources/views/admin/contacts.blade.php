@@ -27,7 +27,6 @@
         <table class="table table-striped table-bordered" id="contactsTable">
             <thead>
                 <tr>
-                    <th>id</th>
                     <th>Usuario</th>
                     <th>nombre</th>
                     <th>Email</th>
@@ -40,9 +39,8 @@
             <tbody>
                 @foreach($agenda as $agend)
                 <tr>
-                    <td>{{$agend->id}}</td>
                     <td>
-                        <a href="{{route('users.show', $agend->id_user)}}">
+                        <a href="{{route('users.show', $agend->uuid)}}">
                             {{$agend->user_name}}
                             @if(!$agend->mensaje_leido)
                             <span class="badge bg-danger">Nuevo Mensaje</span>
