@@ -45,9 +45,10 @@ class User extends Authenticatable
         'rol' => UserRole::class,
     ];
 
-    protected $primaryKey = 'uuid';
-    protected $keyType = 'string';
-    public $incrementing = false;
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 
     protected function name(): Attribute
     {
