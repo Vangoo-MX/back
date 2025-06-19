@@ -14,10 +14,11 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, CanResetPassword;
+    use HasApiTokens, HasFactory, Notifiable, CanResetPassword, HasUuids;
 
     protected $table = 'app_users';
 
@@ -43,6 +44,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'rol' => UserRole::class,
     ];
+
+    protected $primaryKey = 'uuid';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     protected function name(): Attribute
     {

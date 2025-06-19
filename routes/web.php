@@ -162,10 +162,10 @@ Route::prefix('terrains')->name('terrains.')->middleware('check.admin')->group(f
 
 //Gestion de usuarios
 Route::prefix('users')->name('users.')->middleware('check.admin')->group(function () {
-    Route::put('{user}/status', [UserController::class, 'statusUser'])
+    Route::put('{user:uuid}/status', [UserController::class, 'statusUser'])
         ->name('status.update');
     Route::resource('/', UserController::class)
-        ->parameters(['' => 'user']);
+        ->parameters(['' => 'user:uuid']);
 });
 
 
