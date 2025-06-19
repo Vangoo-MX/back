@@ -87,7 +87,7 @@ class UserController extends Controller
 
         $user->update($updateData);
 
-        return redirect()->route('users.show', $user->uuid)
+        return redirect()->route('users.show', $user)
             ->with('success', 'Usuario actualizado correctamente');
     }
 
