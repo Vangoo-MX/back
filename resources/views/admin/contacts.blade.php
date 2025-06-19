@@ -42,7 +42,7 @@
                 <tr>
                     <td>{{$agend->id}}</td>
                     <td>
-                        <a href="{{route('admin.user',$agend->id_user)}}">
+                        <a href="{{route('users.show', $agend->id_user)}}">
                             {{$agend->user_name}}
                             @if(!$agend->mensaje_leido)
                             <span class="badge bg-danger">Nuevo Mensaje</span>

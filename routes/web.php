@@ -7,7 +7,6 @@ use App\Http\Controllers\{
     Auth\ResetPasswordController,
     Auth\AuthController,
     ContactsController,
-    LotsController,
     Users\UserController,
     Properties\PropertyController,
     Properties\PropertyQueueController,
