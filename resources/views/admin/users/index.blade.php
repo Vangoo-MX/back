@@ -19,7 +19,6 @@
         <table class="table table-striped table-bordered" id="propertiesTable">
             <thead>
                 <tr>
-                    <th>id</th>
                     <th>name</th>
                     <th>Email</th>
                     <th>Teléfono</th>
@@ -29,22 +28,21 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($users as $u)
+                @foreach($users as $user)
                 <tr>
-                    <td>{{$u->id}}</td>
-                    <td><a href="{{route('users.show',$u->id)}}">{{$u->name}}</a></td>
-                    <td>{{$u->email}}</td>
-                    <td>{{$u->tel}}</td>
-                    <td>{{ $u->rol->title() }}</td>
+                    <td><a href="{{route('users.show',$user)}}">{{$user->name}}</a></td>
+                    <td>{{$user->email}}</td>
+                    <td>{{$user->tel}}</td>
+                    <td>{{ $user->rol->title() }}</td>
                     <td>
                         <div class="dropdown">
-                            <span class="{{ $u->status ? 'card-status-green' : 'card-status-grey' }} dropdown-toggle"
+                            <span class="{{ $user->status ? 'card-status-green' : 'card-status-grey' }} dropdown-toggle"
                                 data-bs-toggle="dropdown">
-                                {{ $u->status ? 'Aprobado' : 'En proceso' }}
+                                {{ $user->status ? 'Aprobado' : 'En proceso' }}
                             </span>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <form action="{{ route('users.status.update', $u) }}" method="POST">
+                                    <form action="{{ route('users.status.update', $user) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" name="status" value="1">
@@ -54,7 +52,7 @@
                                     </form>
                                 </li>
                                 <li>
-                                    <form action="{{ route('users.status.update', $u) }}" method="POST">
+                                    <form action="{{ route('users.status.update', $user) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" name="status" value="0">
@@ -76,13 +74,13 @@
                                 @csrf
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" href="{{route('users.index',$u->id)}}" target="_blank">
+                                        <a class="dropdown-item" href="{{route('users.index',$user)}}" target="_blank">
                                             <img src="{{url('./img/icon/info.png')}}" />
                                             Detalles
                                         </a>
                                     </li>
                                     <li>
-                                        <button class="dropdown-item delete" data-user-id="{{$u->id}}">
+                                        <button class="dropdown-item delete" data-user-id="{{$user->id}}">
                                             <img src="{{url('./img/icon/trash.png')}}" />
                                             Borrar
                                         </button>
