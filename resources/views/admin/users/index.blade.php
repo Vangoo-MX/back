@@ -74,13 +74,13 @@
                                 @csrf
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" href="{{route('users.index',$user)}}" target="_blank">
+                                        <a class="dropdown-item" href="{{route('users.show', $user)}}" target="_blank">
                                             <img src="{{url('./img/icon/info.png')}}" />
                                             Detalles
                                         </a>
                                     </li>
                                     <li>
-                                        <button class="dropdown-item delete" data-user-id="{{$user->id}}">
+                                        <button class="dropdown-item delete" data-user-id="{{$user->uuid}}">
                                             <img src="{{url('./img/icon/trash.png')}}" />
                                             Borrar
                                         </button>
