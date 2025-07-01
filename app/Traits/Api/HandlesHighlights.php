@@ -9,16 +9,18 @@ trait HandlesHighlights
         $model = $this->highlightModel;
         $relationship = $this->highlightRelationship;
 
-        $query = $model::with($relationship)
+        $query = $model::query()
+            ->whereHas($relationship)
             ->orderBy('num_order', 'asc');
 
         if (!is_null($municipioId)) {
             $query->where('id_municipio', $municipioId);
         }
 
-        return $query->get()
-            ->map(fn($highlight) => $highlight->{$relationship})
-            ->filter()
+        return $query
+            ->with($relationship)
+            ->get()
+            ->pluck($relationship)
             ->values();
     }
 }
