@@ -17,7 +17,7 @@ trait HandlesHighlights
         }
 
         return $query->get()
-            ->pluck($relationship)
+            ->map(fn($highlight) => $highlight->{$relationship})
             ->filter()
             ->values();
     }
