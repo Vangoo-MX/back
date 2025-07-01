@@ -29,6 +29,7 @@ class PropertiesHighlights extends Model
 
     public function property(): BelongsTo
     {
-        return $this->belongsTo(Properties::class, 'id_property', 'id');
+        return $this->belongsTo(Properties::class, 'id_property', 'id')
+            ->select('id', 'title', 'price', 'location', 'area', 'bathrooms', 'rooms', 'parkings', 'description', 'images');
     }
 }
