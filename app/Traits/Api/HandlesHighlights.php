@@ -16,9 +16,7 @@ trait HandlesHighlights
             $query->where('id_municipio', $municipioId);
         }
 
-        $highlights = $query->limit(20)->get();
-
-        return $highlights
+        return $query
             ->pluck($relationship)
             ->filter()
             ->values();
