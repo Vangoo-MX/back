@@ -138,7 +138,7 @@ Route::prefix('user')->group(function () {
         ->middleware(['web']);
     Route::post('update', [UserApiController::class, 'updateUser']);
     route::get('info/{id}', [UserApiController::class, 'getInfoUser'])
-        ->middleware(['web', 'auth']);
+        ->middleware(['web']);
 });
 
 Route::prefix('favorite')->group(function () {
