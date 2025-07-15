@@ -27,6 +27,17 @@ class UserApiController extends Controller
         return response()->json($userData);
     }
 
+    public function getInfoUserByUuid($uuid): JsonResponse
+    {
+        $user = User::where('uuid', $uuid)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no encontrado.'], 404);
+        }
+
+        return response()->json($user->toArray());
+    }
+
     public function logout(Request $request): JsonResponse
     {
         Auth::logout();

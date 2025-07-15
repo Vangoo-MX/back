@@ -78,32 +78,32 @@ class User extends Authenticatable
 
     public function apartments(): HasMany
     {
-        return $this->hasMany(Apartments::class);
+        return $this->hasMany(Apartments::class, 'id', 'id_user');
     }
 
     public function developmentVerticals(): HasMany
     {
-        return $this->hasMany(Developments::class);
+        return $this->hasMany(Developments::class, 'id', 'id_user');
     }
 
     public function developmentHorizontals(): HasMany
     {
-        return $this->hasMany(DevelopmentsHorizontals::class);
+        return $this->hasMany(DevelopmentsHorizontals::class, 'id', 'id_user');
     }
 
     public function lots(): HasMany
     {
-        return $this->hasMany(Lots::class);
+        return $this->hasMany(Lots::class, 'id', 'id_user');
     }
 
     public function properties(): HasMany
     {
-        return $this->hasMany(Properties::class);
+        return $this->hasMany(Properties::class, 'id', 'id_user');
     }
 
     public function terrains(): HasMany
     {
-        return $this->hasMany(Terrains::class);
+        return $this->hasMany(Terrains::class, 'id', 'id_user');
     }
 
     public function listUser(): HasMany
