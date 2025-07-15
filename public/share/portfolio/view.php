@@ -26,9 +26,6 @@ $propertyTypes = [
     'property',
     'apartment',
     'terrain',
-    'lot',
-    'development-vertical',
-    'development-horizontal'
 ];
 
 $allProperties = [];
