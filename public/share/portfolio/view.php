@@ -56,7 +56,21 @@ $data = [
     'properties' => $allProperties
 ];
 
-var_dump($data);
+function debugData($data, $label = '')
+{
+    $label = $label ? "<h2>$label</h2>" : '';
+    $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $caller = $backtrace[0];
+    $location = "Called from: {$caller['file']} on line {$caller['line']}";
+
+    $output = "<div style='background:#f8f8f8; border:1px solid #ddd; padding:15px; margin:20px; border-radius:5px; font-family:monospace;'>";
+    $output .= $label;
+    $output .= "<div style='color:#888; font-size:0.9em; margin-bottom:10px;'>$location</div>";
+    $output .= "<pre>" . htmlspecialchars(print_r($data, true)) . "</pre>";
+    $output .= "</div>";
+
+    echo $output;
+}
 
 function moneyFormat($numero)
 {

@@ -138,7 +138,7 @@ Route::prefix('user')->group(function () {
         ->middleware(['web']);
     Route::post('update', [UserApiController::class, 'updateUser']);
     Route::get('info/{id}', [UserApiController::class, 'getInfoUser'])
-        ->middleware(['web']);
+        ->middleware(['web', 'auth']);
     Route::get('uuid/{uuid}', [UserApiController::class, 'getInfoUserByUuid'])
         ->middleware(['web']);
 });
