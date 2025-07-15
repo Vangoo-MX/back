@@ -72,6 +72,8 @@ function debugData($data, $label = '')
     echo $output;
 }
 
+debugData($data, 'Estructura completa de $data');
+
 function moneyFormat($numero)
 {
     $formatted = number_format($numero, 2, '.', ',');
