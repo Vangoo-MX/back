@@ -276,10 +276,10 @@ function getBadgeText($type)
                                             <?= htmlspecialchars($property['location']) ?>
                                         </p>
                                         <div class="d-flex justify-content-between align-items-center mt-3">
-                                            <span class="text-muted small">
+                                            <!-- <span class="text-muted small">
                                                 <i class="bi bi-eye me-1"></i>
                                                 <?= $property['views'] ?? 0 ?> vistas
-                                            </span>
+                                            </span> -->
                                             <span class="text-muted small">
                                                 <i class="bi bi-calendar me-1"></i>
                                                 <?= date('d M Y', strtotime($property['created_at'])) ?>
