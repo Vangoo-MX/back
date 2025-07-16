@@ -24,8 +24,8 @@ if (!$userData || isset($userData['error'])) {
 $userId = $userData['id'];
 $propertyTypes = [
     'property',
-    // 'apartment',
-    // 'terrain',
+    'apartment',
+    'terrain',
 ];
 
 $allProperties = [];
