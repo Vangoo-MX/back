@@ -39,16 +39,17 @@ foreach ($propertyTypes as $type) {
 
     $properties = json_decode($response, true);
 
-    if (is_array($properties)) {
-        if (isset($properties[0])) {
-            foreach ($properties as $p) {
-                $p['type'] = $type;
-            }
-            $allProperties = array_merge($allProperties, $properties);
-        } else if (!empty($properties)) {
-            $properties['type'] = $type;
-            $allProperties[] = $properties;
-        }
+    if (!is_array($properties)) {
+        continue;
+    }
+
+    if (!isset($properties[0]) && !empty($properties)) {
+        $properties = [$properties];
+    }
+
+    foreach ($properties as $p) {
+        $p['property_type'] = $type;
+        $allProperties[] = $p;
     }
 }
 
@@ -265,7 +266,7 @@ function getBadgeText($type)
                                             </div>
                                         <?php endif; ?>
                                         <span class="badge bg-pink position-absolute top-0 start-0 m-2 property-badge">
-                                            <?= getBadgeText($property['type']) ?>
+                                            <?= getBadgeText($property['property_type']) ?>
                                         </span>
                                     </div>
                                     <div class="card-body">
@@ -276,10 +277,6 @@ function getBadgeText($type)
                                             <?= htmlspecialchars($property['location']) ?>
                                         </p>
                                         <div class="d-flex justify-content-between align-items-center mt-3">
-                                            <!-- <span class="text-muted small">
-                                                <i class="bi bi-eye me-1"></i>
-                                                <?= $property['views'] ?? 0 ?> vistas
-                                            </span> -->
                                             <span class="text-muted small">
                                                 <i class="bi bi-calendar me-1"></i>
                                                 <?= date('d M Y', strtotime($property['created_at'])) ?>
