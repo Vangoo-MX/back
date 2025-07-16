@@ -78,7 +78,7 @@ function getImageUrl($type, $propertyId, $imageName)
         return $baseUrl . $folders[$type] . '/' . $propertyId . '/' . $imageName;
     }
 
-    return "/placeholder.svg?height=300&width=400";
+    return "https://www.vangoo.mx/assets/img/img404.jpg?height=300&width=400";
 }
 
 function getBadgeText($type)
