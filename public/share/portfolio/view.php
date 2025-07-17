@@ -91,6 +91,17 @@ function getBadgeText($type)
 
     return $types[$type] ?? 'Propiedad';
 }
+
+function getDetailsUrl($type, $id)
+{
+    $urls = [
+        'property' => 'https://www.vangoo.mx/details/propiedad/',
+        'apartment' => 'https://www.vangoo.mx/detailsDepa/apartments/',
+        'terrain' => 'https://www.vangoo.mx/detailsTerrain/terrains/'
+    ];
+
+    return $urls[$type] . $id;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -255,35 +266,38 @@ function getBadgeText($type)
                         <?php foreach ($allProperties as $property): ?>
                             <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
                                 <div class="card h-100 shadow-sm property-card">
-                                    <div class="position-relative">
-                                        <?php if (!empty($property['images'][0])): ?>
-                                            <!-- TODO -->
-                                            <img src="<?= getImageUrl($property['type'], $property['id'], $property['images'][0]) ?>"
-                                                class="card-img-top property-image"
-                                                alt="<?= htmlspecialchars($property['title']) ?>">
-                                        <?php else: ?>
-                                            <div class="bg-light d-flex align-items-center justify-content-center property-image">
-                                                <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
-                                            </div>
-                                        <?php endif; ?>
-                                        <span class="badge bg-pink position-absolute top-0 start-0 m-2 property-badge">
-                                            <?= getBadgeText($property['property_type']) ?>
-                                        </span>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title text-truncate-2"><?= htmlspecialchars($property['title']) ?></h5>
-                                        <p class="text-pink fw-bold fs-5 mb-2"><?= moneyFormat($property['price']) ?></p>
-                                        <p class="text-muted small mb-2">
-                                            <i class="bi bi-geo-alt-fill me-1"></i>
-                                            <?= htmlspecialchars($property['location']) ?>
-                                        </p>
-                                        <div class="d-flex justify-content-between align-items-center mt-3">
-                                            <span class="text-muted small">
-                                                <i class="bi bi-calendar me-1"></i>
-                                                <?= date('d M Y', strtotime($property['created_at'])) ?>
+                                    <a href="<?= getDetailsUrl($property['property_type'], $property['id']) ?>"
+                                        target="_blank"
+                                        class="card-link">
+                                        <div class="position-relative">
+                                            <?php if (!empty($property['images'][0])): ?>
+                                                <!-- TODO -->
+                                                <img src="<?= getImageUrl($property['type'], $property['id'], $property['images'][0]) ?>"
+                                                    class="card-img-top property-image"
+                                                    alt="<?= htmlspecialchars($property['title']) ?>">
+                                            <?php else: ?>
+                                                <div class="bg-light d-flex align-items-center justify-content-center property-image">
+                                                    <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                                                </div>
+                                            <?php endif; ?>
+                                            <span class="badge bg-pink position-absolute top-0 start-0 m-2 property-badge">
+                                                <?= getBadgeText($property['property_type']) ?>
                                             </span>
                                         </div>
-                                    </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title text-truncate-2"><?= htmlspecialchars($property['title']) ?></h5>
+                                            <p class="text-pink fw-bold fs-5 mb-2"><?= moneyFormat($property['price']) ?></p>
+                                            <p class="text-muted small mb-2">
+                                                <i class="bi bi-geo-alt-fill me-1"></i>
+                                                <?= htmlspecialchars($property['location']) ?>
+                                            </p>
+                                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                                <span class="text-muted small">
+                                                    <i class="bi bi-calendar me-1"></i>
+                                                    <?= date('d M Y', strtotime($property['created_at'])) ?>
+                                                </span>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
