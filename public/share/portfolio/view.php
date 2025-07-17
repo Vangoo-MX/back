@@ -50,7 +50,6 @@ foreach ($propertyTypes as $type) {
     foreach ($properties as $p) {
         $p['property_type'] = $type;
         $allProperties[] = $p;
-        $propertyId = $p['id'];
     }
 }
 
