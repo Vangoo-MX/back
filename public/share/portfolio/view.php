@@ -257,7 +257,7 @@ function getBadgeText($type)
                                 <div class="card h-100 shadow-sm property-card">
                                     <div class="position-relative">
                                         <?php if (!empty($property['images'][0])): ?>
-                                            <img src="<?= getImageUrl($property['type'], $property['id'], $property['images'][0]) ?>"
+                                            <img src="<?= getImageUrl($property['property_type'], $property['id'], $property['images'][0]) ?>"
                                                 class="card-img-top property-image"
                                                 alt="<?= htmlspecialchars($property['title']) ?>">
                                         <?php else: ?>
