@@ -227,6 +227,16 @@ function getDetailsUrl($type, $id)
             border-color: #25D366 !important;
             color: white !important;
         }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            cursor: pointer;
+        }
     </style>
 
 <body class="bg-gray-50">
@@ -265,39 +275,37 @@ function getDetailsUrl($type, $id)
                     <div class="row g-4">
                         <?php foreach ($allProperties as $property): ?>
                             <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                                <div class="card h-100 shadow-sm property-card">
-                                    <a href="<?= getDetailsUrl($property['property_type'], $property['id']) ?>"
-                                        target="_blank"
-                                        class="card-link">
-                                        <div class="position-relative">
-                                            <?php if (!empty($property['images'][0])): ?>
-                                                <!-- TODO -->
-                                                <img src="<?= getImageUrl($property['type'], $property['id'], $property['images'][0]) ?>"
-                                                    class="card-img-top property-image"
-                                                    alt="<?= htmlspecialchars($property['title']) ?>">
-                                            <?php else: ?>
-                                                <div class="bg-light d-flex align-items-center justify-content-center property-image">
-                                                    <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
-                                                </div>
-                                            <?php endif; ?>
-                                            <span class="badge bg-pink position-absolute top-0 start-0 m-2 property-badge">
-                                                <?= getBadgeText($property['property_type']) ?>
+                                <div class="card h-100 shadow-sm property-card" data-url="<?= getDetailsUrl($property['property_type'], $property['id']) ?>">
+                                    <div class="card-overlay"></div>
+                                    <div class="position-relative">
+                                        <?php if (!empty($property['images'][0])): ?>
+                                            <!-- TODO -->
+                                            <img src="<?= getImageUrl($property['type'], $property['id'], $property['images'][0]) ?>"
+                                                class="card-img-top property-image"
+                                                alt="<?= htmlspecialchars($property['title']) ?>">
+                                        <?php else: ?>
+                                            <div class="bg-light d-flex align-items-center justify-content-center property-image">
+                                                <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                                            </div>
+                                        <?php endif; ?>
+                                        <span class="badge bg-pink position-absolute top-0 start-0 m-2 property-badge">
+                                            <?= getBadgeText($property['property_type']) ?>
+                                        </span>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title text-truncate-2"><?= htmlspecialchars($property['title']) ?></h5>
+                                        <p class="text-pink fw-bold fs-5 mb-2"><?= moneyFormat($property['price']) ?></p>
+                                        <p class="text-muted small mb-2">
+                                            <i class="bi bi-geo-alt-fill me-1"></i>
+                                            <?= htmlspecialchars($property['location']) ?>
+                                        </p>
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <span class="text-muted small">
+                                                <i class="bi bi-calendar me-1"></i>
+                                                <?= date('d M Y', strtotime($property['created_at'])) ?>
                                             </span>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title text-truncate-2"><?= htmlspecialchars($property['title']) ?></h5>
-                                            <p class="text-pink fw-bold fs-5 mb-2"><?= moneyFormat($property['price']) ?></p>
-                                            <p class="text-muted small mb-2">
-                                                <i class="bi bi-geo-alt-fill me-1"></i>
-                                                <?= htmlspecialchars($property['location']) ?>
-                                            </p>
-                                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                                <span class="text-muted small">
-                                                    <i class="bi bi-calendar me-1"></i>
-                                                    <?= date('d M Y', strtotime($property['created_at'])) ?>
-                                                </span>
-                                            </div>
-                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -339,6 +347,19 @@ function getDetailsUrl($type, $id)
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.querySelectorAll('.property-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.closest('.property-badge')) return;
+
+                const url = this.getAttribute('data-url');
+                if (url) {
+                    window.open(url, '_blank');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
