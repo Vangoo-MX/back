@@ -125,9 +125,9 @@ function getDetailsUrl($type, $id)
     <meta property="og:description" content="Mi portafolio de propiedades en Vangoo. Encuentra mi información de contacto y las propiedades que tengo disponibles para compra o renta.">
     <meta property="og:image" content="https://dashboard.vangoo.mx/share/portfolio/preview.png">
     <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/share/portfolio/preview.png">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="400">
-    <meta property="og:image:height" content="300">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:url" content="<?php echo $urlShare; ?>">
     <meta property="fb:app_id" content="7865680626775570">
 
