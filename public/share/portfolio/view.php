@@ -279,8 +279,7 @@ function getDetailsUrl($type, $id)
                                     <div class="card-overlay"></div>
                                     <div class="position-relative">
                                         <?php if (!empty($property['images'][0])): ?>
-                                            <!-- TODO -->
-                                            <img src="<?= getImageUrl($property['type'], $property['id'], $property['images'][0]) ?>"
+                                            <img src="<?= getImageUrl($property['property_type'], $property['id'], $property['images'][0]) ?>"
                                                 class="card-img-top property-image"
                                                 alt="<?= htmlspecialchars($property['title']) ?>">
                                         <?php else: ?>
@@ -348,7 +347,7 @@ function getDetailsUrl($type, $id)
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- <script>
+    <script>
         document.querySelectorAll('.property-card').forEach(card => {
             card.addEventListener('click', function(e) {
                 if (e.target.closest('.property-badge')) return;
@@ -359,7 +358,7 @@ function getDetailsUrl($type, $id)
                 }
             });
         });
-    </script> -->
+    </script>
 </body>
 
 </html>
