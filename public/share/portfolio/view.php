@@ -115,16 +115,16 @@ function getDetailsUrl($type, $id)
 
     <meta name="description" content="Mi portafolio de propiedades en Vangoo. Encuentra mi información de contacto y las propiedades que tengo disponibles para compra o renta.">
     <meta name="keywords" content="comprar casa, comprar departamento,rentar,rentar casa,comprar nuevo león, rentar casa en nuevo león, comprar casa monterrey,publicar propiedad, buscar propiedades en nuevo león, buscar departamentos,sitio para vivir, lugar para vivir,encontrar dónde vivir, vender propiedades en nuevo león,comisión por venta de propiedad,propiedades destacados nuevo león,desarrollos inmobiliarios">
-    <meta property="image" content="https://dashboard.vangoo.mx/share/portfolio/preview.jpg">
-    <meta property="image:secure_url" content="https://dashboard.vangoo.mx/share/portfolio/preview.jpg">
+    <meta property="image" content="https://dashboard.vangoo.mx/share/portfolio/preview.png">
+    <meta property="image:secure_url" content="https://dashboard.vangoo.mx/share/portfolio/preview.png">
     <meta property="url" content="<?php echo $urlShare; ?>">
     <link rel="canonical" href="<?php echo $urlShare; ?>">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Portafolios de <?php echo $data['user']['name']; ?>">
     <meta property="og:description" content="Mi portafolio de propiedades en Vangoo. Encuentra mi información de contacto y las propiedades que tengo disponibles para compra o renta.">
-    <meta property="og:image" content="https://dashboard.vangoo.mx/share/portfolio/preview.jpg">
-    <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/share/portfolio/preview.jpg">
+    <meta property="og:image" content="https://dashboard.vangoo.mx/share/portfolio/preview.png">
+    <meta property="og:image:secure_url" content="https://dashboard.vangoo.mx/share/portfolio/preview.png">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="400">
     <meta property="og:image:height" content="300">
