@@ -23,6 +23,7 @@ if (!$data) {
 }
 
 $userId = $data['id_user'];
+var_dump($userId);
 $userUrl = 'https://dashboard.vangoo.mx/api/user/info/' . $userId;
 $curl = curl_init($userUrl);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
