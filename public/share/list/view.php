@@ -81,9 +81,9 @@ function getDetailsUrl($type, $id)
         'property' => 'https://www.vangoo.mx/details/propiedad/',
         'apartment' => 'https://www.vangoo.mx/detailsDepa/apartments/',
         'terrain' => 'https://www.vangoo.mx/detailsTerrain/terrains/',
-        'development' => 'https://www.vangoo.mx/detailsDev/development/',
-        'development-horizontal' => 'https://www.vangoo.mx/detailsDevHor/development-horizontal/',
-        'lot' => 'https://www.vangoo.mx/detailsLot/lots/'
+        'development' => 'https://www.vangoo.mx/details/desarrollo/',
+        'development-horizontal' => 'https://www.vangoo.mx/details-horiz-dev/horizontalDev/',
+        'lot' => 'https://www.vangoo.mx/detailslots/lots/'
     ];
 
     return $urls[$type] . $id;
