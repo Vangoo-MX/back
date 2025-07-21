@@ -50,7 +50,7 @@ function getImageUrl($type, $propertyId, $imageName)
         'apartment' => 'apartments',
         'terrain' => 'terrains',
         'development' => 'developments',
-        'development-horizontal' => 'developments-horizontal',
+        'development-horizontal' => 'developmentsHorizontal',
         'lot' => 'lots'
     ];
 
@@ -67,7 +67,7 @@ function getBadgeText($type)
         'property' => 'Casa',
         'apartment' => 'Departamento',
         'terrain' => 'Terreno',
-        'development' => 'Desarrollo',
+        'development' => 'Desarrollo Vertical',
         'development-horizontal' => 'Desarrollo Horizontal',
         'lot' => 'Lote'
     ];
@@ -338,7 +338,7 @@ foreach ($propertyTypes as $key => $type) {
                         <?php
                         $phone = preg_replace('/[^0-9]/', '', $userData['tel']);
                         $whatsappLink = "https://wa.me/{$phone}?text=" .
-                            urlencode("Hola " . $userData['name'] . ", estoy interesado en una propiedad de tu portafolio.");
+                            urlencode("Hola " . $userData['name'] . ", estoy interesado en una propiedad de tu lista de favoritos.");
                         ?>
                         <a href="<?= $whatsappLink ?>" target="_blank"
                             class="btn btn-light text-pink fw-semibold px-4 py-2 whatsapp-btn">
@@ -357,7 +357,7 @@ foreach ($propertyTypes as $key => $type) {
     <footer class="py-4 text-center text-muted small">
         <div class="container">
             <p>© <?= date('Y') ?> Vangoo - Todos los derechos reservados</p>
-            <p class="mb-0">Este portafolio es generado automáticamente</p>
+            <p class="mb-0">Esta lista de favoritos es generada automáticamente</p>
         </div>
     </footer>
 
