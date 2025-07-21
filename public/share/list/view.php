@@ -299,7 +299,17 @@ foreach ($propertyTypes as $key => $type) {
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title text-truncate-2"><?= htmlspecialchars($property['title']) ?></h5>
-                                        <p class="text-pink fw-bold fs-5 mb-2"><?= moneyFormat($property['price']) ?></p>
+                                        <!-- <p class="text-pink fw-bold fs-5 mb-2"><?= moneyFormat($property['price']) ?></p> -->
+                                        <?php if (isset($property['price'])): ?>
+                                            <p class="text-pink fw-bold fs-5 mb-2"><?= moneyFormat($property['price']) ?></p>
+                                        <?php elseif (isset($property['price_min']) && isset($property['price_max'])): ?>
+                                            <div class="price-range mb-2">
+                                                <span class="text-pink fw-bold">Desde: <?= moneyFormat($property['price_min']) ?></span>
+                                                <span class="text-pink fw-bold">Hasta: <?= moneyFormat($property['price_max']) ?></span>
+                                            </div>
+                                        <?php else: ?>
+                                            <p class="text-pink fw-bold fs-5 mb-2">Consultar precio</p>
+                                        <?php endif; ?>
                                         <p class="text-muted small mb-2">
                                             <i class="bi bi-geo-alt-fill me-1"></i>
                                             <?= htmlspecialchars($property['location']) ?>
