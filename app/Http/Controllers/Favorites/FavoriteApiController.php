@@ -120,37 +120,37 @@ class FavoriteApiController extends Controller
                 'model' => Properties::class,
                 'relation' => PropertiesFavorites::class,
                 'foreign_key' => 'id_property',
-                'columns' => ['id', 'title', 'price', 'location', 'rooms', 'parkings', 'bathrooms', 'area', 'description', 'views', 'images']
+                'columns' => ['id', 'title', 'price', 'location', 'rooms', 'parkings', 'bathrooms', 'area', 'description', 'views', 'images', 'created_at']
             ],
             'developments' => [
                 'model' => Developments::class,
                 'relation' => DevelopmentsFavorites::class,
                 'foreign_key' => 'id_development',
-                'columns' => ['id', 'status', 'title', 'price_min', 'price_max', 'location', 'description', 'commission_percentage', 'mode', 'views', 'images']
+                'columns' => ['id', 'status', 'title', 'price_min', 'price_max', 'location', 'description', 'commission_percentage', 'mode', 'views', 'images', 'created_at']
             ],
             'developmentsHorizontal' => [
                 'model' => DevelopmentsHorizontals::class,
                 'relation' => DevelopmentsHorizontalFavorites::class,
                 'foreign_key' => 'id_development',
-                'columns' => ['id', 'status', 'title', 'price_min', 'price_max', 'location', 'description', 'commission_percentage', 'mode', 'views', 'images']
+                'columns' => ['id', 'status', 'title', 'price_min', 'price_max', 'location', 'description', 'commission_percentage', 'mode', 'views', 'images', 'created_at']
             ],
             'lots' => [
                 'model' => Lots::class,
                 'relation' => LotsFavorites::class,
                 'foreign_key' => 'id_lot',
-                'columns' => ['id', 'title', 'status', 'type_lots', 'price_min', 'price_max', 'location', 'slope', 'description', 'lots_min', 'lots_max', 'type_terrain', 'initial_fee', 'price_mt2', 'commission_percentage', 'images']
+                'columns' => ['id', 'title', 'status', 'type_lots', 'price_min', 'price_max', 'location', 'slope', 'description', 'lots_min', 'lots_max', 'type_terrain', 'initial_fee', 'price_mt2', 'commission_percentage', 'images', 'created_at']
             ],
             'apartments' => [
                 'model' => Apartments::class,
                 'relation' => ApartmentsFavorites::class,
                 'foreign_key' => 'id_property',
-                'columns' => ['id', 'title', 'price', 'location', 'rooms', 'dev_type', 'parkings', 'bathrooms', 'area', 'description', 'views', 'images']
+                'columns' => ['id', 'title', 'price', 'location', 'rooms', 'dev_type', 'parkings', 'bathrooms', 'area', 'description', 'views', 'images', 'created_at']
             ],
             'terrains' => [
                 'model' => Terrains::class,
                 'relation' => TerrainsFavorites::class,
                 'foreign_key' => 'id_property',
-                'columns' => ['id', 'title', 'price', 'location', 'parkings', 'area_terrain', 'description', 'services', 'images']
+                'columns' => ['id', 'title', 'price', 'location', 'parkings', 'area_terrain', 'description', 'services', 'images', 'created_at']
             ]
         ];
     }
