@@ -23,7 +23,6 @@ if (!$data) {
 }
 
 $userId = $data['listdata']['id_user'];
-var_dump($userId);
 $userUrl = 'https://dashboard.vangoo.mx/api/user/info/' . $userId;
 $curl = curl_init($userUrl);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -42,6 +41,73 @@ function moneyFormat($numero)
     $formatted = number_format($numero, 2, '.', ',');
     return '$' . $formatted . ' MXN';
 }
+
+function getImageUrl($type, $propertyId, $imageName)
+{
+    $baseUrl = "https://dashboard.vangoo.mx/storage/img/posts/";
+    $folders = [
+        'property' => 'properties',
+        'apartment' => 'apartments',
+        'terrain' => 'terrains',
+        'development' => 'developments',
+        'development-horizontal' => 'developments-horizontal',
+        'lot' => 'lots'
+    ];
+
+    if (isset($folders[$type])) {
+        return $baseUrl . $folders[$type] . '/' . $propertyId . '/' . $imageName;
+    }
+
+    return "https://www.vangoo.mx/assets/img/img404.jpg?height=300&width=400";
+}
+
+function getBadgeText($type)
+{
+    $types = [
+        'property' => 'Casa',
+        'apartment' => 'Departamento',
+        'terrain' => 'Terreno',
+        'development' => 'Desarrollo',
+        'development-horizontal' => 'Desarrollo Horizontal',
+        'lot' => 'Lote'
+    ];
+
+    return $types[$type] ?? 'Propiedad';
+}
+
+function getDetailsUrl($type, $id)
+{
+    $urls = [
+        'property' => 'https://www.vangoo.mx/details/propiedad/',
+        'apartment' => 'https://www.vangoo.mx/detailsDepa/apartments/',
+        'terrain' => 'https://www.vangoo.mx/detailsTerrain/terrains/',
+        'development' => 'https://www.vangoo.mx/detailsDev/development/',
+        'development-horizontal' => 'https://www.vangoo.mx/detailsDevHor/development-horizontal/',
+        'lot' => 'https://www.vangoo.mx/detailsLot/lots/'
+    ];
+
+    return $urls[$type] . $id;
+}
+
+$allProperties = [];
+$propertyTypes = [
+    'properties' => 'property',
+    'apartments' => 'apartment',
+    'terrains' => 'terrain',
+    'developments' => 'development',
+    'developmentsHorizontal' => 'development-horizontal',
+    'lots' => 'lot'
+];
+
+foreach ($propertyTypes as $key => $type) {
+    if (!empty($data['entities'][$key])) {
+        foreach ($data['entities'][$key] as $property) {
+            $property['property_type'] = $type;
+            $allProperties[] = $property;
+        }
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -203,9 +269,9 @@ function moneyFormat($numero)
 
         <div class="card mb-5 border-0 shadow-sm">
             <div class="card-body p-4">
-                <h2 class="text-center fw-bold text-dark fs-3 mb-5 section-title">Mi Lista de Favoritos</h2>
+                <h2 class="text-center fw-bold text-dark fs-3 mb-5 section-title"><?= htmlspecialchars($data['listdata']['title']) ?></h2>
 
-                <?php if (empty($data)): ?>
+                <?php if (empty($allProperties)): ?>
                     <div class="no-properties">
                         <i class="bi bi-house-x text-pink" style="font-size: 3rem;"></i>
                         <h3 class="mt-3">No hay propiedades disponibles</h3>
@@ -213,7 +279,7 @@ function moneyFormat($numero)
                     </div>
                 <?php else: ?>
                     <div class="row g-4">
-                        <?php foreach ($data as $property): ?>
+                        <?php foreach ($allProperties as $property): ?>
                             <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
                                 <div class="card h-100 shadow-sm property-card" data-url="<?= getDetailsUrl($property['property_type'], $property['id']) ?>">
                                     <div class="card-overlay"></div>
