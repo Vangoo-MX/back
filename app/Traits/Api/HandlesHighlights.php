@@ -22,7 +22,7 @@ trait HandlesHighlights
     //         ->values();
     // }
 
-    public function getHighlightedItems(?int $municipioId = null): \Illuminate\Support\Collection
+    public function getHighlitedItems(?int $municipioId = null): \Illuminate\Support\Collection
     {
         /* 1. Instancias */
         $highlightModel = app($this->highlightModel);            // PropertiesHighlights
