@@ -6,10 +6,7 @@ trait HandlesHighlights
 {
     public function getHighlitedItems(?int $municipioId = null)
     {
-        $model = $this->highlightModel;
-        $relationship = $this->highlightRelationship;
-
-        $query = $model::with($relationship)
+        $query = $this->highlightModel::with($this->highlightRelationship)
             ->orderBy('num_order', 'asc');
 
         if (!is_null($municipioId)) {
@@ -17,7 +14,7 @@ trait HandlesHighlights
         }
 
         return $query->get()
-            ->map(fn($highlight) => $highlight->{$relationship})
+            ->map(fn($highlight) => $highlight->{$this->highlightRelationship})
             ->filter()
             ->values();
     }
