@@ -299,7 +299,6 @@ foreach ($propertyTypes as $key => $type) {
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title text-truncate-2"><?= htmlspecialchars($property['title']) ?></h5>
-                                        <!-- <p class="text-pink fw-bold fs-5 mb-2"><?= moneyFormat($property['price']) ?></p> -->
                                         <?php if (isset($property['price'])): ?>
                                             <p class="text-pink fw-bold fs-5 mb-2"><?= moneyFormat($property['price']) ?></p>
                                         <?php elseif (isset($property['price_min']) && isset($property['price_max'])): ?>
