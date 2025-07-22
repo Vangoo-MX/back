@@ -20,7 +20,7 @@ trait HandlesHighlights
         $fields = match ($model) {
             PropertiesHighlights::class => ['id', 'title', 'price', 'location', 'description', 'rooms', 'bathrooms', 'parkings', 'area', 'images'],
             ApartmentsHighlights::class => ['id', 'title', 'price', 'location', 'description', 'rooms', 'bathrooms', 'parkings', 'area', 'images'],
-            TerrainsHighlights::class => ['id', 'title', 'price', 'location', 'description', 'parkings', 'area', 'images'],
+            TerrainsHighlights::class => ['id', 'title', 'price', 'location', 'description', 'parkings', 'area_terrain', 'images'],
             DevelopmentsHighlights::class => ['id', 'title', 'price_min', 'location', 'description', 'images', 'status', 'mode'],
             DevelopmentsHorizontalHighlights::class => ['id', 'title', 'price_min', 'location', 'description', 'images', 'status', 'mode'],
             LotsHighlights::class => ['id', 'title', 'price_min', 'location', 'description', 'slope', 'images'],
