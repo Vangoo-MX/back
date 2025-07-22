@@ -18,12 +18,12 @@ trait HandlesHighlights
         $foreignKey = (new $model)->{$relationship}()->getForeignKeyName();
 
         $fields = match ($model) {
-            PropertiesHighlights::class => ['id', 'title', 'price', 'num_order', 'location', 'description', 'rooms', 'bathrooms', 'parkings', 'area', 'images'],
-            ApartmentsHighlights::class => ['id', 'title', 'price', 'num_order', 'location', 'description', 'rooms', 'bathrooms', 'parkings', 'area', 'images'],
-            TerrainsHighlights::class => ['id', 'title', 'price', 'num_order', 'location', 'description', 'parkings', 'area', 'images'],
-            DevelopmentsHighlights::class => ['id', 'title', 'price_min', 'num_order', 'location', 'description', 'images', 'status', 'mode'],
-            DevelopmentsHorizontalHighlights::class => ['id', 'title', 'price_min', 'num_order', 'location', 'description', 'images', 'status', 'mode'],
-            LotsHighlights::class => ['id', 'title', 'price_min', 'num_order', 'location', 'description', 'slope', 'images'],
+            PropertiesHighlights::class => ['id', 'title', 'price', 'location', 'description', 'rooms', 'bathrooms', 'parkings', 'area', 'images'],
+            ApartmentsHighlights::class => ['id', 'title', 'price', 'location', 'description', 'rooms', 'bathrooms', 'parkings', 'area', 'images'],
+            TerrainsHighlights::class => ['id', 'title', 'price', 'location', 'description', 'parkings', 'area', 'images'],
+            DevelopmentsHighlights::class => ['id', 'title', 'price_min', 'location', 'description', 'images', 'status', 'mode'],
+            DevelopmentsHorizontalHighlights::class => ['id', 'title', 'price_min', 'location', 'description', 'images', 'status', 'mode'],
+            LotsHighlights::class => ['id', 'title', 'price_min', 'location', 'description', 'slope', 'images'],
         };
 
         $query = $model::select($foreignKey, 'num_order')
