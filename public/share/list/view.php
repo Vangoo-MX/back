@@ -9,6 +9,7 @@ if ($_GET && isset($_GET['id'])) {
 $urlShare = 'https://dashboard.vangoo.mx/share/list/view.php?id=' . $id;
 
 $urlApi = 'https://dashboard.vangoo.mx/api/favorite/data/' . $id;
+
 $curl = curl_init($urlApi);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($curl);
@@ -21,11 +22,92 @@ if (!$data) {
     exit;
 }
 
+$userId = $data['listdata']['id_user'];
+$userUrl = 'https://dashboard.vangoo.mx/api/user/info/' . $userId;
+$curl = curl_init($userUrl);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($curl);
+curl_close($curl);
+
+$userData = json_decode($response, true);
+
+if (!$userData || isset($userData['error'])) {
+    echo "No se ha encontrado el usuario";
+    exit;
+}
+
 function moneyFormat($numero)
 {
     $formatted = number_format($numero, 2, '.', ',');
     return '$' . $formatted . ' MXN';
 }
+
+function getImageUrl($type, $propertyId, $imageName)
+{
+    $baseUrl = "https://dashboard.vangoo.mx/storage/img/posts/";
+    $folders = [
+        'property' => 'properties',
+        'apartment' => 'apartments',
+        'terrain' => 'terrains',
+        'development' => 'developments',
+        'development-horizontal' => 'developmentsHorizontal',
+        'lot' => 'lots'
+    ];
+
+    if (isset($folders[$type])) {
+        return $baseUrl . $folders[$type] . '/' . $propertyId . '/' . $imageName;
+    }
+
+    return "https://www.vangoo.mx/assets/img/img404.jpg?height=300&width=400";
+}
+
+function getBadgeText($type)
+{
+    $types = [
+        'property' => 'Casa',
+        'apartment' => 'Departamento',
+        'terrain' => 'Terreno',
+        'development' => 'Desarrollo Vertical',
+        'development-horizontal' => 'Desarrollo Horizontal',
+        'lot' => 'Lote'
+    ];
+
+    return $types[$type] ?? 'Propiedad';
+}
+
+function getDetailsUrl($type, $id)
+{
+    $urls = [
+        'property' => 'https://www.vangoo.mx/details/propiedad/',
+        'apartment' => 'https://www.vangoo.mx/detailsDepa/apartments/',
+        'terrain' => 'https://www.vangoo.mx/detailsTerrain/terrains/',
+        'development' => 'https://www.vangoo.mx/details/desarrollo/',
+        'development-horizontal' => 'https://www.vangoo.mx/details-horiz-dev/horizontalDev/',
+        'lot' => 'https://www.vangoo.mx/detailslots/lots/'
+    ];
+
+    return $urls[$type] . $id;
+}
+
+$allProperties = [];
+$propertyTypes = [
+    'properties' => 'property',
+    'apartments' => 'apartment',
+    'terrains' => 'terrain',
+    'developments' => 'development',
+    'developmentsHorizontal' => 'development-horizontal',
+    'lots' => 'lot'
+];
+
+foreach ($propertyTypes as $key => $type) {
+    if (!empty($data['entities'][$key])) {
+        foreach ($data['entities'][$key] as $property) {
+            $property['property_type'] = $type;
+            $allProperties[] = $property;
+        }
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -55,269 +137,242 @@ function moneyFormat($numero)
     <meta property="og:url" content="<?php echo $urlShare; ?>">
     <meta property="fb:app_id" content="7865680626775570">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script src="https://kit.fontawesome.com/e0df5df9e9.js" crossorigin="anonymous"></script>
 
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        .bg-gray-50 {
+            background-color: #f9fafb;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
+        .text-pink {
+            color: #FC7B97;
         }
 
-        .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
+        .bg-pink {
+            background-color: #FC7B97;
         }
 
-        .logo-section {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 32px;
+        .property-card {
+            transition: all 0.3s ease;
+            height: 100%;
         }
 
-        .logo {
-            height: 80px;
-            margin-bottom: 16px;
+        .property-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transform: scale(1.03);
+            transition: all 0.3s ease-in-out;
         }
 
-        .btn {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .btn:hover {
-            background-color: #0056b3;
-        }
-
-        .card {
-            width: 380px;
-            margin-right: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .image-container {
-            position: relative;
-        }
-
-        .property-image {
-            width: 100%;
-            height: 250px;
+        .object-fit-cover {
             object-fit: cover;
         }
 
-        .card-content {
-            padding: 16px;
+        .contact-cta {
+            background-image: linear-gradient(to right, #FC7B97, #fc6b8a);
         }
 
-        .property-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .property-price {
-            font-size: 1.8rem;
-            color: #FC7B97;
-            margin-bottom: 16px;
-        }
-
-        .property-address {
-            color: #666;
-            font-size: 1.2rem;
-            margin-bottom: 16px;
-        }
-
-        .slider-container {
-            position: relative;
-            width: 100%;
-            max-width: calc(380px * 5 + 30px);
+        .text-truncate-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            margin: 0 auto;
         }
 
-        .slider {
-            display: flex;
-            transition: transform 0.3s ease-in-out;
+        .profile-img {
+            width: 128px;
+            height: 128px;
+            border: 4px solid white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .prev,
-        .next {
+        .property-image {
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .no-properties {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: white;
+            border-radius: 8px;
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            border: none;
-            color: white;
-            padding: 10px;
-            cursor: pointer;
-            z-index: 10;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #FC7B97;
+            border-radius: 2px;
         }
 
-        .prev {
+        .property-badge {
+            font-size: 0.85rem;
+            padding: 5px 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .whatsapp-btn {
+            transition: all 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #25D366 !important;
+            border-color: #25D366 !important;
+            color: white !important;
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
             left: 0;
-        }
-
-        .next {
-            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            cursor: pointer;
         }
     </style>
 
-<body>
-    <div class="container">
-        <div class="logo-section">
-            <a href="https://vangoo.mx">
-                <img src="https://www.vangoo.mx/assets/img/system/new_logo.png" alt="Vangoo Logo" class="logo">
-            </a>
-            <a href="https://vangoo.mx/listdetail/<?php echo $id; ?>"><button class="btn">Ver lista completa</button></a>
+<body class="bg-gray-50">
+    <div class="container-fluid px-4 py-5">
+        <div class="card mb-5 border-0 shadow-sm">
+            <div class="card-body p-4 d-flex flex-column flex-sm-row align-items-center gap-4">
+                <div class="rounded-circle overflow-hidden shadow profile-img">
+                    <img src="https://dashboard.vangoo.mx/storage/img/users/<?= htmlspecialchars($userData['profile_image']) ?>"
+                        alt="<?= htmlspecialchars($userData['name']) ?>"
+                        class="w-100 h-100 object-fit-cover">
+                </div>
+                <div class="text-center text-sm-start flex-grow-1">
+                    <h1 class="fw-bold text-dark fs-2 mb-3"><?= htmlspecialchars($userData['name']) ?></h1>
+                    <p class="text-muted mb-4"><?= htmlspecialchars($userData['biography']) ?></p>
+                    <div class="row row-cols-1 row-cols-sm-2 gy-2">
+                        <div><span class="text-muted">Email: </span><span class="text-dark"><?= htmlspecialchars($userData['email']) ?></span></div>
+                        <div><span class="text-muted">Teléfono: </span><span class="text-dark"><?= htmlspecialchars($userData['tel']) ?></span></div>
+                        <div><span class="text-muted">Contacto: </span><span class="text-dark"><?= htmlspecialchars($userData['contact_preference']) ?></span></div>
+                        <div><span class="text-muted">Horario: </span><span class="text-dark"><?= htmlspecialchars($userData['contact_schedule']) ?></span></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="slider-container">
-            <div class="slider">
-                <?php if (!empty($data['entities']['properties'])) : ?>
-                    <?php foreach ($data['entities']['properties'] as $property) : ?>
-                        <div class="card">
-                            <div class="image-container">
-                                <img src="https://dashboard.vangoo.mx/storage/img/posts/properties/<?php echo $property['id']; ?>/<?php echo $property['images'][0]; ?>?height=250&width=400" alt="Property" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
-                            </div>
-                            <div class="card-content">
-                                <h3 class="property-title"><?php echo $property['title']; ?></h3>
-                                <p class="property-price"><?php echo moneyFormat($property['price']); ?></p>
-                                <p class="property-address"><?php echo $property['location']; ?></p>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+        <div class="card mb-5 border-0 shadow-sm">
+            <div class="card-body p-4">
+                <h2 class="text-center fw-bold text-dark fs-3 mb-5 section-title"><?= htmlspecialchars($data['listdata']['title']) ?></h2>
 
-                <?php if (!empty($data['entities']['developments'])) : ?>
-                    <?php foreach ($data['entities']['developments'] as $development) : ?>
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/developments/<?php echo $development['id']; ?>/<?php echo $development['images'][0]; ?>?height=250&width=400" alt="Development" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
+                <?php if (empty($allProperties)): ?>
+                    <div class="no-properties">
+                        <i class="bi bi-house-x text-pink" style="font-size: 3rem;"></i>
+                        <h3 class="mt-3">No hay propiedades disponibles</h3>
+                        <p class="text-muted">Este usuario aún no ha añadido propiedades a su lista de favoritos</p>
+                    </div>
+                <?php else: ?>
+                    <div class="row g-4">
+                        <?php foreach ($allProperties as $property): ?>
+                            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                                <div class="card h-100 shadow-sm property-card" data-url="<?= getDetailsUrl($property['property_type'], $property['id']) ?>">
+                                    <div class="card-overlay"></div>
+                                    <div class="position-relative">
+                                        <?php if (!empty($property['images'][0])): ?>
+                                            <img src="<?= getImageUrl($property['property_type'], $property['id'], $property['images'][0]) ?>"
+                                                class="card-img-top property-image"
+                                                alt="<?= htmlspecialchars($property['title']) ?>">
+                                        <?php else: ?>
+                                            <div class="bg-light d-flex align-items-center justify-content-center property-image">
+                                                <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                                            </div>
+                                        <?php endif; ?>
+                                        <span class="badge bg-pink position-absolute top-0 start-0 m-2 property-badge">
+                                            <?= getBadgeText($property['property_type']) ?>
+                                        </span>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title text-truncate-2"><?= htmlspecialchars($property['title']) ?></h5>
+                                        <!-- <p class="text-pink fw-bold fs-5 mb-2"><?= moneyFormat($property['price']) ?></p> -->
+                                        <?php if (isset($property['price'])): ?>
+                                            <p class="text-pink fw-bold fs-5 mb-2"><?= moneyFormat($property['price']) ?></p>
+                                        <?php elseif (isset($property['price_min']) && isset($property['price_max'])): ?>
+                                            <div class="price-range mb-2">
+                                                <span class="text-pink fw-bold">Desde: <?= moneyFormat($property['price_min']) ?></span>
+                                                <span class="text-pink fw-bold">Hasta: <?= moneyFormat($property['price_max']) ?></span>
+                                            </div>
+                                        <?php else: ?>
+                                            <p class="text-pink fw-bold fs-5 mb-2">Consultar precio</p>
+                                        <?php endif; ?>
+                                        <p class="text-muted small mb-2">
+                                            <i class="bi bi-geo-alt-fill me-1"></i>
+                                            <?= htmlspecialchars($property['location']) ?>
+                                        </p>
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <span class="text-muted small">
+                                                <i class="bi bi-calendar me-1"></i>
+                                                <?= date('d M Y', strtotime($property['created_at'])) ?>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-content">
-                                <h3 class="property-title"><?php echo $development['title']; ?></h3>
-                                <p class="property-price"><?php echo moneyFormat($development['price_min']); ?> - <?php echo moneyFormat($development['price_max']); ?></p>
-                                <p class="property-address"><?php echo $development['location']; ?></p>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-
-                <?php if (!empty($data['entities']['developmentsHorizontal'])) : ?>
-                    <?php foreach ($data['entities']['developmentsHorizontal'] as $developmentHorizontal) : ?>
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/developmentsHorizontal/<?php echo $developmentHorizontal['id']; ?>/<?php echo $developmentHorizontal['images'][0]; ?>?height=250&width=400" alt="Development" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="property-title"><?php echo $developmentHorizontal['title']; ?></h3>
-                                <p class="property-price"><?php echo moneyFormat($developmentHorizontal['price_min']); ?> - <?php echo moneyFormat($developmentHorizontal['price_max']); ?></p>
-                                <p class="property-address"><?php echo $developmentHorizontal['location']; ?></p>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-
-                <?php if (!empty($data['entities']['lots'])) : ?>
-                    <?php foreach ($data['entities']['lots'] as $lot) : ?>
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/lots/<?php echo $lot['id']; ?>/<?php echo $lot['images'][0]; ?>?height=250&width=400" alt="Lot" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="property-title"><?php echo $lot['title']; ?></h3>
-                                <p class="property-price"><?php echo moneyFormat($lot['price_min']); ?> - <?php echo moneyFormat($lot['price_max']); ?></p>
-                                <p class="property-address"><?php echo $lot['location']; ?></p>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-
-                <?php if (!empty($data['entities']['apartments'])) : ?>
-                    <?php foreach ($data['entities']['apartments'] as $apartment) : ?>
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/apartments/<?php echo $apartment['id']; ?>/<?php echo $apartment['images'][0]; ?>?height=250&width=400" alt="Rental" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="property-title"><?php echo $apartment['title']; ?></h3>
-                                <p class="property-price"><?php echo moneyFormat($apartment['price']); ?></p>
-                                <p class="property-address"><?php echo $apartment['location']; ?></p>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-                <?php if (!empty($data['entities']['terrains'])) : ?>
-                    <?php foreach ($data['entities']['terrains'] as $terrain) : ?>
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="image-container">
-                                    <img src="https://dashboard.vangoo.mx/storage/img/posts/terrains/<?php echo $terrain['id']; ?>/<?php echo $terrain['images'][0]; ?>?height=250&width=400" alt="Terrain" class="property-image" onerror="this.onerror=null;this.src='https://www.vangoo.mx/assets/img/img404.jpg?height=250&width=400';">
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="property-title"><?php echo $terrain['title']; ?></h3>
-                                <p class="property-price"><?php echo moneyFormat($terrain['price']); ?></p>
-                                <p class="property-address"><?php echo $terrain['location']; ?></p>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </div>
                 <?php endif; ?>
             </div>
+        </div>
 
-            <button class="prev">⟨</button>
-            <button class="next">⟩</button>
+        <div class="text-center">
+            <div class="card text-white contact-cta border-0 shadow">
+                <div class="card-body py-5">
+                    <h3 class="fw-bold fs-3 mb-3">¿Interesado en alguna propiedad?</h3>
+                    <p class="opacity-85 mb-4">Contáctame para más información y agenda una visita</p>
+                    <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                        <?php
+                        $phone = preg_replace('/[^0-9]/', '', $userData['tel']);
+                        $whatsappLink = "https://wa.me/{$phone}?text=" .
+                            urlencode("Hola " . $userData['name'] . ", estoy interesado en una propiedad de tu lista de favoritos.");
+                        ?>
+                        <a href="<?= $whatsappLink ?>" target="_blank"
+                            class="btn btn-light text-pink fw-semibold px-4 py-2 whatsapp-btn">
+                            <i class="bi bi-whatsapp me-2"></i> Contactar por WhatsApp
+                        </a>
+                        <a href="mailto:<?= $userData['email'] ?>" target="_blank"
+                            class="btn btn-outline-light fw-semibold px-4 py-2">
+                            <i class="bi bi-envelope me-2"></i> Enviar Email
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <footer class="py-4 text-center text-muted small">
+        <div class="container">
+            <p>© <?= date('Y') ?> Vangoo - Todos los derechos reservados</p>
+            <p class="mb-0">Esta lista de favoritos es generada automáticamente</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        const slider = document.querySelector('.slider');
-        const cards = document.querySelectorAll('.card');
-        let currentPosition = 0;
-        const totalCards = cards.length;
-        const visibleCards = 5;
-        const cardWidth = 380 + 10;
+        document.querySelectorAll('.property-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.closest('.property-badge')) return;
 
-        document.querySelector('.next').addEventListener('click', () => {
-            if (currentPosition > -(totalCards - visibleCards)) {
-                currentPosition--;
-                slider.style.transform = `translateX(${currentPosition * cardWidth}px)`;
-            }
-        });
-
-        document.querySelector('.prev').addEventListener('click', () => {
-            if (currentPosition < 0) {
-                currentPosition++;
-                slider.style.transform = `translateX(${currentPosition * cardWidth}px)`;
-            }
+                const url = this.getAttribute('data-url');
+                if (url) {
+                    window.open(url, '_blank');
+                }
+            });
         });
     </script>
 </body>
