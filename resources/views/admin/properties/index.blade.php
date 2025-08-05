@@ -575,72 +575,68 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 
     /* Asegúrate de que esto esté cerca del final de tu archivo o en tu blade directamente */
     .pagination-wrapper {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        margin-top: 2rem !important;
-        width: 100% !important;
-        position: relative !important;
-        left: 0 !important;
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
     }
 
+    /* Lista de botones */
     .custom-pagination {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: center !important;
-        align-items: center !important;
-        flex-wrap: nowrap !important;
-        gap: 8px !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        list-style: none !important;
+        display: flex;
+        gap: 0.5rem;
+        padding: 0;
+        margin: 0;
+        list-style: none;
     }
 
-    /* Forzar los botones en línea y apariencia correcta */
-    .custom-pagination .custom-page {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 36px !important;
-        height: 36px !important;
-        border-radius: 6px !important;
-        background-color: #f3f4f6 !important;
-        font-weight: 500 !important;
-        cursor: pointer !important;
-        transition: background-color 0.2s !important;
-        text-align: center !important;
-        border: none !important;
-        box-shadow: none !important;
-    }
-
-    .custom-pagination .custom-page:hover {
-        background-color: #e5e7eb !important;
-    }
-
-    .custom-pagination .custom-page a {
-        text-decoration: none !important;
-        color: #111827 !important;
-        width: 100%;
-        height: 100%;
-        display: flex !important;
+    /* Botón base */
+    .custom-page {
+        width: 40px;
+        height: 40px;
+        background-color: #f3f4f6;
+        /* Gris claro */
+        border-radius: 8px;
+        display: flex;
         align-items: center;
         justify-content: center;
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #374151;
+        /* Gris oscuro */
+        transition: background-color 0.2s ease;
+        cursor: pointer;
+        text-decoration: none;
+        border: none;
     }
 
-    /* Activo */
-    .custom-pagination .custom-page.active {
-        background-color: #6366f1 !important;
-        color: white !important;
+    /* Enlaces dentro */
+    .custom-page a {
+        color: inherit;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
     }
 
-    .custom-pagination .custom-page.active span {
-        color: white !important;
+    /* Hover limpio */
+    .custom-page:hover,
+    .custom-page a:hover {
+        background-color: #e5e7eb;
     }
 
-    /* Deshabilitado */
-    .custom-pagination .custom-page.disabled {
-        pointer-events: none !important;
-        opacity: 0.4 !important;
+    /* Botón activo */
+    .custom-page.active {
+        background-color: #6366f1;
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Botón deshabilitado */
+    .custom-page.disabled {
+        opacity: 0.4;
+        pointer-events: none;
     }
 </style>
 
