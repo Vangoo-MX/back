@@ -503,45 +503,46 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         color: #c62828;
     }
 
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
-
-    .dropdown-toggle {
-        background: none;
-        border: none;
-        font-size: 13.5px;
-        cursor: pointer;
-    }
-
     .dropdown-menu {
         display: none;
         position: absolute;
         right: 0;
         background-color: white;
-        min-width: 150px;
+        min-width: 170px;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         z-index: 10;
         border-radius: 8px;
         overflow: hidden;
+        padding: 5px 0;
     }
 
-    .dropdown-menu a {
+    .dropdown-menu .dropdown-item {
+        display: flex;
+        align-items: center;
         padding: 10px 15px;
-        display: block;
+        font-size: 14px;
         color: #333;
         text-decoration: none;
-        font-size: 14px;
+        background: none;
+        width: 100%;
+        border: none;
+        text-align: left;
+        cursor: pointer;
     }
 
-    .dropdown-menu a:hover {
+    .dropdown-menu .dropdown-item:hover {
         background-color: #f2f2f2;
     }
 
-    .dropdown-menu a.danger:hover {
+    .dropdown-menu .dropdown-item.text-danger:hover {
         background-color: #ffe6e6;
         color: #d32f2f;
+    }
+
+    .dropdown-menu .dropdown-item i {
+        margin-right: 8px;
+        min-width: 16px;
+        text-align: center;
     }
 </style>
 
