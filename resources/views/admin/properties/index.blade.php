@@ -581,16 +581,16 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     }
 
     .custom-pagination {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
         gap: 0.5rem;
         padding: 0.75rem 1rem;
         background: #f9f9f9;
         border-radius: 10px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         flex-wrap: nowrap;
-        width: auto;
+        width: auto !important;
         overflow-x: auto;
     }
 
