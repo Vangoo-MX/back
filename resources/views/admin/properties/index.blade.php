@@ -329,7 +329,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     .dropdown-toggle {
         background: none;
         border: none;
-        font-size: 18px;
+        font-size: 13.5px;
         cursor: pointer;
     }
 
