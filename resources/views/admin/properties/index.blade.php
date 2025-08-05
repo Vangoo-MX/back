@@ -130,7 +130,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             @endforeach
         </tbody>
     </table>
-    <div id="estate-pagination">
+    <div class="pagination-wrapper">
         {{ $estates->links('vendor.pagination.custom') }}
     </div>
     <p class="text-sm text-gray-600 px-4 mt-2">
@@ -580,7 +580,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         margin-top: 2rem;
     }
 
-    #estate-pagination .custom-pagination {
+    .custom-pagination {
         display: flex !important;
         flex-direction: row !important;
         justify-content: center !important;
