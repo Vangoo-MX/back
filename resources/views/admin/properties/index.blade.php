@@ -75,7 +75,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         </thead>
         <tbody id="estate-table-body">
             @foreach($estates as $estate)
-            <tr>
+            <tr class="estate-row">
                 <td>
                     {{ limitString($estate->title,37) }}
                     <span class="badge {{ $estate->status === 1 ? 'active' : 'inactive' }}">
