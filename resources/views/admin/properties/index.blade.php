@@ -348,18 +348,15 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     }
 
     thead.custom-header {
-        background-color: #ffffff;
-        /* Blanco */
-        border-bottom: 1px solid #e5e7eb;
-        /* Gris suave */
-        color: #374151;
-        /* Gris oscuro para texto */
-        font-weight: 600;
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #e5e7eb !important;
+        color: #374151 !important;
     }
 
     thead.custom-header th {
-        padding: 12px 16px;
-        text-align: left;
+        padding: 12px 16px !important;
+        text-align: left !important;
+        font-weight: 600 !important;
     }
 </style>
 
