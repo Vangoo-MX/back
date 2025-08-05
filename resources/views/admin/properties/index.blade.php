@@ -580,17 +580,8 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         margin-top: 2rem;
     }
 
-    /* Lista limpia */
-    .custom-pagination {
-        display: flex !important;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        gap: 0.5rem;
-    }
-
     /* Botón base */
-    .custom-pagination li {
+    .custom-pagination .custom-page {
         display: flex !important;
         width: 40px;
         height: 40px;
@@ -606,7 +597,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     }
 
     /* Quitar estilos heredados de Bootstrap */
-    .custom-pagination li a {
+    .custom-pagination .custom-page a {
         all: unset;
         display: flex;
         align-items: center;
@@ -619,19 +610,19 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     }
 
     /* Hover */
-    .custom-pagination li:hover {
+    .custom-pagination .custom-page:hover {
         background-color: #e5e7eb;
     }
 
     /* Activo */
-    .custom-pagination li.active {
+    .custom-pagination .custom-page.active {
         background-color: #6366f1;
         color: white;
         font-weight: bold;
     }
 
     /* Deshabilitado */
-    .custom-pagination li.disabled {
+    .custom-pagination .custom-page.disabled {
         opacity: 0.4;
         pointer-events: none;
     }
