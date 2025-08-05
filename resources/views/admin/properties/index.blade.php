@@ -213,25 +213,25 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         pagination.appendChild(next)
     }
 
-    function handleAction(action, id) {
-        switch (action) {
-            case 'details':
-                alert(`Ver detalles de propiedad ${id}`)
-                break
-            case 'copy':
-                navigator.clipboard.writeText(`${window.location.origin}/property/${id}`)
-                alert(`Link copiado para propiedad ${id}`)
-                break
-            case 'toggle':
-                alert(`Activar/Desactivar propiedad ${id}`)
-                break
-            case 'delete':
-                if (confirm('¿Seguro que deseas eliminar esta propiedad?')) {
-                    alert(`Eliminar propiedad ${id}`)
-                }
-                break
-        }
-    }
+    // function handleAction(action, id) {
+    //     switch (action) {
+    //         case 'details':
+    //             alert(`Ver detalles de propiedad ${id}`)
+    //             break
+    //         case 'copy':
+    //             navigator.clipboard.writeText(`${window.location.origin}/property/${id}`)
+    //             alert(`Link copiado para propiedad ${id}`)
+    //             break
+    //         case 'toggle':
+    //             alert(`Activar/Desactivar propiedad ${id}`)
+    //             break
+    //         case 'delete':
+    //             if (confirm('¿Seguro que deseas eliminar esta propiedad?')) {
+    //                 alert(`Eliminar propiedad ${id}`)
+    //             }
+    //             break
+    //     }
+    // }
 
     document.addEventListener('click', function(e) {
         // Cerrar cualquier otro menú abierto
