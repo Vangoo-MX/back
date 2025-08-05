@@ -20,13 +20,13 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     <h2>Filtros y Búsqueda</h2>
     <div class="filters-grid">
         <!-- Búsqueda -->
-        <div>
+        <div class="form-group">
             <label for="search">Buscar por título</label>
             <input type="text" id="search" placeholder="Buscar propiedades..." oninput="applyFilters()" />
         </div>
 
         <!-- Colonia -->
-        <div>
+        <div class="form-group">
             <label for="colonia">Colonia</label>
             <select id="colonia" onchange="applyFilters()">
                 <option value="all">Todas las colonias</option>
@@ -37,7 +37,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         </div>
 
         <!-- Municipio -->
-        <div>
+        <div class="form-group">
             <label for="municipio">Municipio</label>
             <select id="municipio" onchange="applyFilters()">
                 <option value="all">Todos los municipios</option>
@@ -48,7 +48,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         </div>
 
         <!-- Estado -->
-        <div>
+        <div class="form-group">
             <label for="estado">Estado</label>
             <select id="estado" onchange="applyFilters()">
                 <option value="all">Todos los estados</option>
@@ -102,7 +102,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     </table>
 
     <!-- Paginación -->
-    <div id="pagination" class="pagination"></div>
+    <div id="pagination" class="pagination-container"></div>
 </div>
 
 <!-- Scripts -->
@@ -211,17 +211,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 
 <!-- Estilos básicos -->
 <style>
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: "Segoe UI", sans-serif;
-        background: #f9f9f9;
-        margin: 0;
-        padding: 2rem;
-    }
-
     .container {
         max-width: 1200px;
         margin: auto;
@@ -244,7 +233,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         margin-bottom: 1rem;
     }
 
-    .filter-grid {
+    .filters-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 1rem;
