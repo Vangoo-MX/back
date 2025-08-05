@@ -577,7 +577,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         text-align: center;
     }
 
-    .pagination {
+    /* .pagination {
         display: flex;
         justify-content: flex-end;
         margin-top: 1rem;
@@ -611,7 +611,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         background-color: #1a202c;
         color: #fff;
         border-color: #1a202c;
-    }
+    } */
 </style>
 
 @endsection()
