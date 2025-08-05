@@ -60,8 +60,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 </div>
 
 <!-- Tabla de propiedades -->
-<div class="card">
-    <h2>Propiedades (<span id="total-results"></span> resultados)</h2>
+<div class="table-container">
     <table>
         <thead>
             <tr>
@@ -77,7 +76,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         </thead>
         <tbody id="estate-table-body">
             @foreach($estates as $estate)
-            <tr class="estate-row"
+            <tr>
                 data-title="{{ strtolower($estate->title) }}"
                 data-colonia="{{ $estate->id_colonia }}"
                 data-municipio="{{ $estate->id_municipio }}"
@@ -260,40 +259,52 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         background-color: #fff;
     }
 
+    .table-container {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        overflow-x: auto;
+    }
+
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        min-width: 800px;
     }
 
     thead {
         background-color: #f1f5f9;
+        position: sticky;
+        top: 0;
+        z-index: 1;
     }
 
-    th,
-    td {
+    thead th {
         padding: 0.75rem 1rem;
         text-align: left;
-        font-size: 0.9rem;
-    }
-
-    th {
         font-weight: 600;
         color: #374151;
+        border-bottom: 2px solid #e5e7eb;
+        white-space: nowrap;
     }
 
-    tr {
+    tbody td {
+        padding: 0.75rem 1rem;
+        color: #4b5563;
         border-bottom: 1px solid #e5e7eb;
+        vertical-align: middle;
     }
 
-    tr:hover {
+    tbody tr:hover {
         background-color: #f9fafb;
     }
 
     .pagination-container {
         display: flex;
         justify-content: center;
-        padding: 1rem 0;
+        margin-top: 1.5rem;
     }
 </style>
 
