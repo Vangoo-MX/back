@@ -91,7 +91,10 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                     <div class="dropdown">
                         <button class="dropdown-toggle">Opciones</button>
                         <div class="dropdown-menu">
-                            <a target="_blank" href="https://www.vangoo.mx/details/propiedad/{{ $estate->id }}">Detalles</a>
+                            <a target="_blank" href="https://www.vangoo.mx/details/propiedad/{{ $estate->id }}" class="dropdown-item">
+                                <i class="fas fa-eye me-2"></i> Detalles
+                            </a>
+
                             @if($estate->status === 0)
                             <button
                                 type="button"
@@ -99,7 +102,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                                 onclick="propertyActiveSend({{ $estate->id }})"
                                 data-url="{{ route('properties.active', $estate->id) }}"
                                 id="propertyActivateConfirmBtn{{ $estate->id }}">
-                                Activar
+                                <i class="fas fa-toggle-on me-2"></i> Activar
                             </button>
                             @else
                             <button
@@ -108,16 +111,17 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                                 onclick="propertyDeactiveSend({{ $estate->id }})"
                                 data-url="{{ route('properties.deactive', $estate->id) }}"
                                 id="propertyDeactiveConfirmBtn{{ $estate->id }}">
-                                Desactivar
+                                <i class="fas fa-toggle-off me-2"></i> Desactivar
                             </button>
                             @endif
+
                             <button
                                 type="button"
                                 class="dropdown-item text-danger"
                                 onclick="propertyDeleteSend({{ $estate->id }})"
                                 data-url="{{ route('properties.destroy', $estate->id) }}"
                                 id="propertyDeleteBtn{{ $estate->id }}">
-                                Eliminar
+                                <i class="fas fa-trash-alt me-2"></i> Eliminar
                             </button>
                         </div>
                     </div>
