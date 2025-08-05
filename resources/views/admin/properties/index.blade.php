@@ -573,16 +573,22 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         text-align: center;
     }
 
-    /* Wrapper centrado */
     .pagination-wrapper {
         display: flex;
         justify-content: center;
         margin-top: 2rem;
     }
 
-    /* Botón base */
+    .custom-pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 0.5rem;
+    }
+
     .custom-pagination .custom-page {
-        display: flex !important;
+        display: flex;
         width: 40px;
         height: 40px;
         background-color: #f3f4f6;
@@ -596,7 +602,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         cursor: pointer;
     }
 
-    /* Quitar estilos heredados de Bootstrap */
     .custom-pagination .custom-page a {
         all: unset;
         display: flex;
@@ -609,19 +614,16 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         text-decoration: none;
     }
 
-    /* Hover */
     .custom-pagination .custom-page:hover {
         background-color: #e5e7eb;
     }
 
-    /* Activo */
     .custom-pagination .custom-page.active {
         background-color: #6366f1;
         color: white;
         font-weight: bold;
     }
 
-    /* Deshabilitado */
     .custom-pagination .custom-page.disabled {
         opacity: 0.4;
         pointer-events: none;
