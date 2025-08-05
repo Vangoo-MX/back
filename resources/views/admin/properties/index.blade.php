@@ -76,7 +76,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         </thead>
         <tbody id="estate-table-body">
             @foreach($estates as $estate)
-            <tr>
+            <tr class="estate-row"
                 data-title="{{ strtolower($estate->title) }}"
                 data-colonia="{{ $estate->id_colonia }}"
                 data-municipio="{{ $estate->id_municipio }}"
@@ -305,6 +305,32 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         display: flex;
         justify-content: center;
         margin-top: 1.5rem;
+    }
+
+    td button {
+        background-color: #3b82f6;
+        border: none;
+        color: white;
+        padding: 0.4rem 0.75rem;
+        margin: 0 0.2rem 0.2rem 0;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    td button:hover {
+        background-color: #2563eb;
+    }
+
+    .badge {
+        display: inline-block;
+        background-color: #f87171;
+        color: white;
+        padding: 0.15rem 0.5rem;
+        font-size: 0.75rem;
+        border-radius: 9999px;
+        margin-left: 0.5rem;
     }
 </style>
 
