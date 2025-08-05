@@ -503,6 +503,18 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         color: #c62828;
     }
 
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-toggle {
+        background: none;
+        border: none;
+        font-size: 13.5px;
+        cursor: pointer;
+    }
+
     .dropdown-menu {
         display: none;
         position: absolute;
