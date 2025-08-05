@@ -62,7 +62,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 <!-- Tabla de propiedades -->
 <div class="table-container">
     <table class="styled-table">
-        <thead>
+        <thead class="bg-white border-b border-gray-200 text-left text-sm text-gray-700">
             <tr>
                 <th>Título</th>
                 <th>Precio</th>
