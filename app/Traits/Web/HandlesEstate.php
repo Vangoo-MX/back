@@ -16,7 +16,7 @@ trait HandlesEstate
 {
     public function indexEstate($viewEstate)
     {
-        $estates = $this->model::all();
+        $estates = $this->model::paginate(10);
 
         return view($viewEstate, compact('estates'));
     }

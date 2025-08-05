@@ -130,7 +130,17 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             @endforeach
         </tbody>
     </table>
+    <div class="pagination">
+        {{ $estates->links() }}
+    </div>
+
+    <p class="text-sm text-gray-600 px-4 mt-2">
+        Mostrando <span class="font-medium">{{ $estates->firstItem() }}</span> a
+        <span class="font-medium">{{ $estates->lastItem() }}</span> de
+        <span class="font-medium">{{ $estates->total() }}</span> resultados
+    </p>
 </div>
+
 
 <!-- Scripts -->
 <script>
@@ -562,6 +572,42 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         margin-right: 8px;
         min-width: 16px;
         text-align: center;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        gap: 6px;
+        font-family: 'Inter', sans-serif;
+        flex-wrap: wrap;
+    }
+
+    .pagination nav {
+        display: flex;
+        gap: 6px;
+    }
+
+    .pagination a,
+    .pagination span {
+        padding: 8px 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        color: #374151;
+        font-size: 13px;
+        text-decoration: none;
+        background-color: #ffffff;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .pagination a:hover {
+        background-color: #f3f4f6;
+    }
+
+    .pagination .active span {
+        background-color: #3b82f6;
+        color: #ffffff;
+        border-color: #3b82f6;
     }
 </style>
 
