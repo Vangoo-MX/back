@@ -130,9 +130,12 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             @endforeach
         </tbody>
     </table>
-    <div class="pagination">
-        {{ $estates->links() }}
+    <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
+        <div class="pagination">
+            {{ $estates->links() }}
+        </div>
     </div>
+
 
     <p class="text-sm text-gray-600 px-4 mt-2">
         Mostrando <span class="font-medium">{{ $estates->firstItem() }}</span> a
