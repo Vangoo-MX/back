@@ -91,7 +91,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                     <div class="dropdown">
                         <button class="dropdown-toggle">Opciones</button>
                         <div class="dropdown-menu">
-                            <a href="#">Detalles</a>
+                            <a href="{{route('properties.show',$estate->id)}}">Detalles</a>
                             <a href="#">Copiar</a>
                             <a href="#">{{ $estate->status === 1 ? 'Inactivar' : 'Activar' }}</a>
                             <a href="#" class="danger">Eliminar</a>
