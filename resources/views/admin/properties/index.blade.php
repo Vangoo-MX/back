@@ -130,16 +130,16 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             @endforeach
         </tbody>
     </table>
-</div>
-<div class="pagination">
-    {{ $estates->links() }}
-</div>
+    <div class="pagination">
+        {{ $estates->links() }}
+    </div>
 
-<p class="text-sm text-gray-600 px-4 mt-2">
-    Mostrando <span class="font-medium">{{ $estates->firstItem() }}</span> a
-    <span class="font-medium">{{ $estates->lastItem() }}</span> de
-    <span class="font-medium">{{ $estates->total() }}</span> resultados
-</p>
+    <p class="text-sm text-gray-600 px-4 mt-2">
+        Mostrando <span class="font-medium">{{ $estates->firstItem() }}</span> a
+        <span class="font-medium">{{ $estates->lastItem() }}</span> de
+        <span class="font-medium">{{ $estates->total() }}</span> resultados
+    </p>
+</div>
 
 
 <!-- Scripts -->
@@ -578,11 +578,16 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         display: flex;
         justify-content: flex-end;
         margin-top: 1rem;
-        padding-right: 1rem;
+        padding: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        flex-wrap: wrap;
+        position: relative;
     }
 
     .pagination .page-item {
-        margin: 0 0.2rem;
+        margin: 0 0.25rem;
+        list-style: none;
     }
 
     .pagination .page-link {
@@ -592,7 +597,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         background-color: #fff;
         color: #333;
         text-decoration: none;
-        transition: all 0.2s;
+        transition: background-color 0.2s;
     }
 
     .pagination .page-link:hover {
@@ -601,7 +606,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 
     .pagination .active .page-link {
         background-color: #1a202c;
-        /* tono oscuro */
         color: #fff;
         border-color: #1a202c;
     }
