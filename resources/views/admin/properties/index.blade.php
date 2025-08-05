@@ -92,7 +92,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                         <button class="dropdown-toggle">Opciones</button>
                         <div class="dropdown-menu">
                             <a target="_blank" href="https://www.vangoo.mx/details/propiedad/{{ $estate->id }}">Detalles</a>
-                            <a href="#">Copiar</a>
                             @if($estate->status === 0)
                             <button
                                 type="button"
@@ -112,7 +111,14 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                                 Desactivar
                             </button>
                             @endif
-                            <a href="{{route('properties.destroy', $estate->id)}}" class="danger">Eliminar</a>
+                            <button
+                                type="button"
+                                class="dropdown-item text-danger"
+                                onclick="propertyDeleteSend({{ $estate->id }})"
+                                data-url="{{ route('properties.destroy', $estate->id) }}"
+                                id="propertyDeleteBtn{{ $estate->id }}">
+                                Eliminar
+                            </button>
                         </div>
                     </div>
                 </td>
@@ -274,6 +280,31 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             },
             error: function(xhr) {
                 message('danger', 'Algo salió mal');
+                console.error('Error en la solicitud. Código de estado: ' + xhr.status);
+            }
+        });
+    }
+
+    function propertyDeleteSend(id) {
+        const url = $("#propertyDeleteBtn" + id).data("url");
+
+        if (!confirm("¿Estás seguro de que deseas eliminar esta propiedad? Esta acción no se puede deshacer.")) {
+            return;
+        }
+
+        $.ajax({
+            url: url,
+            type: "DELETE",
+            data: {
+                _token: "{{ csrf_token() }}"
+            },
+            dataType: 'json',
+            success: function(response) {
+                message('success', 'Propiedad eliminada correctamente. Actualizando tabla... <div class="spinner-border text-success"></div>');
+                setTimeout(() => window.location.reload(), 1000);
+            },
+            error: function(xhr) {
+                message('danger', 'Error al eliminar la propiedad');
                 console.error('Error en la solicitud. Código de estado: ' + xhr.status);
             }
         });
