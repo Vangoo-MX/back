@@ -573,68 +573,65 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         text-align: center;
     }
 
-    /* Asegúrate de que esto esté cerca del final de tu archivo o en tu blade directamente */
+    /* Wrapper centrado */
     .pagination-wrapper {
         display: flex;
         justify-content: center;
         margin-top: 2rem;
     }
 
-    /* Lista de botones */
+    /* Lista limpia */
     .custom-pagination {
-        display: flex;
-        gap: 0.5rem;
+        display: flex !important;
+        list-style: none;
         padding: 0;
         margin: 0;
-        list-style: none;
+        gap: 0.5rem;
     }
 
     /* Botón base */
-    .custom-page {
+    .custom-pagination li {
+        display: flex !important;
         width: 40px;
         height: 40px;
         background-color: #f3f4f6;
-        /* Gris claro */
         border-radius: 8px;
-        display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 500;
         font-size: 0.9rem;
         color: #374151;
-        /* Gris oscuro */
         transition: background-color 0.2s ease;
         cursor: pointer;
-        text-decoration: none;
-        border: none;
     }
 
-    /* Enlaces dentro */
-    .custom-page a {
-        color: inherit;
-        text-decoration: none;
+    /* Quitar estilos heredados de Bootstrap */
+    .custom-pagination li a {
+        all: unset;
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
         height: 100%;
+        color: inherit;
+        font-weight: inherit;
+        text-decoration: none;
     }
 
-    /* Hover limpio */
-    .custom-page:hover,
-    .custom-page a:hover {
+    /* Hover */
+    .custom-pagination li:hover {
         background-color: #e5e7eb;
     }
 
-    /* Botón activo */
-    .custom-page.active {
+    /* Activo */
+    .custom-pagination li.active {
         background-color: #6366f1;
         color: white;
         font-weight: bold;
     }
 
-    /* Botón deshabilitado */
-    .custom-page.disabled {
+    /* Deshabilitado */
+    .custom-pagination li.disabled {
         opacity: 0.4;
         pointer-events: none;
     }
