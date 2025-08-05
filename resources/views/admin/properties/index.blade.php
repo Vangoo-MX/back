@@ -204,6 +204,21 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         }
     }
 
+    document.addEventListener('click', function(e) {
+        // Cerrar cualquier otro menú abierto
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            if (!menu.contains(e.target) && !menu.previousElementSibling.contains(e.target)) {
+                menu.style.display = 'none';
+            }
+        });
+
+        // Mostrar el menú si se hace clic en el botón
+        if (e.target.matches('.dropdown-toggle')) {
+            const menu = e.target.nextElementSibling;
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+    });
+
     // Inicializar
     applyFilters()
 </script>
