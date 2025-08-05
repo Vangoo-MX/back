@@ -8,8 +8,14 @@
 
 @section('content')
 
-<!-- Content Row -->
 <!-- Filtros y búsqueda -->
+@php
+$coloniasFiltradas = $estates->pluck('id_colonia')->unique();
+$municipiosFiltrados = $estates->pluck('id_municipio')->unique();
+$estadosFiltrados = $estates->pluck('id_estado')->unique();
+@endphp
+
+<!-- Filtros -->
 <div class="card">
     <h2>Filtros y Búsqueda</h2>
     <div class="filters-grid">
@@ -24,8 +30,8 @@
             <label for="colonia">Colonia</label>
             <select id="colonia" onchange="applyFilters()">
                 <option value="all">Todas las colonias</option>
-                @foreach($colonias as $id => $name)
-                <option value="{{ $id }}">{{ $name }}</option>
+                @foreach($coloniasFiltradas as $idColonia)
+                <option value="{{ $idColonia }}">{{ limitString(colonia($idColonia), 30) }}</option>
                 @endforeach
             </select>
         </div>
@@ -35,8 +41,8 @@
             <label for="municipio">Municipio</label>
             <select id="municipio" onchange="applyFilters()">
                 <option value="all">Todos los municipios</option>
-                @foreach($municipios as $id => $name)
-                <option value="{{ $id }}">{{ $name }}</option>
+                @foreach($municipiosFiltrados as $idMunicipio)
+                <option value="{{ $idMunicipio }}">{{ municipio($idMunicipio) }}</option>
                 @endforeach
             </select>
         </div>
@@ -46,8 +52,8 @@
             <label for="estado">Estado</label>
             <select id="estado" onchange="applyFilters()">
                 <option value="all">Todos los estados</option>
-                @foreach($estados as $id => $name)
-                <option value="{{ $id }}">{{ $name }}</option>
+                @foreach($estadosFiltrados as $idEstado)
+                <option value="{{ $idEstado }}">{{ estado($idEstado) }}</option>
                 @endforeach
             </select>
         </div>
