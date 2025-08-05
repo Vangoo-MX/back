@@ -77,15 +77,15 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             @foreach($estates as $estate)
             <tr class="estate-row">
                 <td>
-                    {{ limitString($estate->title,37) }}
+                    data-title="{{ limitString($estate->title,37) }}"
                     <span class="badge {{ $estate->status === 1 ? 'active' : 'inactive' }}">
                         {{ $estate->status === 1 ? 'Activo' : 'Inactivo' }}
                     </span>
                 </td>
                 <td>{{ moneyFormat($estate->price) }}</td>
-                <td>{{ limitString(colonia($estate->id_colonia),30) }}</td>
-                <td>{{ municipio($estate->id_municipio) }}</td>
-                <td>{{ estado($estate->id_estado) }}</td>
+                <td data-colonia="{{ limitString(colonia($estate->id_colonia),30) }}"></td>
+                <td data-municipio="{{ municipio($estate->id_municipio) }}"></td>
+                <td data-estado="{{ estado($estate->id_estado) }}"></td>
                 <td>{{ $estate->user->name }}</td>
                 <td>
                     <div class="dropdown">
