@@ -140,7 +140,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 <!-- Scripts -->
 <script>
     const rows = Array.from(document.querySelectorAll('.estate-row'))
-    const itemsPerPage = 5
+    const itemsPerPage = 100
     let currentPage = 1
 
     function applyFilters() {
