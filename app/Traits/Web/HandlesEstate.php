@@ -132,7 +132,7 @@ trait HandlesEstate
         $this->model::findOrFail($id)->update(['status' => 0]);
         return response()->json([
             'success' => true,
-            'message' => __('Propiedad eliminada exitosamente')
+            'message' => __('Propiedad desactivada exitosamente')
         ], 200);
     }
 
@@ -141,7 +141,7 @@ trait HandlesEstate
         $this->model::findOrFail($id)->update(['status' => 1]);
         return response()->json([
             'success' => true,
-            'message' => __('Propiedad eliminada exitosamente')
+            'message' => __('Propiedad activada exitosamente')
         ], 200);
     }
 

@@ -94,9 +94,23 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                             <a target="_blank" href="https://www.vangoo.mx/details/propiedad/{{ $estate->id }}">Detalles</a>
                             <a href="#">Copiar</a>
                             @if($estate->status === 0)
-                            <a href="{{route('properties.active', $estate->id)}}">Activar</a>
+                            <button
+                                type="button"
+                                class="dropdown-item"
+                                onclick="propertyActiveSend({{ $estate->id }})"
+                                data-url="{{ route('properties.active', $estate->id) }}"
+                                id="propertyActivateConfirmBtn{{ $estate->id }}">
+                                Activar
+                            </button>
                             @else
-                            <a href="{{route('properties.deactive', $estate->id)}}">Desactivar</a>
+                            <button
+                                type="button"
+                                class="dropdown-item"
+                                onclick="propertyDeactiveSend({{ $estate->id }})"
+                                data-url="{{ route('properties.deactive', $estate->id) }}"
+                                id="propertyDeactiveConfirmBtn{{ $estate->id }}">
+                                Desactivar
+                            </button>
                             @endif
                             <a href="{{route('properties.destroy', $estate->id)}}" class="danger">Eliminar</a>
                         </div>
@@ -222,6 +236,48 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
     });
+
+    function propertyActiveSend(id) {
+        const url = $("#propertyActivateConfirmBtn" + id).data("url");
+
+        $.ajax({
+            url: url,
+            type: "PUT",
+            data: {
+                _token: "{{ csrf_token() }}"
+            },
+            dataType: 'json',
+            success: function(response) {
+                message('success', 'Propiedad ' + id + ' activada. Actualizando tabla... <div class="spinner-border text-success"></div>');
+                setTimeout(() => window.location.reload(), 1000);
+            },
+            error: function(xhr) {
+                message('danger', 'Algo salió mal');
+                console.error('Error en la solicitud. Código de estado: ' + xhr.status);
+            }
+        });
+    }
+
+    function propertyDeactiveSend(id) {
+        const url = $("#propertyDeactiveConfirmBtn" + id).data("url");
+
+        $.ajax({
+            url: url,
+            type: "PUT",
+            data: {
+                _token: "{{ csrf_token() }}"
+            },
+            dataType: 'json',
+            success: function(response) {
+                message('success', 'Propiedad ' + id + ' desactivada. Actualizando tabla... <div class="spinner-border text-success"></div>');
+                setTimeout(() => window.location.reload(), 1000);
+            },
+            error: function(xhr) {
+                message('danger', 'Algo salió mal');
+                console.error('Error en la solicitud. Código de estado: ' + xhr.status);
+            }
+        });
+    }
 
     // Inicializar
     applyFilters()
