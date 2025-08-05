@@ -576,91 +576,54 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     .pagination-wrapper {
         display: flex;
         justify-content: center;
-        margin-top: 1.5rem;
-        width: 100%;
-    }
-
-    .custom-pagination {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        gap: 0.5rem;
-        padding: 0.75rem 1rem;
-        background: #f9f9f9;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-        flex-wrap: nowrap;
-        width: auto !important;
-        overflow-x: auto;
-    }
-
-    .page-item {
-        padding: 6px 12px;
-        border-radius: 6px;
-        text-decoration: none;
-        background-color: white;
-        border: 1px solid #ccc;
-        color: #444;
-        font-weight: 500;
-        transition: all 0.3s ease;
-    }
-
-    .page-item:hover {
-        background-color: #f0f0f0;
-        color: #000;
-    }
-
-    .page-item.active {
-        background-color: #6366f1;
-        color: white;
-        border-color: #6366f1;
-    }
-
-    .page-item.disabled {
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
-    .custom-pagination-nav {
-        display: flex;
-        justify-content: center;
-        margin-top: 1.5rem;
+        margin-top: 2rem;
     }
 
     .custom-pagination {
         display: flex;
-        gap: 0.5rem;
         list-style: none;
+        gap: 8px;
         padding: 0;
         margin: 0;
         flex-wrap: wrap;
+        align-items: center;
     }
 
     .custom-page {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 0.5rem 0.75rem;
-        background-color: #f1f1f1;
+        width: 36px;
+        height: 36px;
         border-radius: 6px;
-        text-decoration: none;
-        transition: all 0.2s;
+        background-color: #f3f4f6;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
     }
 
     .custom-page a {
         text-decoration: none;
-        color: #333;
+        color: #111827;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .custom-page.active {
-        background-color: #4f46e5;
+        background-color: #6366f1;
         color: white;
-        font-weight: bold;
+    }
+
+    .custom-page.active span {
+        color: white;
     }
 
     .custom-page.disabled {
+        pointer-events: none;
         opacity: 0.4;
-        cursor: not-allowed;
     }
 </style>
 
