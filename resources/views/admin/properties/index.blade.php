@@ -587,6 +587,8 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         margin: 0;
         flex-wrap: wrap;
         align-items: center;
+
+        border: 2px dashed red;
     }
 
     .custom-page {
