@@ -78,15 +78,15 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             @foreach($estates as $estate)
             <tr>
                 <td>
-                    {{ $estate->title }}
-                    <span class="badge {{ $estate->is_active ? 'active' : 'inactive' }}">
-                        {{ $estate->is_active ? 'Activo' : 'Inactivo' }}
+                    {{ limitString($estate->title,37) }}
+                    <span class="badge {{ $estate->status === 1 ? 'active' : 'inactive' }}">
+                        {{ $estate->status === 1 ? 'Activo' : 'Inactivo' }}
                     </span>
                 </td>
-                <td>${{ number_format($estate->price, 2) }}</td>
-                <td>{{ $estate->colonia }}</td>
-                <td>{{ $estate->municipio }}</td>
-                <td>{{ $estate->estado }}</td>
+                <td>${{ moneyFormat($estate->price) }}</td>
+                <td>{{ limitString(colonia($estate->id_colonia),30) }}</td>
+                <td>{{ municipio($estate->id_municipio) }}</td>
+                <td>{{ estado($estate->id_estado) }}</td>
                 <td>{{ $estate->user->name }}</td>
                 <td>{{ \Carbon\Carbon::parse($estate->created_at)->format('d-m-Y') }}</td>
                 <td>
