@@ -82,7 +82,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                         {{ $estate->status === 1 ? 'Activo' : 'Inactivo' }}
                     </span>
                 </td>
-                <td>${{ moneyFormat($estate->price) }}</td>
+                <td>{{ moneyFormat($estate->price) }}</td>
                 <td>{{ limitString(colonia($estate->id_colonia),30) }}</td>
                 <td>{{ municipio($estate->id_municipio) }}</td>
                 <td>{{ estado($estate->id_estado) }}</td>
