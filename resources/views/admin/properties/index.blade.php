@@ -94,9 +94,9 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                             <a target="_blank" href="https://www.vangoo.mx/details/propiedad/{{ $estate->id }}">Detalles</a>
                             <a href="#">Copiar</a>
                             @if($estate->status === 0)
-                            <a href="{{route('properties.activate', $estate->id)}}">Activar</a>
+                            <a href="{{route('properties.active', $estate->id)}}">Activar</a>
                             @else
-                            <a href="{{route('properties.deactivate', $estate->id)}}">Desactivar</a>
+                            <a href="{{route('properties.deactive', $estate->id)}}">Desactivar</a>
                             @endif
                             <a href="{{route('properties.destroy', $estate->id)}}" class="danger">Eliminar</a>
                         </div>
