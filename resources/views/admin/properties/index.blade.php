@@ -15,13 +15,12 @@ $municipiosFiltrados = $estates->pluck('id_municipio')->unique();
 $estadosFiltrados = $estates->pluck('id_estado')->unique();
 @endphp
 
-<!-- Filtros -->
-<div class="card">
-    <h2>Filtros y Búsqueda</h2>
+<div class="filters-container">
+    <h2 class="filters-title">Filtros y búsqueda</h2>
     <div class="filters-grid">
-        <!-- Búsqueda -->
+        <!-- Buscar por título -->
         <div class="form-group">
-            <label for="search">Buscar por título</label>
+            <label for="search">Buscar título</label>
             <input type="text" id="search" placeholder="Buscar propiedades..." oninput="applyFilters()" />
         </div>
 
@@ -211,32 +210,25 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 
 <!-- Estilos básicos -->
 <style>
-    .container {
-        max-width: 1200px;
-        margin: auto;
-    }
-
-    .card {
+    .filters-container {
         background: white;
         border-radius: 12px;
         padding: 1.5rem;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         margin-bottom: 2rem;
     }
 
-    .card-title {
-        font-size: 1.25rem;
+    .filters-title {
+        font-size: 1.2rem;
         font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
+        color: #2d3748;
     }
 
     .filters-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 1rem;
+        gap: 1.2rem;
     }
 
     .form-group {
@@ -246,83 +238,62 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 
     .form-group label {
         font-weight: 500;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.4rem;
+        color: #4a5568;
+        font-size: 0.9rem;
     }
 
-    .input-icon {
-        position: relative;
-    }
-
-    .input-icon input {
-        width: 100%;
+    .form-group input,
+    .form-group select {
         padding: 0.5rem 0.75rem;
-        border: 1px solid #ccc;
+        border: 1px solid #d1d5db;
         border-radius: 8px;
+        background-color: #f9fafb;
+        font-size: 0.9rem;
+        transition: border 0.2s ease;
     }
 
-    select {
-        padding: 0.5rem 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        background: white;
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: #3b82f6;
+        outline: none;
+        background-color: #fff;
     }
 
-    .table-wrapper {
-        overflow-x: auto;
-        margin-top: 1rem;
-    }
-
-    .property-table {
+    table {
         width: 100%;
         border-collapse: collapse;
+        margin-bottom: 1rem;
     }
 
-    .property-table th,
-    .property-table td {
-        padding: 0.75rem;
+    thead {
+        background-color: #f1f5f9;
+    }
+
+    th,
+    td {
+        padding: 0.75rem 1rem;
         text-align: left;
-        border-bottom: 1px solid #e5e5e5;
-        vertical-align: middle;
+        font-size: 0.9rem;
     }
 
-    .property-table td .badge {
-        background: #e4e4e7;
-        padding: 2px 6px;
-        font-size: 0.75rem;
-        border-radius: 6px;
-        margin-left: 0.5rem;
+    th {
+        font-weight: 600;
+        color: #374151;
+    }
+
+    tr {
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    tr:hover {
+        background-color: #f9fafb;
     }
 
     .pagination-container {
         display: flex;
-        justify-content: flex-end;
-        gap: 0.25rem;
-        margin-top: 1rem;
-    }
-
-    .pagination-container button {
-        padding: 6px 10px;
-        border: 1px solid #ddd;
-        background: white;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .pagination-container button:hover:not(:disabled) {
-        background: #f0f0f0;
-    }
-
-    .pagination-container button.active {
-        background: black;
-        color: white;
-        font-weight: bold;
-        border-color: black;
-    }
-
-    .pagination-container button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
+        justify-content: center;
+        padding: 1rem 0;
     }
 </style>
 
