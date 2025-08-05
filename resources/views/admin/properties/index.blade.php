@@ -576,38 +576,34 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 
     .pagination {
         display: flex;
-        justify-content: center;
-        margin-top: 20px;
-        gap: 6px;
-        font-family: 'Inter', sans-serif;
-        flex-wrap: wrap;
+        justify-content: flex-end;
+        margin-top: 1rem;
+        padding-right: 1rem;
     }
 
-    .pagination nav {
-        display: flex;
-        gap: 6px;
+    .pagination .page-item {
+        margin: 0 0.2rem;
     }
 
-    .pagination a,
-    .pagination span {
-        padding: 8px 12px;
-        border: 1px solid #e5e7eb;
+    .pagination .page-link {
+        padding: 0.4rem 0.75rem;
         border-radius: 6px;
-        color: #374151;
-        font-size: 13px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        color: #333;
         text-decoration: none;
-        background-color: #ffffff;
-        transition: background-color 0.2s, color 0.2s;
+        transition: all 0.2s;
     }
 
-    .pagination a:hover {
-        background-color: #f3f4f6;
+    .pagination .page-link:hover {
+        background-color: #f0f0f0;
     }
 
-    .pagination .active span {
-        background-color: #3b82f6;
-        color: #ffffff;
-        border-color: #3b82f6;
+    .pagination .active .page-link {
+        background-color: #1a202c;
+        /* tono oscuro */
+        color: #fff;
+        border-color: #1a202c;
     }
 </style>
 
