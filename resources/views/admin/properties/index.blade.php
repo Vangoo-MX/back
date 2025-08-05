@@ -484,6 +484,13 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         font-size: 13.5px;
     }
 
+    .custom-table tbody tr:hover {
+        background-color: #eff6ff;
+        /* Azul suave como el hover del dropdown */
+        transition: background-color 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
     .badge {
         padding: 3px 8px;
         border-radius: 12px;
