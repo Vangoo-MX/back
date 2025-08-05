@@ -581,14 +581,16 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 
     .custom-pagination {
         display: flex !important;
-        list-style: none;
+        flex-direction: row !important;
+        /* Asegura que los items estén en fila */
+        justify-content: center;
+        /* Centra los items */
+        align-items: center;
+        flex-wrap: wrap;
         gap: 8px;
         padding: 0;
         margin: 0;
-        flex-wrap: wrap;
-        align-items: center;
-
-        border: 2px dashed red;
+        list-style: none;
     }
 
     .custom-page {
@@ -626,6 +628,13 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     .custom-page.disabled {
         pointer-events: none;
         opacity: 0.4;
+    }
+
+    .custom-pagination .custom-page {
+        display: flex !important;
+        /* Cambia de block a flex */
+        align-items: center;
+        justify-content: center;
     }
 </style>
 
