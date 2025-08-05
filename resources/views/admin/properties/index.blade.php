@@ -130,16 +130,16 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             @endforeach
         </tbody>
     </table>
-    <div class="pagination">
-        {{ $estates->links() }}
-    </div>
-
-    <p class="text-sm text-gray-600 px-4 mt-2">
-        Mostrando <span class="font-medium">{{ $estates->firstItem() }}</span> a
-        <span class="font-medium">{{ $estates->lastItem() }}</span> de
-        <span class="font-medium">{{ $estates->total() }}</span> resultados
-    </p>
 </div>
+<div class="pagination">
+    {{ $estates->links() }}
+</div>
+
+<p class="text-sm text-gray-600 px-4 mt-2">
+    Mostrando <span class="font-medium">{{ $estates->firstItem() }}</span> a
+    <span class="font-medium">{{ $estates->lastItem() }}</span> de
+    <span class="font-medium">{{ $estates->total() }}</span> resultados
+</p>
 
 
 <!-- Scripts -->
