@@ -246,20 +246,45 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     function propertyActiveSend(id) {
         const url = $("#propertyActivateConfirmBtn" + id).data("url");
 
-        $.ajax({
-            url: url,
-            type: "PUT",
-            data: {
-                _token: "{{ csrf_token() }}"
-            },
-            dataType: 'json',
-            success: function(response) {
-                message('success', 'Propiedad ' + id + ' activada. Actualizando tabla... <div class="spinner-border text-success"></div>');
-                setTimeout(() => window.location.reload(), 1000);
-            },
-            error: function(xhr) {
-                message('danger', 'Algo salió mal');
-                console.error('Error en la solicitud. Código de estado: ' + xhr.status);
+        Swal.fire({
+            title: '¿Activar propiedad?',
+            text: 'La propiedad será visible en el sitio.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, activar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: "PUT",
+                    data: {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        Swal.fire({
+                            title: '¡Activada!',
+                            text: 'La propiedad ahora está activa.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1600);
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'No se pudo activar la propiedad.',
+                            icon: 'error'
+                        });
+                    }
+                });
             }
         });
     }
@@ -267,20 +292,45 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     function propertyDeactiveSend(id) {
         const url = $("#propertyDeactiveConfirmBtn" + id).data("url");
 
-        $.ajax({
-            url: url,
-            type: "PUT",
-            data: {
-                _token: "{{ csrf_token() }}"
-            },
-            dataType: 'json',
-            success: function(response) {
-                message('success', 'Propiedad ' + id + ' desactivada. Actualizando tabla... <div class="spinner-border text-success"></div>');
-                setTimeout(() => window.location.reload(), 1000);
-            },
-            error: function(xhr) {
-                message('danger', 'Algo salió mal');
-                console.error('Error en la solicitud. Código de estado: ' + xhr.status);
+        Swal.fire({
+            title: '¿Desactivar propiedad?',
+            text: 'La propiedad dejará de ser visible.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ffc107',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, desactivar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: "PUT",
+                    data: {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        Swal.fire({
+                            title: '¡Desactivada!',
+                            text: 'La propiedad ha sido desactivada.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1600);
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'No se pudo desactivar la propiedad.',
+                            icon: 'error'
+                        });
+                    }
+                });
             }
         });
     }
@@ -288,24 +338,46 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     function propertyDeleteSend(id) {
         const url = $("#propertyDeleteBtn" + id).data("url");
 
-        if (!confirm("¿Estás seguro de que deseas eliminar esta propiedad? Esta acción no se puede deshacer.")) {
-            return;
-        }
+        Swal.fire({
+            title: '¿Eliminar propiedad?',
+            text: "Esta acción no se puede deshacer",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: "DELETE",
+                    data: {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        Swal.fire({
+                            title: '¡Eliminado!',
+                            text: 'La propiedad ha sido eliminada.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
 
-        $.ajax({
-            url: url,
-            type: "DELETE",
-            data: {
-                _token: "{{ csrf_token() }}"
-            },
-            dataType: 'json',
-            success: function(response) {
-                message('success', 'Propiedad eliminada correctamente. Actualizando tabla... <div class="spinner-border text-success"></div>');
-                setTimeout(() => window.location.reload(), 1000);
-            },
-            error: function(xhr) {
-                message('danger', 'Error al eliminar la propiedad');
-                console.error('Error en la solicitud. Código de estado: ' + xhr.status);
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1600);
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'No se pudo eliminar la propiedad.',
+                            icon: 'error'
+                        });
+                        console.error('Error en la solicitud. Código de estado: ' + xhr.status);
+                    }
+                });
             }
         });
     }
