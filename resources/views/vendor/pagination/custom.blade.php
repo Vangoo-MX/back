@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-<nav class="custom-pagination-nav" role="navigation" aria-label="Pagination Navigation">
+<nav class="pagination-wrapper" role="navigation" aria-label="Pagination Navigation">
     <ul class="custom-pagination">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
@@ -10,12 +10,10 @@
 
         {{-- Pagination Elements --}}
         @foreach ($elements as $element)
-        {{-- "Three Dots" Separator --}}
         @if (is_string($element))
-        <li class="custom-page disabled" aria-disabled="true"><span>{{ $element }}</span></li>
+        <li class="custom-page disabled"><span>{{ $element }}</span></li>
         @endif
 
-        {{-- Array Of Links --}}
         @if (is_array($element))
         @foreach ($element as $page => $url)
         @if ($page == $paginator->currentPage())
@@ -31,7 +29,7 @@
         @if ($paginator->hasMorePages())
         <li class="custom-page"><a href="{{ $paginator->nextPageUrl() }}" rel="next">&raquo;</a></li>
         @else
-        <li class="custom-page disabled" aria-disabled="true"><span>&raquo;</span></li>
+        <li class="custom-page disabled"><span>&raquo;</span></li>
         @endif
     </ul>
 </nav>
