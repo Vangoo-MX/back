@@ -131,9 +131,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         </tbody>
     </table>
     <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
-        <div class="pagination">
-            {{ $estates->links() }}
-        </div>
+        {{ $estates->links() }}
     </div>
 
 
