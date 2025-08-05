@@ -61,7 +61,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 
 <!-- Tabla de propiedades -->
 <div class="table-container">
-    <table>
+    <table class="styled-table">
         <thead>
             <tr>
                 <th>Título</th>
@@ -74,33 +74,36 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody id="estate-table-body">
+        <tbody>
             @foreach($estates as $estate)
-            <tr class="estate-row"
-                data-title="{{ strtolower($estate->title) }}"
-                data-colonia="{{ $estate->id_colonia }}"
-                data-municipio="{{ $estate->id_municipio }}"
-                data-estado="{{ $estate->id_estado }}">
-                <td>{{ limitString($estate->title, 37) }} @if(!$estate->active)<span class="badge">Inactivo</span>@endif</td>
-                <td>{{ moneyFormat($estate->price) }}</td>
-                <td>{{ limitString(colonia($estate->id_colonia), 30) }}</td>
-                <td>{{ municipio($estate->id_municipio) }}</td>
-                <td>{{ estado($estate->id_estado) }}</td>
-                <td><a href="/user/{{ $estate->id_user }}">{{ username($estate->id_user) }}</a></td>
-                <td>{{ convertDate($estate->created_at) }}</td>
+            <tr>
                 <td>
-                    <button onclick="handleAction('details', {{ $estate->id }})">Detalles</button>
-                    <button onclick="handleAction('copy', {{ $estate->id }})">Copiar</button>
-                    <button onclick="handleAction('toggle', {{ $estate->id }})">{{ $estate->active ? 'Desactivar' : 'Activar' }}</button>
-                    <button onclick="handleAction('delete', {{ $estate->id }})">Eliminar</button>
+                    {{ $estate->title }}
+                    <span class="badge {{ $estate->is_active ? 'active' : 'inactive' }}">
+                        {{ $estate->is_active ? 'Activo' : 'Inactivo' }}
+                    </span>
+                </td>
+                <td>${{ number_format($estate->price, 2) }}</td>
+                <td>{{ $estate->colonia }}</td>
+                <td>{{ $estate->municipio }}</td>
+                <td>{{ $estate->estado }}</td>
+                <td>{{ $estate->user->name }}</td>
+                <td>{{ \Carbon\Carbon::parse($estate->created_at)->format('d-m-Y') }}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle">⋮</button>
+                        <div class="dropdown-menu">
+                            <a href="#">Detalles</a>
+                            <a href="#">Copiar</a>
+                            <a href="#">{{ $estate->is_active ? 'Inactivar' : 'Activar' }}</a>
+                            <a href="#" class="danger">Eliminar</a>
+                        </div>
+                    </div>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
-
-    <!-- Paginación -->
-    <div id="pagination" class="pagination-container"></div>
 </div>
 
 <!-- Scripts -->
@@ -260,77 +263,90 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     }
 
     .table-container {
-        background: white;
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         overflow-x: auto;
+        margin-top: 2rem;
     }
 
-    table {
+    .styled-table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 0.9rem;
-        min-width: 800px;
+        font-size: 14px;
     }
 
-    thead {
-        background-color: #f1f5f9;
-        position: sticky;
-        top: 0;
-        z-index: 1;
-    }
-
-    thead th {
-        padding: 0.75rem 1rem;
+    .styled-table thead {
+        background-color: #e4ecfb;
+        color: #333;
         text-align: left;
-        font-weight: 600;
-        color: #374151;
-        border-bottom: 2px solid #e5e7eb;
-        white-space: nowrap;
     }
 
-    tbody td {
-        padding: 0.75rem 1rem;
-        color: #4b5563;
-        border-bottom: 1px solid #e5e7eb;
+    .styled-table th,
+    .styled-table td {
+        padding: 14px 16px;
+        border-bottom: 1px solid #f0f0f0;
         vertical-align: middle;
     }
 
-    tbody tr:hover {
-        background-color: #f9fafb;
-    }
-
-    .pagination-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 1.5rem;
-    }
-
-    td button {
-        background-color: #3b82f6;
-        border: none;
-        color: white;
-        padding: 0.4rem 0.75rem;
-        margin: 0 0.2rem 0.2rem 0;
-        border-radius: 6px;
-        font-size: 0.8rem;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
-    }
-
-    td button:hover {
-        background-color: #2563eb;
-    }
-
     .badge {
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        margin-left: 6px;
         display: inline-block;
-        background-color: #f87171;
-        color: white;
-        padding: 0.15rem 0.5rem;
-        font-size: 0.75rem;
-        border-radius: 9999px;
-        margin-left: 0.5rem;
+        font-weight: bold;
+    }
+
+    .badge.active {
+        background-color: #daf5dc;
+        color: #2e7d32;
+    }
+
+    .badge.inactive {
+        background-color: #fbdada;
+        color: #c62828;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-toggle {
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: white;
+        min-width: 150px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .dropdown-menu a {
+        padding: 10px 15px;
+        display: block;
+        color: #333;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .dropdown-menu a:hover {
+        background-color: #f2f2f2;
+    }
+
+    .dropdown-menu a.danger:hover {
+        background-color: #ffe6e6;
+        color: #d32f2f;
     }
 </style>
 
