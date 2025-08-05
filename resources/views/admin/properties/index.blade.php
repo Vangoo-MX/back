@@ -130,14 +130,14 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             @endforeach
         </tbody>
     </table>
-    <div class="pagination-wrapper">
+    <!-- <div class="pagination-wrapper">
         {{ $estates->links('vendor.pagination.custom') }}
     </div>
     <p class="text-sm text-gray-600 px-4 mt-2">
         Mostrando <span class="font-medium">{{ $estates->firstItem() }}</span> a
         <span class="font-medium">{{ $estates->lastItem() }}</span> de
         <span class="font-medium">{{ $estates->total() }}</span> resultados
-    </p>
+    </p> -->
 </div>
 
 
