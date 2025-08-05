@@ -130,11 +130,9 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             @endforeach
         </tbody>
     </table>
-    <div class="custom-pagination">
-        {{ $estates->links() }}
+    <div class="pagination-wrapper">
+        {{ $estates->links('vendor.pagination.custom') }}
     </div>
-
-
     <p class="text-sm text-gray-600 px-4 mt-2">
         Mostrando <span class="font-medium">{{ $estates->firstItem() }}</span> a
         <span class="font-medium">{{ $estates->lastItem() }}</span> de
@@ -575,54 +573,47 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         text-align: center;
     }
 
-    .custom-pagination nav {
+    .pagination-wrapper {
         display: flex;
         justify-content: center;
         margin-top: 1.5rem;
     }
 
-    .custom-pagination .pagination {
+    .custom-pagination {
         display: flex;
         gap: 0.5rem;
-        list-style: none;
-        padding: 0;
-        margin: 0;
+        padding: 0.75rem 1rem;
+        background: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         flex-wrap: wrap;
     }
 
-    .custom-pagination .pagination li {
-        display: inline-block;
-    }
-
-    .custom-pagination .pagination li a,
-    .custom-pagination .pagination li span {
-        display: inline-block;
-        padding: 0.5rem 0.75rem;
+    .page-item {
+        padding: 6px 12px;
+        border-radius: 6px;
         text-decoration: none;
+        background-color: white;
         border: 1px solid #ccc;
-        border-radius: 0.375rem;
-        background-color: #fff;
-        color: #333;
-        font-size: 14px;
-        transition: background-color 0.3s, color 0.3s;
+        color: #444;
+        font-weight: 500;
+        transition: all 0.3s ease;
     }
 
-    .custom-pagination .pagination li a:hover {
+    .page-item:hover {
         background-color: #f0f0f0;
         color: #000;
     }
 
-    .custom-pagination .pagination .active span {
-        background-color: #0d6efd;
-        color: #fff;
-        border-color: #0d6efd;
+    .page-item.active {
+        background-color: #6366f1;
+        color: white;
+        border-color: #6366f1;
     }
 
-    .custom-pagination .pagination .disabled span {
-        color: #999;
-        cursor: not-allowed;
-        background-color: #eee;
-        border-color: #ccc;
+    .page-item.disabled {
+        opacity: 0.5;
+        pointer-events: none;
     }
 </style>
 
