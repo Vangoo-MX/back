@@ -70,7 +70,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                 <th>Municipio</th>
                 <th>Estado</th>
                 <th>Usuario</th>
-                <th>Fecha</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -88,7 +87,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                 <td>{{ municipio($estate->id_municipio) }}</td>
                 <td>{{ estado($estate->id_estado) }}</td>
                 <td>{{ $estate->user->name }}</td>
-                <td>{{ \Carbon\Carbon::parse($estate->created_at)->format('d-m-Y') }}</td>
                 <td>
                     <div class="dropdown">
                         <button class="dropdown-toggle">⋮</button>
