@@ -620,6 +620,48 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         opacity: 0.5;
         pointer-events: none;
     }
+
+    .custom-pagination-nav {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5rem;
+    }
+
+    .custom-pagination {
+        display: flex;
+        gap: 0.5rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        flex-wrap: wrap;
+    }
+
+    .custom-page {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.75rem;
+        background-color: #f1f1f1;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .custom-page a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .custom-page.active {
+        background-color: #4f46e5;
+        color: white;
+        font-weight: bold;
+    }
+
+    .custom-page.disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
 </style>
 
 @endsection()
