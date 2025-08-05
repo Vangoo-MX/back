@@ -485,7 +485,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     }
 
     .custom-table tbody tr:hover {
-        background-color: #eff6ff;
+        background-color: #f2f2f2;
         /* Azul suave como el hover del dropdown */
         transition: background-color 0.2s ease-in-out;
         cursor: pointer;
