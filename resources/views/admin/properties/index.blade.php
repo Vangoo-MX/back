@@ -130,7 +130,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             @endforeach
         </tbody>
     </table>
-    <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
+    <div class="custom-pagination">
         {{ $estates->links() }}
     </div>
 
@@ -575,41 +575,55 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         text-align: center;
     }
 
-    /* .pagination {
+    .custom-pagination nav {
         display: flex;
-        justify-content: flex-end;
-        margin-top: 1rem;
-        padding: 1rem;
-        width: 100%;
-        box-sizing: border-box;
-        flex-wrap: wrap;
-        position: relative;
+        justify-content: center;
+        margin-top: 1.5rem;
     }
 
-    .pagination .page-item {
-        margin: 0 0.25rem;
+    .custom-pagination .pagination {
+        display: flex;
+        gap: 0.5rem;
         list-style: none;
+        padding: 0;
+        margin: 0;
+        flex-wrap: wrap;
     }
 
-    .pagination .page-link {
-        padding: 0.4rem 0.75rem;
-        border-radius: 6px;
+    .custom-pagination .pagination li {
+        display: inline-block;
+    }
+
+    .custom-pagination .pagination li a,
+    .custom-pagination .pagination li span {
+        display: inline-block;
+        padding: 0.5rem 0.75rem;
+        text-decoration: none;
         border: 1px solid #ccc;
+        border-radius: 0.375rem;
         background-color: #fff;
         color: #333;
-        text-decoration: none;
-        transition: background-color 0.2s;
+        font-size: 14px;
+        transition: background-color 0.3s, color 0.3s;
     }
 
-    .pagination .page-link:hover {
+    .custom-pagination .pagination li a:hover {
         background-color: #f0f0f0;
+        color: #000;
     }
 
-    .pagination .active .page-link {
-        background-color: #1a202c;
+    .custom-pagination .pagination .active span {
+        background-color: #0d6efd;
         color: #fff;
-        border-color: #1a202c;
-    } */
+        border-color: #0d6efd;
+    }
+
+    .custom-pagination .pagination .disabled span {
+        color: #999;
+        cursor: not-allowed;
+        background-color: #eee;
+        border-color: #ccc;
+    }
 </style>
 
 @endsection()
