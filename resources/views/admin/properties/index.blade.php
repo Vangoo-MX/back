@@ -61,7 +61,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 
 <!-- Tabla de propiedades -->
 <div class="table-container">
-    <table class="styled-table">
+    <table class="custom-table w-full text-sm text-left">
         <thead class="custom-header">
             <tr>
                 <th>Título</th>
@@ -268,23 +268,38 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         margin-top: 2rem;
     }
 
-    .styled-table {
+    .custom-table {
         width: 100%;
         border-collapse: collapse;
         font-size: 14px;
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
     }
 
-    .styled-table thead {
-        background-color: #e4ecfb;
-        color: #333;
+    .custom-table thead {
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #e5e7eb !important;
+        color: #374151 !important;
         text-align: left;
     }
 
-    .styled-table th,
-    .styled-table td {
+    .custom-table thead th {
+        padding: 12px 16px !important;
+        font-weight: 600 !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 14px !important;
+        vertical-align: middle !important;
+        border: none !important;
+        background-color: #ffffff !important;
+        color: #374151 !important;
+    }
+
+    .custom-table tbody td {
         padding: 14px 16px;
         border-bottom: 1px solid #f0f0f0;
         vertical-align: middle;
+        font-size: 13.5px;
     }
 
     .badge {
@@ -345,18 +360,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     .dropdown-menu a.danger:hover {
         background-color: #ffe6e6;
         color: #d32f2f;
-    }
-
-    thead.custom-header {
-        background-color: #ffffff !important;
-        border-bottom: 1px solid #e5e7eb !important;
-        color: #374151 !important;
-    }
-
-    thead.custom-header th {
-        padding: 12px 16px !important;
-        text-align: left !important;
-        font-weight: 600 !important;
     }
 </style>
 
