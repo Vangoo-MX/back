@@ -89,11 +89,11 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                 <td>{{ $estate->user->name }}</td>
                 <td>
                     <div class="dropdown">
-                        <button class="dropdown-toggle">⋮</button>
+                        <button class="dropdown-toggle">Opciones</button>
                         <div class="dropdown-menu">
                             <a href="#">Detalles</a>
                             <a href="#">Copiar</a>
-                            <a href="#">{{ $estate->is_active ? 'Inactivar' : 'Activar' }}</a>
+                            <a href="#">{{ $estate->status === 1 ? 'Inactivar' : 'Activar' }}</a>
                             <a href="#" class="danger">Eliminar</a>
                         </div>
                     </div>
