@@ -211,33 +211,129 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 
 <!-- Estilos básicos -->
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f9f9f9;
+        margin: 0;
+        padding: 2rem;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
     .card {
-        padding: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 0.5rem;
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
         margin-bottom: 1rem;
     }
 
-    .filters-grid {
+    .filter-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 1rem;
     }
 
-    .badge {
-        background: #eee;
-        padding: 2px 4px;
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .input-icon {
+        position: relative;
+    }
+
+    .input-icon input {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+    }
+
+    select {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background: white;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+        margin-top: 1rem;
+    }
+
+    .property-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .property-table th,
+    .property-table td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #e5e5e5;
+        vertical-align: middle;
+    }
+
+    .property-table td .badge {
+        background: #e4e4e7;
+        padding: 2px 6px;
         font-size: 0.75rem;
-        border-radius: 4px;
+        border-radius: 6px;
+        margin-left: 0.5rem;
     }
 
-    .pagination button {
-        margin: 0 2px;
-        padding: 4px 8px;
+    .pagination-container {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.25rem;
+        margin-top: 1rem;
     }
 
-    .pagination .active {
+    .pagination-container button {
+        padding: 6px 10px;
+        border: 1px solid #ddd;
+        background: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .pagination-container button:hover:not(:disabled) {
+        background: #f0f0f0;
+    }
+
+    .pagination-container button.active {
+        background: black;
+        color: white;
         font-weight: bold;
+        border-color: black;
+    }
+
+    .pagination-container button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 </style>
 
