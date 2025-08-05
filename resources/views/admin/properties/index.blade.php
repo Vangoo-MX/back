@@ -62,7 +62,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 <!-- Tabla de propiedades -->
 <div class="table-container">
     <table class="styled-table">
-        <thead class="bg-white border-b border-gray-200 text-left text-sm text-gray-700">
+        <thead class="custom-header">
             <tr>
                 <th>Título</th>
                 <th>Precio</th>
@@ -345,6 +345,21 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     .dropdown-menu a.danger:hover {
         background-color: #ffe6e6;
         color: #d32f2f;
+    }
+
+    thead.custom-header {
+        background-color: #ffffff;
+        /* Blanco */
+        border-bottom: 1px solid #e5e7eb;
+        /* Gris suave */
+        color: #374151;
+        /* Gris oscuro para texto */
+        font-weight: 600;
+    }
+
+    thead.custom-header th {
+        padding: 12px 16px;
+        text-align: left;
     }
 </style>
 
