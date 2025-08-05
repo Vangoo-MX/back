@@ -580,7 +580,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     }
 
     .custom-pagination {
-        display: flex;
+        display: flex !important;
         list-style: none;
         gap: 8px;
         padding: 0;
