@@ -130,7 +130,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             @endforeach
         </tbody>
     </table>
-    <div class="pagination-wrapper">
+    <div id="estate-pagination">
         {{ $estates->links('vendor.pagination.custom') }}
     </div>
     <p class="text-sm text-gray-600 px-4 mt-2">
@@ -573,68 +573,70 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         text-align: center;
     }
 
+    /* Asegúrate de que esto esté cerca del final de tu archivo o en tu blade directamente */
     .pagination-wrapper {
-        display: flex;
-        justify-content: center;
+        display: flex !important;
+        justify-content: center !important;
         margin-top: 2rem;
     }
 
-    .custom-pagination {
+    #estate-pagination .custom-pagination {
         display: flex !important;
         flex-direction: row !important;
-        /* Asegura que los items estén en fila */
-        justify-content: center;
-        /* Centra los items */
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 0;
-        margin: 0;
-        list-style: none;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        gap: 8px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        list-style: none !important;
     }
 
-    .custom-page {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 6px;
-        background-color: #f3f4f6;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-
-    .custom-page a {
-        text-decoration: none;
-        color: #111827;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .custom-page.active {
-        background-color: #6366f1;
-        color: white;
-    }
-
-    .custom-page.active span {
-        color: white;
-    }
-
-    .custom-page.disabled {
-        pointer-events: none;
-        opacity: 0.4;
-    }
-
+    /* Forzar los botones en línea y apariencia correcta */
     .custom-pagination .custom-page {
         display: flex !important;
-        /* Cambia de block a flex */
+        align-items: center !important;
+        justify-content: center !important;
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 6px !important;
+        background-color: #f3f4f6 !important;
+        font-weight: 500 !important;
+        cursor: pointer !important;
+        transition: background-color 0.2s !important;
+        text-align: center !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .custom-pagination .custom-page:hover {
+        background-color: #e5e7eb !important;
+    }
+
+    .custom-pagination .custom-page a {
+        text-decoration: none !important;
+        color: #111827 !important;
+        width: 100%;
+        height: 100%;
+        display: flex !important;
         align-items: center;
         justify-content: center;
+    }
+
+    /* Activo */
+    .custom-pagination .custom-page.active {
+        background-color: #6366f1 !important;
+        color: white !important;
+    }
+
+    .custom-pagination .custom-page.active span {
+        color: white !important;
+    }
+
+    /* Deshabilitado */
+    .custom-pagination .custom-page.disabled {
+        pointer-events: none !important;
+        opacity: 0.4 !important;
     }
 </style>
 
