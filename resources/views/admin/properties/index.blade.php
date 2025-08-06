@@ -8,7 +8,6 @@
 
 @section('content')
 
-<!-- Filtros y búsqueda -->
 @php
 $coloniasFiltradas = $estates->pluck('id_colonia')->unique();
 $municipiosFiltrados = $estates->pluck('id_municipio')->unique();
@@ -18,13 +17,11 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 <div class="filters-container">
     <h2 class="filters-title">Filtros y búsqueda</h2>
     <div class="filters-grid">
-        <!-- Buscar por título -->
         <div class="form-group">
             <label for="search">Buscar título</label>
             <input type="text" id="search" placeholder="Buscar propiedades..." oninput="applyFilters()" />
         </div>
 
-        <!-- Colonia -->
         <div class="form-group">
             <label for="colonia">Colonia</label>
             <select id="colonia" onchange="applyFilters()">
@@ -35,7 +32,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             </select>
         </div>
 
-        <!-- Municipio -->
         <div class="form-group">
             <label for="municipio">Municipio</label>
             <select id="municipio" onchange="applyFilters()">
@@ -46,7 +42,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             </select>
         </div>
 
-        <!-- Estado -->
         <div class="form-group">
             <label for="estado">Estado</label>
             <select id="estado" onchange="applyFilters()">
@@ -59,7 +54,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     </div>
 </div>
 
-<!-- Tabla de propiedades -->
 <div class="table-container">
     <table class="custom-table w-full text-sm text-left">
         <thead class="custom-header">
@@ -136,8 +130,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     </table>
 </div>
 
-
-<!-- Scripts -->
 <script>
     const rows = Array.from(document.querySelectorAll('.estate-row'))
     const itemsPerPage = 100
@@ -218,14 +210,12 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     }
 
     document.addEventListener('click', function(e) {
-        // Cerrar cualquier otro menú abierto
         document.querySelectorAll('.dropdown-menu').forEach(menu => {
             if (!menu.contains(e.target) && !menu.previousElementSibling.contains(e.target)) {
                 menu.style.display = 'none';
             }
         });
 
-        // Mostrar el menú si se hace clic en el botón
         if (e.target.matches('.dropdown-toggle')) {
             const menu = e.target.nextElementSibling;
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
@@ -371,11 +361,9 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         });
     }
 
-    // Inicializar
     applyFilters()
 </script>
 
-<!-- Estilos básicos -->
 <style>
     .filters-container {
         background: white;
@@ -471,7 +459,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 
     .custom-table tbody tr:hover {
         background-color: #f2f2f2;
-        /* Azul suave como el hover del dropdown */
         transition: background-color 0.2s ease-in-out;
         cursor: pointer;
     }
