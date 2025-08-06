@@ -84,7 +84,8 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                 <td>{{ limitString(colonia($estate->id_colonia),30) }}</td>
                 <td>{{ municipio($estate->id_municipio) }}</td>
                 <td>{{ estado($estate->id_estado) }}</td>
-                <td>{{ $estate->user->name }}</td>
+                <td><a href="https://dashboard.vangoo.mx/users/{{$estate->user->uuid}}">{{ $estate->user->name }}</td>
+                <td>
                 <td>
                     <div class="dropdown" data-scope="table-dropdown">
                         <button class="dropdown-toggle">Opciones</button>
