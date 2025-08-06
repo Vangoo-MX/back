@@ -423,6 +423,14 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
         margin-top: 2rem;
     }
 
+    .table-container,
+    table,
+    tbody,
+    tr,
+    td {
+        overflow: visible !important;
+    }
+
     .custom-table {
         width: 100%;
         border-collapse: collapse;
