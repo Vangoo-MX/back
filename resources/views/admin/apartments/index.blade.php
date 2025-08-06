@@ -86,7 +86,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                 <td>{{ estado($estate->id_estado) }}</td>
                 <td>{{ $estate->user->name }}</td>
                 <td>
-                    <div class="dropdown">
+                    <div class="dropdown" data-scope="table-dropdown">
                         <button class="dropdown-toggle">Opciones</button>
                         <div class="dropdown-menu">
                             <a target="_blank" href="https://www.vangoo.mx/detailsDepa/apartments/{{$estate->id}}" class="dropdown-item">
@@ -210,13 +210,13 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     }
 
     document.addEventListener('click', function(e) {
-        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+        document.querySelectorAll('[data-scope="table-dropdown"] .dropdown-menu').forEach(menu => {
             if (!menu.contains(e.target) && !menu.previousElementSibling.contains(e.target)) {
                 menu.style.display = 'none';
             }
         });
 
-        if (e.target.matches('.dropdown-toggle')) {
+        if (e.target.matches('[data-scope="table-dropdown"] .dropdown-toggle')) {
             const menu = e.target.nextElementSibling;
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
