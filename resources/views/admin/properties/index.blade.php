@@ -85,10 +85,10 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                 <td>{{ municipio($estate->id_municipio) }}</td>
                 <td>{{ estado($estate->id_estado) }}</td>
                 <td>{{ $estate->user->name }}</td>
-                <td>
-                    <div class="dropdown">
+                <td style="position: relative;">
+                    <div class="dropdown" style="position:relative;">
                         <button class="dropdown-toggle">Opciones</button>
-                        <div class="dropdown-menu">
+                        <div class="dropdown-menu" style="position: absolute; top: 100%; left: 0; display: none; z-index: 1000;">
                             <a target="_blank" href="https://www.vangoo.mx/details/propiedad/{{ $estate->id }}" class="dropdown-item">
                                 <i class="fas fa-eye me-2"></i> Detalles
                             </a>
@@ -484,7 +484,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
 
     .dropdown {
         position: relative;
-        display: inline-block;
+        /* display: inline-block; */
     }
 
     .dropdown-toggle {
@@ -495,29 +495,24 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
     }
 
     .dropdown-menu {
-        display: none;
         position: absolute;
-        right: 0;
-        background-color: white;
-        min-width: 170px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 10;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        background: white;
+        padding: 0.5rem 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
-        overflow: hidden;
-        padding: 5px 0;
+        min-width: 160px;
+        display: none;
     }
 
-    .dropdown-menu .dropdown-item {
+    .dropdown-item {
         display: flex;
         align-items: center;
-        padding: 10px 15px;
-        font-size: 14px;
-        color: #333;
+        padding: 0.5rem 1rem;
+        color: #374151;
         text-decoration: none;
-        background: none;
-        width: 100%;
-        border: none;
-        text-align: left;
         cursor: pointer;
     }
 
