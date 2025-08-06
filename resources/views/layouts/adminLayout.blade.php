@@ -16,7 +16,6 @@
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,10 +39,6 @@
                         <img src="{{url('./img/icon/icon-logo.png')}}" />
                     </a>
                 </div>
-                <!---
-                <div class="divider">
-                    <i class="fa-solid fa-circle"></i>
-                </div>-->
                 <div class="menu">
                     <li>
                         <a href="{{route('admin.index')}}" class="{{ (request()->is('overview/home*')) ? 'active' : '' }}">
