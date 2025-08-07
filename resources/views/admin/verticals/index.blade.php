@@ -94,27 +94,11 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                             <a target="_blank" href="https://www.vangoo.mx/details/desarrollo/{{ $estate->id }}" class="dropdown-item">
                                 <i class="fas fa-eye me-2"></i> Detalles
                             </a>
-
-                            @if($estate->status === 0)
-                            <button
-                                type="button"
-                                class="dropdown-item"
-                                onclick="propertyActiveSend({{ $estate->id }})"
-                                data-url="{{ route('verticals.active', $estate->id) }}"
-                                id="propertyActivateConfirmBtn{{ $estate->id }}">
-                                <i class="fas fa-toggle-on me-2"></i> Activar
-                            </button>
-                            @else
-                            <button
-                                type="button"
-                                class="dropdown-item"
-                                onclick="propertyDeactiveSend({{ $estate->id }})"
-                                data-url="{{ route('verticals.deactive', $estate->id) }}"
-                                id="propertyDeactiveConfirmBtn{{ $estate->id }}">
-                                <i class="fas fa-toggle-off me-2"></i> Desactivar
-                            </button>
-                            @endif
-
+                            <a
+                                href="{{ route('verticals.edit', $estate->id) }}"
+                                class="dropdown-item">
+                                <i class="fas fa-edit me-2"></i> Editar
+                            </a>
                             <button
                                 type="button"
                                 class="dropdown-item text-danger"
@@ -223,98 +207,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
     });
-
-    function propertyActiveSend(id) {
-        const url = $("#propertyActivateConfirmBtn" + id).data("url");
-
-        Swal.fire({
-            title: '¿Activar propiedad?',
-            text: 'La propiedad será visible en el sitio.',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#28a745',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Sí, activar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: url,
-                    type: "PUT",
-                    data: {
-                        _token: "{{ csrf_token() }}"
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        Swal.fire({
-                            title: '¡Activada!',
-                            text: 'La propiedad ahora está activa.',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1600);
-                    },
-                    error: function(xhr) {
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'No se pudo activar la propiedad.',
-                            icon: 'error'
-                        });
-                    }
-                });
-            }
-        });
-    }
-
-    function propertyDeactiveSend(id) {
-        const url = $("#propertyDeactiveConfirmBtn" + id).data("url");
-
-        Swal.fire({
-            title: '¿Desactivar propiedad?',
-            text: 'La propiedad dejará de ser visible.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#ffc107',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Sí, desactivar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: url,
-                    type: "PUT",
-                    data: {
-                        _token: "{{ csrf_token() }}"
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        Swal.fire({
-                            title: '¡Desactivada!',
-                            text: 'La propiedad ha sido desactivada.',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1600);
-                    },
-                    error: function(xhr) {
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'No se pudo desactivar la propiedad.',
-                            icon: 'error'
-                        });
-                    }
-                });
-            }
-        });
-    }
 
     function propertyDeleteSend(id) {
         const url = $("#propertyDeleteBtn" + id).data("url");
