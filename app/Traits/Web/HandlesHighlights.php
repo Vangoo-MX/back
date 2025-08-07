@@ -4,6 +4,8 @@ namespace App\Traits\Web;
 
 use App\Models\Municipios;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\Rule;
+use Illuminate\Database\QueryException;
 
 trait HandlesHighlights
 {
@@ -23,23 +25,36 @@ trait HandlesHighlights
     {
         $config = $this->getHighlightConfig();
 
-        try {
-            $validated = $request->validate([
-                'id_municipio' => 'required|exists:info_municipios,id',
-                $config['input_id'] => 'required|exists:post_properties,id'
-            ]);
+        $request->validate([
+            'id_municipio' => [
+                'required',
+                'exists:info_municipios,id',
+                Rule::prohibitedIf(function () use ($request) {
+                    return $this->modelHighlights::where('id_municipio', $request->id_municipio)
+                        ->count() >= 10;
+                })
+            ],
+            $config['input_id'] => 'required|exists:post_properties,id'
+        ], [
+            'id_municipio.prohibited' => 'No se pueden agregar más de 10 registros para el mismo municipio.'
+        ]);
 
+        try {
             $this->modelHighlights::create([
                 'id_estado' => 19,
-                'id_municipio' => $validated['id_municipio'],
-                $config['field_id'] => $validated[$config['input_id']],
+                'id_municipio' => $request->id_municipio,
+                $config['field_id'] => $request->input($config['input_id']),
             ]);
 
             return redirect()->back()->with('success', 'Highlight creado exitosamente');
+        } catch (QueryException $e) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['error' => 'Error de base de datos: ' . $e->getMessage()]);
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
-                ->withErrors(['error' => 'Error al crear el highlight: ' . $e->getMessage()]);
+                ->withErrors(['error' => 'Error inesperado: ' . $e->getMessage()]);
         }
     }
 
