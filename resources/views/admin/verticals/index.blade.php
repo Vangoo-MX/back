@@ -75,12 +75,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                 data-colonia="{{ $estate->id_colonia }}"
                 data-municipio="{{ $estate->id_municipio }}"
                 data-estado="{{ $estate->id_estado }}">
-                <td>
-                    {{ limitString($estate->title,37) }}
-                    <span class="badge {{ $estate->status === 1 ? 'active' : 'inactive' }}">
-                        {{ $estate->status === 1 ? 'Activo' : 'Inactivo' }}
-                    </span>
-                </td>
+                <td>{{ limitString($estate->title,37) }}</td>
                 <td>{{ moneyFormat($estate->price_min) }}</td>
                 <td>{{ moneyFormat($estate->price_max) }}</td>
                 <td>{{ limitString(colonia($estate->id_colonia),30) }}</td>
