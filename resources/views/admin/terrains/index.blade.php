@@ -90,7 +90,7 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                     <div class="dropdown" data-scope="table-dropdown">
                         <button class="dropdown-toggle">Opciones</button>
                         <div class="dropdown-menu">
-                            <a target="_blank" href="https://www.vangoo.mx/detailsTerrain/terrains/{{ $estate->id }}" class="dropdown-item">
+                            <a href="{{route('terrains.show', $estate->id)}}" class="dropdown-item">
                                 <i class="fas fa-eye me-2"></i> Detalles
                             </a>
 

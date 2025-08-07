@@ -92,7 +92,6 @@ $estadosFiltrados = $estates->pluck('id_estado')->unique();
                             <a href="{{route('properties.show', $estate->id)}}" class="dropdown-item">
                                 <i class="fas fa-eye me-2"></i> Detalles
                             </a>
-
                             @if($estate->status === 0)
                             <button
                                 type="button"
