@@ -8,185 +8,377 @@
 
 @section('content')
 
-<h3>Nueva propiedad destacada</h3>
-<br>
-<form method="post" action="{{ route('properties.highlights.store') }}">
-    @csrf
-    <div class="d-flex gap-2">
-        <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">
-            <option selected value="0" data-municipio-id="0">Todas las propiedades destacadas</option>
-            @foreach($municipios as $municipio)
-            <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
-            @endforeach
-        </select>
-        <div id="properties-by-municipio" class="d-flex gap-2 larger-width"></div>
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">Propiedades Destacadas</h3>
     </div>
-</form>
 
+    {{-- Filtros y botón para nueva propiedad --}}
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="POST" action="{{ route('properties.highlights.store') }}" class="row g-3 align-items-end">
+                @csrf
 
-<br>
+                {{-- Filtro municipio --}}
+                <div class="col-md-4">
+                    <label for="filterMunicipio" class="form-label">Municipio</label>
+                    <select id="filterMunicipio" class="form-select">
+                        <option value="">Todos</option>
+                        @foreach ($municipalities as $municipio)
+                        <option value="{{ $municipio->id }}">{{ $municipio->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-<!-- Content Row -->
-<div class="row">
-    <div class="container mt-3 px-4">
-        <table class="table table-striped table-bordered" id="hlTable">
-            <thead>
-                <tr>
-                    <th>Propiedad id</th>
-                    <th>Titulo</th>
-                    <th>Estado</th>
-                    <th>Id Municipio</th>
-                    <th>Municipio</th>
-                    <th>Orden</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($estates as $estate)
-                <tr class="municipio-{{$estate->id_municipio}}">
-                    <td>{{$estate->id_property}}</td>
-                    <td>{{property($estate->id_property)[0]['title']}}</td>
-                    <td>{{estado($estate->id_estado)}}</td>
-                    <td>{{$estate->id_municipio}}</td>
-                    <td>{{municipio($estate->id_municipio)}}</td>
-                    <td>{{$estate->num_order}}</td>
-                    <td class="d-flex gap-3">
-                        <form action="{{ route('properties.highlights.destroy', $estate->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">
-                                <i class="fa-solid fa-circle-xmark"></i>
-                            </button>
-                        </form>
-                        <a href="https://vangoo.mx/details/propiedad/{{$estate->id}}" target="_blank">
-                            <i class="fa-solid fa-link mx-1"></i>
-                        </a>
-                        <form id="orden-form{{$estate->id_property}}" action="{{ route('properties.highlights.update', $estate->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <span class="d-flex gap-1">
-                                <input type="hidden" name="id" value="{{$estate->id_property}}">
-                                <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_property}})">
-                                    <option value="" selected hidden>Orden</option>
-                                    @for($i = 1; $i <= count($estates); $i++)
-                                        <option value="{{ $i }}" {{ $estate->num_order == $i ? 'selected' : '' }}>
+                {{-- Filtro propiedad --}}
+                <div class="col-md-4">
+                    <label for="filterProperty" class="form-label">Propiedad</label>
+                    <select id="filterProperty" class="form-select" name="property_id">
+                        <option value="">Seleccione municipio primero</option>
+                    </select>
+                </div>
+
+                {{-- Botón agregar --}}
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-plus me-2"></i> Asignar Propiedad
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- Tabla --}}
+    <div class="card">
+        <div class="card-body">
+            <table id="verticalsTable" class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Municipio</th>
+                        <th>Orden</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($estates as $estate)
+                    <tr>
+                        <td>{{ $estate->id }}</td>
+                        <td>{{ $estate->title }}</td>
+                        <td>{{ $estate->municipio->name ?? '—' }}</td>
+                        <td>
+                            <form method="POST" action="{{ route('properties.highlights.update', $estate->id) }}">
+                                @csrf
+                                @method('PATCH')
+                                <select name="order" class="form-select form-select-sm" onchange="this.form.submit()">
+                                    @for ($i = 1; $i <= 10; $i++)
+                                        <option value="{{ $i }}" {{ $estate->order == $i ? 'selected' : '' }}>
                                         {{ $i }}
                                         </option>
                                         @endfor
                                 </select>
-                            </span>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                            </form>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                {{-- Ver --}}
+                                <a href="https://www.vangoo.mx/details/propiedad/{{ $estate->id }}"
+                                    target="_blank"
+                                    class="btn btn-sm btn-outline-info"
+                                    title="Ver">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                {{-- Eliminar --}}
+                                <form method="POST" action="{{ route('properties.highlights.destroy', $estate->id) }}"
+                                    onsubmit="return confirm('¿Seguro que deseas eliminar este registro?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-<br><br>
-
-<script>
-    $(document).ready(function() {
-        $('#hlTable').DataTable({
-            language: {
-                processing: "Procesando..",
-                search: "Buscar:&nbsp;",
-                lengthMenu: "Ver _MENU_ Elementos",
-                info: "Mostrando de _START_ a _END_ de _TOTAL_ Elementos",
-                infoFiltered: "(filtrando de _MAX_ elementos en total)",
-                infoPostFix: "",
-                loadingRecords: "Cargando registros...",
-                zeroRecords: "No hay registros",
-                emptyTable: "No hay datos para mostrar",
-                paginate: {
-                    first: "Primero",
-                    previous: "Anterior",
-                    next: "Siguiente",
-                    last: "Último"
-                },
-                aria: {
-                    sortAscending: ": activer pour trier la colonne par ordre croissant",
-                    sortDescending: ": activer pour trier la colonne par ordre décroissant"
-                }
-            }
-        });
-
-        $('document').on('change', '#municipiosh-select', function() {
-            var table = $($(this).data('table')).DataTable();
-            var municipioId = $(this).val();
-            if (municipioId == 0 || municipioId == "") {
-                table.column(3).search("").draw();
-            } else {
-                table.column(3).search(municipioId).draw();
-            }
-        });
-
-    });
-
-    function ordenSelect(id) {
-        console.log(id);
-        $('#orden-form' + id).submit();
-    }
-
-    document.getElementById('municipiosh-select').addEventListener('change', function() {
-        var municipioId = this.value;
-        var url = '/properties/municipio/' + municipioId;
-
-        fetch(url)
-            .then(response => response.json())
-            .then(properties => {
-                let html = '<select class="form-select larger-width" name="id_property" required>';
-                properties.forEach(property => {
-                    html += `<option value="${property.id}">${property.id} - ${property.title}</option>`;
-                });
-                html += '</select>';
-
-                html += '<button type="submit" class="btn btn-primary ms-2">Asignar</button>';
-
-                document.getElementById('properties-by-municipio').innerHTML = html;
-                document.getElementById('submit-btn').style.display = 'inline-block';
-            })
-            .catch(error => console.error('Error:', error));
-    });
-</script>
 
 <style>
-    .dataTables_wrapper .dataTables_paginate .paginate_button.current,
-    .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-        color: inherit !important;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 50px;
-        background-color: transparent;
-        background: transparent;
+    .filters-container {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
     }
 
-    button.bg-gradient-info {
-        background-color: var(--info);
-        background-size: cover;
-        color: white;
-        border-radius: 25px;
+    .filters-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.2rem;
+        color: #2d3748;
     }
 
-    button.bg-gradient-info:hover {
-        background-color: var(--info);
-        background-size: cover;
-        opacity: 0.7;
-        color: white;
+    .filters-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.2rem;
     }
 
-    a {
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: 500;
+        margin-bottom: 0.4rem;
+        color: #4a5568;
+        font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        background-color: #f9fafb;
+        font-size: 0.9rem;
+        transition: border 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: #3b82f6;
+        outline: none;
+        background-color: #fff;
+    }
+
+    .table-container {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+        margin-top: 2rem;
+    }
+
+    .table-container,
+    table,
+    tbody,
+    tr,
+    td {
+        overflow: visible !important;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .custom-table thead {
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #e5e7eb !important;
+        color: #374151 !important;
+        text-align: left;
+    }
+
+    .custom-table thead th {
+        padding: 12px 16px !important;
+        font-weight: 600 !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 14px !important;
+        vertical-align: middle !important;
+        border: none !important;
+        background-color: #ffffff !important;
+        color: #374151 !important;
+    }
+
+    .custom-table tbody td {
+        padding: 14px 16px;
+        border-bottom: 1px solid #f0f0f0;
+        vertical-align: middle;
+        font-size: 13.5px;
+    }
+
+    .custom-table tbody tr:hover {
+        background-color: #f2f2f2;
+        transition: background-color 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+    .badge {
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        margin-left: 6px;
+        display: inline-block;
+        font-weight: bold;
+    }
+
+    .badge.active {
+        background-color: #daf5dc;
+        color: #2e7d32;
+    }
+
+    .badge.inactive {
+        background-color: #fbdada;
+        color: #c62828;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-toggle {
+        background: none;
+        border: none;
+        font-size: 13.5px;
+        cursor: pointer;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: white;
+        min-width: 170px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        border-radius: 8px;
+        overflow: hidden;
+        padding: 5px 0;
+    }
+
+    .dropdown-menu .dropdown-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        font-size: 14px;
+        color: #333;
+        text-decoration: none;
+        background: none;
+        width: 100%;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .dropdown-menu .dropdown-item:hover {
+        background-color: #f2f2f2;
+    }
+
+    .dropdown-menu .dropdown-item.text-danger:hover {
+        background-color: #ffe6e6;
+        color: #d32f2f;
+    }
+
+    .dropdown-menu .dropdown-item i {
+        margin-right: 8px;
+        min-width: 16px;
+        text-align: center;
+    }
+
+    .pagination-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+    .custom-pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 0.5rem;
+    }
+
+    .custom-pagination .custom-page {
+        display: flex;
+        width: 40px;
+        height: 40px;
+        background-color: #f3f4f6;
+        border-radius: 8px;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #374151;
+        transition: background-color 0.2s ease;
+        cursor: pointer;
+    }
+
+    .custom-pagination .custom-page a {
+        all: unset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        color: inherit;
+        font-weight: inherit;
         text-decoration: none;
     }
 
-    .equal-width {
-        width: 100%;
-        max-width: 300px;
+    .custom-pagination .custom-page:hover {
+        background-color: #e5e7eb;
     }
 
-    .larger-width {
-        width: 100%;
-        max-width: 600px;
+    .custom-pagination .custom-page.active {
+        background-color: #6366f1;
+        color: white;
+        font-weight: bold;
+    }
+
+    .custom-pagination .custom-page.disabled {
+        opacity: 0.4;
+        pointer-events: none;
     }
 </style>
+@endsection
 
-@endsection()
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar DataTable
+        let table = $('#verticalsTable').DataTable({
+            responsive: true,
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json'
+            }
+        });
+
+        // Filtro por municipio
+        $('#filterMunicipio').on('change', function() {
+            let municipioId = $(this).val();
+
+            // Filtrar en DataTable
+            table.column(2).search(municipioId ? '^' + $('#filterMunicipio option:selected').text() + '$' : '', true, false).draw();
+
+            // Cargar propiedades vía AJAX
+            $('#filterProperty').html('<option value="">Cargando...</option>');
+            if (municipioId) {
+                fetch(`/api/municipios/${municipioId}/properties`)
+                    .then(res => res.json())
+                    .then(data => {
+                        let options = '<option value="">Seleccione una propiedad</option>';
+                        data.forEach(prop => {
+                            options += `<option value="${prop.id}">${prop.title}</option>`;
+                        });
+                        $('#filterProperty').html(options);
+                    });
+            } else {
+                $('#filterProperty').html('<option value="">Seleccione municipio primero</option>');
+            }
+        });
+    });
+</script>
+@endpush
