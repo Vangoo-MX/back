@@ -24,7 +24,7 @@
                     <label for="filterMunicipio" class="form-label">Municipio</label>
                     <select id="filterMunicipio" class="form-select">
                         <option value="">Todos</option>
-                        @foreach ($municipalities as $municipio)
+                        @foreach ($municipios as $municipio)
                         <option value="{{ $municipio->id }}">{{ $municipio->name }}</option>
                         @endforeach
                     </select>
