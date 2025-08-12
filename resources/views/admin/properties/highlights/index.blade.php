@@ -8,8 +8,6 @@
 
 @section('content')
 
-<h3>Nueva propiedad destacada</h3>
-<br>
 <form method="post" action="{{ route('properties.highlights.store') }}">
     @csrf
     <div class="filters-container">
@@ -120,11 +118,10 @@
             .then(response => response.json())
             .then(properties => {
                 const select = document.getElementById('properties-select');
-                select.innerHTML = ''; // limpiar
+                select.innerHTML = '';
 
                 if (properties.length === 0) {
                     select.innerHTML = '<option value="">No hay propiedades disponibles</option>';
-                    // Si quieres ocultar el botón cuando no haya propiedades:
                     const existingBtn = document.getElementById('btn-asignar');
                     if (existingBtn) existingBtn.remove();
                     return;
@@ -137,18 +134,14 @@
                     select.appendChild(opt);
                 });
 
-                // Quitar botón anterior si ya existe
                 const existingBtn = document.getElementById('btn-asignar');
                 if (existingBtn) existingBtn.remove();
 
-                // Crear botón asignar
                 const btn = document.createElement('button');
                 btn.id = 'btn-asignar';
                 btn.type = 'submit';
                 btn.className = 'btn-add';
                 btn.textContent = 'Añadir';
-
-                // Insertar después del select
                 select.insertAdjacentElement('afterend', btn);
             })
             .catch(error => console.error('Error en fetch:', error));
@@ -156,7 +149,6 @@
 </script>
 
 <style>
-    /* Nuevo */
     .filters-container {
         background: white;
         border-radius: 12px;
@@ -340,10 +332,8 @@
         display: flex;
         align-items: center;
         gap: 6px;
-        /* espacio entre botones */
     }
 
-    /* Botones cuadrados */
     .table-action-btn {
         display: inline-flex;
         align-items: center;
@@ -354,15 +344,12 @@
         font-weight: 500;
         border: none;
         border-radius: 4px;
-        /* menos redondo */
         color: #fff;
         cursor: pointer;
         transition: background-color 0.2s ease;
         height: 32px;
-        /* altura uniforme */
     }
 
-    /* Colores */
     .table-action-btn.orange {
         background-color: #ffe6e6;
     }
@@ -379,7 +366,6 @@
         background-color: #2980b9;
     }
 
-    /* Select en línea con botones */
     .table-action-select {
         height: 32px;
         font-size: 13px;
