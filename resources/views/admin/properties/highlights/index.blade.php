@@ -120,39 +120,39 @@
         const url = '/properties/municipio/' + municipioId;
 
         fetch(url)
-            .then(response => {
-                console.log('Status:', response.status);
-                return response.text(); // leer como texto para ver qué devuelve
-            })
-            .then(text => {
-                console.log('Respuesta cruda:', text); // ver respuesta real
-                try {
-                    const properties = JSON.parse(text);
-                    const select = document.getElementById('properties-select');
-                    select.innerHTML = ''; // limpiar
+            .then(response => response.json())
+            .then(properties => {
+                const select = document.getElementById('properties-select');
+                select.innerHTML = ''; // limpiar
 
-                    if (properties.length === 0) {
-                        select.innerHTML = '<option value="">No hay propiedades disponibles</option>';
-                        return;
-                    }
-
-                    properties.forEach(property => {
-                        const opt = document.createElement('option');
-                        opt.value = property.id;
-                        opt.textContent = `${property.id} - ${property.title}`;
-                        select.appendChild(opt);
-                    });
-
-                    if (properties.length > 0) {
-                        const btn = document.createElement('button');
-                        btn.type = 'submit';
-                        btn.className = 'btn btn-primary ms-2';
-                        btn.textContent = 'Asignar';
-                        document.getElementById('properties-by-municipio').appendChild(btn);
-                    }
-                } catch (e) {
-                    console.error('Error parseando JSON:', e);
+                if (properties.length === 0) {
+                    select.innerHTML = '<option value="">No hay propiedades disponibles</option>';
+                    // Si quieres ocultar el botón cuando no haya propiedades:
+                    const existingBtn = document.getElementById('btn-asignar');
+                    if (existingBtn) existingBtn.remove();
+                    return;
                 }
+
+                properties.forEach(property => {
+                    const opt = document.createElement('option');
+                    opt.value = property.id;
+                    opt.textContent = `${property.id} - ${property.title}`;
+                    select.appendChild(opt);
+                });
+
+                // Quitar botón anterior si ya existe
+                const existingBtn = document.getElementById('btn-asignar');
+                if (existingBtn) existingBtn.remove();
+
+                // Crear botón asignar
+                const btn = document.createElement('button');
+                btn.id = 'btn-asignar';
+                btn.type = 'submit';
+                btn.className = 'btn btn-primary ms-2';
+                btn.textContent = 'Asignar';
+
+                // Insertar después del select
+                select.insertAdjacentElement('afterend', btn);
             })
             .catch(error => console.error('Error en fetch:', error));
     });
