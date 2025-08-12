@@ -172,7 +172,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/ruta/asignar', // <-- aquí pones tu endpoint real
+                    url: url,
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
