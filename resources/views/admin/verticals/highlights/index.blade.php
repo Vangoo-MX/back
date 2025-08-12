@@ -75,7 +75,7 @@
                             <select class="table-action-select"
                                 name="num_order"
                                 onchange="ordenSelect({{$estate->id_development}})">
-                                <option hidden>Orden</option>
+                                <option value="" disabled selected>Orden</option>
                                 @for($i = 1; $i <= count($estates); $i++)
                                     <option value="{{ $i }}" {{ $estate->num_order == $i ? 'selected' : '' }}>
                                     {{ $i }}
