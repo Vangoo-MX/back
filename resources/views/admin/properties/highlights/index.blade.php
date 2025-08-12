@@ -92,6 +92,8 @@
 <br><br>
 
 <script>
+    const assignUrl = "{{ route('properties.highlights.store') }}";
+
     $(document).ready(function() {
         $('document').on('change', '#municipiosh-select', function() {
             var table = $($(this).data('table')).DataTable();
@@ -172,7 +174,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: url,
+                    url: assignUrl,
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
