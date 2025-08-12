@@ -48,7 +48,7 @@
         <tbody>
             @foreach($estates as $estate)
             <tr class="municipio-{{$estate->id_municipio}}">
-                <td>{{$estate->vertical->title ?? 'Sin título'}}</td>
+                <td>{{$estate->developmentVertical->title ?? 'Sin título'}}</td>
                 <td>{{ $estate->estado->nombre ?? 'Sin estado' }}</td>
                 <td>{{ $estate->municipio->nombre ?? 'Sin municipio' }}</td>
                 <td>{{$estate->num_order}}</td>
