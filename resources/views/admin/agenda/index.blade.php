@@ -12,7 +12,7 @@
 <div class="row">
 
     <div class="container mt-3 px-4">
-        <form method="GET" action="{{ route('admin.contacts') }}" class="mb-4">
+        <form method="GET" action="{{ route('agenda.index') }}" class="mb-4">
             <div class="form-group">
                 <label for="userSelect">Seleccionar Usuario:</label>
                 <select name="user_id" id="userSelect" class="form-control" onchange="this.form.submit()">

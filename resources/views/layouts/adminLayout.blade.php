@@ -111,13 +111,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('admin.contacts')}}" class="{{ (request()->is('overview/contacts*')) ? 'active' : '' }}">
-                            <img src="{{url('./img/icon/contacts.png')}}" title="Contactos" alt="Contacts" />
-                        </a>
-                    </li>
-                    <li style="display:none;">
-                        <a href="{{route('admin.statistics')}}" class="{{ (request()->is('overview/statistics*')) ? 'active' : '' }}">
-                            <img src="{{url('./img/icon/metrics.png')}}" title="Estadisticas" alt="Metrics" />
+                        <a href="{{route('admin.agenda.index')}}" class="{{ (request()->is('agenda*')) ? 'active' : '' }}">
+                            <img src="{{url('./img/icon/contacts.png')}}" title="Agenda" alt="Agenda" />
                         </a>
                     </li>
                 </div>

@@ -31,38 +31,6 @@ class AdminController extends Controller
         return view('admin.index', $data);
     }
 
-    //users
-
-    public function contacts(Request $request)
-    {
-        $selectedUserID = $request->input('user_id', Auth::id());
-
-        $agenda = Agenda::join('app_users', 'list_agenda.id_user', '=', 'app_users.id')
-            ->where('list_agenda.id_user', $selectedUserID)
-            ->select('list_agenda.*', 'app_users.name as user_name')
-            ->get();
-
-        $users = User::whereIn('rol', [1, 2, 3, 4])->pluck('name', 'id');
-
-        return view('admin.contacts', compact('agenda', 'users', 'selectedUserID'));
-    }
-
-    //various
-    public function files()
-    {
-        return view('admin.files');
-    }
-
-    public function statistics()
-    {
-        return view('admin.statistics');
-    }
-
-    public function settingsinfo()
-    {
-        return view('admin.settingsinfo');
-    }
-
     public function email_confirm()
     {
         return view('emails.confirm');

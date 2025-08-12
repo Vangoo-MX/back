@@ -24,6 +24,7 @@ use App\Http\Controllers\Properties\PropertyHighlightController;
 use App\Http\Controllers\Terrains\TerrainController;
 use App\Http\Controllers\Terrains\TerrainHighlightController;
 use App\Http\Controllers\Terrains\TerrainQueueController;
+use App\Http\Controllers\Agendas\AgendaController;
 
 Route::redirect('/', '/auth/user/login');
 
@@ -167,18 +168,17 @@ Route::prefix('users')->name('users.')->middleware('check.admin')->group(functio
         ->parameters(['' => 'user:uuid']);
 });
 
+//Agenda
+Route::prefix('agenda')->name('agenda.')->middleware('check.admin')->group(function () {
+    Route::get('/', [AgendaController::class, 'index'])->name('index');
+});
+
 
 
 // Panel de administración
 Route::prefix('overview')->name('admin.')->group(function () {
     // Dashboard
     Route::get('home', [AdminController::class, 'index'])->name('index');
-
-    // Varios
-    Route::get('contacts', [AdminController::class, 'contacts'])->name('contacts');
-    Route::get('files', [AdminController::class, 'files'])->name('files');
-    Route::get('statistics', [AdminController::class, 'statistics'])->name('statistics');
-    Route::get('settings', [AdminController::class, 'settingsinfo'])->name('settings');
 });
 
 Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('emails.confirm');
