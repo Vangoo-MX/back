@@ -71,6 +71,7 @@
                             action="{{ route('properties.highlights.update', $estate->id_property) }}"
                             method="POST">
                             @csrf @method('PUT')
+                            <input type="hidden" name="id" value="{{ $estate->id_property }}">
                             <select class="table-action-select"
                                 name="num_order"
                                 onchange="ordenSelect({{$estate->id_property}})">
