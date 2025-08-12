@@ -206,6 +206,21 @@
                         }, 1600);
                     },
                     error: function(xhr) {
+                        console.error('Error completo:', xhr);
+                        console.log('Respuesta del servidor:', xhr.responseText);
+                        let message = 'No se pudo asignar la propiedad.';
+
+                        try {
+                            const res = JSON.parse(xhr.responseText);
+                            if (res.errors) {
+                                // Tomamos el primer mensaje de error de validación
+                                message = Object.values(res.errors).flat().join('\n');
+                            } else if (res.message) {
+                                message = res.message;
+                            }
+                        } catch (e) {
+                            // Si no es JSON, dejamos el mensaje por defecto
+                        }
                         Swal.fire({
                             title: 'Error',
                             text: 'No se pudo asignar la propiedad.',
