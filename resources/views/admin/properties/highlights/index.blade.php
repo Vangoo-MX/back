@@ -115,29 +115,41 @@
         $('#orden-form' + id).submit();
     }
 
-    document.getElementById("municipiosh-select").addEventListener("change", function() {
+    document.getElementById('municipiosh-select').addEventListener('change', function() {
         const municipioId = this.value;
-        const propertiesSelect = document.getElementById("properties-select");
-        const addBtn = document.getElementById("add-property-btn");
+        const propertiesSelect = document.getElementById('properties-select');
 
-        // Limpiar opciones
-        propertiesSelect.innerHTML = '<option value="0">Cargando...</option>';
-        propertiesSelect.disabled = true;
-        addBtn.style.display = "none";
+        // Limpiar las opciones actuales
+        propertiesSelect.innerHTML = '<option selected value="0" data-property-id="0">Cargando propiedades...</option>';
 
-        if (municipioId > 0) {
-            // Simular carga AJAX
-            setTimeout(() => {
-                propertiesSelect.innerHTML = `
-                <option value="1">Propiedad A</option>
-                <option value="2">Propiedad B</option>
-            `;
-                propertiesSelect.disabled = false;
-                addBtn.style.display = "inline-block";
-            }, 500);
-        } else {
-            propertiesSelect.innerHTML = '<option value="0">Seleccione un municipio...</option>';
+        // Si no hay municipio seleccionado, dejar solo la opción por defecto
+        if (municipioId === "0") {
+            propertiesSelect.innerHTML = '<option selected value="0" data-property-id="0">Todas las propiedades destacadas</option>';
+            return;
         }
+
+        fetch(`/properties/municipio/${municipioId}`)
+            .then(response => response.json())
+            .then(properties => {
+                // Vaciar y añadir la opción por defecto
+                propertiesSelect.innerHTML = '<option selected value="0" data-property-id="0">Seleccione una propiedad</option>';
+
+                // Añadir opciones desde la API
+                properties.forEach(property => {
+                    const option = document.createElement('option');
+                    option.value = property.id;
+                    option.textContent = `${property.id} - ${property.title}`;
+                    option.setAttribute('data-property-id', property.id);
+                    propertiesSelect.appendChild(option);
+                });
+
+                // Mostrar botón "Asignar" si quieres que aparezca después de cargar propiedades
+                document.getElementById('assign-btn').style.display = 'inline-block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                propertiesSelect.innerHTML = '<option value="0">Error al cargar propiedades</option>';
+            });
     });
 </script>
 
