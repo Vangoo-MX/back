@@ -11,7 +11,7 @@
 <form method="post" action="{{ route('properties.highlights.store') }}">
     @csrf
     <div class="filters-container">
-        <h5 class="filters-title">Añadir propiedades</h5>
+        <h5 class="filters-title">Añadir propiedades destacadas</h5>
         <div class="filters-row">
             <div class="form-group">
                 <label for="municipio">Municipio</label>
@@ -26,7 +26,7 @@
                 <label for="properties">Propiedades destacadas</label>
                 <div class="input-with-button">
                     <select id="properties-select" name="id_property">
-                        <option selected value="0">Seleccione un municipio...</option>
+                        <option selected value="0">Seleccione una propiedad...</option>
                     </select>
                 </div>
             </div>
@@ -139,13 +139,70 @@
 
                 const btn = document.createElement('button');
                 btn.id = 'btn-asignar';
-                btn.type = 'submit';
+                btn.type = 'button';
                 btn.className = 'btn-add';
                 btn.textContent = 'Añadir';
+                btn.onclick = assignProperty;
                 select.insertAdjacentElement('afterend', btn);
             })
             .catch(error => console.error('Error en fetch:', error));
     });
+
+    function assignProperty() {
+        const selectedId = document.getElementById('properties-select').value;
+
+        if (!selectedId || selectedId === "0") {
+            Swal.fire({
+                title: 'Atención',
+                text: 'Debes seleccionar una propiedad.',
+                icon: 'warning'
+            });
+            return;
+        }
+
+        Swal.fire({
+            title: '¿Asignar propiedad?',
+            text: 'Esta propiedad será marcada como destacada.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, asignar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/ruta/asignar', // <-- aquí pones tu endpoint real
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        property_id: selectedId
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        Swal.fire({
+                            title: '¡Asignada!',
+                            text: 'La propiedad ha sido asignada correctamente.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1600);
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'No se pudo asignar la propiedad.',
+                            icon: 'error'
+                        });
+                    }
+                });
+            }
+        });
+    }
 </script>
 
 <style>
