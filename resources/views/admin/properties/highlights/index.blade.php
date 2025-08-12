@@ -33,7 +33,6 @@
             <tr>
                 <th>Titulo</th>
                 <th>Estado</th>
-                <th>Id Municipio</th>
                 <th>Municipio</th>
                 <th>Orden</th>
                 <th>Acciones</th>
@@ -44,7 +43,6 @@
             <tr class="municipio-{{$estate->id_municipio}}">
                 <td>{{property($estate->id_property)[0]['title']}}</td>
                 <td>{{estado($estate->id_estado)}}</td>
-                <td>{{$estate->id_municipio}}</td>
                 <td>{{municipio($estate->id_municipio)}}</td>
                 <td>{{$estate->num_order}}</td>
                 <td class="d-flex gap-3">
