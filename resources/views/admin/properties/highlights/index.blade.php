@@ -13,6 +13,7 @@
 <form method="post" action="{{ route('properties.highlights.store') }}">
     @csrf
     <div class="filters-container">
+        <h5 class="filters-title">Añadir propiedades</h5>
         <div class="filters-grid">
             <div class="form-group">
                 <label for="municipio">Municipio</label>
@@ -45,32 +46,38 @@
                 <td>{{estado($estate->id_estado)}}</td>
                 <td>{{municipio($estate->id_municipio)}}</td>
                 <td>{{$estate->num_order}}</td>
-                <td class="d-flex gap-3">
-                    <form action="{{ route('properties.highlights.destroy', $estate->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">
-                            <i class="fa-solid fa-circle-xmark"></i>
-                        </button>
-                    </form>
-                    <a href="https://vangoo.mx/details/propiedad/{{$estate->id}}" target="_blank">
-                        <i class="fa-solid fa-link mx-1"></i>
-                    </a>
-                    <form id="orden-form{{$estate->id_property}}" action="{{ route('properties.highlights.update', $estate->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <span class="d-flex gap-1">
-                            <input type="hidden" name="id" value="{{$estate->id_property}}">
-                            <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_property}})">
-                                <option value="" selected hidden>Orden</option>
+                <td>
+                    <div class="action-buttons">
+                        <form action="{{ route('properties.highlights.destroy', $estate->id) }}" method="POST">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="btn-action text-danger" title="Eliminar">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </form>
+
+                        <a href="https://vangoo.mx/details/propiedad/{{$estate->id}}"
+                            target="_blank"
+                            class="btn-action"
+                            title="Ver en Vangoo">
+                            <i class="fa-solid fa-link"></i>
+                        </a>
+
+                        <form id="orden-form{{$estate->id_property}}"
+                            action="{{ route('properties.highlights.update', $estate->id) }}"
+                            method="POST">
+                            @csrf @method('PUT')
+                            <select class="form-select form-select-sm"
+                                name="num_order"
+                                onchange="ordenSelect({{$estate->id_property}})">
+                                <option hidden>Orden</option>
                                 @for($i = 1; $i <= count($estates); $i++)
                                     <option value="{{ $i }}" {{ $estate->num_order == $i ? 'selected' : '' }}>
                                     {{ $i }}
                                     </option>
                                     @endfor
                             </select>
-                        </span>
-                    </form>
+                        </form>
+                    </div>
                 </td>
             </tr>
             @endforeach
@@ -121,43 +128,6 @@
 </script>
 
 <style>
-    .dataTables_wrapper .dataTables_paginate .paginate_button.current,
-    .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-        color: inherit !important;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 50px;
-        background-color: transparent;
-        background: transparent;
-    }
-
-    button.bg-gradient-info {
-        background-color: var(--info);
-        background-size: cover;
-        color: white;
-        border-radius: 25px;
-    }
-
-    button.bg-gradient-info:hover {
-        background-color: var(--info);
-        background-size: cover;
-        opacity: 0.7;
-        color: white;
-    }
-
-    a {
-        text-decoration: none;
-    }
-
-    .equal-width {
-        width: 100%;
-        max-width: 300px;
-    }
-
-    .larger-width {
-        width: 100%;
-        max-width: 600px;
-    }
-
     /* Nuevo */
     .filters-container {
         background: white;
@@ -336,6 +306,36 @@
         margin-right: 8px;
         min-width: 16px;
         text-align: center;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .btn-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px;
+        border-radius: 6px;
+        background-color: transparent;
+        border: 1px solid #e5e7eb;
+        cursor: pointer;
+        color: #374151;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn-action:hover {
+        background-color: #f3f4f6;
+        border-color: #d1d5db;
+    }
+
+    .btn-action.text-danger:hover {
+        background-color: #fee2e2;
+        border-color: #fecaca;
+        color: #b91c1c;
     }
 </style>
 
