@@ -33,8 +33,7 @@ trait HandlesHighlights
                     return $this->modelHighlights::where('id_municipio', $request->id_municipio)
                         ->count() >= 10;
                 })
-            ],
-            $config['input_id'] => 'required|exists:post_properties,id'
+            ]
         ], [
             'id_municipio.prohibited' => 'No se pueden agregar más de 10 registros para el mismo municipio.'
         ]);
