@@ -118,6 +118,7 @@
             .then(response => response.json())
             .then(properties => {
                 let html = `
+                <label for="id_property">Seleccionar propiedad:</label>
                 <select name="id_property" required>
                     ${properties.map(property =>
                         `<option value="${property.id}">${property.id} - ${property.title}</option>`
