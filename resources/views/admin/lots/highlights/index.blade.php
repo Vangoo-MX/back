@@ -190,7 +190,7 @@
                     data: {
                         _token: "{{ csrf_token() }}",
                         id_municipio: municipioId,
-                        id_development: selectedId
+                        id_lot: selectedId
                     },
                     dataType: 'json',
                     success: function(response) {
