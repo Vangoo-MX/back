@@ -117,39 +117,36 @@
 
     document.getElementById('municipiosh-select').addEventListener('change', function() {
         const municipioId = this.value;
-        const propertiesSelect = document.getElementById('properties-select');
+        const url = '/properties/municipio/' + municipioId;
 
-        // Limpiar las opciones actuales
-        propertiesSelect.innerHTML = '<option selected value="0" data-property-id="0">Cargando propiedades...</option>';
-
-        // Si no hay municipio seleccionado, dejar solo la opción por defecto
-        if (municipioId === "0") {
-            propertiesSelect.innerHTML = '<option selected value="0" data-property-id="0">Todas las propiedades destacadas</option>';
-            return;
-        }
-
-        fetch(`/properties/municipio/${municipioId}`)
-            .then(response => response.json())
-            .then(properties => {
-                // Vaciar y añadir la opción por defecto
-                propertiesSelect.innerHTML = '<option selected value="0" data-property-id="0">Seleccione una propiedad</option>';
-
-                // Añadir opciones desde la API
-                properties.forEach(property => {
-                    const option = document.createElement('option');
-                    option.value = property.id;
-                    option.textContent = `${property.id} - ${property.title}`;
-                    option.setAttribute('data-property-id', property.id);
-                    propertiesSelect.appendChild(option);
-                });
-
-                // Mostrar botón "Asignar" si quieres que aparezca después de cargar propiedades
-                document.getElementById('assign-btn').style.display = 'inline-block';
+        fetch(url)
+            .then(response => {
+                console.log('Status:', response.status);
+                return response.text(); // leer como texto para ver qué devuelve
             })
-            .catch(error => {
-                console.error('Error:', error);
-                propertiesSelect.innerHTML = '<option value="0">Error al cargar propiedades</option>';
-            });
+            .then(text => {
+                console.log('Respuesta cruda:', text); // ver respuesta real
+                try {
+                    const properties = JSON.parse(text);
+                    const select = document.getElementById('properties-select');
+                    select.innerHTML = ''; // limpiar
+
+                    if (properties.length === 0) {
+                        select.innerHTML = '<option value="">No hay propiedades disponibles</option>';
+                        return;
+                    }
+
+                    properties.forEach(property => {
+                        const opt = document.createElement('option');
+                        opt.value = property.id;
+                        opt.textContent = `${property.id} - ${property.title}`;
+                        select.appendChild(opt);
+                    });
+                } catch (e) {
+                    console.error('Error parseando JSON:', e);
+                }
+            })
+            .catch(error => console.error('Error en fetch:', error));
     });
 </script>
 
