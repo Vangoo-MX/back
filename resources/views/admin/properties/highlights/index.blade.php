@@ -27,7 +27,7 @@
             <div class="form-group">
                 <label for="properties">Propiedades destacadas</label>
                 <div class="input-with-button">
-                    <select id="properties-select" name="id_property" disabled>
+                    <select id="properties-select" name="id_property">
                         <option selected value="0">Seleccione un municipio...</option>
                     </select>
                     <button id="add-property-btn" class="btn-add" style="display: none;">
