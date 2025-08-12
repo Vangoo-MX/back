@@ -46,7 +46,7 @@ trait HandlesHighlights
                 $config['field_id'] => $request->input($config['input_id']),
             ]);
 
-            return redirect()->json(['success' => true, 'message' => 'Highlight creado exitosamente']);
+            return response()->json(['success' => true, 'message' => 'Highlight creado exitosamente']);
         } catch (QueryException $e) {
             return response()->json(['success' => false, 'message' => 'Error de base de datos: ' . $e->getMessage()], 500);
         } catch (\Exception $e) {
