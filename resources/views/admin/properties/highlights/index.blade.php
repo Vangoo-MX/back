@@ -22,6 +22,7 @@
                     <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
                     @endforeach
                 </select>
+                <div id="properties-by-municipio"></div>
             </form>
         </div>
     </div>
