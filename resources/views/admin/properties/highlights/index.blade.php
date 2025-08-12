@@ -26,11 +26,9 @@
             </div>
             <div class="form-group">
                 <label for="properties">Propiedades destacadas</label>
-                <div class="input-with-button">
-                    <select id="properties-select" name="id_property">
-                        <option selected value="0">Seleccione un municipio...</option>
-                    </select>
-                </div>
+                <select id="properties-select" name="id_property">
+                    <option selected value="0">Seleccione un municipio...</option>
+                </select>
             </div>
         </div>
     </div>
