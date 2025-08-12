@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label for="municipio">Municipio</label>
                 <select id="municipiosh-select" data-table="#hlTable" name="id_municipio">
-                    <option selected value="0" data-municipio-id="0">Todas los municipios destacados</option>
+                    <option selected value="0" data-municipio-id="0">Todos los municipios destacados</option>
                     @foreach($municipios as $municipio)
                     <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
                     @endforeach

@@ -124,7 +124,7 @@
                 select.innerHTML = '';
 
                 if (properties.length === 0) {
-                    select.innerHTML = '<option value="">No hay propiedades disponibles</option>';
+                    select.innerHTML = '<option value="">No hay apartamentos disponibles</option>';
                     const existingBtn = document.getElementById('btn-asignar');
                     if (existingBtn) existingBtn.remove();
                     return;
@@ -167,15 +167,15 @@
         if (!selectedId || selectedId === "0") {
             Swal.fire({
                 title: 'Atención',
-                text: 'Debes seleccionar una propiedad.',
+                text: 'Debes seleccionar un apartamento.',
                 icon: 'warning'
             });
             return;
         }
 
         Swal.fire({
-            title: '¿Asignar propiedad?',
-            text: 'Esta propiedad será marcada como destacada.',
+            title: '¿Asignar apartamento?',
+            text: 'Este apartamento será marcado como destacado.',
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#28a745',
@@ -196,7 +196,7 @@
                     success: function(response) {
                         Swal.fire({
                             title: '¡Asignada!',
-                            text: 'La propiedad ha sido asignada correctamente.',
+                            text: 'El apartamento ha sido asignado correctamente.',
                             icon: 'success',
                             showConfirmButton: false,
                             timer: 1500
@@ -207,7 +207,7 @@
                         }, 1600);
                     },
                     error: function(xhr) {
-                        let errorMsg = 'No se pudo asignar la propiedad.';
+                        let errorMsg = 'No se pudo asignar el apartamento.';
 
                         if (xhr.responseJSON && xhr.responseJSON.errors) {
                             if (xhr.responseJSON.errors.id_municipio) {
