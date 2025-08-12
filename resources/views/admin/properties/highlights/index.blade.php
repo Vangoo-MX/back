@@ -47,7 +47,7 @@
                 <td>{{municipio($estate->id_municipio)}}</td>
                 <td>{{$estate->num_order}}</td>
                 <td>
-                    <div class="action-buttons">
+                    <div class="table-actions">
                         <form action="{{ route('properties.highlights.destroy', $estate->id) }}" method="POST">
                             @csrf @method('DELETE')
                             <button class="table-action-btn orange">
