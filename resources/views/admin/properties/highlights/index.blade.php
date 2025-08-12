@@ -340,11 +340,11 @@
 
     /* Colores */
     .table-action-btn.orange {
-        background-color: #e67e22;
+        background-color: #ffe6e6;
     }
 
     .table-action-btn.orange:hover {
-        background-color: #d35400;
+        color: #d32f2f;
     }
 
     .table-action-btn.blue {
