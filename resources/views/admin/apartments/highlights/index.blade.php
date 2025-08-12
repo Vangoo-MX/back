@@ -68,7 +68,7 @@
                         </a>
 
                         <form id="orden-form{{$estate->id_property}}"
-                            action="{{ route('apartments.highlights.update', $estate->id) }}"
+                            action="{{ route('apartments.highlights.update', $estate->id_property) }}"
                             method="POST">
                             @csrf @method('PUT')
                             <select class="table-action-select"
