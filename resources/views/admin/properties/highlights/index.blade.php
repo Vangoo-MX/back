@@ -12,19 +12,24 @@
 <br>
 <form method="post" action="{{ route('properties.highlights.store') }}">
     @csrf
-    <div class="filters-container compact">
+    <div class="filters-container">
         <h5 class="filters-title">Añadir propiedades</h5>
-        <div class="filters-inline">
+        <div class="filters-grid">
             <div class="form-group">
                 <label for="municipio">Municipio</label>
                 <select id="municipiosh-select" data-table="#hlTable" name="id_municipio">
-                    <option selected value="0" data-municipio-id="0">Todas las propiedades destacadas</option>
+                    <option selected value="0" data-municipio-id="0">Todas los municipios destacados</option>
                     @foreach($municipios as $municipio)
                     <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
                     @endforeach
                 </select>
             </div>
-            <div id="properties-by-municipio"></div>
+            <div class="form-group">
+                <label for="properties">Propiedades</label>
+                <select id="properties-select" data-table="#hlTable" name="id_property">
+                    <option selected value="0" data-property-id="0">Todas las propiedades destacadas</option>
+                </select>
+            </div>
         </div>
     </div>
 </form>
@@ -109,24 +114,19 @@
         var municipioId = this.value;
         var url = '/properties/municipio/' + municipioId;
 
-        if (municipioId == 0 || municipioId === "") {
-            document.getElementById('properties-by-municipio').innerHTML = "";
-            return;
-        }
-
         fetch(url)
             .then(response => response.json())
             .then(properties => {
-                let html = `
-                <label for="id_property">Seleccionar propiedad:</label>
-                <select name="id_property" required>
-                    ${properties.map(property =>
-                        `<option value="${property.id}">${property.id} - ${property.title}</option>`
-                    ).join('')}
-                </select>
-                <button type="submit">Asignar</button>
-            `;
+                let html = '<select class="form-select larger-width" name="id_property" required>';
+                properties.forEach(property => {
+                    html += `<option value="${property.id}">${property.id} - ${property.title}</option>`;
+                });
+                html += '</select>';
+
+                html += '<button type="submit" class="btn btn-primary ms-2">Asignar</button>';
+
                 document.getElementById('properties-by-municipio').innerHTML = html;
+                document.getElementById('submit-btn').style.display = 'inline-block';
             })
             .catch(error => console.error('Error:', error));
     });
@@ -341,11 +341,11 @@
 
     /* Colores */
     .table-action-btn.orange {
-        background-color: #ffe6e6;
+        background-color: #e67e22;
     }
 
     .table-action-btn.orange:hover {
-        color: #d32f2f;
+        background-color: #d35400;
     }
 
     .table-action-btn.blue {
@@ -362,47 +362,6 @@
         font-size: 13px;
         border-radius: 4px;
         padding: 0 6px;
-    }
-
-    .filters-container.compact {
-        padding: 10px 15px;
-        background: #fff;
-        border-radius: 6px;
-        display: inline-block;
-    }
-
-    /* Alineación en una sola fila */
-    .filters-inline {
-        display: flex;
-        align-items: flex-end;
-        gap: 10px;
-    }
-
-    /* Estilo consistente para selects */
-    .filters-inline select {
-        height: 34px;
-        font-size: 13px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        padding: 0 8px;
-    }
-
-    /* Botón estilo tabla */
-    .filters-inline button {
-        height: 34px;
-        font-size: 13px;
-        font-weight: 500;
-        border-radius: 4px;
-        background-color: #3498db;
-        color: #fff;
-        border: none;
-        padding: 0 12px;
-        cursor: pointer;
-        transition: background 0.2s ease;
-    }
-
-    .filters-inline button:hover {
-        background-color: #2980b9;
     }
 </style>
 
