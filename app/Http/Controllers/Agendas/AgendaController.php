@@ -16,7 +16,7 @@ class AgendaController extends Controller
     {
         $selectedUserID = $request->integer('user_id', Auth::id());
 
-        $agenda = Agenda::with('user:id,name')
+        $agenda = Agenda::with('user:id,name,uuid')
             ->where('id_user', $selectedUserID)
             ->get();
 

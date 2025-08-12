@@ -40,8 +40,8 @@
                 @foreach($agenda as $agend)
                 <tr>
                     <td>
-                        <a href="{{route('users.show', $agend->uuid)}}">
-                            {{$agend->user_name}}
+                        <a href="{{route('users.show', $agend->user->uuid)}}">
+                            {{$agend->user->name}}
                             @if(!$agend->mensaje_leido)
                             <span class="badge bg-danger">Nuevo Mensaje</span>
                             @endif
