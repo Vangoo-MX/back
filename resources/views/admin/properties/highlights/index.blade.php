@@ -152,6 +152,16 @@
 
     function assignProperty() {
         const selectedId = document.getElementById('properties-select').value;
+        const municipioId = document.getElementById('municipiosh-select').value;
+
+        if (!municipioId || municipioId === "0") {
+            Swal.fire({
+                title: 'Atención',
+                text: 'Debes seleccionar un municipio.',
+                icon: 'warning'
+            });
+            return;
+        }
 
         if (!selectedId || selectedId === "0") {
             Swal.fire({
@@ -178,7 +188,8 @@
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
-                        property_id: selectedId
+                        id_municipio: municipioId,
+                        id_property: selectedId
                     },
                     dataType: 'json',
                     success: function(response) {
