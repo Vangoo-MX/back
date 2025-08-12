@@ -50,14 +50,14 @@
                     <div class="action-buttons">
                         <form action="{{ route('properties.highlights.destroy', $estate->id) }}" method="POST">
                             @csrf @method('DELETE')
-                            <button type="submit" class="btn-action text-danger" title="Eliminar">
-                                <i class="fa-solid fa-circle-xmark"></i>
+                            <button class="table-action-btn" style="background-color: #e67e22;">
+                                <i class="fas fa-trash"></i> Eliminar
                             </button>
                         </form>
 
                         <a href="https://vangoo.mx/details/propiedad/{{$estate->id}}"
                             target="_blank"
-                            class="btn-action"
+                            class="table-action-btn"
                             title="Ver en Vangoo">
                             <i class="fa-solid fa-link"></i>
                         </a>
@@ -308,34 +308,36 @@
         text-align: center;
     }
 
-    .action-buttons {
-        display: flex;
-        gap: 6px;
-        align-items: center;
-    }
-
-    .btn-action {
-        display: flex;
+    .table-action-btn {
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 6px;
+        gap: 6px;
+        /* espacio entre icono y texto */
+        padding: 8px 14px;
+        font-size: 14px;
+        font-weight: 500;
+        border: none;
         border-radius: 6px;
-        background-color: transparent;
-        border: 1px solid #e5e7eb;
+        background-color: #3498db;
+        color: #fff;
         cursor: pointer;
-        color: #374151;
-        transition: all 0.2s ease-in-out;
+        transition: background-color 0.2s ease, transform 0.15s ease;
     }
 
-    .btn-action:hover {
-        background-color: #f3f4f6;
-        border-color: #d1d5db;
+    .table-action-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-1px);
     }
 
-    .btn-action.text-danger:hover {
-        background-color: #fee2e2;
-        border-color: #fecaca;
-        color: #b91c1c;
+    .table-action-btn:active {
+        background-color: #1f6391;
+        transform: translateY(0);
+    }
+
+    .table-action-btn i {
+        font-size: 16px;
+        /* tamaño icono */
     }
 </style>
 
