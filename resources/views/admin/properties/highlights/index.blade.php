@@ -10,11 +10,11 @@
 
 <h3>Nueva propiedad destacada</h3>
 <br>
-<div class="filters-container">
-    <div class="filters-grid">
-        <div class="form-group">
-            <form method="post" action="{{ route('properties.highlights.store') }}">
-                @csrf
+<form method="post" action="{{ route('properties.highlights.store') }}">
+    @csrf
+    <div class="filters-container">
+        <div class="filters-grid">
+            <div class="form-group">
                 <label for="municipio">Municipio</label>
                 <select id="municipiosh-select" data-table="#hlTable" name="id_municipio">
                     <option selected value="0" data-municipio-id="0">Todas las propiedades destacadas</option>
@@ -22,10 +22,11 @@
                     <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
                     @endforeach
                 </select>
-            </form>
+                <div id="properties-by-municipio" class="d-flex gap-2 larger-width"></div>
+            </div>
         </div>
     </div>
-</div>
+</form>
 
 <div class="table-container">
     <table class="custom-table w-full text-sm text-left">
