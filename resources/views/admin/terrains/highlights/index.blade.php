@@ -60,7 +60,7 @@
                                 <i class="fas fa-trash"></i></button>
                         </form>
 
-                        <a href="https://vangoo.mx/details/propiedad/{{$estate->id}}"
+                        <a href="https://www.vangoo.mx/detailsTerrain/terrains/{{$estate->id}}"
                             target="_blank"
                             class="table-action-btn blue"
                             title="Ver en Vangoo">
