@@ -14,7 +14,7 @@
     @csrf
     <div class="filters-container">
         <h5 class="filters-title">Añadir propiedades</h5>
-        <div class="filters-grid">
+        <div class="filters-row">
             <div class="form-group">
                 <label for="municipio">Municipio</label>
                 <select id="municipiosh-select" data-table="#hlTable" name="id_municipio">
@@ -25,10 +25,15 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="properties">Propiedades</label>
-                <select id="properties-select" data-table="#hlTable" name="id_property">
-                    <option selected value="0" data-property-id="0">Todas las propiedades destacadas</option>
-                </select>
+                <label for="properties">Propiedades destacadas</label>
+                <div class="input-with-button">
+                    <select id="properties-select" name="id_property" disabled>
+                        <option selected value="0">Seleccione un municipio...</option>
+                    </select>
+                    <button id="add-property-btn" class="btn-add" style="display: none;">
+                        ➕ Añadir
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -110,25 +115,29 @@
         $('#orden-form' + id).submit();
     }
 
-    document.getElementById('municipiosh-select').addEventListener('change', function() {
-        var municipioId = this.value;
-        var url = '/properties/municipio/' + municipioId;
+    document.getElementById("municipiosh-select").addEventListener("change", function() {
+        const municipioId = this.value;
+        const propertiesSelect = document.getElementById("properties-select");
+        const addBtn = document.getElementById("add-property-btn");
 
-        fetch(url)
-            .then(response => response.json())
-            .then(properties => {
-                let html = '<select class="form-select larger-width" name="id_property" required>';
-                properties.forEach(property => {
-                    html += `<option value="${property.id}">${property.id} - ${property.title}</option>`;
-                });
-                html += '</select>';
+        // Limpiar opciones
+        propertiesSelect.innerHTML = '<option value="0">Cargando...</option>';
+        propertiesSelect.disabled = true;
+        addBtn.style.display = "none";
 
-                html += '<button type="submit" class="btn btn-primary ms-2">Asignar</button>';
-
-                document.getElementById('properties-by-municipio').innerHTML = html;
-                document.getElementById('submit-btn').style.display = 'inline-block';
-            })
-            .catch(error => console.error('Error:', error));
+        if (municipioId > 0) {
+            // Simular carga AJAX
+            setTimeout(() => {
+                propertiesSelect.innerHTML = `
+                <option value="1">Propiedad A</option>
+                <option value="2">Propiedad B</option>
+            `;
+                propertiesSelect.disabled = false;
+                addBtn.style.display = "inline-block";
+            }, 500);
+        } else {
+            propertiesSelect.innerHTML = '<option value="0">Seleccione un municipio...</option>';
+        }
     });
 </script>
 
@@ -362,6 +371,42 @@
         font-size: 13px;
         border-radius: 4px;
         padding: 0 6px;
+    }
+
+    .filters-row {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-end;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    select {
+        padding: 8px 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    .input-with-button {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .btn-add {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .btn-add:hover {
+        background-color: #218838;
     }
 </style>
 
