@@ -111,7 +111,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('admin.agenda.index')}}" class="{{ (request()->is('agenda*')) ? 'active' : '' }}">
+                        <a href="{{route('agenda.index')}}" class="{{ (request()->is('agenda*')) ? 'active' : '' }}">
                             <img src="{{url('./img/icon/contacts.png')}}" title="Agenda" alt="Agenda" />
                         </a>
                     </li>
