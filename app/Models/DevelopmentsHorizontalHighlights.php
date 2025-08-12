@@ -20,12 +20,12 @@ class DevelopmentsHorizontalHighlights extends Model
 
     public function estado(): BelongsTo
     {
-        return $this->belongsTo(Estados::class);
+        return $this->belongsTo(Estados::class, 'id_estado', 'id');
     }
 
     public function municipio(): BelongsTo
     {
-        return $this->belongsTo(Municipios::class);
+        return $this->belongsTo(Municipios::class, 'id_municipio', 'id');
     }
 
     public function horizontal(): BelongsTo
