@@ -48,9 +48,9 @@
         <tbody>
             @foreach($estates as $estate)
             <tr class="municipio-{{$estate->id_municipio}}">
-                <td>{{property($estate->id_property)[0]['title']}}</td>
-                <td>{{estado($estate->id_estado)}}</td>
-                <td>{{municipio($estate->id_municipio)}}</td>
+                <td>{{$estate->apartment->title ?? 'Sin título'}}</td>
+                <td>{{ $estate->estado->nombre ?? 'Sin estado' }}</td>
+                <td>{{ $estate->municipio->nombre ?? 'Sin municipio' }}</td>
                 <td>{{$estate->num_order}}</td>
                 <td>
                     <div class="table-actions">
