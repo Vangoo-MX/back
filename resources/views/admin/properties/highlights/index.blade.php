@@ -399,7 +399,7 @@
     }
 
     .btn-add {
-        background-color: #28a745;
+        background-color: #3498db;
         color: white;
         border: none;
         padding: 8px 12px;
@@ -408,7 +408,7 @@
     }
 
     .btn-add:hover {
-        background-color: #218838;
+        background-color: #2980b9;
     }
 </style>
 
