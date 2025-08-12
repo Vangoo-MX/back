@@ -22,83 +22,62 @@
                     <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
                     @endforeach
                 </select>
-                <div id="properties-by-municipio"></div>
             </form>
         </div>
     </div>
 </div>
-<form method="post" action="{{ route('properties.highlights.store') }}">
-    @csrf
-    <div class="d-flex gap-2">
-        <select class="form-select equal-width" id="municipiosh-select" data-table="#hlTable" name="id_municipio">
-            <option selected value="0" data-municipio-id="0">Todas las propiedades destacadas</option>
-            @foreach($municipios as $municipio)
-            <option value="{{$municipio->id}}" data-municipio-id="{{$municipio->id}}">{{$municipio->nombre}}</option>
+
+<div class="table-container">
+    <table class="custom-table w-full text-sm text-left" id="hlTable">
+        <thead class="custom-header">
+            <tr>
+                <th>Titulo</th>
+                <th>Estado</th>
+                <th>Id Municipio</th>
+                <th>Municipio</th>
+                <th>Orden</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($estates as $estate)
+            <tr class="municipio-{{$estate->id_municipio}}">
+                <td>{{property($estate->id_property)[0]['title']}}</td>
+                <td>{{estado($estate->id_estado)}}</td>
+                <td>{{$estate->id_municipio}}</td>
+                <td>{{municipio($estate->id_municipio)}}</td>
+                <td>{{$estate->num_order}}</td>
+                <td class="d-flex gap-3">
+                    <form action="{{ route('properties.highlights.destroy', $estate->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    </form>
+                    <a href="https://vangoo.mx/details/propiedad/{{$estate->id}}" target="_blank">
+                        <i class="fa-solid fa-link mx-1"></i>
+                    </a>
+                    <form id="orden-form{{$estate->id_property}}" action="{{ route('properties.highlights.update', $estate->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <span class="d-flex gap-1">
+                            <input type="hidden" name="id" value="{{$estate->id_property}}">
+                            <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_property}})">
+                                <option value="" selected hidden>Orden</option>
+                                @for($i = 1; $i <= count($estates); $i++)
+                                    <option value="{{ $i }}" {{ $estate->num_order == $i ? 'selected' : '' }}>
+                                    {{ $i }}
+                                    </option>
+                                    @endfor
+                            </select>
+                        </span>
+                    </form>
+                </td>
+            </tr>
             @endforeach
-        </select>
-        <div id="properties-by-municipio" class="d-flex gap-2 larger-width"></div>
-    </div>
-</form>
-
-
-<br>
-
-<!-- Content Row -->
-<div class="row">
-    <div class="container mt-3 px-4">
-        <table class="table table-striped table-bordered" id="hlTable">
-            <thead>
-                <tr>
-                    <th>Propiedad id</th>
-                    <th>Titulo</th>
-                    <th>Estado</th>
-                    <th>Id Municipio</th>
-                    <th>Municipio</th>
-                    <th>Orden</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($estates as $estate)
-                <tr class="municipio-{{$estate->id_municipio}}">
-                    <td>{{$estate->id_property}}</td>
-                    <td>{{property($estate->id_property)[0]['title']}}</td>
-                    <td>{{estado($estate->id_estado)}}</td>
-                    <td>{{$estate->id_municipio}}</td>
-                    <td>{{municipio($estate->id_municipio)}}</td>
-                    <td>{{$estate->num_order}}</td>
-                    <td class="d-flex gap-3">
-                        <form action="{{ route('properties.highlights.destroy', $estate->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">
-                                <i class="fa-solid fa-circle-xmark"></i>
-                            </button>
-                        </form>
-                        <a href="https://vangoo.mx/details/propiedad/{{$estate->id}}" target="_blank">
-                            <i class="fa-solid fa-link mx-1"></i>
-                        </a>
-                        <form id="orden-form{{$estate->id_property}}" action="{{ route('properties.highlights.update', $estate->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <span class="d-flex gap-1">
-                                <input type="hidden" name="id" value="{{$estate->id_property}}">
-                                <select class="form-select" name="num_order" onchange="ordenSelect({{$estate->id_property}})">
-                                    <option value="" selected hidden>Orden</option>
-                                    @for($i = 1; $i <= count($estates); $i++)
-                                        <option value="{{ $i }}" {{ $estate->num_order == $i ? 'selected' : '' }}>
-                                        {{ $i }}
-                                        </option>
-                                        @endfor
-                                </select>
-                            </span>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
 </div>
 <br><br>
 
