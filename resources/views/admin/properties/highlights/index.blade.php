@@ -122,23 +122,17 @@
         fetch(url)
             .then(response => {
                 console.log('Status:', response.status);
-                return response.text();
+                return response.text(); // leer como texto para ver qué devuelve
             })
             .then(text => {
-                console.log('Respuesta cruda:', text);
+                console.log('Respuesta cruda:', text); // ver respuesta real
                 try {
                     const properties = JSON.parse(text);
-                    const container = document.getElementById('properties-by-municipio');
-                    container.innerHTML = ''; // limpiar contenedor
-
-                    const select = document.createElement('select');
-                    select.className = 'form-select larger-width';
-                    select.name = 'id_property';
-                    select.required = true;
+                    const select = document.getElementById('properties-select');
+                    select.innerHTML = ''; // limpiar
 
                     if (properties.length === 0) {
                         select.innerHTML = '<option value="">No hay propiedades disponibles</option>';
-                        container.appendChild(select);
                         return;
                     }
 
@@ -149,15 +143,13 @@
                         select.appendChild(opt);
                     });
 
-                    container.appendChild(select);
-
-                    const btn = document.createElement('button');
-                    btn.type = 'submit';
-                    btn.className = 'btn btn-primary ms-2';
-                    btn.textContent = 'Asignar';
-                    container.appendChild(btn);
-
-                    document.getElementById('submit-btn').style.display = 'inline-block';
+                    if (properties.length > 0) {
+                        const btn = document.createElement('button');
+                        btn.type = 'submit';
+                        btn.className = 'btn btn-primary ms-2';
+                        btn.textContent = 'Asignar';
+                        document.getElementById('properties-by-municipio').appendChild(btn);
+                    }
                 } catch (e) {
                     console.error('Error parseando JSON:', e);
                 }
