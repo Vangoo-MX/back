@@ -115,7 +115,7 @@
 
     document.getElementById('municipiosh-select').addEventListener('change', function() {
         const municipioId = this.value;
-        const url = '/verticals/municipio/' + municipioId;
+        const url = '/developments/vertical/municipio/' + municipioId;
 
         fetch(url)
             .then(response => response.json())
