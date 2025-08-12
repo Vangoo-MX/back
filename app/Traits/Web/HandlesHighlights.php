@@ -46,15 +46,11 @@ trait HandlesHighlights
                 $config['field_id'] => $request->input($config['input_id']),
             ]);
 
-            return redirect()->back()->with('success', 'Highlight creado exitosamente');
+            return redirect()->json(['success' => true, 'message' => 'Highlight creado exitosamente']);
         } catch (QueryException $e) {
-            return redirect()->back()
-                ->withInput()
-                ->withErrors(['error' => 'Error de base de datos: ' . $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => 'Error de base de datos: ' . $e->getMessage()], 500);
         } catch (\Exception $e) {
-            return redirect()->back()
-                ->withInput()
-                ->withErrors(['error' => 'Error inesperado: ' . $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => 'Error inesperado: ' . $e->getMessage()], 500);
         }
     }
 
