@@ -30,9 +30,6 @@
                     <select id="properties-select" name="id_property">
                         <option selected value="0">Seleccione un municipio...</option>
                     </select>
-                    <button id="add-property-btn" class="btn-add" style="display: none;">
-                        ➕ Añadir
-                    </button>
                 </div>
             </div>
         </div>
@@ -148,8 +145,8 @@
                 const btn = document.createElement('button');
                 btn.id = 'btn-asignar';
                 btn.type = 'submit';
-                btn.className = 'btn btn-primary ms-2';
-                btn.textContent = 'Asignar';
+                btn.className = 'btn-add';
+                btn.textContent = 'Añadir';
 
                 // Insertar después del select
                 select.insertAdjacentElement('afterend', btn);
@@ -367,11 +364,11 @@
 
     /* Colores */
     .table-action-btn.orange {
-        background-color: #e67e22;
+        background-color: #ffe6e6;
     }
 
     .table-action-btn.orange:hover {
-        background-color: #d35400;
+        color: #d32f2f;
     }
 
     .table-action-btn.blue {
