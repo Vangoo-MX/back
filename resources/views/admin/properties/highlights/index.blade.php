@@ -28,7 +28,7 @@
 </div>
 
 <div class="table-container">
-    <table class="custom-table w-full text-sm text-left" id="hlTable">
+    <table class="custom-table w-full text-sm text-left">
         <thead class="custom-header">
             <tr>
                 <th>Titulo</th>
@@ -83,30 +83,6 @@
 
 <script>
     $(document).ready(function() {
-        $('#hlTable').DataTable({
-            language: {
-                processing: "Procesando..",
-                search: "Buscar:&nbsp;",
-                lengthMenu: "Ver _MENU_ Elementos",
-                info: "Mostrando de _START_ a _END_ de _TOTAL_ Elementos",
-                infoFiltered: "(filtrando de _MAX_ elementos en total)",
-                infoPostFix: "",
-                loadingRecords: "Cargando registros...",
-                zeroRecords: "No hay registros",
-                emptyTable: "No hay datos para mostrar",
-                paginate: {
-                    first: "Primero",
-                    previous: "Anterior",
-                    next: "Siguiente",
-                    last: "Último"
-                },
-                aria: {
-                    sortAscending: ": activer pour trier la colonne par ordre croissant",
-                    sortDescending: ": activer pour trier la colonne par ordre décroissant"
-                }
-            }
-        });
-
         $('document').on('change', '#municipiosh-select', function() {
             var table = $($(this).data('table')).DataTable();
             var municipioId = $(this).val();
