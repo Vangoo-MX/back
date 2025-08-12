@@ -208,7 +208,6 @@
                     error: function(xhr) {
                         let errorMsg = 'No se pudo asignar la propiedad.';
 
-                        // Si Laravel envía errores de validación
                         if (xhr.responseJSON && xhr.responseJSON.errors) {
                             if (xhr.responseJSON.errors.id_municipio) {
                                 errorMsg += "\n" + xhr.responseJSON.errors.id_municipio.join('\n');
