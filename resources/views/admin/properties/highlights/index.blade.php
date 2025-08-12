@@ -26,9 +26,11 @@
             </div>
             <div class="form-group">
                 <label for="properties">Propiedades destacadas</label>
-                <select id="properties-select" name="id_property">
-                    <option selected value="0">Seleccione un municipio...</option>
-                </select>
+                <div class="input-with-button">
+                    <select id="properties-select" name="id_property">
+                        <option selected value="0">Seleccione un municipio...</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -389,18 +391,6 @@
         display: flex;
         gap: 1rem;
         align-items: flex-end;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-    }
-
-    select {
-        padding: 8px 10px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        font-size: 14px;
     }
 
     .input-with-button {
