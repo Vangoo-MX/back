@@ -50,23 +50,23 @@
                     <div class="action-buttons">
                         <form action="{{ route('properties.highlights.destroy', $estate->id) }}" method="POST">
                             @csrf @method('DELETE')
-                            <button class="table-action-btn" style="background-color: #e67e22;">
+                            <button class="table-action-btn orange">
                                 <i class="fas fa-trash"></i> Eliminar
                             </button>
                         </form>
 
                         <a href="https://vangoo.mx/details/propiedad/{{$estate->id}}"
                             target="_blank"
-                            class="table-action-btn"
+                            class="table-action-btn blue"
                             title="Ver en Vangoo">
-                            <i class="fa-solid fa-link"></i>
+                            <i class="fas fa-link"></i>
                         </a>
 
                         <form id="orden-form{{$estate->id_property}}"
                             action="{{ route('properties.highlights.update', $estate->id) }}"
                             method="POST">
                             @csrf @method('PUT')
-                            <select class="form-select form-select-sm"
+                            <select class="table-action-select"
                                 name="num_order"
                                 onchange="ordenSelect({{$estate->id_property}})">
                                 <option hidden>Orden</option>
@@ -308,36 +308,55 @@
         text-align: center;
     }
 
+    .table-actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        /* espacio entre botones */
+    }
+
+    /* Botones cuadrados */
     .table-action-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 6px;
-        /* espacio entre icono y texto */
-        padding: 8px 14px;
-        font-size: 14px;
+        gap: 4px;
+        padding: 6px 10px;
+        font-size: 13px;
         font-weight: 500;
         border: none;
-        border-radius: 6px;
-        background-color: #3498db;
+        border-radius: 4px;
+        /* menos redondo */
         color: #fff;
         cursor: pointer;
-        transition: background-color 0.2s ease, transform 0.15s ease;
+        transition: background-color 0.2s ease;
+        height: 32px;
+        /* altura uniforme */
     }
 
-    .table-action-btn:hover {
+    /* Colores */
+    .table-action-btn.orange {
+        background-color: #e67e22;
+    }
+
+    .table-action-btn.orange:hover {
+        background-color: #d35400;
+    }
+
+    .table-action-btn.blue {
+        background-color: #3498db;
+    }
+
+    .table-action-btn.blue:hover {
         background-color: #2980b9;
-        transform: translateY(-1px);
     }
 
-    .table-action-btn:active {
-        background-color: #1f6391;
-        transform: translateY(0);
-    }
-
-    .table-action-btn i {
-        font-size: 16px;
-        /* tamaño icono */
+    /* Select en línea con botones */
+    .table-action-select {
+        height: 32px;
+        font-size: 13px;
+        border-radius: 4px;
+        padding: 0 6px;
     }
 </style>
 
