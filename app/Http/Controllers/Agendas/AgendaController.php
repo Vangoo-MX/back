@@ -41,4 +41,13 @@ class AgendaController extends Controller
         return redirect()->route('agenda.index')
             ->with('success', 'Mensaje marcado como leído exitosamente.');
     }
+
+
+    public function statusContact(Agenda $agenda, string $etapa): RedirectResponse
+    {
+        $agenda->update(['etapa' => $etapa]);
+
+        return redirect()->back()
+            ->with('success', 'Estado del contacto actualizado exitosamente.');
+    }
 }

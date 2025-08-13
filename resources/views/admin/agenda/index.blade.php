@@ -56,22 +56,22 @@
                             <span type="button" class="{{$agend->etapa == 4 ? 'card-status-green' : 'card-status-grey'}} dropdown-toggle" data-bs-toggle="dropdown">{{$agend->etapa == 4 ? 'Listo' : 'Etapa '.$agend->etapa}}</span>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('contactStatus.get', ['id_agenda' => $agend->id,'etapa' => '1']) }}">
+                                    <a class="dropdown-item" href="{{ route('agenda.statusContact', ['id_agenda' => $agend->id,'etapa' => '1']) }}">
                                         Etapa 1
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('contactStatus.get', ['id_agenda' => $agend->id,'etapa' => '2']) }}">
+                                    <a class="dropdown-item" href="{{ route('agenda.statusContact', ['id_agenda' => $agend->id,'etapa' => '2']) }}">
                                         Etapa 2
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('contactStatus.get', ['id_agenda' => $agend->id,'etapa' => '3']) }}">
+                                    <a class="dropdown-item" href="{{ route('agenda.statusContact', ['id_agenda' => $agend->id,'etapa' => '3']) }}">
                                         Etapa 3
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('contactStatus.get', ['id_agenda' => $agend->id,'etapa' => '4']) }}">
+                                    <a class="dropdown-item" href="{{ route('agenda.statusContact', ['id_agenda' => $agend->id,'etapa' => '4']) }}">
                                         Listo
                                     </a>
                                 </li>
