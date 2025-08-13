@@ -66,18 +66,4 @@ class ContactsController extends Controller
             return json_encode($e->getMessage());
         }
     }
-
-    public function statusContact($id, $etapa)
-    {
-        try {
-            $agenda = Agenda::findOrFail($id);
-
-            $agenda->etapa = $etapa;
-            $agenda->save();
-
-            return redirect()->back();
-        } catch (Exception $e) {
-            return json_encode('error: ' . $e);
-        }
-    }
 }
