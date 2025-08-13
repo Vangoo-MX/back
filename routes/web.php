@@ -171,6 +171,7 @@ Route::prefix('users')->name('users.')->middleware('check.admin')->group(functio
 //Agenda
 Route::prefix('agenda')->name('agenda.')->middleware('check.admin')->group(function () {
     Route::get('/', [AgendaController::class, 'index'])->name('index');
+    Route::get('/leido/{agenda}', [AgendaController::class, 'marcarComoLeido'])->name('marcarLeido');
 });
 
 
@@ -192,5 +193,3 @@ Route::get('ep/getDocsAgenda/{id}', [ContactsController::class, 'getDocsAgenda']
 Route::post('ep/saveContactDocs', [ContactsController::class, 'saveContactDocs'])->middleware('web')->name('contactDocs.post');
 
 Route::get('ep/statusContact/{id_agenda}/{etapa}', [ContactsController::class, 'statusContact'])->name('contactStatus.get');
-
-Route::get('ep/MarcarLeido/{id_agenda}', [ContactsController::class, 'marcarComoLeido'])->name('marcarComoLeido');

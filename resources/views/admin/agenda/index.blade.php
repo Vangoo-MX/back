@@ -91,8 +91,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" href="{{ route('marcarComoLeido', $agend->id) }}">
-                                        <!-- <img src="{{url('./img/icon/check.png')}}" /> -->
+                                    <a class="dropdown-item cursor-pointer" href="{{ route('agenda.marcarLeido', $agend->id) }}">
                                         <i class="fa-regular fa-circle-check"></i>
                                         Marcar como leído
                                     </a>

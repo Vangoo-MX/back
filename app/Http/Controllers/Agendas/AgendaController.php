@@ -9,6 +9,7 @@ use App\Models\Agenda;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Enums\UserRole;
+use Illuminate\Http\RedirectResponse;
 
 class AgendaController extends Controller
 {
@@ -31,5 +32,13 @@ class AgendaController extends Controller
             ->pluck('name', 'id');
 
         return view('admin.agenda.index', compact('agenda', 'users', 'selectedUserID'));
+    }
+
+    public function marcarComoLeido(Agenda $agenda): RedirectResponse
+    {
+        $agenda->update(['mensaje_leido' => true]);
+
+        return redirect()->route('admin.agenda.index')
+            ->with('success', 'Mensaje marcado como leído exitosamente.');
     }
 }
