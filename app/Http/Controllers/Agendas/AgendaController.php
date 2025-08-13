@@ -38,7 +38,7 @@ class AgendaController extends Controller
     {
         $agenda->update(['mensaje_leido' => true]);
 
-        return redirect()->route('admin.agenda.index')
+        return redirect()->route('agenda.index')
             ->with('success', 'Mensaje marcado como leído exitosamente.');
     }
 }

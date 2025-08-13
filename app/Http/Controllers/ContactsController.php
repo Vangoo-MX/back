@@ -67,15 +67,6 @@ class ContactsController extends Controller
         }
     }
 
-    public function marcarComoLeido($id_agenda)
-    {
-        $agenda = Agenda::findOrFail($id_agenda);
-        $agenda->mensaje_leido = true;
-        $agenda->save();
-
-        return redirect()->route('admin.contacts');
-    }
-
     public function statusContact($id, $etapa)
     {
         try {
