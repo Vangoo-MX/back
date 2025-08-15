@@ -16,62 +16,64 @@ trait HandlesHighlights
                 ->values();
         }
 
-        $municipios = $this->highlightModel::select('id_municipio')
-            ->distinct()
-            ->pluck('id_municipio')
-            ->toArray();
+        // UNA SOLA CONSULTA: obtener todos los datos necesarios
+        $allHighlights = $this->highlightModel::with($this->highlightRelationship)
+            ->orderBy('id_municipio', 'asc')
+            ->orderBy('num_order', 'asc')
+            ->get()
+            ->filter(fn($highlight) => $highlight->{$this->highlightRelationship} !== null)
+            ->groupBy('id_municipio');
 
-        $totalMunicipios = count($municipios);
-
-        if ($totalMunicipios === 0) {
+        if ($allHighlights->isEmpty()) {
             return collect();
         }
 
+        $municipios = $allHighlights->keys()->toArray();
+        $totalMunicipios = count($municipios);
+
+        // Si hay más municipios que el límite, seleccionar aleatoriamente
         if ($totalMunicipios > $maxTotal) {
-            $municipios = collect($municipios)->shuffle()->take($maxTotal)->toArray();
+            $municipiosSeleccionados = collect($municipios)->shuffle()->take($maxTotal)->toArray();
+            $allHighlights = $allHighlights->only($municipiosSeleccionados);
             $totalMunicipios = $maxTotal;
         }
 
+        // Distribución inicial
         $elementosPorMunicipio = floor($maxTotal / $totalMunicipios);
-        $elementosRestantes = $maxTotal % $totalMunicipios;
+        $elementosExtra = $maxTotal % $totalMunicipios;
 
         $resultados = collect();
-        $elementosObtenidos = [];
+        $municipiosArray = $allHighlights->keys()->toArray();
 
-        foreach ($municipios as $index => $municipio) {
-            $limite = $elementosPorMunicipio + ($index < $elementosRestantes ? 1 : 0);
+        // Primera pasada: distribución base
+        foreach ($municipiosArray as $index => $municipioId) {
+            $limite = $elementosPorMunicipio + ($index < $elementosExtra ? 1 : 0);
             $limite = max(1, $limite);
 
-            $elementos = $this->highlightModel::with($this->highlightRelationship)
-                ->where('id_municipio', $municipio)
-                ->orderBy('num_order', 'asc')
+            $elementos = $allHighlights[$municipioId]
                 ->take($limite)
-                ->get()
-                ->map(fn($highlight) => $highlight->{$this->highlightRelationship})
-                ->filter();
+                ->map(fn($highlight) => $highlight->{$this->highlightRelationship});
 
             $resultados = $resultados->concat($elementos);
-            $elementosObtenidos[$municipio] = $elementos->count();
         }
 
+        // Segunda pasada: optimización para llenar espacios restantes
         $elementosActuales = $resultados->count();
 
         if ($elementosActuales < $maxTotal) {
             $espaciosDisponibles = $maxTotal - $elementosActuales;
 
-            foreach ($municipios as $municipio) {
+            foreach ($municipiosArray as $municipioId) {
                 if ($espaciosDisponibles <= 0) break;
 
-                $yaObtenidos = $elementosObtenidos[$municipio];
+                $yaObtenidos = $elementosPorMunicipio +
+                    (array_search($municipioId, $municipiosArray) < $elementosExtra ? 1 : 0);
+                $yaObtenidos = max(1, $yaObtenidos);
 
-                $elementosAdicionales = $this->highlightModel::with($this->highlightRelationship)
-                    ->where('id_municipio', $municipio)
-                    ->orderBy('num_order', 'asc')
+                $elementosAdicionales = $allHighlights[$municipioId]
                     ->skip($yaObtenidos)
                     ->take($espaciosDisponibles)
-                    ->get()
-                    ->map(fn($highlight) => $highlight->{$this->highlightRelationship})
-                    ->filter();
+                    ->map(fn($highlight) => $highlight->{$this->highlightRelationship});
 
                 $resultados = $resultados->concat($elementosAdicionales);
                 $espaciosDisponibles -= $elementosAdicionales->count();
