@@ -17,7 +17,7 @@ trait HandlesHighlights
                 ->values();
         }
 
-        // Para todos los municipios: distribución balanceada
+        // Para todos los municipios: distribución balanceada y optimizada
 
         // 1. Obtener todos los municipios únicos
         $municipios = $this->highlightModel::select('id_municipio')
@@ -31,26 +31,23 @@ trait HandlesHighlights
             return collect();
         }
 
-        // OPCIÓN A: Garantizar al menos 1 elemento por municipio hasta el límite
+        // Si hay más municipios que el límite, seleccionar municipios aleatoriamente
         if ($totalMunicipios > $maxTotal) {
-            // Si hay más municipios que el límite, seleccionar municipios aleatoriamente
             $municipios = collect($municipios)->shuffle()->take($maxTotal)->toArray();
             $totalMunicipios = $maxTotal;
         }
 
-        // 2. Calcular elementos por municipio
+        // 2. Primera pasada: distribución base (al menos 1 por municipio)
         $elementosPorMunicipio = floor($maxTotal / $totalMunicipios);
-        $elementosExtra = $maxTotal % $totalMunicipios;
+        $elementosRestantes = $maxTotal % $totalMunicipios;
 
         $resultados = collect();
+        $elementosObtenidos = [];
 
-        // 3. Obtener elementos de cada municipio
+        // 3. Obtener elementos iniciales de cada municipio
         foreach ($municipios as $index => $municipio) {
-            // Los primeros municipios obtienen un elemento extra si hay residuo
-            $limite = $elementosPorMunicipio + ($index < $elementosExtra ? 1 : 0);
-
-            // Asegurar al menos 1 elemento si es posible
-            $limite = max(1, $limite);
+            $limite = $elementosPorMunicipio + ($index < $elementosRestantes ? 1 : 0);
+            $limite = max(1, $limite); // Al menos 1 por municipio
 
             $elementos = $this->highlightModel::with($this->highlightRelationship)
                 ->where('id_municipio', $municipio)
@@ -61,10 +58,33 @@ trait HandlesHighlights
                 ->filter();
 
             $resultados = $resultados->concat($elementos);
+            $elementosObtenidos[$municipio] = $elementos->count();
+        }
 
-            // Verificar si ya alcanzamos el límite
-            if ($resultados->count() >= $maxTotal) {
-                break;
+        // 4. Segunda pasada: llenar espacios restantes si no hemos llegado al máximo
+        $elementosActuales = $resultados->count();
+
+        if ($elementosActuales < $maxTotal) {
+            $espaciosDisponibles = $maxTotal - $elementosActuales;
+
+            // Intentar obtener más elementos de cada municipio en orden
+            foreach ($municipios as $municipio) {
+                if ($espaciosDisponibles <= 0) break;
+
+                $yaObtenidos = $elementosObtenidos[$municipio];
+
+                // Obtener elementos adicionales saltando los ya obtenidos
+                $elementosAdicionales = $this->highlightModel::with($this->highlightRelationship)
+                    ->where('id_municipio', $municipio)
+                    ->orderBy('num_order', 'asc')
+                    ->skip($yaObtenidos)
+                    ->take($espaciosDisponibles)
+                    ->get()
+                    ->map(fn($highlight) => $highlight->{$this->highlightRelationship})
+                    ->filter();
+
+                $resultados = $resultados->concat($elementosAdicionales);
+                $espaciosDisponibles -= $elementosAdicionales->count();
             }
         }
 
