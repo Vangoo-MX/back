@@ -16,7 +16,6 @@ trait HandlesHighlights
                 ->values();
         }
 
-        // UNA SOLA CONSULTA: obtener todos los datos necesarios
         $allHighlights = $this->highlightModel::with($this->highlightRelationship)
             ->orderBy('id_municipio', 'asc')
             ->orderBy('num_order', 'asc')
@@ -31,21 +30,18 @@ trait HandlesHighlights
         $municipios = $allHighlights->keys()->toArray();
         $totalMunicipios = count($municipios);
 
-        // Si hay más municipios que el límite, seleccionar aleatoriamente
         if ($totalMunicipios > $maxTotal) {
             $municipiosSeleccionados = collect($municipios)->shuffle()->take($maxTotal)->toArray();
             $allHighlights = $allHighlights->only($municipiosSeleccionados);
             $totalMunicipios = $maxTotal;
         }
 
-        // Distribución inicial
         $elementosPorMunicipio = floor($maxTotal / $totalMunicipios);
         $elementosExtra = $maxTotal % $totalMunicipios;
 
         $resultados = collect();
         $municipiosArray = $allHighlights->keys()->toArray();
 
-        // Primera pasada: distribución base
         foreach ($municipiosArray as $index => $municipioId) {
             $limite = $elementosPorMunicipio + ($index < $elementosExtra ? 1 : 0);
             $limite = max(1, $limite);
@@ -57,7 +53,6 @@ trait HandlesHighlights
             $resultados = $resultados->concat($elementos);
         }
 
-        // Segunda pasada: optimización para llenar espacios restantes
         $elementosActuales = $resultados->count();
 
         if ($elementosActuales < $maxTotal) {
@@ -66,12 +61,12 @@ trait HandlesHighlights
             foreach ($municipiosArray as $municipioId) {
                 if ($espaciosDisponibles <= 0) break;
 
-                $yaObtenidos = $elementosPorMunicipio +
+                $obtenidos = $elementosPorMunicipio +
                     (array_search($municipioId, $municipiosArray) < $elementosExtra ? 1 : 0);
-                $yaObtenidos = max(1, $yaObtenidos);
+                $obtenidos = max(1, $obtenidos);
 
                 $elementosAdicionales = $allHighlights[$municipioId]
-                    ->skip($yaObtenidos)
+                    ->skip($obtenidos)
                     ->take($espaciosDisponibles)
                     ->map(fn($highlight) => $highlight->{$this->highlightRelationship});
 
