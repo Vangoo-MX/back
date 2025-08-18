@@ -173,6 +173,7 @@ Route::prefix('agenda')->name('agenda.')->middleware('check.admin')->group(funct
     Route::get('/', [AgendaController::class, 'index'])->name('index');
     Route::get('/leido/{agenda}', [AgendaController::class, 'marcarComoLeido'])->name('marcarLeido');
     Route::get('/status/{agenda}/{etapa}', [AgendaController::class, 'statusContact'])->name('statusContact');
+    Route::get('/show/{agenda}', [AgendaController::class, 'getDocuments'])->name('showDocuments');
 });
 
 
@@ -188,7 +189,5 @@ Route::get('emailconfirm', [AdminController::class, 'email_confirm'])->name('ema
 Route::get('emailtemplate', [AdminController::class, 'email_template'])->name('emails.template');
 
 /* Agenda */
-
-Route::get('ep/getDocsAgenda/{id}', [ContactsController::class, 'getDocsAgenda'])->name('contactDocs.get');
 
 Route::post('ep/saveContactDocs', [ContactsController::class, 'saveContactDocs'])->middleware('web')->name('contactDocs.post');

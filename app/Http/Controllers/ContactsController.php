@@ -14,15 +14,6 @@ use Exception;
 
 class ContactsController extends Controller
 {
-
-    public function getDocsAgenda($id)
-    {
-        $return = AgendaDocs::where('id_agenda', $id)
-            ->get();
-
-        return $return;
-    }
-
     public function saveContactDocs(Request $request)
     {
         try {

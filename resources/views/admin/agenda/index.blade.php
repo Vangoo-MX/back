@@ -85,7 +85,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#documentsModal" onclick="documentsModalData({{$agend->id}})" id="documentsConfirmBtn{{$agend->id}}" data-url="{{route('contactDocs.get',$agend->id)}}">
+                                    <a class="dropdown-item cursor-pointer" data-bs-toggle="modal" data-bs-target="#documentsModal" onclick="documentsModalData({{$agend->id}})" id="documentsConfirmBtn{{$agend->id}}" data-url="{{route('agenda.showDocuments',$agend->id)}}">
                                         <img src="{{url('./img/icon/info.png')}}" />
                                         Documentos
                                     </a>
