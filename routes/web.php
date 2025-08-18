@@ -25,6 +25,7 @@ use App\Http\Controllers\Terrains\TerrainController;
 use App\Http\Controllers\Terrains\TerrainHighlightController;
 use App\Http\Controllers\Terrains\TerrainQueueController;
 use App\Http\Controllers\Agendas\AgendaController;
+use App\Http\Controllers\Agendas\DocumentController;
 
 Route::redirect('/', '/auth/user/login');
 
@@ -173,7 +174,7 @@ Route::prefix('agenda')->name('agenda.')->middleware('check.admin')->group(funct
     Route::get('/', [AgendaController::class, 'index'])->name('index');
     Route::get('/leido/{agenda}', [AgendaController::class, 'marcarComoLeido'])->name('marcarLeido');
     Route::get('/status/{agenda}/{etapa}', [AgendaController::class, 'statusContact'])->name('statusContact');
-    Route::get('/show/{agenda}', [AgendaController::class, 'getDocuments'])->name('showDocuments');
+    Route::get('/show/{agenda}', [DocumentController::class, 'getDocuments'])->name('showDocuments');
 });
 
 
