@@ -117,7 +117,7 @@
             </div>
 
             <div class="modal-body">
-                <form id="contactDocsForm" method="post" action="{{route('contactDocs.post')}}">
+                <form id="contactDocsForm" method="post" action="{{route('agenda.storeDocuments')}}">
                     @csrf
                     <input type="hidden" name="id" id="contactId">
                     <div>
