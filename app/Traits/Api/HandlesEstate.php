@@ -112,9 +112,9 @@ trait HandlesEstate
             }
         }
 
-        if ($request->hasAny(['minPrice', 'maxPrice'])) {
-            $min = max(0, (float) $request->input('minPrice', 0));
-            $max = max(0, (float) $request->input('maxPrice', 0));
+        if ($request->hasAny(['min', 'max', 'minPrice', 'maxPrice'])) {
+            $min = (float) ($request->input('min') ?? $request->input('minPrice', 0));
+            $max = (float) ($request->input('max') ?? $request->input('maxPrice', 0));
 
             if (isset($this->priceRangeColumns)) {
                 [$minCol, $maxCol] = [$this->priceRangeColumns['min'], $this->priceRangeColumns['max']];
@@ -127,7 +127,7 @@ trait HandlesEstate
                                 $sq->where($minCol, '<=', $min)->where($maxCol, '>=', $max);
                             });
                     } else {
-                        $q->where($maxCol, '>=', $min);
+                        $q->where($minCol, '<=', $min)->where($maxCol, '>=', $min);
                     }
                 });
             } else {
