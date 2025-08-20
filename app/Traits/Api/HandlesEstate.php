@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 use App\Models\Colonias;
 use App\Models\Estados;
 use App\Models\Municipios;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 trait HandlesEstate
 {
