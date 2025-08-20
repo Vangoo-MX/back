@@ -10,7 +10,6 @@ use Illuminate\Http\Response;
 use App\Models\Colonias;
 use App\Models\Estados;
 use App\Models\Municipios;
-use Illuminate\Http\Request;
 
 trait HandlesEstate
 {
@@ -102,36 +101,44 @@ trait HandlesEstate
         'colonia' => 'id_colonia'
     ];
 
-    public function getEstateSearch(?Request $request = null)
+    public function getEstateSearch($request = null)
     {
         $request ??= request();
         $query = $this->model::query();
 
-        collect($this->locationFilters)->each(
-            fn($column, $param) => $request->filled($param) && $query->where($column, $request->input($param))
-        );
+        foreach ($this->locationFilters as $param => $column) {
+            if ($value = $request->input($param)) {
+                $query->where($column, $value);
+            }
+        }
 
-        if ($request->hasAny(['min', 'max'])) {
-            $min = max(0, (float) $request->input('min', 0));
-            $max = max(0, (float) $request->input('max', 0));
+        if ($request->hasAny(['minPrice', 'maxPrice'])) {
+            $min = max(0, (float) $request->input('minPrice', 0));
+            $max = max(0, (float) $request->input('maxPrice', 0));
 
             if (isset($this->priceRangeColumns)) {
                 [$minCol, $maxCol] = [$this->priceRangeColumns['min'], $this->priceRangeColumns['max']];
 
-                $query->where(
-                    fn($q) => $max > 0
-                        ? $q->whereBetween($minCol, [$min, $max])
-                        ->orWhereBetween($maxCol, [$min, $max])
-                        ->orWhere(fn($sq) => $sq->where($minCol, '<=', $min)->where($maxCol, '>=', $max))
-                        : $q->where($maxCol, '>=', $min)
-                );
+                $query->where(function ($q) use ($min, $max, $minCol, $maxCol) {
+                    if ($max > 0) {
+                        $q->whereBetween($minCol, [$min, $max])
+                            ->orWhereBetween($maxCol, [$min, $max])
+                            ->orWhere(function ($sq) use ($min, $max, $minCol, $maxCol) {
+                                $sq->where($minCol, '<=', $min)->where($maxCol, '>=', $max);
+                            });
+                    } else {
+                        $q->where($maxCol, '>=', $min);
+                    }
+                });
             } else {
                 $column = $this->priceColumn ?? 'price';
-                $query->where(
-                    fn($q) => $max > 0
-                        ? $q->whereBetween($column, [$min, $max])
-                        : $q->where($column, '>=', $min)
-                );
+                $query->where(function ($q) use ($min, $max, $column) {
+                    if ($max > 0) {
+                        $q->whereBetween($column, [$min, $max]);
+                    } else {
+                        $q->where($column, '>=', $min);
+                    }
+                });
             }
         }
 
