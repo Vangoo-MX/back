@@ -51,95 +51,45 @@ trait HandlesEstate
 
     public function getEstateRelated(int $id): Collection
     {
-        $estate = $this->findEstate($id);
+        $estate = $this->model::select($this->getRequiredColumns())->find($id);
 
-        if (!$estate) {
-            return collect();
-        }
-
-        return $this->buildRelatedEstatesQuery($estate, $id)
+        return $estate
+            ? $this->model::query()
+            ->whereNot('id', $id)
+            ->where('id_municipio', $estate->id_municipio)
+            ->where(fn($q) => $this->applyPriceFilterRelated($q, $estate))
             ->limit(10)
-            ->get();
-    }
-
-    private function findEstate(int $id): ?object
-    {
-        return $this->model::select($this->getRequiredColumns())
-            ->find($id);
+            ->get()
+            : collect();
     }
 
     private function getRequiredColumns(): array
     {
-        $baseColumns = ['id', 'id_municipio'];
+        $base = ['id', 'id_municipio'];
 
-        return match (true) {
-            property_exists($this, 'priceRangeColumns') => [
-                ...$baseColumns,
-                $this->priceRangeColumns['min'],
-                $this->priceRangeColumns['max']
-            ],
-            default => [
-                ...$baseColumns,
-                $this->priceColumn ?? 'price'
-            ]
-        };
-    }
-
-    private function buildRelatedEstatesQuery(object $estate, int $excludeId): Builder
-    {
-        return $this->model::query()
-            ->whereNot('id', $excludeId)
-            ->where('id_municipio', $estate->id_municipio)
-            ->where(fn($query) => $this->applyPriceFilterRelated($query, $estate));
-    }
-
-    private function applyPriceFilterRelated(Builder $query, object $estate): Builder
-    {
         return property_exists($this, 'priceRangeColumns')
-            ? $this->applyRangePriceFilter($query, $estate)
-            : $this->applySinglePriceFilter($query, $estate);
+            ? [...$base, ...array_values($this->priceRangeColumns)]
+            : [...$base, $this->priceColumn ?? 'price'];
     }
 
-    private function applyRangePriceFilter(Builder $query, object $estate): Builder
+    private function applyPriceFilterRelated($query, object $estate)
     {
-        ['min' => $minColumn, 'max' => $maxColumn] = $this->priceRangeColumns;
+        if (property_exists($this, 'priceRangeColumns')) {
+            ['min' => $min, 'max' => $max] = $this->priceRangeColumns;
+            [$minPrice, $maxPrice] = [(int) floor($estate->{$min} * 0.8), (int) ceil($estate->{$max} * 1.2)];
 
-        $priceRange = $this->calculatePriceRange(
-            $estate->{$minColumn},
-            $estate->{$maxColumn}
-        );
-
-        return $query->where(function ($q) use ($priceRange, $minColumn, $maxColumn) {
-            $q->whereBetween($minColumn, $priceRange)
-                ->orWhereBetween($maxColumn, $priceRange)
-                ->orWhere(function ($subQuery) use ($priceRange, $minColumn, $maxColumn) {
-                    $subQuery->where($minColumn, '<=', $priceRange[0])
-                        ->where($maxColumn, '>=', $priceRange[1]);
-                });
-        });
-    }
-
-    private function applySinglePriceFilter(Builder $query, object $estate): Builder
-    {
-        $column = $this->priceColumn ?? 'price';
-        $priceRange = $this->calculatePriceRange($estate->{$column});
-
-        return $query->whereBetween($column, $priceRange);
-    }
-
-    private function calculatePriceRange(float $minPrice, ?float $maxPrice = null): array
-    {
-        if ($maxPrice === null) {
-            return [
-                (int) floor($minPrice * 0.8),
-                (int) ceil($minPrice * 1.2)
-            ];
+            return $query->where(
+                fn($q) => $q
+                    ->whereBetween($min, [$minPrice, $maxPrice])
+                    ->orWhereBetween($max, [$minPrice, $maxPrice])
+                    ->orWhere(fn($sub) => $sub->where($min, '<=', $minPrice)->where($max, '>=', $maxPrice))
+            );
         }
 
-        return [
-            (int) floor($minPrice * 0.8),
-            (int) ceil($maxPrice * 1.2)
-        ];
+        $column = $this->priceColumn ?? 'price';
+        $range = [(int) floor($estate->{$column} * 0.8), (int) ceil($estate->{$column} * 1.2)];
+
+        return $query->whereBetween($column, $range);
     }
 
     /**
