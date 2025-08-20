@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 use App\Models\Colonias;
 use App\Models\Estados;
 use App\Models\Municipios;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Request;
 
 trait HandlesEstate
 {
@@ -96,78 +96,54 @@ trait HandlesEstate
      * Inicio buscador
      */
 
-    public function getEstateSearch()
+    protected array $locationFilters = [
+        'estado' => 'id_estado',
+        'municipio' => 'id_municipio',
+        'colonia' => 'id_colonia'
+    ];
+
+    public function getEstateSearch(?Request $request = null)
     {
+        $request ??= request();
         $query = $this->model::query();
 
-        $this->applyLocationFilters($query);
+        collect($this->locationFilters)->each(
+            fn($column, $param) => $request->filled($param) && $query->where($column, $request->input($param))
+        );
 
-        $this->applyPriceFilter($query);
+        if ($request->hasAny(['min', 'max'])) {
+            $min = max(0, (float) $request->input('min', 0));
+            $max = max(0, (float) $request->input('max', 0));
+
+            if (isset($this->priceRangeColumns)) {
+                [$minCol, $maxCol] = [$this->priceRangeColumns['min'], $this->priceRangeColumns['max']];
+
+                $query->where(
+                    fn($q) => $max > 0
+                        ? $q->whereBetween($minCol, [$min, $max])
+                        ->orWhereBetween($maxCol, [$min, $max])
+                        ->orWhere(fn($sq) => $sq->where($minCol, '<=', $min)->where($maxCol, '>=', $max))
+                        : $q->where($maxCol, '>=', $min)
+                );
+            } else {
+                $column = $this->priceColumn ?? 'price';
+                $query->where(
+                    fn($q) => $max > 0
+                        ? $q->whereBetween($column, [$min, $max])
+                        : $q->where($column, '>=', $min)
+                );
+            }
+        }
 
         return $query->paginate(50);
     }
 
-    private function applyLocationFilters($query): void
-    {
-        $locationFilters = [
-            'estado' => 'id_estado',
-            'municipio' => 'id_municipio',
-            'colonia' => 'id_colonia'
-        ];
-
-        foreach ($locationFilters as $param => $column) {
-            if ($value = request($param)) {
-                $query->where($column, $value);
-            }
-        }
-    }
-
-    private function applyPriceFilter($query): void
-    {
-        if (!request()->has('min') && !request()->has('max')) {
-            return;
-        }
-
-        $min = (float)request('min', 0);
-        $max = (float)request('max', 0);
-
-        if (property_exists($this, 'priceRangeColumns')) {
-            $minColumn = $this->priceRangeColumns['min'];
-            $maxColumn = $this->priceRangeColumns['max'];
-
-            if ($max > 0) {
-                $query->where(function ($q) use ($min, $max, $minColumn, $maxColumn) {
-                    $q->whereBetween($minColumn, [$min, $max])
-                        ->orWhereBetween($maxColumn, [$min, $max])
-                        ->orWhere(function ($subQuery) use ($min, $max, $minColumn, $maxColumn) {
-                            $subQuery->where($minColumn, '<=', $min)
-                                ->where($maxColumn, '>=', $max);
-                        });
-                });
-            } else {
-                $query->where($minColumn, '<=', $min)
-                    ->where($maxColumn, '>=', $min);
-            }
-        } else {
-            $column = property_exists($this, 'priceColumn') ? $this->priceColumn : 'price';
-            $query->where(function ($q) use ($min, $max, $column) {
-                $max > 0
-                    ? $q->whereBetween($column, [$min, $max])
-                    : $q->where($column, '>=', $min);
-            });
-        }
-    }
-
     protected function getLocation(int $coloniaId, int $municipioId, int $estadoId): string
     {
-        $colonia = Colonias::find($coloniaId);
-        $municipio = Municipios::find($municipioId);
-        $estado = Estados::find($estadoId);
-
         return collect([
-            $colonia->nombre ?? null,
-            $municipio->nombre ?? null,
-            $estado->nombre ?? null,
+            Colonias::find($coloniaId)?->nombre,
+            Municipios::find($municipioId)?->nombre,
+            Estados::find($estadoId)?->nombre,
         ])->filter()->join(', ');
     }
 
