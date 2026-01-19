@@ -6,6 +6,10 @@
 
 @section('titleContent','Propiedades publicadas')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/admin/properties-table.css') }}">
+@endpush
+
 @section('content')
 
 @include('admin.partials.properties-filters', ['estates' => $estates])
