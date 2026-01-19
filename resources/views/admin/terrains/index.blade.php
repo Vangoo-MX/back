@@ -2,7 +2,7 @@
 
 @section('breadcrumb','Terrenos')
 
-@section('title','Terrenos')
+@section('title','Terrenos Prueba')
 
 @section('titleContent','Terrenos publicados')
 
