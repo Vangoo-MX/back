@@ -2,7 +2,7 @@
 
 @section('breadcrumb','Apartamentos')
 
-@section('title','Apartamentos prueba')
+@section('title','Apartamentos')
 
 @section('titleContent','Apartamentos publicados')
 
