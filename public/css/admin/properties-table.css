@@ -232,3 +232,182 @@ td {
     opacity: 0.4;
     pointer-events: none;
 }
+
+/* ========================================
+   RESPONSIVE DESIGN - MEDIA QUERIES
+   ======================================== */
+
+/* Tablets y pantallas medianas (768px - 1024px) */
+@media (max-width: 1024px) {
+    .filters-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .custom-table {
+        font-size: 13px;
+    }
+
+    .custom-table thead th,
+    .custom-table tbody td {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+}
+
+/* Móviles y pantallas pequeñas (menos de 768px) */
+@media (max-width: 768px) {
+    .filters-container {
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .filters-title {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .filters-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .table-container {
+        border-radius: 8px;
+        margin-top: 1.5rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Tabla en modo scroll horizontal */
+    .custom-table {
+        min-width: 800px;
+        font-size: 12px;
+    }
+
+    .custom-table thead th {
+        padding: 8px 10px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .custom-table tbody td {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    /* Badges más pequeños en móvil */
+    .badge {
+        padding: 2px 6px;
+        font-size: 10px;
+        margin-left: 4px;
+    }
+
+    /* Dropdown menu más ancho en móvil */
+    .dropdown-menu {
+        min-width: 160px;
+        right: 0;
+        left: auto;
+    }
+
+    .dropdown-menu .dropdown-item {
+        padding: 12px 15px;
+        font-size: 13px;
+    }
+
+    /* Paginación más pequeña */
+    .pagination-wrapper {
+        margin-top: 1.5rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .custom-pagination {
+        gap: 0.3rem;
+        min-width: max-content;
+    }
+
+    .custom-pagination .custom-page {
+        width: 36px;
+        height: 36px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Móviles muy pequeños (menos de 480px) */
+@media (max-width: 480px) {
+    .filters-container {
+        padding: 0.75rem;
+        border-radius: 8px;
+    }
+
+    .filters-title {
+        font-size: 1rem;
+    }
+
+    .form-group label {
+        font-size: 0.85rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .table-container {
+        border-radius: 6px;
+    }
+
+    .custom-table {
+        min-width: 700px;
+        font-size: 11px;
+    }
+
+    .custom-table thead th,
+    .custom-table tbody td {
+        padding: 8px;
+        font-size: 11px;
+    }
+
+    .badge {
+        font-size: 9px;
+        padding: 2px 5px;
+    }
+
+    .dropdown-menu {
+        min-width: 140px;
+    }
+
+    .dropdown-menu .dropdown-item {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .custom-pagination .custom-page {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Mensaje de ayuda para scroll horizontal en móviles */
+@media (max-width: 768px) {
+    .table-container::before {
+        content: "← Desliza para ver más →";
+        display: block;
+        text-align: center;
+        padding: 8px;
+        background: #f0f9ff;
+        color: #0369a1;
+        font-size: 12px;
+        font-weight: 500;
+        border-bottom: 1px solid #e0e7ff;
+    }
+}
+
+/* Ocultar mensaje de scroll en tablets y desktop */
+@media (min-width: 769px) {
+    .table-container::before {
+        display: none;
+    }
+}
