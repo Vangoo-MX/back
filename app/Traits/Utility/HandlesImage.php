@@ -53,7 +53,7 @@ trait HandlesImage
             $image->move($directory, $filename);
         } else {
             Image::make($image)
-                ->encode('webp', 90)
+                ->encode('webp', 80)
                 ->save($fullPath);
         }
     }
