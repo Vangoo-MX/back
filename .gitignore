@@ -17,4 +17,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/.github
+/AGENTS.md
+/boost.json
 routes/web copy.php
