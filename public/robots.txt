@@ -1,2 +1,19 @@
+# Directivas generales para buscadores como Google, Bing, Yahoo y DuckDuckGo.
 User-agent: *
-Disallow:
+Allow: /
+
+# El panel y las rutas de autenticacion no contienen contenido publico para indexar.
+Disallow: /login
+Disallow: /logout
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /email/verify
+Disallow: /dashboard
+Disallow: /home
+Disallow: /admin
+Disallow: /api/
+Disallow: /storage/
+
+# Evita rastrear parametros de consulta que pueden generar URLs duplicadas.
+Disallow: /*?
