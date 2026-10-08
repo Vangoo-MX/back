@@ -22,3 +22,4 @@ yarn-error.log
 /boost.json
 routes/web copy.php
 skills-lock.json
+/storage/framework/
