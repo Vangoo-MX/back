@@ -13,11 +13,6 @@ use App\Models\Agenda;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('check.admin');
-    }
-
     //index
     public function index()
     {

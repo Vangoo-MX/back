@@ -181,7 +181,7 @@ Route::prefix('agenda')->name('agenda.')->middleware('check.admin')->group(funct
 
 
 // Panel de administración
-Route::prefix('overview')->name('admin.')->group(function () {
+Route::prefix('overview')->name('admin.')->middleware('check.admin')->group(function () {
     // Dashboard
     Route::get('home', [AdminController::class, 'index'])->name('index');
 });
